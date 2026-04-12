@@ -12,17 +12,11 @@
   <!-- VendorSoluce&trade; design system — tokens + components -->
   <link href="assets/css/tokens.css" rel="stylesheet"/>
   <link href="assets/css/components.css" rel="stylesheet"/>
+  <link href="assets/css/product.css" rel="stylesheet"/>
   <style>
-    :root {
-      --vendorsoluce-green: #33691E;
-      --vendorsoluce-light-green: #66BB6A;
-      --vendorsoluce-dark-green: #2E5A1A;
-      --vendorsoluce-pale-green: #E8F5E8;
-    }
     .bg-vendorsoluce-green { background-color: var(--vendorsoluce-green); }
     .text-vendorsoluce-green { color: var(--vendorsoluce-green) !important; }
     html.dark .text-vendorsoluce-green { color: var(--vendorsoluce-light-green) !important; }
-    /* Tutorial: visual step cards and timeline */
     .tutorial-timeline { position: relative; }
     .tutorial-timeline::before {
       content: '';
@@ -42,18 +36,18 @@
     .tutorial-step-card {
       position: relative;
       border-radius: 1rem;
-      border: 1px solid rgb(229 231 235);
-      background: rgb(255 255 255);
-      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
     .dark .tutorial-step-card {
-      border-color: rgb(55 65 81);
-      background: rgb(31 41 55);
+      border-color: var(--border);
+      background: var(--card);
     }
     .tutorial-step-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 24px -8px rgb(0 0 0 / 0.12);
+      box-shadow: var(--shadow-lg);
     }
     .tutorial-step-card .step-accent {
       border-left: 4px solid var(--vendorsoluce-green);
@@ -67,50 +61,49 @@
       min-height: 2rem;
       background: linear-gradient(135deg, var(--vendorsoluce-green), var(--vendorsoluce-dark-green));
       color: white;
-      border: 3px solid rgb(255 255 255);
-      box-shadow: 0 2px 8px rgba(51, 105, 30, 0.35);
+      border: 3px solid var(--bg);
+      box-shadow: 0 2px 8px rgb(var(--accent-rgb) / 0.35);
     }
-    .dark .tutorial-step-dot { border-color: rgb(31 41 55); }
+    .dark .tutorial-step-dot { border-color: var(--card); }
     .tutorial-step-icon { color: var(--vendorsoluce-green); transition: transform 0.25s ease; }
     .dark .tutorial-step-icon { color: var(--vendorsoluce-light-green); }
     .tutorial-step-card:hover .tutorial-step-icon { transform: scale(1.08); }
     .tutorial-nav-pill {
       border-radius: 9999px;
-      background: rgba(51, 105, 30, 0.12);
+      background: rgb(var(--accent-rgb) / 0.12);
       color: var(--vendorsoluce-green);
       font-size: 0.75rem;
       font-weight: 600;
       padding: 0.25rem 0.6rem;
     }
-    .dark .tutorial-nav-pill { background: rgba(102, 187, 106, 0.2); color: var(--vendorsoluce-light-green); }
+    .dark .tutorial-nav-pill { background: rgb(var(--accent-2-rgb) / 0.2); color: var(--vendorsoluce-light-green); }
     .tutorial-check { color: var(--vendorsoluce-green); }
     .dark .tutorial-check { color: var(--vendorsoluce-light-green); }
   </style>
   <style>
     :root { --nav-height: 64px; }
     main { padding-top: var(--nav-height, 64px); }
-    .nav-link { color: rgb(55 65 81); text-decoration: none; transition: all 0.2s ease; }
-    .dark .nav-link { color: rgb(209 213 219); }
-    .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: #33691E !important; background-color: rgba(51, 105, 30, 0.1) !important; }
-    html.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: #66BB6A !important; background-color: rgba(102, 187, 106, 0.12) !important; }
-    nav a[title].active, nav a[title][aria-current="page"] { color: #33691E !important; background: rgba(51,105,30,.08) !important; font-weight: 700 !important; }
-    html.dark nav a[title].active, html.dark nav a[title][aria-current="page"] { color: #66BB6A !important; background: rgba(102,187,106,.12) !important; }
+    .nav-link { color: var(--muted); text-decoration: none; transition: all 0.2s ease; }
+    .dark .nav-link { color: var(--text-secondary); }
+    .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: var(--accent) !important; background-color: rgb(var(--accent-rgb) / 0.1) !important; }
+    html.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: var(--accent-2) !important; background-color: rgb(var(--accent-2-rgb) / 0.12) !important; }
+    nav a[title].active, nav a[title][aria-current="page"] { color: var(--accent) !important; background: rgb(var(--accent-rgb) / 0.08) !important; font-weight: 700 !important; }
+    html.dark nav a[title].active, html.dark nav a[title][aria-current="page"] { color: var(--accent-2) !important; background: rgb(var(--accent-2-rgb) / 0.12) !important; }
     nav [data-tour="main-nav"] a, nav [data-tour="main-nav"] a:hover, nav [data-tour="main-nav"] a:focus { color: inherit !important; background: transparent !important; font-weight: inherit !important; }
-    /* Brand title and tagline: match canonical header (same as index/includes/header) */
-    nav [data-tour="main-nav"] a span.font-bold { color: #33691E !important; }
+    nav [data-tour="main-nav"] a span.font-bold { color: var(--accent) !important; }
     html.dark nav [data-tour="main-nav"] a span.font-bold { color: white !important; }
-    nav [data-tour="main-nav"] a .tagline-text { color: rgba(51,105,30,0.8) !important; }
-    html.dark nav [data-tour="main-nav"] a .tagline-text { color: #66BB6A !important; }
+    nav [data-tour="main-nav"] a .tagline-text { color: rgb(var(--accent-rgb) / 0.8) !important; }
+    html.dark nav [data-tour="main-nav"] a .tagline-text { color: var(--accent-2) !important; }
     .tagline-text { letter-spacing: -0.02em; margin-top: -3px; }
-nav [data-tour="theme-toggle"] button, nav button[data-theme-toggle] { width: 2.25rem !important; height: 2.25rem !important; min-width: 2.25rem !important; min-height: 2.25rem !important; border-radius: 0.5rem !important; background-color: rgb(243 244 246) !important; color: rgb(55 65 81) !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; }
-    html.dark nav [data-tour="theme-toggle"] button, html.dark nav button[data-theme-toggle] { background-color: rgb(55 65 81) !important; color: rgb(250 204 21) !important; }
-    nav [data-tour="theme-toggle"] button:hover, nav button[data-theme-toggle]:hover { background-color: rgb(229 231 235) !important; }
-    html.dark nav [data-tour="theme-toggle"] button:hover, html.dark nav button[data-theme-toggle]:hover { background-color: rgb(75 85 99) !important; }
+    nav [data-tour="theme-toggle"] button, nav button[data-theme-toggle] { width: 2.25rem !important; height: 2.25rem !important; min-width: 2.25rem !important; min-height: 2.25rem !important; border-radius: 0.5rem !important; background-color: var(--bg-2) !important; color: var(--text-secondary) !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; transition: all 0.2s ease !important; }
+    html.dark nav [data-tour="theme-toggle"] button, html.dark nav button[data-theme-toggle] { background-color: var(--border) !important; color: var(--risk-medium) !important; }
+    nav [data-tour="theme-toggle"] button:hover, nav button[data-theme-toggle]:hover { background-color: var(--border) !important; }
+    html.dark nav [data-tour="theme-toggle"] button:hover, html.dark nav button[data-theme-toggle]:hover { background-color: var(--border) !important; }
     nav [data-tour="theme-toggle"] button svg, nav button[data-theme-toggle] svg { width: 1.25rem !important; height: 1.25rem !important; color: inherit !important; }
-    .mobile-nav-link { color: rgb(55 65 81); }
-    .dark .mobile-nav-link { color: rgb(209 213 219); }
-    .mobile-nav-link:not(.nav-link-active):hover { color: #33691E !important; }
-    html.dark .mobile-nav-link:not(.nav-link-active):hover { color: #66BB6A !important; }
+    .mobile-nav-link { color: var(--muted); }
+    .dark .mobile-nav-link { color: var(--text-secondary); }
+    .mobile-nav-link:not(.nav-link-active):hover { color: var(--accent) !important; }
+    html.dark .mobile-nav-link:not(.nav-link-active):hover { color: var(--accent-2) !important; }
   </style>
   
 <!-- VSS static SEO: canonical + Open Graph + Twitter + JSON-LD (ERMITS baseline) -->

@@ -347,13 +347,13 @@
 
 /* Focus styles */
 .chat-widget button:focus-visible {
-  outline: 2px solid #33691E;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 .chat-widget textarea:focus {
   outline: none;
-  box-shadow: 0 0 0 2px #33691E;
+  box-shadow: 0 0 0 2px var(--accent);
 }
 
 /* High contrast mode support */
@@ -592,13 +592,7 @@
 }
 
 :root {
-  /* Primary Colors - Growth & Trust */
-  --vendorsoluce-green: #33691E;
-  --vendorsoluce-light-green: #66BB6A;
-  --vendorsoluce-dark-green: #2E5A1A;
-  --vendorsoluce-pale-green: #E8F5E8;
-  --neutral-gray: #6B7280;
-  
+  /* Brand greens: tokens.css + assets/css/product.css (--vendorsoluce-* aliases). */
   /* Risk Communication Colors */
   --risk-critical: #DC2626;
   --risk-high: #EA580C;

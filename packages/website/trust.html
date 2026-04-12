@@ -13,32 +13,32 @@
   <!-- VendorSoluce&trade; design system — tokens + components -->
   <link href="assets/css/tokens.css" rel="stylesheet"/>
   <link href="assets/css/components.css" rel="stylesheet"/>
+  <link href="assets/css/product.css" rel="stylesheet"/>
   <style>
     /* Navigation link styles - consistent with Home page */
-    .nav-link { color: rgb(55 65 81); text-decoration: none; transition: all 0.2s ease; }
-    .dark .nav-link { color: rgb(209 213 219); }
-    .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: #33691E !important; background-color: rgba(51, 105, 30, 0.1) !important; }
-    html.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: #66BB6A !important; background-color: rgba(102, 187, 106, 0.12) !important; }
+    .nav-link { color: var(--muted); text-decoration: none; transition: all 0.2s ease; }
+    .dark .nav-link { color: var(--text-secondary); }
+    .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: var(--accent) !important; background-color: rgb(var(--accent-rgb) / 0.1) !important; }
+    html.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: var(--accent-2) !important; background-color: rgb(var(--accent-2-rgb) / 0.12) !important; }
     .nav-link svg { color: currentColor; }
-    /* Active navigation link styles - only target navigation menu links (have title attribute), exclude brand logo */
     nav a[title].active,
     nav a[title][aria-current="page"] {
-      color: #33691E !important;
-      background: rgba(51,105,30,.08) !important;
+      color: var(--accent) !important;
+      background: rgb(var(--accent-rgb) / 0.08) !important;
       font-weight: 700 !important;
     }
     html.dark nav a[title].active,
     html.dark nav a[title][aria-current="page"] {
-      color: #66BB6A !important;
-      background: rgba(102,187,106,.12) !important;
+      color: var(--accent-2) !important;
+      background: rgb(var(--accent-2-rgb) / 0.12) !important;
     }
     nav a[title].active:hover,
     nav a[title][aria-current="page"]:hover {
-      background: rgba(51,105,30,.12) !important;
+      background: rgb(var(--accent-rgb) / 0.12) !important;
     }
     html.dark nav a[title].active:hover,
     html.dark nav a[title][aria-current="page"]:hover {
-      background: rgba(102,187,106,.18) !important;
+      background: rgb(var(--accent-2-rgb) / 0.18) !important;
     }
 /* Theme toggle: match homepage header (fixed shape, color, contrast) on all pages */
     nav [data-tour="theme-toggle"] button,
@@ -48,8 +48,8 @@
       min-width: 2.25rem !important;
       min-height: 2.25rem !important;
       border-radius: 0.5rem !important;
-      background-color: rgb(243 244 246) !important;
-      color: rgb(55 65 81) !important;
+      background-color: var(--bg-2) !important;
+      color: var(--text-secondary) !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -58,18 +58,17 @@
     }
     html.dark nav [data-tour="theme-toggle"] button,
     html.dark nav button[data-theme-toggle] {
-      background-color: rgb(55 65 81) !important;
-      color: rgb(250 204 21) !important;
+      background-color: var(--border) !important;
+      color: var(--risk-medium) !important;
     }
     nav [data-tour="theme-toggle"] button:hover,
     nav button[data-theme-toggle]:hover {
-      background-color: rgb(229 231 235) !important;
+      background-color: var(--border) !important;
     }
     html.dark nav [data-tour="theme-toggle"] button:hover,
     html.dark nav button[data-theme-toggle]:hover {
-      background-color: rgb(75 85 99) !important;
+      background-color: var(--border) !important;
     }
-    /* Theme toggle icons: same size and color on all pages */
     nav [data-tour="theme-toggle"] button svg,
     nav button[data-theme-toggle] svg {
       width: 1.25rem !important;
@@ -78,17 +77,9 @@
     }
     nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
     nav button[data-theme-toggle] .lucide-sun.hidden-icon {
-      color: rgb(245 158 11) !important; /* amber-500 when visible */
+      color: var(--risk-medium) !important;
     }
-    :root {
-      --vendorsoluce-green: #33691E;
-      --vendorsoluce-light-green: #66BB6A;
-      --vendorsoluce-dark-green: #2E5A1A;
-      --vendorsoluce-pale-green: #E8F5E8;
-    }
-    
-    
-    
+
 
     .bg-vendorsoluce-green { background-color: var(--vendorsoluce-green); }
     
@@ -106,7 +97,7 @@
     /* Fix second line branding - use gray-700 in light theme instead of green/80 */
     html:not(.dark) span[class*="text-vendorsoluce-green/80"],
     :not(.dark) span[class*="text-vendorsoluce-green/80"] {
-      color: #374151 !important; /* gray-700 */
+      color: var(--text-secondary) !important;
     }
     
     /* Dark mode - let Tailwind's dark:text-white handle it, but ensure it works */
@@ -141,44 +132,42 @@
     
     /* Unified Modern Card System - Refined Design */
     .modern-card {
-      border-radius: 1rem; /* rounded-2xl */
+      border-radius: 1rem;
       border-width: 1px;
-      border-color: rgb(229 231 235); /* border-gray-200 */
-      background-color: rgb(255 255 255);
-      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      border-color: var(--border);
+      background-color: var(--card);
+      box-shadow: var(--shadow);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
     
-    /* Cards on gray-50 sections get subtle background tint */
     .bg-gray-50 .modern-card {
-      background-color: rgb(255 255 255);
-      border-color: rgb(243 244 246); /* border-gray-100 */
+      background-color: var(--card);
+      border-color: var(--border);
     }
     
     .dark .modern-card {
-      border-color: rgb(55 65 81); /* border-gray-700 */
-      background-color: rgb(31 41 55); /* bg-gray-800 */
-      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.2);
+      border-color: var(--border);
+      background-color: var(--card);
+      box-shadow: var(--shadow);
     }
     
-    /* Cards on gray-800 sections in dark mode */
     .dark .bg-gray-800 .modern-card {
-      background-color: rgb(37 47 61); /* slightly lighter than gray-800 */
-      border-color: rgb(55 65 81); /* border-gray-700 */
+      background-color: var(--bg-2);
+      border-color: var(--border);
     }
     
     .modern-card:hover {
-      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      box-shadow: var(--shadow-lg);
       transform: translateY(-4px);
-      border-color: rgb(209 213 219); /* border-gray-300 */
+      border-color: var(--muted);
     }
     
     .dark .modern-card:hover {
-      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+      box-shadow: var(--shadow-lg);
       transform: translateY(-4px);
-      border-color: rgb(75 85 99); /* border-gray-600 */
+      border-color: var(--text-secondary);
     }
     
     /* Custom bullet point styles with checkmark icons */
@@ -217,16 +206,16 @@
     
     /* Icon container gradient */
     .icon-container {
-      background: linear-gradient(135deg, rgba(51, 105, 30, 0.1) 0%, rgba(51, 105, 30, 0.05) 100%);
-      border: 1px solid rgba(51, 105, 30, 0.1);
+      background: linear-gradient(135deg, rgb(var(--accent-rgb) / 0.1) 0%, rgb(var(--accent-rgb) / 0.05) 100%);
+      border: 1px solid rgb(var(--accent-rgb) / 0.1);
     }
     
     .dark .icon-container {
-      background: linear-gradient(135deg, rgba(102, 187, 106, 0.15) 0%, rgba(102, 187, 106, 0.08) 100%);
-      border: 1px solid rgba(102, 187, 106, 0.2);
+      background: linear-gradient(135deg, rgb(var(--accent-2-rgb) / 0.15) 0%, rgb(var(--accent-2-rgb) / 0.08) 100%);
+      border: 1px solid rgb(var(--accent-2-rgb) / 0.2);
     }
-    .vs-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-size:0.65em;background:rgba(51,105,30,.12);color:var(--vendorsoluce-green);font-weight:600;vertical-align:middle;border:none}
-    html.dark .vs-badge{background:rgba(102,187,106,.18);color:var(--vendorsoluce-light-green)}
+    .vs-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-size:0.65em;background:rgb(var(--accent-rgb) / 0.12);color:var(--vendorsoluce-green);font-weight:600;vertical-align:middle;border:none}
+    html.dark .vs-badge{background:rgb(var(--accent-2-rgb) / 0.18);color:var(--vendorsoluce-light-green)}
     
     /* Collapsible framework sections - chevron rotation when open */
     details.modern-card[open] summary svg.chevron-icon {

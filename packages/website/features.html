@@ -13,16 +13,9 @@
   <!-- VendorSoluce&trade; design system — tokens + components (aligned with CyberCaution/CyberCorrect) -->
   <link href="assets/css/tokens.css" rel="stylesheet"/>
   <link href="assets/css/components.css" rel="stylesheet"/>
+  <link href="assets/css/product.css" rel="stylesheet"/>
   <style>
-    :root {
-      --vendorsoluce-green: #33691E;
-      --vendorsoluce-light-green: #66BB6A;
-      --vendorsoluce-dark-green: #2E5A1A;
-      --vendorsoluce-pale-green: #E8F5E8;
-    }
-    
-    
-    
+
 
     .bg-vendorsoluce-green { background-color: var(--vendorsoluce-green); }
     
@@ -40,7 +33,7 @@
     /* Fix second line branding - use gray-700 in light theme instead of green/80 */
     html:not(.dark) span[class*="text-vendorsoluce-green/80"],
     :not(.dark) span[class*="text-vendorsoluce-green/80"] {
-      color: #374151 !important; /* gray-700 */
+      color: var(--text-secondary) !important;
     }
     
     /* Dark mode - let Tailwind's dark:text-white handle it, but ensure it works */
@@ -81,30 +74,29 @@
       color: var(--vendorsoluce-light-green) !important;
     }
     /* Navigation link styles - consistent with Home page */
-    .nav-link { color: rgb(55 65 81); text-decoration: none; transition: all 0.2s ease; }
-    .dark .nav-link { color: rgb(209 213 219); }
-    .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: #33691E !important; background-color: rgba(51, 105, 30, 0.1) !important; }
-    html.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: #66BB6A !important; background-color: rgba(102, 187, 106, 0.12) !important; }
+    .nav-link { color: var(--muted); text-decoration: none; transition: all 0.2s ease; }
+    .dark .nav-link { color: var(--text-secondary); }
+    .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: var(--accent) !important; background-color: rgb(var(--accent-rgb) / 0.1) !important; }
+    html.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: var(--accent-2) !important; background-color: rgb(var(--accent-2-rgb) / 0.12) !important; }
     .nav-link svg { color: currentColor; }
-    /* Active navigation link styles - only target navigation menu links (have title attribute), exclude brand logo */
     nav a[title].active,
     nav a[title][aria-current="page"] {
-      color: #33691E !important;
-      background: rgba(51,105,30,.08) !important;
+      color: var(--accent) !important;
+      background: rgb(var(--accent-rgb) / 0.08) !important;
       font-weight: 700 !important;
     }
     html.dark nav a[title].active,
     html.dark nav a[title][aria-current="page"] {
-      color: #66BB6A !important;
-      background: rgba(102,187,106,.12) !important;
+      color: var(--accent-2) !important;
+      background: rgb(var(--accent-2-rgb) / 0.12) !important;
     }
     nav a[title].active:hover,
     nav a[title][aria-current="page"]:hover {
-      background: rgba(51,105,30,.12) !important;
+      background: rgb(var(--accent-rgb) / 0.12) !important;
     }
     html.dark nav a[title].active:hover,
     html.dark nav a[title][aria-current="page"]:hover {
-      background: rgba(102,187,106,.18) !important;
+      background: rgb(var(--accent-2-rgb) / 0.18) !important;
     }
 /* Theme toggle: match homepage header (fixed shape, color, contrast) on all pages */
     nav [data-tour="theme-toggle"] button,
@@ -114,8 +106,8 @@
       min-width: 2.25rem !important;
       min-height: 2.25rem !important;
       border-radius: 0.5rem !important;
-      background-color: rgb(243 244 246) !important;
-      color: rgb(55 65 81) !important;
+      background-color: var(--bg-2) !important;
+      color: var(--text-secondary) !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -124,18 +116,17 @@
     }
     html.dark nav [data-tour="theme-toggle"] button,
     html.dark nav button[data-theme-toggle] {
-      background-color: rgb(55 65 81) !important;
-      color: rgb(250 204 21) !important;
+      background-color: var(--border) !important;
+      color: var(--risk-medium) !important;
     }
     nav [data-tour="theme-toggle"] button:hover,
     nav button[data-theme-toggle]:hover {
-      background-color: rgb(229 231 235) !important;
+      background-color: var(--border) !important;
     }
     html.dark nav [data-tour="theme-toggle"] button:hover,
     html.dark nav button[data-theme-toggle]:hover {
-      background-color: rgb(75 85 99) !important;
+      background-color: var(--border) !important;
     }
-    /* Theme toggle icons: same size and color on all pages */
     nav [data-tour="theme-toggle"] button svg,
     nav button[data-theme-toggle] svg {
       width: 1.25rem !important;
@@ -144,10 +135,10 @@
     }
     nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
     nav button[data-theme-toggle] .lucide-sun.hidden-icon {
-      color: rgb(245 158 11) !important; /* amber-500 when visible */
+      color: var(--risk-medium) !important;
     }
-    .vs-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-size:0.65em;background:rgba(51,105,30,.12);color:var(--vendorsoluce-green);font-weight:600;vertical-align:middle;border:none}
-    html.dark .vs-badge{background:rgba(102,187,106,.18);color:var(--vendorsoluce-light-green)}
+    .vs-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-size:0.65em;background:rgb(var(--accent-rgb) / 0.12);color:var(--vendorsoluce-green);font-weight:600;vertical-align:middle;border:none}
+    html.dark .vs-badge{background:rgb(var(--accent-2-rgb) / 0.18);color:var(--vendorsoluce-light-green)}
     
     /* Utility classes for inline styles */
     .tagline-text {
@@ -176,11 +167,11 @@
     #stakeholders .stakeholder-panel .modern-card h3 { font-size: 0.9375rem; margin-bottom: 0.5rem; }
     #stakeholders .stakeholder-panel .modern-card ul { font-size: 0.8125rem; }
     #stakeholders .stakeholder-panel .modern-card .feature-item { padding-left: 1.25rem; margin-bottom: 0.125rem; }
-    .stakeholder-tab { padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgb(229 231 235); font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s; background: white; color: rgb(55 65 81); }
-    html.dark .stakeholder-tab { border-color: rgb(75 85 99); background: rgb(31 41 55); color: rgb(209 213 219); }
+    .stakeholder-tab { padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border); font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s; background: var(--card); color: var(--muted); }
+    html.dark .stakeholder-tab { border-color: var(--border); background: var(--card); color: var(--text-secondary); }
     .stakeholder-tab:hover { border-color: var(--vendorsoluce-green); color: var(--vendorsoluce-green); }
     html.dark .stakeholder-tab:hover { color: var(--vendorsoluce-light-green); }
-    .stakeholder-tab.stakeholder-tab-active { background-color: var(--vendorsoluce-green) !important; color: white !important; border-color: transparent !important; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+    .stakeholder-tab.stakeholder-tab-active { background-color: var(--vendorsoluce-green) !important; color: white !important; border-color: transparent !important; box-shadow: var(--shadow); }
     html.dark .stakeholder-tab.stakeholder-tab-active { background-color: var(--vendorsoluce-green) !important; color: white !important; }
     .stakeholder-panel.hidden { display: none !important; }
     </style>
@@ -1191,18 +1182,18 @@
 }
 .brand-tagline {
   font-size: 13px;
-  color: #6B7280;
+  color: var(--muted);
   margin-bottom: 1px;
 }
 .dark .brand-tagline {
-  color: #94A3B8;
+  color: var(--muted);
 }
 .brand-attribution {
   font-size: 11px;
-  color: #6B7280;
+  color: var(--muted);
 }
 .dark .brand-attribution {
-  color: #94A3B8;
+  color: var(--muted);
 }
 
 /* Make footer borders extremely subtle - match background colors */
