@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { lineBarAreaDefault, useChartDataLines, useChartDataPalette } from '../theme/inlineUiTokens';
 
 interface ChartData {
   [key: string]: string | number | boolean | undefined;
@@ -54,35 +55,29 @@ export const useChartData = ({ data, type, dataKey = 'value', xAxisKey = 'name' 
       case 'radar':
         return {
           lines: [
-            { dataKey: 'risk', stroke: '#ef4444', name: 'Current Risk' },
-            { dataKey: 'required', stroke: '#10b981', name: 'Required Controls' }
-          ]
+            { dataKey: 'risk', stroke: useChartDataLines.risk, name: 'Current Risk' },
+            { dataKey: 'required', stroke: useChartDataLines.required, name: 'Required Controls' },
+          ],
         };
 
       case 'pie':
         return {
-          colors: ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D']
+          colors: [...useChartDataPalette],
         };
 
       case 'line':
         return {
-          lines: [
-            { dataKey: dataKey, stroke: '#8884d8', name: 'Value' }
-          ]
+          lines: [{ dataKey: dataKey, stroke: lineBarAreaDefault, name: 'Value' }],
         };
 
       case 'bar':
         return {
-          bars: [
-            { dataKey: dataKey, fill: '#8884d8', name: 'Value' }
-          ]
+          bars: [{ dataKey: dataKey, fill: lineBarAreaDefault, name: 'Value' }],
         };
 
       case 'area':
         return {
-          areas: [
-            { dataKey: dataKey, stroke: '#8884d8', fill: '#8884d8', name: 'Value' }
-          ]
+          areas: [{ dataKey: dataKey, stroke: lineBarAreaDefault, fill: lineBarAreaDefault, name: 'Value' }],
         };
 
       default:

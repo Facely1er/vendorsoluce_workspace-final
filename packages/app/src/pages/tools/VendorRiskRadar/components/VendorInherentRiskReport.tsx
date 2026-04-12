@@ -15,19 +15,13 @@ import {
 } from '../../../../utils/riskCalculations';
 import type { VendorRadar, PortfolioStats } from '../../../../types/vendorRadar';
 import styles from './VendorInherentRiskReport.module.css';
+import { vendorInherentRiskBands, vendorInherentRiskIconCss } from '../../../../theme/inlineUiTokens';
 
 interface VendorInherentRiskReportProps {
   vendors: VendorRadar[];
   stats: PortfolioStats;
   onClose: () => void;
 }
-
-const RISK_COLOR = (score: number) => {
-  if (score >= 90) return { bg: '#FEE2E2', text: '#991B1B', bar: '#DC2626' };
-  if (score >= 70) return { bg: '#FEF3C7', text: '#92400E', bar: '#F59E0B' };
-  if (score >= 40) return { bg: '#FFF7ED', text: '#7C2D12', bar: '#F97316' };
-  return { bg: '#F0FDF4', text: '#14532D', bar: '#22C55E' };
-};
 
 const CATEGORY_LABEL: Record<string, string> = {
   critical: 'Critical',
@@ -81,13 +75,9 @@ const VendorInherentRiskReport: React.FC<VendorInherentRiskReportProps> = ({
   ];
 
   const dynamicStyles = [
-    `.vir-icon-0{color:#6B7280}`,
-    `.vir-icon-1{color:#DC2626}`,
-    `.vir-icon-2{color:#F59E0B}`,
-    `.vir-icon-3{color:#7C3AED}`,
-    `.vir-icon-4{color:#059669}`,
+    vendorInherentRiskIconCss,
     ...sortedVendors.map((v, i) => {
-      const c = RISK_COLOR(v.inherentRisk);
+      const c = vendorInherentRiskBands(v.inherentRisk);
       return `.vir-bar-v-${i}{width:${v.inherentRisk}%;background:${c.bar}}.vir-score-v-${i}{color:${c.text}}.vir-badge-v-${i}{background:${c.bg};color:${c.text}}`;
     }),
   ].join('');

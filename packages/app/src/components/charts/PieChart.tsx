@@ -1,5 +1,6 @@
 import React from 'react';
 import { PieChart as RechartsPieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { lineBarAreaDefault, useChartDataPalette } from '../../theme/inlineUiTokens';
 
 interface PieChartProps {
   data: Array<{
@@ -14,7 +15,7 @@ interface PieChartProps {
   showLegend?: boolean;
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'];
+const COLORS = [...useChartDataPalette];
 
 const PieChart: React.FC<PieChartProps> = ({ 
   data, 
@@ -65,7 +66,7 @@ const PieChart: React.FC<PieChartProps> = ({
             labelLine={false}
             label={renderCustomizedLabel}
             outerRadius={80}
-            fill="#8884d8"
+            fill={lineBarAreaDefault}
             dataKey="value"
           >
             {data.map((entry, index) => (

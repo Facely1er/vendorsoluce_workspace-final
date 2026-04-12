@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Joyride, { Step, CallBackProps, STATUS, EVENTS } from 'react-joyride';
+import { appTour } from '../../theme/inlineUiTokens';
 // import { useAuth } from '../../context/AuthContext';
 // import { useLocation } from 'react-router-dom';
 
@@ -147,9 +148,9 @@ const AppTour: React.FC<AppTourProps> = ({ isRunning, onComplete, onSkip }) => {
   // Custom styles for the tour
   const joyrideStyles = {
     options: {
-      primaryColor: '#33691E', // VendorSoluce green
-      backgroundColor: '#ffffff',
-      textColor: '#333333',
+      primaryColor: appTour.primaryColor,
+      backgroundColor: appTour.backgroundColor,
+      textColor: appTour.textColor,
       overlayColor: 'rgba(0, 0, 0, 0.4)',
       spotlightShadow: '0 0 15px rgba(0, 0, 0, 0.5)',
       beaconSize: 36,
@@ -163,18 +164,18 @@ const AppTour: React.FC<AppTourProps> = ({ isRunning, onComplete, onSkip }) => {
       textAlign: 'left' as const,
     },
     buttonNext: {
-      backgroundColor: '#33691E',
+      backgroundColor: appTour.buttonBg,
       fontSize: '14px',
       padding: '8px 16px',
       borderRadius: '6px',
     },
     buttonBack: {
-      color: '#666',
+      color: appTour.buttonBack,
       fontSize: '14px',
       marginRight: '10px',
     },
     buttonSkip: {
-      color: '#999',
+      color: appTour.buttonSkip,
       fontSize: '14px',
     },
   };

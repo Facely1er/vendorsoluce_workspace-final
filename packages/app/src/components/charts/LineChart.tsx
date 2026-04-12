@@ -1,4 +1,5 @@
 import React from 'react';
+import { lineBarAreaDefault } from '../../theme/inlineUiTokens';
 import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 interface LineChartProps {
@@ -26,7 +27,7 @@ const LineChart: React.FC<LineChartProps> = ({
   width = "100%", 
   className = "",
   xAxisKey = "name",
-  lines = [{ dataKey: "value", stroke: "#8884d8", name: "Value" }],
+  lines = [{ dataKey: "value", stroke: lineBarAreaDefault, name: "Value" }],
   showGrid = true,
   showTooltip = true,
   showLegend = true

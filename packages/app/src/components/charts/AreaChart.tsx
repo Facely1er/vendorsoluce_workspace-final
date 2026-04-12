@@ -1,5 +1,6 @@
 import React from 'react';
 import { AreaChart as RechartsAreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { lineBarAreaDefault } from '../../theme/inlineUiTokens';
 
 interface AreaChartProps {
   data: Array<{
@@ -27,7 +28,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
   width = "100%", 
   className = "",
   xAxisKey = "name",
-  areas = [{ dataKey: "value", stroke: "#8884d8", fill: "#8884d8", name: "Value" }],
+  areas = [{ dataKey: "value", stroke: lineBarAreaDefault, fill: lineBarAreaDefault, name: "Value" }],
   showGrid = true,
   showTooltip = true,
   showLegend = true

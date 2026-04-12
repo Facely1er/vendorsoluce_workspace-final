@@ -13,6 +13,7 @@ import {
   EyeOff,
   RefreshCw
 } from 'lucide-react';
+import { riskPieSegmentColors } from '../../theme/inlineUiTokens';
 
 interface DashboardWidget {
   id: string;
@@ -81,9 +82,9 @@ const PerformanceOptimizedDashboard: React.FC = () => {
       data: {
         chartType: 'pie',
         data: [
-          { name: 'Low Risk', value: 72, color: '#10B981' },
-          { name: 'Medium Risk', value: 47, color: '#F59E0B' },
-          { name: 'High Risk', value: 8, color: '#EF4444' }
+          { name: 'Low Risk', value: 72, color: riskPieSegmentColors.low },
+          { name: 'Medium Risk', value: 47, color: riskPieSegmentColors.medium },
+          { name: 'High Risk', value: 8, color: riskPieSegmentColors.high }
         ]
       }
     },

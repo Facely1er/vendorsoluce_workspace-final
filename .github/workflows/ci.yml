@@ -20,8 +20,8 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci --include=dev
-      - name: Verify UI tokens (Tailwind governance)
-        run: npm run verify:ui-tokens
+      - name: Verify UI governance (Tailwind + inline colors)
+        run: npm run verify:ui
       - name: Type check
         run: npm run type-check
       - name: Lint

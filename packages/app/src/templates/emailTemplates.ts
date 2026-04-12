@@ -1,6 +1,8 @@
 // Email Templates for Marketing Automation
 // File: src/templates/emailTemplates.ts
 
+import { emailGradients, emailMarketing } from '../theme/inlineUiTokens';
+
 export interface EmailTemplateData {
   name: string;
   subject: string;
@@ -18,15 +20,15 @@ export class EmailTemplates {
   private static getEmailFooter(unsubscribeUrl?: string, _userId?: string): string {
     const unsubscribeLink = unsubscribeUrl || `${this.baseUrl}/account?tab=notifications`;
     return `
-      <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 12px; color: #6b7280;">
+      <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid ${emailMarketing.border}; text-align: center; font-size: 12px; color: ${emailMarketing.muted};">
         <p style="margin: 10px 0;">
-          <a href="${unsubscribeLink}" style="color: #6b7280; text-decoration: underline;">Unsubscribe from marketing emails</a>
+          <a href="${unsubscribeLink}" style="color: ${emailMarketing.muted}; text-decoration: underline;">Unsubscribe from marketing emails</a>
         </p>
         <p style="margin: 5px 0;">
           Opt-out requests are processed within 10 business days as required by the CAN-SPAM Act.
         </p>
         <p style="margin: 10px 0;">
-          ERMITS LLC | <a href="${this.baseUrl}/master-privacy-policy" style="color: #6b7280; text-decoration: underline;">Privacy Policy</a> | <a href="${this.baseUrl}/master-terms-of-service" style="color: #6b7280; text-decoration: underline;">Terms of Service</a>
+          ERMITS LLC | <a href="${this.baseUrl}/master-privacy-policy" style="color: ${emailMarketing.muted}; text-decoration: underline;">Privacy Policy</a> | <a href="${this.baseUrl}/master-terms-of-service" style="color: ${emailMarketing.muted}; text-decoration: underline;">Terms of Service</a>
         </p>
       </div>
     `;
@@ -54,21 +56,21 @@ export class EmailTemplates {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0;">Welcome to VendorSoluce™!</h1>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: ${emailMarketing.bodyText}; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: ${emailGradients.emerald}; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: ${emailMarketing.white}; margin: 0;">Welcome to VendorSoluce™!</h1>
           </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px;">
+          <div style="background: ${emailMarketing.panel}; padding: 30px; border-radius: 0 0 10px 10px;">
             <p>Hi ${data.name || 'there'},</p>
             <p>Thanks for signing up! We're excited to help you manage your supply chain risk.</p>
-            <h3 style="color: #10b981;">Get Started in 3 Steps:</h3>
+            <h3 style="color: ${emailMarketing.emerald500};">Get Started in 3 Steps:</h3>
             <ol style="padding-left: 20px;">
               <li style="margin: 10px 0;"><strong>Add Your First Vendor</strong> - Start tracking your suppliers</li>
               <li style="margin: 10px 0;"><strong>Run a Risk Assessment</strong> - Evaluate vendor security</li>
               <li style="margin: 10px 0;"><strong>Analyze an SBOM</strong> - Check for vulnerabilities</li>
             </ol>
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${data.dashboardUrl || `${this.baseUrl}/dashboard`}" style="background: #10b981; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Go to Dashboard</a>
+              <a href="${data.dashboardUrl || `${this.baseUrl}/dashboard`}" style="background: ${emailMarketing.emerald500}; color: ${emailMarketing.white}; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Go to Dashboard</a>
             </div>
             <p>Need help? Check out our <a href="${this.baseUrl}/api-docs">API documentation</a> or <a href="${this.baseUrl}/integration-guides">integration guides</a>, or reply to this email.</p>
             <p>Best regards,<br>The VendorSoluce™ Team</p>
@@ -95,27 +97,27 @@ export class EmailTemplates {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0;">Powerful Features at Your Fingertips</h1>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: ${emailMarketing.bodyText}; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: ${emailGradients.blue}; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: ${emailMarketing.white}; margin: 0;">Powerful Features at Your Fingertips</h1>
           </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px;">
+          <div style="background: ${emailMarketing.panel}; padding: 30px; border-radius: 0 0 10px 10px;">
             <p>Hi ${data.name || 'there'},</p>
             <p>Here are some features that can help you reduce vendor risk:</p>
-            <div style="background: white; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid #10b981;">
-              <h3 style="margin-top: 0; color: #10b981;">🔍 NIST SP 800-161 Compliance</h3>
+            <div style="background: ${emailMarketing.white}; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid ${emailMarketing.emerald500};">
+              <h3 style="margin-top: 0; color: ${emailMarketing.emerald500};">🔍 NIST SP 800-161 Compliance</h3>
               <p>Built-in templates for supply chain security assessments aligned with NIST guidelines.</p>
             </div>
-            <div style="background: white; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid #3b82f6;">
-              <h3 style="margin-top: 0; color: #3b82f6;">📦 SBOM Analysis</h3>
+            <div style="background: ${emailMarketing.white}; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid ${emailMarketing.blue500};">
+              <h3 style="margin-top: 0; color: ${emailMarketing.blue500};">📦 SBOM Analysis</h3>
               <p>Upload and analyze Software Bills of Materials to identify vulnerabilities and license risks.</p>
             </div>
-            <div style="background: white; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid #8b5cf6;">
-              <h3 style="margin-top: 0; color: #8b5cf6;">📊 Risk Dashboard</h3>
+            <div style="background: ${emailMarketing.white}; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid ${emailMarketing.violet500};">
+              <h3 style="margin-top: 0; color: ${emailMarketing.violet500};">📊 Risk Dashboard</h3>
               <p>Visualize vendor risk scores and track compliance metrics in real-time.</p>
             </div>
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${this.baseUrl}/features" style="background: #10b981; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Explore Features</a>
+              <a href="${this.baseUrl}/features" style="background: ${emailMarketing.emerald500}; color: ${emailMarketing.white}; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Explore Features</a>
             </div>
             <p>Best regards,<br>The VendorSoluce™ Team</p>
             ${this.getEmailFooter(data.unsubscribeUrl, data.userId)}
@@ -141,25 +143,25 @@ export class EmailTemplates {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0;">Real Results from Real Customers</h1>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: ${emailMarketing.bodyText}; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: ${emailGradients.violet}; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: ${emailMarketing.white}; margin: 0;">Real Results from Real Customers</h1>
           </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px;">
+          <div style="background: ${emailMarketing.panel}; padding: 30px; border-radius: 0 0 10px 10px;">
             <p>Hi ${data.name || 'there'},</p>
             <p>Here's what customers are saying about VendorSoluce™:</p>
-            <div style="background: white; padding: 20px; margin: 20px 0; border-radius: 5px; border: 1px solid #e5e7eb;">
+            <div style="background: ${emailMarketing.white}; padding: 20px; margin: 20px 0; border-radius: 5px; border: 1px solid ${emailMarketing.border};">
               <p style="font-style: italic; margin: 0 0 15px 0;">"VendorSoluce™ has streamlined our vendor risk assessment process. The automated workflows and templates save us significant time."</p>
-              <p style="margin: 0; color: #6b7280; font-size: 14px;">— Enterprise Customer</p>
+              <p style="margin: 0; color: ${emailMarketing.muted}; font-size: 14px;">— Enterprise Customer</p>
             </div>
-            <div style="background: white; padding: 20px; margin: 20px 0; border-radius: 5px; border: 1px solid #e5e7eb;">
+            <div style="background: ${emailMarketing.white}; padding: 20px; margin: 20px 0; border-radius: 5px; border: 1px solid ${emailMarketing.border};">
               <p style="font-style: italic; margin: 0 0 15px 0;">"The SBOM analysis feature helps us identify vulnerabilities in our supply chain. It's become an essential part of our security workflow."</p>
-              <p style="margin: 0; color: #6b7280; font-size: 14px;">— Security Professional</p>
+              <p style="margin: 0; color: ${emailMarketing.muted}; font-size: 14px;">— Security Professional</p>
             </div>
-            <p style="font-size: 12px; color: #6b7280; margin-top: 20px; font-style: italic;">* Results may vary. Individual experiences depend on various factors including organization size, existing processes, and implementation approach.</p>
+            <p style="font-size: 12px; color: ${emailMarketing.muted}; margin-top: 20px; font-style: italic;">* Results may vary. Individual experiences depend on various factors including organization size, existing processes, and implementation approach.</p>
             <p>Ready to get started? Start your first assessment today!</p>
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${this.baseUrl}/dashboard" style="background: #10b981; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Get Started</a>
+              <a href="${this.baseUrl}/dashboard" style="background: ${emailMarketing.emerald500}; color: ${emailMarketing.white}; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Get Started</a>
             </div>
             <p>Best regards,<br>The VendorSoluce™ Team</p>
             ${this.getEmailFooter(data.unsubscribeUrl, data.userId)}
@@ -185,27 +187,27 @@ export class EmailTemplates {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0;">Pro Tips for Success</h1>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: ${emailMarketing.bodyText}; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: ${emailGradients.amber}; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: ${emailMarketing.white}; margin: 0;">Pro Tips for Success</h1>
           </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px;">
+          <div style="background: ${emailMarketing.panel}; padding: 30px; border-radius: 0 0 10px 10px;">
             <p>Hi ${data.name || 'there'},</p>
             <p>Here are some tips to maximize your vendor risk management:</p>
-            <div style="background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #10b981;">
+            <div style="background: ${emailMarketing.white}; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid ${emailMarketing.emerald500};">
               <strong>💡 Tip #1: Use Custom Questionnaires</strong>
               <p style="margin: 5px 0 0 0;">Create industry-specific assessment templates for faster evaluations.</p>
             </div>
-            <div style="background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #3b82f6;">
+            <div style="background: ${emailMarketing.white}; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid ${emailMarketing.blue500};">
               <strong>💡 Tip #2: Set Up Automated Reminders</strong>
               <p style="margin: 5px 0 0 0;">Never miss a vendor assessment renewal with automated notifications.</p>
             </div>
-            <div style="background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #8b5cf6;">
+            <div style="background: ${emailMarketing.white}; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid ${emailMarketing.violet500};">
               <strong>💡 Tip #3: Export Reports Regularly</strong>
               <p style="margin: 5px 0 0 0;">Generate compliance reports for audits and stakeholder reviews.</p>
             </div>
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${this.baseUrl}/api-docs" style="background: #10b981; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">View API Documentation</a>
+              <a href="${this.baseUrl}/api-docs" style="background: ${emailMarketing.emerald500}; color: ${emailMarketing.white}; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">View API Documentation</a>
             </div>
             <p>Best regards,<br>The VendorSoluce™ Team</p>
             ${this.getEmailFooter(data.unsubscribeUrl, data.userId)}
@@ -233,16 +235,16 @@ export class EmailTemplates {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0;">${isFreeTier ? 'Ready to Level Up?' : 'Keep Up the Great Work!'}</h1>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: ${emailMarketing.bodyText}; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: ${emailGradients.emerald}; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: ${emailMarketing.white}; margin: 0;">${isFreeTier ? 'Ready to Level Up?' : 'Keep Up the Great Work!'}</h1>
           </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px;">
+          <div style="background: ${emailMarketing.panel}; padding: 30px; border-radius: 0 0 10px 10px;">
             <p>Hi ${data.name || 'there'},</p>
             ${isFreeTier ? `
               <p>You've been using VendorSoluce™ for a while. Ready to unlock more features?</p>
-              <div style="background: white; padding: 20px; margin: 20px 0; border-radius: 5px; border: 2px solid #10b981;">
-                <h3 style="margin-top: 0; color: #10b981;">Professional — $189/mo or $1,814/yr (Save 20%)</h3>
+              <div style="background: ${emailMarketing.white}; padding: 20px; margin: 20px 0; border-radius: 5px; border: 2px solid ${emailMarketing.emerald500};">
+                <h3 style="margin-top: 0; color: ${emailMarketing.emerald500};">Professional — $189/mo or $1,814/yr (Save 20%)</h3>
                 <ul style="list-style: none; padding: 0;">
                   <li style="padding: 5px 0;">✓ Up to 100 vendor assessments</li>
                   <li style="padding: 5px 0;">✓ Advanced SBOM analysis</li>
@@ -250,10 +252,10 @@ export class EmailTemplates {
                   <li style="padding: 5px 0;">✓ Priority support</li>
                   <li style="padding: 5px 0;">✓ API access</li>
                 </ul>
-                <p style="margin: 15px 0 0 0; font-size: 14px; color: #4b5563;">Same tiers and prices as <a href="https://www.vendorsoluce.com/pricing" style="color: #059669;">vendorsoluce.com/pricing</a>.</p>
+                <p style="margin: 15px 0 0 0; font-size: 14px; color: ${emailMarketing.proseSecondary};">Same tiers and prices as <a href="https://www.vendorsoluce.com/pricing" style="color: ${emailMarketing.emerald600};">vendorsoluce.com/pricing</a>.</p>
               </div>
               <div style="text-align: center; margin: 30px 0;">
-                <a href="${this.baseUrl}/pricing" style="background: #10b981; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">View Plans</a>
+                <a href="${this.baseUrl}/pricing" style="background: ${emailMarketing.emerald500}; color: ${emailMarketing.white}; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">View Plans</a>
               </div>
             ` : `
               <p>You're making great progress! Keep using VendorSoluce™ to manage your vendor risk effectively.</p>
@@ -283,14 +285,14 @@ export class EmailTemplates {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0;">Don't Miss Out!</h1>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: ${emailMarketing.bodyText}; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: ${emailGradients.amber}; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: ${emailMarketing.white}; margin: 0;">Don't Miss Out!</h1>
           </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px;">
+          <div style="background: ${emailMarketing.panel}; padding: 30px; border-radius: 0 0 10px 10px;">
             <p>Hi ${data.name || 'there'},</p>
             <p>We noticed you started the checkout process but didn't complete it. ${data.planName ? `Your ${data.planName} plan` : 'Your subscription'} is waiting for you!</p>
-            <div style="background: white; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid #10b981;">
+            <div style="background: ${emailMarketing.white}; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid ${emailMarketing.emerald500};">
               <h3 style="margin-top: 0;">What You'll Get:</h3>
               <ul style="list-style: none; padding: 0;">
                 <li style="padding: 5px 0;">✓ Complete vendor risk management</li>
@@ -300,7 +302,7 @@ export class EmailTemplates {
               </ul>
             </div>
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${data.pricingUrl || `${this.baseUrl}/pricing`}" style="background: #10b981; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Complete Subscription</a>
+              <a href="${data.pricingUrl || `${this.baseUrl}/pricing`}" style="background: ${emailMarketing.emerald500}; color: ${emailMarketing.white}; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Complete Subscription</a>
             </div>
             <p>Questions? Reply to this email - we're here to help!</p>
             <p>Best regards,<br>The VendorSoluce™ Team</p>
@@ -327,11 +329,11 @@ export class EmailTemplates {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0;">We Miss You!</h1>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: ${emailMarketing.bodyText}; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: ${emailGradients.violet}; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: ${emailMarketing.white}; margin: 0;">We Miss You!</h1>
           </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px;">
+          <div style="background: ${emailMarketing.panel}; padding: 30px; border-radius: 0 0 10px 10px;">
             <p>Hi ${data.name || 'there'},</p>
             <p>It's been a while since you last used VendorSoluce™. We've added new features and improvements:</p>
             <ul style="padding-left: 20px;">
@@ -341,7 +343,7 @@ export class EmailTemplates {
               <li style="margin: 10px 0;">Faster vendor assessment workflows</li>
             </ul>
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${data.dashboardUrl || `${this.baseUrl}/dashboard`}" style="background: #10b981; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Return to Dashboard</a>
+              <a href="${data.dashboardUrl || `${this.baseUrl}/dashboard`}" style="background: ${emailMarketing.emerald500}; color: ${emailMarketing.white}; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Return to Dashboard</a>
             </div>
             <p>Your data is safe and waiting for you. Come back and see what's new!</p>
             <p>Best regards,<br>The VendorSoluce™ Team</p>
@@ -377,15 +379,15 @@ export class EmailTemplates {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0;">Security Assessment Request</h1>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: ${emailMarketing.bodyText}; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: ${emailGradients.emerald}; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: ${emailMarketing.white}; margin: 0;">Security Assessment Request</h1>
           </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px;">
+          <div style="background: ${emailMarketing.panel}; padding: 30px; border-radius: 0 0 10px 10px;">
             <p>Hi ${data.vendorName},</p>
             <p>${data.organizationName} has requested that you complete a security assessment${data.frameworkName ? ` (${data.frameworkName})` : ''}.</p>
             ${data.dueDate ? `<p><strong>Due Date:</strong> ${data.dueDate}</p>` : ''}
-            <div style="background: white; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid #10b981;">
+            <div style="background: ${emailMarketing.white}; padding: 20px; margin: 20px 0; border-radius: 5px; border-left: 4px solid ${emailMarketing.emerald500};">
               <h3 style="margin-top: 0;">What to Expect:</h3>
               <ul style="list-style: none; padding: 0;">
                 <li style="padding: 5px 0;">✓ Secure, encrypted portal</li>
@@ -395,9 +397,9 @@ export class EmailTemplates {
               </ul>
             </div>
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${assessmentUrl}" style="background: #10b981; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Access Assessment Portal</a>
+              <a href="${assessmentUrl}" style="background: ${emailMarketing.emerald500}; color: ${emailMarketing.white}; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Access Assessment Portal</a>
             </div>
-            <p style="font-size: 14px; color: #6b7280;">Or visit <a href="${this.vendorPortalUrl}">${this.vendorPortalUrl}</a> and enter your Assessment ID: <code style="background: #f3f4f6; padding: 2px 6px; border-radius: 3px;">${data.assessmentId}</code></p>
+            <p style="font-size: 14px; color: ${emailMarketing.muted};">Or visit <a href="${this.vendorPortalUrl}">${this.vendorPortalUrl}</a> and enter your Assessment ID: <code style="background: ${emailMarketing.codeBg}; padding: 2px 6px; border-radius: 3px;">${data.assessmentId}</code></p>
             <p>If you have any questions, please contact ${data.organizationName}'s security team.</p>
             <p>Best regards,<br>The VendorSoluce™ Team</p>
             ${this.getEmailFooter(data.unsubscribeUrl)}
@@ -423,17 +425,17 @@ export class EmailTemplates {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0;">🎉 New Feature Available!</h1>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: ${emailMarketing.bodyText}; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: ${emailGradients.blue}; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: ${emailMarketing.white}; margin: 0;">🎉 New Feature Available!</h1>
           </div>
-          <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px;">
+          <div style="background: ${emailMarketing.panel}; padding: 30px; border-radius: 0 0 10px 10px;">
             <p>Hi ${data.name || 'there'},</p>
-            <h2 style="color: #10b981;">${data.featureName}</h2>
+            <h2 style="color: ${emailMarketing.emerald500};">${data.featureName}</h2>
             <p>${data.featureDescription}</p>
             ${data.featureUrl ? `
               <div style="text-align: center; margin: 30px 0;">
-                <a href="${data.featureUrl}" style="background: #10b981; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Try It Now</a>
+                <a href="${data.featureUrl}" style="background: ${emailMarketing.emerald500}; color: ${emailMarketing.white}; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Try It Now</a>
               </div>
             ` : ''}
             <p>We'd love to hear your feedback!</p>

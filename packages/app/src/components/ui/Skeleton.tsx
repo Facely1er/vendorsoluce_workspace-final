@@ -18,14 +18,13 @@ const Skeleton: React.FC<SkeletonProps> = ({
   const style: React.CSSProperties = {
     width: width || '100%',
     height: height || '1rem',
-    backgroundColor: '#e5e7eb',
     borderRadius: rounded ? '0.375rem' : '0',
     animation: animate ? 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' : 'none',
   };
 
   return (
     <div 
-      className={`bg-gray-200 dark:bg-gray-700 ${animate ? 'animate-pulse' : ''} ${className}`}
+      className={`bg-gray-200 dark:bg-gray-700 ${animate ? 'animate-pulse' : ''} ${className}`.trim()}
       style={style}
     />
   );

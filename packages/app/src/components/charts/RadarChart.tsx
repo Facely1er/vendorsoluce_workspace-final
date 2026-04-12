@@ -1,5 +1,6 @@
 import React from 'react';
 import { RadarChart as RechartsRadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend } from 'recharts';
+import { chartStrokes } from '../../theme/inlineUiTokens';
 
 interface RadarChartProps {
   data: Array<{
@@ -33,16 +34,16 @@ const RadarChart: React.FC<RadarChartProps> = ({
           <Radar
             name="Current Risk"
             dataKey="risk"
-            stroke="#ef4444"
-            fill="#ef4444"
+            stroke={chartStrokes.red}
+            fill={chartStrokes.red}
             fillOpacity={0.3}
             strokeWidth={2}
           />
           <Radar
             name="Required Controls"
             dataKey="required"
-            stroke="#10b981"
-            fill="#10b981"
+            stroke={chartStrokes.green}
+            fill={chartStrokes.green}
             fillOpacity={0.1}
             strokeWidth={2}
           />

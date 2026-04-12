@@ -1,5 +1,6 @@
 import React from 'react';
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { lineBarAreaDefault } from '../../theme/inlineUiTokens';
 
 interface BarChartProps {
   data: Array<{
@@ -26,7 +27,7 @@ const BarChart: React.FC<BarChartProps> = ({
   width = "100%", 
   className = "",
   xAxisKey = "name",
-  bars = [{ dataKey: "value", fill: "#8884d8", name: "Value" }],
+  bars = [{ dataKey: "value", fill: lineBarAreaDefault, name: "Value" }],
   showGrid = true,
   showTooltip = true,
   showLegend = true
