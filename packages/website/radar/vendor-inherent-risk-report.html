@@ -136,8 +136,8 @@
     min-width: 2.25rem !important;
     min-height: 2.25rem !important;
     border-radius: 0.5rem !important;
-    background-color: rgb(243 244 246) !important;
-    color: rgb(55 65 81) !important;
+    background-color: var(--bg-2) !important;
+    color: var(--text-secondary) !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -146,16 +146,16 @@
   }
   html.dark nav [data-tour="theme-toggle"] button,
   html.dark nav button[data-theme-toggle] {
-    background-color: rgb(55 65 81) !important;
-    color: rgb(250 204 21) !important;
+    background-color: var(--border) !important;
+    color: var(--risk-medium) !important;
   }
   nav [data-tour="theme-toggle"] button:hover,
   nav button[data-theme-toggle]:hover {
-    background-color: rgb(229 231 235) !important;
+    background-color: var(--border) !important;
   }
   html.dark nav [data-tour="theme-toggle"] button:hover,
   html.dark nav button[data-theme-toggle]:hover {
-    background-color: rgb(75 85 99) !important;
+    background-color: var(--border) !important;
   }
   /* Theme toggle icons: same size and color on all pages */
   nav [data-tour="theme-toggle"] button svg,
@@ -166,7 +166,7 @@
   }
   nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
   nav button[data-theme-toggle] .lucide-sun.hidden-icon {
-    color: rgb(245 158 11) !important; /* amber-500 when visible */
+    color: var(--risk-medium) !important;
   }
 </style>
 <nav class="glass-nav-vs fixed top-0 left-0 right-0 z-[99999] w-full max-w-[100vw]" aria-label="Main navigation">

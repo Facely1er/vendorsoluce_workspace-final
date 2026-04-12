@@ -44,25 +44,26 @@
     <!-- VendorSoluce&trade; design system — tokens + components (aligned with CyberCaution/CyberCorrect) -->
     <link href="assets/css/tokens.css" rel="stylesheet"/>
     <link href="assets/css/components.css" rel="stylesheet"/>
+    <link href="assets/css/product.css" rel="stylesheet"/>
   <style>
     /* Navigation link styles - consistent with CyberCaution pattern */
     .nav-link {
-      color: rgb(55 65 81);
+      color: var(--muted);
       text-decoration: none;
       transition: all 0.2s ease;
     }
     .dark .nav-link {
-      color: rgb(209 213 219);
+      color: var(--text-secondary);
     }
     
     /* Hover effect ONLY for inactive links */
     .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
-      color: #33691E !important;
-      background-color: rgba(51, 105, 30, 0.1) !important;
+      color: var(--accent) !important;
+      background-color: rgb(var(--accent-rgb) / 0.1) !important;
     }
     html.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
-      color: #66BB6A !important;
-      background-color: rgba(102, 187, 106, 0.12) !important;
+      color: var(--accent-2) !important;
+      background-color: rgb(var(--accent-2-rgb) / 0.12) !important;
     }
     
     /* Active link styles - green background with white text */
@@ -70,16 +71,16 @@
     .nav-link.bg-vendorsoluce-green,
     nav a[title].active,
     nav a[title][aria-current="page"] {
-      color: #33691E !important;
-      background: rgba(51,105,30,.08) !important;
+      color: var(--accent) !important;
+      background: rgb(var(--accent-rgb) / 0.08) !important;
       font-weight: 700 !important;
     }
     html.dark .nav-link.nav-link-active,
     html.dark .nav-link.bg-vendorsoluce-green,
     html.dark nav a[title].active,
     html.dark nav a[title][aria-current="page"] {
-      color: #66BB6A !important;
-      background: rgba(102,187,106,.12) !important;
+      color: var(--accent-2) !important;
+      background: rgb(var(--accent-2-rgb) / 0.12) !important;
     }
     
     /* CRITICAL: Prevent ANY hover effects on active links */
@@ -87,57 +88,57 @@
     .nav-link.bg-vendorsoluce-green:hover,
     nav a[title].active:hover,
     nav a[title][aria-current="page"]:hover {
-      background: rgba(51,105,30,.08) !important;
-      color: #33691E !important;
+      background: rgb(var(--accent-rgb) / 0.08) !important;
+      color: var(--accent) !important;
     }
     html.dark .nav-link.nav-link-active:hover,
     html.dark .nav-link.bg-vendorsoluce-green:hover,
     html.dark nav a[title].active:hover,
     html.dark nav a[title][aria-current="page"]:hover {
-      background: rgba(102,187,106,.12) !important;
-      color: #66BB6A !important;
+      background: rgb(var(--accent-2-rgb) / 0.12) !important;
+      color: var(--accent-2) !important;
     }
     
     /* Mobile navigation link styles - same rules */
     .mobile-nav-link {
-      color: rgb(55 65 81);
+      color: var(--muted);
       text-decoration: none;
       transition: all 0.2s ease;
     }
     .dark .mobile-nav-link {
-      color: rgb(209 213 219);
+      color: var(--text-secondary);
     }
     
     .mobile-nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
-      color: #33691E !important;
-      background-color: rgba(51, 105, 30, 0.1) !important;
+      color: var(--accent) !important;
+      background-color: rgb(var(--accent-rgb) / 0.1) !important;
     }
     html.dark .mobile-nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
-      color: #66BB6A !important;
-      background-color: rgba(102, 187, 106, 0.12) !important;
+      color: var(--accent-2) !important;
+      background-color: rgb(var(--accent-2-rgb) / 0.12) !important;
     }
     
     .mobile-nav-link.nav-link-active,
     .mobile-nav-link.bg-vendorsoluce-green {
-      color: #33691E !important;
-      background: rgba(51,105,30,.08) !important;
+      color: var(--accent) !important;
+      background: rgb(var(--accent-rgb) / 0.08) !important;
       font-weight: 700 !important;
     }
     html.dark .mobile-nav-link.nav-link-active,
     html.dark .mobile-nav-link.bg-vendorsoluce-green {
-      color: #66BB6A !important;
-      background: rgba(102,187,106,.12) !important;
+      color: var(--accent-2) !important;
+      background: rgb(var(--accent-2-rgb) / 0.12) !important;
     }
     
     .mobile-nav-link.nav-link-active:hover,
     .mobile-nav-link.bg-vendorsoluce-green:hover {
-      background: rgba(51,105,30,.08) !important;
-      color: #33691E !important;
+      background: rgb(var(--accent-rgb) / 0.08) !important;
+      color: var(--accent) !important;
     }
     html.dark .mobile-nav-link.nav-link-active:hover,
     html.dark .mobile-nav-link.bg-vendorsoluce-green:hover {
-      background: rgba(102,187,106,.12) !important;
-      color: #66BB6A !important;
+      background: rgb(var(--accent-2-rgb) / 0.12) !important;
+      color: var(--accent-2) !important;
     }
     
     /* Ensure SVG icons inherit the text color */
@@ -153,8 +154,8 @@
       min-width: 2.25rem !important;
       min-height: 2.25rem !important;
       border-radius: 0.5rem !important;
-      background-color: rgb(243 244 246) !important;
-      color: rgb(55 65 81) !important;
+      background-color: var(--bg-2) !important;
+      color: var(--text-secondary) !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -163,16 +164,16 @@
     }
     html.dark nav [data-tour="theme-toggle"] button,
     html.dark nav button[data-theme-toggle] {
-      background-color: rgb(55 65 81) !important;
-      color: rgb(250 204 21) !important;
+      background-color: var(--border) !important;
+      color: var(--risk-medium) !important;
     }
     nav [data-tour="theme-toggle"] button:hover,
     nav button[data-theme-toggle]:hover {
-      background-color: rgb(229 231 235) !important;
+      background-color: var(--border) !important;
     }
     html.dark nav [data-tour="theme-toggle"] button:hover,
     html.dark nav button[data-theme-toggle]:hover {
-      background-color: rgb(75 85 99) !important;
+      background-color: var(--border) !important;
     }
     /* Theme toggle icons: same size and color on all pages */
     nav [data-tour="theme-toggle"] button svg,
@@ -183,7 +184,7 @@
     }
     nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
     nav button[data-theme-toggle] .lucide-sun.hidden-icon {
-      color: rgb(245 158 11) !important; /* amber-500 when visible */
+      color: var(--risk-medium) !important;
     }
 
     /* Utility classes for inline styles */
@@ -206,8 +207,8 @@
     main {
       padding-top: calc(var(--nav-height, 64px) + var(--breadcrumb-height));
     }
-    .vs-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-size:0.65em;background:rgba(51,105,30,.12);color:var(--vendorsoluce-green);font-weight:600;vertical-align:middle;border:none}
-    html.dark .vs-badge{background:rgba(102,187,106,.18);color:var(--vendorsoluce-light-green)}
+    .vs-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-size:0.65em;background:rgb(var(--accent-rgb) / 0.12);color:var(--vendorsoluce-green);font-weight:600;vertical-align:middle;border:none}
+    html.dark .vs-badge{background:rgb(var(--accent-2-rgb) / 0.18);color:var(--vendorsoluce-light-green)}
   </style>
   <style type="text/css" data-vite-dev-id="C:/Users/facel/Downloads/GitHub/ERMITS_PRODUCTION/05-vendorsoluce/src/components/chatbot/ChatWidget.css">/* ChatWidget.css */
 .chat-widget {
@@ -2645,8 +2646,8 @@ html.dark #hero .vs-btn-outline {
     min-width: 2.25rem !important;
     min-height: 2.25rem !important;
     border-radius: 0.5rem !important;
-    background-color: rgb(243 244 246) !important;
-    color: rgb(55 65 81) !important;
+    background-color: var(--bg-2) !important;
+    color: var(--text-secondary) !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2655,16 +2656,16 @@ html.dark #hero .vs-btn-outline {
   }
   html.dark nav [data-tour="theme-toggle"] button,
   html.dark nav button[data-theme-toggle] {
-    background-color: rgb(55 65 81) !important;
-    color: rgb(250 204 21) !important;
+    background-color: var(--border) !important;
+    color: var(--risk-medium) !important;
   }
   nav [data-tour="theme-toggle"] button:hover,
   nav button[data-theme-toggle]:hover {
-    background-color: rgb(229 231 235) !important;
+    background-color: var(--border) !important;
   }
   html.dark nav [data-tour="theme-toggle"] button:hover,
   html.dark nav button[data-theme-toggle]:hover {
-    background-color: rgb(75 85 99) !important;
+    background-color: var(--border) !important;
   }
   /* Theme toggle icons: same size and color on all pages */
   nav [data-tour="theme-toggle"] button svg,
@@ -2675,7 +2676,7 @@ html.dark #hero .vs-btn-outline {
   }
   nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
   nav button[data-theme-toggle] .lucide-sun.hidden-icon {
-    color: rgb(245 158 11) !important; /* amber-500 when visible */
+    color: var(--risk-medium) !important;
   }
 </style>
 <nav class="glass-nav-vs fixed top-0 left-0 right-0 z-[99999] w-full max-w-[100vw]" aria-label="Main navigation">

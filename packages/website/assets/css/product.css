@@ -5,6 +5,8 @@
 :root {
   --vendorsoluce-green: var(--accent);
   --vendorsoluce-light-green: var(--accent-2);
+  /** Same chroma as vendorsoluce-green (tailwind-colors secure-green) */
+  --secure-green: var(--accent);
 }
 .dark,
 html.dark {
