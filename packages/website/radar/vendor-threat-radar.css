@@ -253,3 +253,107 @@ html.dark .csv-format-body code { background: #374151; }
 .csv-template-link:hover { color: var(--vendorsoluce-dark-green, #1b5e20); }
 html.dark .csv-format-summary, html.dark .csv-template-link { color: var(--vendorsoluce-light-green, #4caf50); }
 html.dark .csv-template-link:hover { color: #86efac; }
+
+/* =============================================================================
+   Radar engagement (radar-interactions.js) — design alignment
+   Uses the same :root tokens as vendor-threat-radar.html (--vendorsoluce-*).
+   No new palette hues; motion respects prefers-reduced-motion.
+   ============================================================================= */
+
+/* Mode selector: selected option matches primary / toolbar affordances */
+.mode-option:has(input:checked) {
+  border-radius: 8px;
+  padding: 0.25rem 0.45rem;
+  margin: -0.25rem -0.45rem;
+  background: var(--vendorsoluce-pale-green, #e8f5e9);
+  box-shadow: 0 0 0 2px var(--vendorsoluce-green, #2e7d32);
+}
+html.dark .mode-option:has(input:checked) {
+  background: rgba(46, 125, 50, 0.2);
+  box-shadow: 0 0 0 2px var(--vendorsoluce-light-green, #4caf50);
+}
+
+/* Stat grid: stagger reveal — easing aligned with .stat-card:hover transition */
+@media (prefers-reduced-motion: no-preference) {
+  .stats-grid:not(.stats-grid--in-view) .stat-card {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  .stats-grid--in-view .stat-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s ease,
+      box-shadow 0.2s ease;
+  }
+  .stats-grid--in-view .stat-card:nth-child(1) { transition-delay: 0.02s; }
+  .stats-grid--in-view .stat-card:nth-child(2) { transition-delay: 0.04s; }
+  .stats-grid--in-view .stat-card:nth-child(3) { transition-delay: 0.06s; }
+  .stats-grid--in-view .stat-card:nth-child(4) { transition-delay: 0.08s; }
+  .stats-grid--in-view .stat-card:nth-child(5) { transition-delay: 0.1s; }
+  .stats-grid--in-view .stat-card:nth-child(6) { transition-delay: 0.12s; }
+  .stats-grid--in-view .stat-card:nth-child(7) { transition-delay: 0.14s; }
+  .stats-grid--in-view .stat-card:nth-child(8) { transition-delay: 0.16s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stats-grid:not(.stats-grid--in-view) .stat-card {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Runtime updates: brief emphasis on numbers — brand green, not a new accent */
+.stat-value.stat-value--flash {
+  animation: vs-radar-stat-flash 0.45s ease;
+}
+@keyframes vs-radar-stat-flash {
+  0%,
+  100% {
+    color: inherit;
+  }
+  45% {
+    color: var(--vendorsoluce-green, #2e7d32);
+  }
+}
+html.dark .stat-value.stat-value--flash {
+  animation-name: vs-radar-stat-flash-dark;
+}
+@keyframes vs-radar-stat-flash-dark {
+  0%,
+  100% {
+    color: inherit;
+  }
+  45% {
+    color: var(--vendorsoluce-light-green, #4caf50);
+  }
+}
+
+/* “All clear” strip: subtle pulse — same green as .alert-banner.clear border */
+@media (prefers-reduced-motion: no-preference) {
+  .alert-banner.clear.alert-banner--live {
+    animation: vs-radar-alert-live 3.5s ease-in-out infinite;
+  }
+}
+@keyframes vs-radar-alert-live {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.18);
+  }
+}
+
+/* Main cards: same hover lift as existing .stat-card:hover in page styles */
+.radar-container--engage .card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.radar-container--engage .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+html.dark .radar-container--engage .card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}

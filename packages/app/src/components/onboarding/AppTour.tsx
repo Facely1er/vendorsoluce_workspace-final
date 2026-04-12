@@ -128,6 +128,9 @@ const AppTour: React.FC<AppTourProps> = ({ isRunning, onComplete, onSkip }) => {
 
   useEffect(() => {
     setRun(isRunning);
+    if (isRunning) {
+      setStepIndex(0);
+    }
   }, [isRunning]);
 
   const handleJoyrideCallback = (data: CallBackProps) => {
@@ -151,8 +154,8 @@ const AppTour: React.FC<AppTourProps> = ({ isRunning, onComplete, onSkip }) => {
       primaryColor: appTour.primaryColor,
       backgroundColor: appTour.backgroundColor,
       textColor: appTour.textColor,
-      overlayColor: 'rgba(0, 0, 0, 0.4)',
-      spotlightShadow: '0 0 15px rgba(0, 0, 0, 0.5)',
+      overlayColor: appTour.overlayColor,
+      spotlightShadow: appTour.spotlightShadow,
       beaconSize: 36,
       zIndex: 1000,
     },

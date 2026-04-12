@@ -60,7 +60,11 @@ export const appTour = {
   textColor: surfaceColors.bodyText,
   buttonBg: vendorsoluceColors['vendorsoluce-green'],
   buttonBack: surfaceColors.mutedText,
-  buttonSkip: '#999999',
+  /** Muted action — same family as secondary chrome text */
+  buttonSkip: surfaceColors.gray400,
+  /** Joyride overlay — neutral scrim */
+  overlayColor: 'rgba(17, 24, 39, 0.45)',
+  spotlightShadow: '0 0 15px rgba(0, 0, 0, 0.35)',
 } as const;
 
 /** Marketing & transactional HTML emails */

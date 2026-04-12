@@ -66,7 +66,9 @@ const DashboardPage: React.FC = () => {
       actions={(
         <>
           <Link to="/supply-chain-assessment">
-            <Button variant="primary" size="sm">Run assessment</Button>
+            <Button variant="primary" size="sm" data-tour="run-assessment">
+              Run assessment
+            </Button>
           </Link>
           <Link to="/vendor-risk-radar">
             <Button variant="outline" size="sm">Open radar</Button>
@@ -77,7 +79,13 @@ const DashboardPage: React.FC = () => {
       <TrialCountdownBanner />
       <TrialConversionPrompt showAfterDays={7} />
 
-      {(vendors.length === 0 || assessments.length === 0) ? <OnboardingChecklist /> : null}
+      <div data-tour="get-started-widget">
+        {(vendors.length === 0 || assessments.length === 0) ? (
+          <OnboardingChecklist />
+        ) : (
+          <p className="sr-only">Onboarding checklist complete.</p>
+        )}
+      </div>
 
       <WorkspaceHero>
         <div className="space-y-4">
@@ -164,16 +172,22 @@ const DashboardPage: React.FC = () => {
         </WorkspaceSection>
 
         <WorkspaceSection title="Quick actions" description="Keep the entry points limited and tied to outcomes.">
-          <div className="space-y-3">
+          <div className="space-y-3" data-tour="quick-actions">
             {[
+              { label: 'Manage vendors', href: '/vendors', icon: Users, tour: 'add-vendor' as const },
               { label: 'Continue assessment', href: '/supply-chain-assessment', icon: FileCheck },
+              { label: 'SBOM & NIST checklist', href: '/tools/nist-checklist', icon: Shield, tour: 'analyze-sbom' as const },
               { label: 'Review radar', href: '/vendor-risk-radar', icon: Radar },
               { label: 'Open reports', href: '/vira-reports', icon: ClipboardList },
-              { label: 'Manage vendors', href: '/vendors', icon: Users },
             ].map((action) => {
               const Icon = action.icon;
               return (
-                <Link key={action.href} to={action.href} className="flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-800 transition hover:border-vendorsoluce-green hover:text-vendorsoluce-green dark:border-gray-800 dark:bg-gray-950/40 dark:text-gray-200">
+                <Link
+                  key={action.href + action.label}
+                  to={action.href}
+                  data-tour={'tour' in action ? action.tour : undefined}
+                  className="flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-800 transition hover:border-vendorsoluce-green hover:text-vendorsoluce-green dark:border-gray-800 dark:bg-gray-950/40 dark:text-gray-200"
+                >
                   <span className="flex items-center gap-3">
                     <Icon className="h-4 w-4" />
                     {action.label}
