@@ -18,7 +18,7 @@
     "dev": "npx http-server . -p 8081 -c-1 --cors -o",
     "dev:only": "npx http-server . -p 8081 -c-1 --cors -o",
     "verify:routes": "node scripts/generate-route-manifest.mjs",
-    "verify:ui": "node ../shared/scripts/verify-ui-tokens.mjs && node ../shared/scripts/verify-ui-inline.mjs && node ../shared/scripts/verify-static-radar-design.mjs"
+    "verify:ui": "node ../shared/scripts/verify-ui-tokens.mjs && node ../shared/scripts/verify-ui-inline.mjs && node ../shared/scripts/verify-static-radar-design.mjs && node ../shared/scripts/verify-website-tokens-css.mjs && node ../shared/scripts/verify-website-html-loads-tokens.mjs"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.18",
