@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Users, PlayCircle, ShieldCheck } from "lucide-react";
+import { Users, PlayCircle, ShieldCheck } from "lucide-react";
 import { CollaborationSetup } from "../../../components/collaboration/CollaborationSetup";
 import WorkspacePageShell from "../../../components/vendorsoluce-intelligence/WorkspacePageShell";
 import PanelCard from "../../../components/vendorsoluce-intelligence/PanelCard";

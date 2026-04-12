@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Download, Users, ShieldCheck, FileSearch, Scale, Package, UserCog, Eye } from 'lucide-react';
-import { Button } from '../../../components/ui/Button';
+import { ShieldCheck, FileSearch, Scale, Package, UserCog, Eye } from 'lucide-react';
 import WorkspacePageShell from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../../components/vendorsoluce-intelligence/PanelCard';
 

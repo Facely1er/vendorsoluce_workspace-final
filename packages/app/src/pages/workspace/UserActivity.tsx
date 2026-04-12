@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
 import {
-  Activity, 
-  Clock, 
-  Target, 
-  Shield, 
-  Settings, 
-  Download,
+  Activity,
+  Clock,
+  Target,
+  Shield,
+  Settings,
   Search,
   FileText,
   AlertTriangle,
   CheckCircle,
   BarChart3,
-  ArrowLeft
 } from 'lucide-react';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
-import { Link } from 'react-router-dom';
 // import { useAuth } from '../../context/AuthContext';
 
 interface ActivityItem {

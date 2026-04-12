@@ -10,7 +10,6 @@ import {
   Download,
   Upload,
   AlertTriangle,
-  CheckCircle,
   Lock,
   X,
 } from 'lucide-react';

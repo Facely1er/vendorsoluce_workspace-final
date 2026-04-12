@@ -12,7 +12,6 @@ import {
   CheckCircle,
   AlertTriangle,
   Calendar,
-  Settings,
   Shield
 } from 'lucide-react';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
@@ -23,7 +22,7 @@ import { useVendors } from '../../hooks/useVendors';
 import { useSupplyChainAssessments } from '../../hooks/useSupplyChainAssessments';
 
 const UserDashboard: React.FC = () => {
-  const { user, profile } = useAuth();
+  const { profile } = useAuth();
   const { vendors } = useVendors();
   const { assessments } = useSupplyChainAssessments();
 

@@ -3,8 +3,9 @@
  * All packages must import `sharedTheme` from `shared/tailwind-config`; do not
  * duplicate hex values in per-package tailwind.config.js files.
  *
- * Static radar (`packages/website/radar/vendor-threat-radar.html`) :root mirrors
- * `vendorsoluceColors` here; update both when changing brand greens.
+ * Static radar (`packages/website/radar/*.html`) and marketing Tailwind input
+ * (`packages/website/src/tailwind.css`) :root mirrors `vendorsoluceColors`; update
+ * all when changing brand greens (see `verify-static-radar-design.mjs`).
  */
 export const vendorsoluceColors = {
   'vendorsoluce-green': '#33691E',

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '../../components/ui/Button';
-import { Bell, Settings, Check, X, Clock, AlertTriangle, Info, Shield, Target, FileText, Filter } from 'lucide-react';
+import { Settings, Check, X, Clock, AlertTriangle, Info, Shield, Target, FileText, Filter } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';

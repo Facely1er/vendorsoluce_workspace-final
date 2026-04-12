@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
-  Users, UserCheck, UserX, Clock, Plus, Search, Mail,
+  Users, UserCheck, UserX, Clock, Search, Mail,
   Edit, X, ShieldCheck, BarChart3, AlertTriangle, CheckCircle, Filter
 } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';

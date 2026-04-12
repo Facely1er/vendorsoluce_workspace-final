@@ -1,7 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', '..', '..');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const root = path.resolve(__dirname, '..', '..', '..');
 const routesPath = path.join(root, 'packages', 'shared', 'routes.json');
 const outPath = path.join(root, 'packages', 'website', 'assets', 'js', 'generated', 'route-manifest.js');
 

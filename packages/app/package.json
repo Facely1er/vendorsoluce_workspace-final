@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rm -rf dist dist-demo node_modules",
     "dev": "node ./scripts/run-vite.mjs",
-    "build": "npm run verify:shell && node ../../node_modules/typescript/bin/tsc && node ./scripts/run-vite.mjs build",
+    "build": "npm run verify:ui && npm run verify:shell && node ../../node_modules/typescript/bin/tsc && node ./scripts/run-vite.mjs build",
     "build:demo": "node scripts/copy-demo-html.js",
     "build:demo:react": "tsc && BUILD_MODE=demo node ./scripts/run-vite.mjs build --mode demo",
     "build:enterprise": "tsc && node ./scripts/run-vite.mjs build --mode enterprise",
@@ -23,7 +23,8 @@
     "verify-stripe-catalog": "node scripts/verify-stripe-catalog.js",
     "align-stripe-catalog": "node scripts/align-stripe-catalog.js",
     "rebuild-stripe-catalog": "node scripts/rebuild-stripe-catalog.js",
-    "verify:shell": "node scripts/verify-shell-contract.mjs"
+    "verify:shell": "node scripts/verify-shell-contract.mjs",
+    "verify:ui": "node ../shared/scripts/verify-ui-tokens.mjs && node ../shared/scripts/verify-ui-inline.mjs && node ../shared/scripts/verify-static-radar-design.mjs"
   },
   "dependencies": {
     "shared": "file:../shared",

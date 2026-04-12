@@ -6,11 +6,12 @@
   "description": "Vendor Risk Portal \u2013 standalone React app for vendor assessments. Integrates with the platform (App) or runs standalone in customer environment.",
   "scripts": {
     "dev": "node ./scripts/run-vite.mjs",
-    "build": "npm run verify:integration && node ./scripts/run-vite.mjs build",
+    "build": "npm run verify:ui && npm run verify:integration && node ./scripts/run-vite.mjs build",
     "preview": "node ./scripts/run-vite.mjs preview",
     "type-check": "node ../../node_modules/typescript/bin/tsc --noEmit",
     "clean": "rm -rf dist node_modules",
-    "verify:integration": "node scripts/verify-portal-integration.mjs"
+    "verify:integration": "node scripts/verify-portal-integration.mjs",
+    "verify:ui": "node ../shared/scripts/verify-ui-tokens.mjs && node ../shared/scripts/verify-ui-inline.mjs && node ../shared/scripts/verify-static-radar-design.mjs"
   },
   "dependencies": {
     "shared": "file:../shared",

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { AlertTriangle, ArrowRight, CheckCircle2, ClipboardList, FileCheck, Radar, Users } from 'lucide-react';
+import { AlertTriangle, ArrowRight, CheckCircle2, ClipboardList, FileCheck, Radar, Shield, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/ui/Button';
 import { Card, CardContent } from '../../components/ui/Card';

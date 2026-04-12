@@ -4,7 +4,6 @@ type VendorRow = Database['public']['Tables']['vs_vendors']['Row'];
 type VendorInsert = Database['public']['Tables']['vs_vendors']['Insert'];
 type VendorUpdate = Database['public']['Tables']['vs_vendors']['Update'];
 type AssessmentRow = Database['public']['Tables']['vs_supply_chain_assessments']['Row'];
-type AssessmentInsert = Database['public']['Tables']['vs_supply_chain_assessments']['Insert'];
 type AssessmentUpdate = Database['public']['Tables']['vs_supply_chain_assessments']['Update'];
 
 const KEYS = {
