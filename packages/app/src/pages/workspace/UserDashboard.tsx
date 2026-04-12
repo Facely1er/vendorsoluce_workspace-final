@@ -15,6 +15,7 @@ import {
   Shield
 } from 'lucide-react';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import { Link } from 'react-router-dom';
 import { WR } from 'shared/constants/routes';
 import { useAuth } from '../../context/AuthContext';
@@ -283,9 +284,7 @@ const UserDashboard: React.FC = () => {
                   <span className="text-gray-600 dark:text-gray-400">Profile completed</span>
                   <span className="font-medium text-gray-900 dark:text-white">85%</span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div className="bg-vendorsoluce-green h-2 rounded-full" style={{ width: '85%' }}></div>
-                </div>
+                <ProgressBarFill percent={85} fillClassName="fill-vendorsoluce-green" />
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center text-green-600 dark:text-green-400">
                     <CheckCircle className="h-4 w-4 mr-2" />

@@ -30,6 +30,14 @@ import {
   buildPortfolioRecommendations,
 } from '../../utils/riskCalculations';
 import type { VendorRadar } from '../../types/vendorRadar';
+import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
+
+function inherentRiskBarFill(risk: number): string {
+  if (risk >= 90) return 'fill-red-600';
+  if (risk >= 70) return 'fill-amber-500';
+  if (risk >= 40) return 'fill-orange-500';
+  return 'fill-green-500';
+}
 
 type SortKey = 'name' | 'inherentRisk' | 'residualRisk' | 'nextReview';
 type SortDir = 'asc' | 'desc';
@@ -371,20 +379,13 @@ const ViraReportsPage: React.FC = () => {
                             </td>
                             <td className="px-4 py-3">
                               <div className="flex items-center gap-2">
-                                <div className="w-16 bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
-                                  <div
-                                    className={`h-1.5 rounded-full ${
-                                      vendor.inherentRisk >= 90
-                                        ? 'bg-red-600'
-                                        : vendor.inherentRisk >= 70
-                                        ? 'bg-amber-500'
-                                        : vendor.inherentRisk >= 40
-                                        ? 'bg-orange-500'
-                                        : 'bg-green-500'
-                                    }`}
-                                    style={{ width: `${vendor.inherentRisk}%` }}
-                                  />
-                                </div>
+                                <ProgressBarFill
+                                  className="w-16 shrink-0"
+                                  heightClassName="h-1.5"
+                                  percent={vendor.inherentRisk}
+                                  fillClassName={inherentRiskBarFill(vendor.inherentRisk)}
+                                  trackClassName="bg-gray-100 dark:bg-gray-700"
+                                />
                                 <span className="font-semibold tabular-nums text-gray-900 dark:text-white">
                                   {vendor.inherentRisk}
                                 </span>

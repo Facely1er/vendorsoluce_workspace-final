@@ -652,8 +652,7 @@ const FedRampAssessment = () => {
           <div className="mt-4 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
             <div
               ref={progressBarRef}
-              className="h-full bg-vendorsoluce-green rounded-full transition-all"
-              style={{ width: 'var(--progress-width, 0%)' }}
+              className="h-full rounded-full bg-vendorsoluce-green transition-all w-[var(--progress-width,0%)]"
             />
           </div>
         </CardHeader>

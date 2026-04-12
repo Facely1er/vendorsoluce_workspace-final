@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowLeft, CheckCircle, AlertCircle, HelpCircle, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
+import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import { Button } from '../../components/ui/Button';
 import { useTranslation } from 'react-i18next';
 
@@ -205,12 +206,11 @@ const NISTChecklist: React.FC = () => {
                         {checklistItems.filter(item => item.checked).length} / {checklistItems.length}
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
-                      <div 
-                        className="bg-vendorsoluce-navy h-2.5 rounded-full" 
-                        style={{ width: `${compliancePercentage}%` }}
-                      ></div>
-                    </div>
+                    <ProgressBarFill
+                      percent={compliancePercentage}
+                      heightClassName="h-2.5"
+                      fillClassName="fill-vendorsoluce-navy"
+                    />
                   </div>
                 </div>
                 

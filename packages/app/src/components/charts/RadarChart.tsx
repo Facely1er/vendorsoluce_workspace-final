@@ -1,6 +1,7 @@
 import React from 'react';
 import { RadarChart as RechartsRadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend } from 'recharts';
 import { chartStrokes } from '../../theme/inlineUiTokens';
+import { cn } from '../../utils/cn';
 
 interface RadarChartProps {
   data: Array<{
@@ -21,7 +22,13 @@ const RadarChart: React.FC<RadarChartProps> = ({
   className = "" 
 }) => {
   return (
-    <div className={className} style={{ height: `${height}px`, width }}>
+    <div
+      className={cn(className, (!width || width === '100%') && 'w-full')}
+      style={{
+        height: `${height}px`,
+        ...(width && width !== '100%' ? { width } : {}),
+      }}
+    >
       <ResponsiveContainer width="100%" height="100%">
         <RechartsRadarChart data={data}>
           <PolarGrid />

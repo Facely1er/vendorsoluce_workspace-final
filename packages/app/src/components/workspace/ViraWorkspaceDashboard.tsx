@@ -18,6 +18,7 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import type { PhaseHealth, PhaseStatus } from '../../types/workspace';
+import { ProgressBarFill } from '../ui/ProgressBarFill';
 
 type TabKey = 'portfolio' | 'evidence' | 'governance' | 'tasks';
 
@@ -141,17 +142,17 @@ const ViraWorkspaceDashboard: React.FC = () => {
           <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
             {overallProgress.percent}% complete ({overallProgress.completed}/{overallProgress.total} phases)
           </p>
-          <div className="w-40 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-vendorsoluce-green rounded-full transition-all duration-500"
-              style={{ width: `${overallProgress.percent}%` }}
-              role="progressbar"
-              aria-valuenow={overallProgress.percent}
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-label={`Overall progress: ${overallProgress.percent}%`}
-            />
-          </div>
+          <ProgressBarFill
+            className="w-40"
+            heightClassName="h-1.5"
+            percent={overallProgress.percent}
+            fillClassName="fill-vendorsoluce-green"
+            role="progressbar"
+            aria-valuenow={overallProgress.percent}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`Overall progress: ${overallProgress.percent}%`}
+          />
         </div>
       </div>
 
@@ -228,17 +229,17 @@ const ViraWorkspaceDashboard: React.FC = () => {
             <p className="text-3xl font-bold text-gray-900 dark:text-white">
               {healthIndicators.vendor_coverage_percent}%
             </p>
-            <div className="w-full mt-2 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-vendorsoluce-green rounded-full"
-                style={{ width: `${healthIndicators.vendor_coverage_percent}%` }}
-                role="progressbar"
-                aria-valuenow={healthIndicators.vendor_coverage_percent}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-label={`Vendor coverage: ${healthIndicators.vendor_coverage_percent}%`}
-              />
-            </div>
+            <ProgressBarFill
+              className="mt-2 w-full"
+              heightClassName="h-1.5"
+              percent={healthIndicators.vendor_coverage_percent}
+              fillClassName="fill-vendorsoluce-green"
+              role="progressbar"
+              aria-valuenow={healthIndicators.vendor_coverage_percent}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={`Vendor coverage: ${healthIndicators.vendor_coverage_percent}%`}
+            />
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Vendor Coverage</p>
           </CardContent>
         </Card>

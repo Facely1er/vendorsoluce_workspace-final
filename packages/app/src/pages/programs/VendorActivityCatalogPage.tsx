@@ -2,6 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '../../components/ui/Card';
+import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import { ListTree, ArrowLeft, Search, X, CheckCircle2, Circle, Users } from 'lucide-react';
 import {
   allVendorSupplyPhaseIds,
@@ -313,12 +314,12 @@ const VendorActivityCatalogPage: React.FC = () => {
 
       {/* Overall progress bar */}
       <div className="flex items-center gap-3 mb-5">
-        <div className="flex-1 h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
-          <div
-            className="h-full rounded-full bg-green-500 transition-all duration-300"
-            style={{ width: `${total > 0 ? (totalDone / total) * 100 : 0}%` }}
-          />
-        </div>
+        <ProgressBarFill
+          percent={total > 0 ? (totalDone / total) * 100 : 0}
+          fillClassName="fill-green-500"
+          trackClassName="bg-gray-200 dark:bg-gray-700"
+          className="flex-1"
+        />
         <span className="text-xs text-gray-500 dark:text-gray-400 tabular-nums shrink-0">
           {totalDone}/{total} done
         </span>
@@ -472,10 +473,12 @@ const VendorActivityCatalogPage: React.FC = () => {
                   </div>
 
                   {/* Phase progress bar */}
-                  <div className="h-1 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden mb-4">
-                    <div
-                      className="h-full rounded-full bg-green-500 transition-all duration-300"
-                      style={{ width: `${pct}%` }}
+                  <div className="mb-4">
+                    <ProgressBarFill
+                      percent={pct}
+                      heightClassName="h-1"
+                      fillClassName="fill-green-500"
+                      trackClassName="bg-gray-100 dark:bg-gray-800"
                     />
                   </div>
 

@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useVendors } from '../../hooks/useVendors';
 import { useSupplyChainAssessments } from '../../hooks/useSupplyChainAssessments';
+import { ProgressBarFill } from '../ui/ProgressBarFill';
 
 const STORAGE_KEY = 'vs-setup-completed-steps';
 
@@ -386,9 +387,12 @@ const GuidedSetupWorkflow: React.FC = () => {
             {totalProgress}%
           </div>
         </div>
-        <div className="mt-6 h-2 rounded-full bg-white/30">
-          <div className="h-2 rounded-full bg-vendorsoluce-green transition-all duration-500" style={{ width: `${totalProgress}%` }} />
-        </div>
+        <ProgressBarFill
+          className="mt-6"
+          percent={totalProgress}
+          fillClassName="fill-vendorsoluce-green"
+          trackClassName="bg-white/30"
+        />
       </div>
 
       {/* Category progress */}
@@ -399,9 +403,12 @@ const GuidedSetupWorkflow: React.FC = () => {
             <div key={cat} className={`rounded-xl p-4 ${CATEGORY_COLORS[cat]}`}>
               <div className="font-semibold text-sm mb-1">{cat}</div>
               <div className="text-xs opacity-75 mb-2">{done}/{total} steps</div>
-              <div className="h-1.5 rounded-full bg-current/20">
-                <div className="h-1.5 rounded-full bg-current transition-all" style={{ width: `${pct}%` }} />
-              </div>
+              <ProgressBarFill
+                percent={pct}
+                heightClassName="h-1.5"
+                fillClassName="fill-current"
+                trackClassName="bg-current/20"
+              />
             </div>
           );
         })}

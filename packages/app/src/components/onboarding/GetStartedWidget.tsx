@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { ProgressBarFill } from '../ui/ProgressBarFill';
 import { Button } from '../ui/Button';
 import {
   FileCheck,
@@ -119,12 +120,7 @@ const GetStartedWidget: React.FC<GetStartedWidgetProps> = ({
             <span>Progress</span>
             <span>{completedCount} of {startedItems.length} completed</span>
           </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-            <div 
-              className="bg-vendorsoluce-green h-2 rounded-full transition-all duration-300"
-              style={{ width: `${progressPercentage}%` }}
-            />
-          </div>
+          <ProgressBarFill percent={progressPercentage} fillClassName="fill-vendorsoluce-green" />
         </div>
       </CardHeader>
       

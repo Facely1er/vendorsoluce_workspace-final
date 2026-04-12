@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { ProgressBarFill } from '../ui/ProgressBarFill';
 import { 
   Building, 
   FileText, 
@@ -361,10 +362,10 @@ const VendorDashboard: React.FC = () => {
                             <span className="text-gray-500 dark:text-gray-400">Progress</span>
                             <span className="text-gray-900 dark:text-white">{assessment.progress}%</span>
                           </div>
-                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-1">
-                            <div 
-                              className="bg-vendorsoluce-green h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${assessment.progress}%` }}
+                          <div className="mt-1">
+                            <ProgressBarFill
+                              percent={assessment.progress}
+                              fillClassName="fill-vendorsoluce-green"
                             />
                           </div>
                         </div>
@@ -480,12 +481,10 @@ const VendorDashboard: React.FC = () => {
                         </div>
                         
                         <div className="mt-3">
-                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                            <div 
-                              className="bg-vendorsoluce-green h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${assessment.progress}%` }}
-                            />
-                          </div>
+                          <ProgressBarFill
+                            percent={assessment.progress}
+                            fillClassName="fill-vendorsoluce-green"
+                          />
                         </div>
                       </div>
                       

@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import type { VendorProgramWorkflowId, VendorProgramWorkflowStep } from '../../lib/vendorProgramWorkflowTypes';
 import { useVendorProgramWorkflowProgress } from '../../hooks/useVendorProgramWorkflowProgress';
+import { ProgressBarFill } from '../ui/ProgressBarFill';
 
 export type WorkflowTimelineLabels = {
   viewDetails: string;
@@ -88,10 +89,10 @@ const statusBadge = (status: StepStatus, labels: WorkflowTimelineLabels) => {
   );
 };
 
-const barColor = (status: StepStatus) => {
-  if (status === 'completed') return 'bg-green-500';
-  if (status === 'in_progress') return 'bg-blue-500';
-  return 'bg-gray-200 dark:bg-gray-600';
+const barFillColor = (status: StepStatus) => {
+  if (status === 'completed') return 'fill-green-500';
+  if (status === 'in_progress') return 'fill-blue-500';
+  return 'fill-gray-200 dark:fill-gray-600';
 };
 
 export const ImplementationWorkflowTimeline: React.FC<Props> = ({
@@ -124,12 +125,7 @@ export const ImplementationWorkflowTimeline: React.FC<Props> = ({
     <div className="space-y-8">
       <div className="flex flex-wrap items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/60 dark:bg-gray-900/40 p-4">
         <div className="flex-1 min-w-[12rem]">
-          <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
-            <div
-              className="h-full rounded-full bg-vendorsoluce-green transition-all duration-300"
-              style={{ width: `${overallPct}%` }}
-            />
-          </div>
+          <ProgressBarFill percent={overallPct} fillClassName="fill-vendorsoluce-green" />
         </div>
         <span className="text-xs text-gray-500 dark:text-gray-400 tabular-nums">
           {labels.overallProgress}: {overallPct}% ({completedCount}/{steps.length})
@@ -246,10 +242,11 @@ export const ImplementationWorkflowTimeline: React.FC<Props> = ({
                       </div>
                     </div>
 
-                    <div className="mt-3 h-2 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
-                      <div
-                        className={`h-full rounded-full transition-all duration-300 ${barColor(status)}`}
-                        style={{ width: `${barPct}%` }}
+                    <div className="mt-3">
+                      <ProgressBarFill
+                        percent={barPct}
+                        fillClassName={barFillColor(status)}
+                        trackClassName="bg-gray-100 dark:bg-gray-800"
                       />
                     </div>
 

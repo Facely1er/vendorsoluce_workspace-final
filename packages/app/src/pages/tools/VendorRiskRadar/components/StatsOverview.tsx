@@ -83,7 +83,7 @@ const StatsOverview: React.FC<StatsOverviewProps> = ({ stats }) => {
                   {stat.value}
                 </div>
                 {stat.showBar && (
-                  <div className={`h-1 ${stat.barColor} rounded-full`} style={{ width: '100%' }}></div>
+                  <div className={`h-1 w-full rounded-full ${stat.barColor}`} />
                 )}
                 {!stat.showBar && (
                   <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full"></div>

@@ -11,6 +11,7 @@ import { Button } from '../../components/ui/Button';
 import { Link } from 'react-router-dom';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
+import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import LoadingBlock from '../../components/vendorsoluce-intelligence/LoadingBlock';
 
 const BillingPage: React.FC = () => {
@@ -79,19 +80,17 @@ const BillingPage: React.FC = () => {
           <PanelCard title="Feature usage" description="Monitor billing consumption in the same panel format used across the workspace.">
             <div className="space-y-4">
               {[
-                { label: 'SBOM Scans', feature: 'sbom_scans', width: '30%' },
-                { label: 'Vendors', feature: 'vendors', width: '20%' },
-                { label: 'Assessments', feature: 'assessments', width: '50%' },
-                { label: 'API Calls', feature: 'api_calls', width: '0%' },
+                { label: 'SBOM Scans', feature: 'sbom_scans', percent: 30 },
+                { label: 'Vendors', feature: 'vendors', percent: 20 },
+                { label: 'Assessments', feature: 'assessments', percent: 50 },
+                { label: 'API Calls', feature: 'api_calls', percent: 0 },
               ].map((item) => (
                 <div key={item.label}>
                   <div className="mb-1 flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-900 dark:text-white">{item.label}</span>
                     <UsageIndicator feature={item.feature} />
                   </div>
-                  <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-                    <div className="h-2 rounded-full bg-vendorsoluce-green" style={{ width: item.width }} />
-                  </div>
+                  <ProgressBarFill percent={item.percent} fillClassName="fill-vendorsoluce-green" />
                 </div>
               ))}
             </div>

@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { ProgressBarFill } from '../ui/ProgressBarFill';
 import { Badge } from '../ui/Badge';
 import { AlertTriangle, CheckCircle, Circle, TrendingUp } from 'lucide-react';
 import type { RequirementGap, VendorRequirement } from '../../types/requirements';
@@ -78,16 +79,12 @@ const GapAnalysis: React.FC<GapAnalysisProps> = ({
               {complianceRate}%
             </span>
           </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-            <div
-              className={`h-2 rounded-full transition-all ${
-                complianceRate >= 80 ? 'bg-green-600' :
-                complianceRate >= 50 ? 'bg-yellow-600' :
-                'bg-red-600'
-              }`}
-              style={{ width: `${complianceRate}%` }}
-            />
-          </div>
+          <ProgressBarFill
+            percent={complianceRate}
+            fillClassName={
+              complianceRate >= 80 ? 'fill-green-600' : complianceRate >= 50 ? 'fill-yellow-600' : 'fill-red-600'
+            }
+          />
         </div>
 
         {/* Gap Summary */}

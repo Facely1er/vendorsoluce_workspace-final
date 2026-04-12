@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { ProgressBarFill } from '../ui/ProgressBarFill';
 import { useVendorStore } from '../../stores/vendorStore';
 import { useAppStore } from '../../stores/appStore';
 import { useAuth } from '../../context/AuthContext';
@@ -308,25 +309,24 @@ const EnhancedVendorManagement: React.FC = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <div className="w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-2 mr-2 overflow-hidden">
-                            {(() => {
-                              const s = Math.min(100, Math.round(vendor.risk_score || 0));
-                              const barClass =
-                                s >= 90
-                                  ? 'bg-red-500'
-                                  : s >= 70
-                                    ? 'bg-orange-500'
-                                    : s >= 40
-                                      ? 'bg-yellow-500'
-                                      : 'bg-green-500';
-                              return (
-                                <div
-                                  className={`h-2 rounded-full ${barClass}`}
-                                  style={{ width: `${s}%` }}
-                                />
-                              );
-                            })()}
-                          </div>
+                          {(() => {
+                            const s = Math.min(100, Math.round(vendor.risk_score || 0));
+                            const fillClass =
+                              s >= 90
+                                ? 'fill-red-500'
+                                : s >= 70
+                                  ? 'fill-orange-500'
+                                  : s >= 40
+                                    ? 'fill-yellow-500'
+                                    : 'fill-green-500';
+                            return (
+                              <ProgressBarFill
+                                className="mr-2 w-16"
+                                percent={s}
+                                fillClassName={fillClass}
+                              />
+                            );
+                          })()}
                           <span className="text-gray-900 dark:text-white font-medium">
                             {vendor.risk_score || 0}
                           </span>

@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
 import WorkspacePageShell from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import { ProgressBarFill } from '../../../components/ui/ProgressBarFill';
 import PanelCard from '../../../components/vendorsoluce-intelligence/PanelCard';
 
 interface TeamMember {
@@ -168,7 +169,7 @@ export default function StakeholderManagementPage() {
                       <span className="font-medium text-gray-700 dark:text-gray-200">{label}</span>
                       <span className="text-gray-500 dark:text-gray-400">{count} ({pct}%)</span>
                     </div>
-                    <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-800"><div className="h-2 rounded-full bg-emerald-600" style={{ width: `${pct}%` }} /></div>
+                    <ProgressBarFill percent={pct} fillClassName="fill-emerald-600" />
                   </div>
                 );
               })}

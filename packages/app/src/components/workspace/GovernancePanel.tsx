@@ -9,6 +9,7 @@ import type {
 } from '../../types/workspace';
 import { SUPPLIER_CRITICALITY_MATRIX } from '../../catalog/nistScrm800161Controls';
 import { CheckCircle, Clock, Circle, AlertTriangle, Flag } from 'lucide-react';
+import { ProgressBarFill } from '../ui/ProgressBarFill';
 
 interface GovernancePanelProps {
   controls: NistScrm10Control[];
@@ -78,17 +79,16 @@ const GovernancePanel: React.FC<GovernancePanelProps> = ({
               {frameworkCompletion.percent}% complete
             </span>
           </div>
-          <div className="mt-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-vendorsoluce-green rounded-full transition-all duration-500"
-              style={{ width: `${frameworkCompletion.percent}%` }}
-              role="progressbar"
-              aria-valuenow={frameworkCompletion.percent}
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-label={`Framework completion: ${frameworkCompletion.percent}%`}
-            />
-          </div>
+          <ProgressBarFill
+            className="mt-2"
+            percent={frameworkCompletion.percent}
+            fillClassName="fill-vendorsoluce-green"
+            role="progressbar"
+            aria-valuenow={frameworkCompletion.percent}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`Framework completion: ${frameworkCompletion.percent}%`}
+          />
           <div className="flex gap-4 mt-2 text-xs text-gray-500 dark:text-gray-400">
             <span>✅ {frameworkCompletion.complete} complete</span>
             <span>🔄 {frameworkCompletion.in_progress} in progress</span>

@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
+import { ProgressBarFill } from '../ui/ProgressBarFill';
 import { Badge } from '../ui/Badge';
 import { Check, Circle, ArrowRight, Target } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -139,13 +140,7 @@ export const OnboardingChecklist: React.FC = () => {
           </Badge>
         </div>
         <div className="mt-4">
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-            {/* Note: Inline style required for dynamic percentage width - cannot be moved to external CSS */}
-            <div
-              className="bg-vendorsoluce-green h-2 rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+          <ProgressBarFill percent={progress} fillClassName="fill-vendorsoluce-green" />
         </div>
       </CardHeader>
       <CardContent>

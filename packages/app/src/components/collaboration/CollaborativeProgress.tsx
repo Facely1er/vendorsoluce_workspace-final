@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Users, CheckCircle, AlertTriangle, MessageSquare, Clock, User, Shield } from 'lucide-react';
 import { CollaborationManager } from '../../utils/collaboration';
+import { ProgressBarFill } from '../ui/ProgressBarFill';
 
 interface CollaborativeProgressProps {
   sessionId: string;
@@ -46,12 +47,11 @@ export function CollaborativeProgress({ sessionId }: CollaborativeProgressProps)
             <span className="font-medium">Overall Completion</span>
             <span className="font-bold text-blue-600">{progress.completionPercentage.toFixed(0)}%</span>
           </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-            <div
-              className="bg-blue-600 h-3 rounded-full transition-all"
-              style={{ width: `${progress.completionPercentage}%` }}
-            />
-          </div>
+          <ProgressBarFill
+            percent={progress.completionPercentage}
+            heightClassName="h-3"
+            fillClassName="fill-blue-600"
+          />
           <p className="text-xs text-gray-500 mt-2">
             {progress.answeredQuestions} of {progress.totalQuestions} questions answered
           </p>
@@ -100,12 +100,11 @@ export function CollaborativeProgress({ sessionId }: CollaborativeProgressProps)
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full transition-all"
-                      style={{ width: `${member.completionRate}%` }}
-                    />
-                  </div>
+                  <ProgressBarFill
+                    className="flex-1"
+                    percent={member.completionRate}
+                    fillClassName="fill-blue-600"
+                  />
                   <span className="text-xs text-gray-500 min-w-[40px] text-right">
                     {member.completionRate.toFixed(0)}%
                   </span>
