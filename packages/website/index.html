@@ -1,0 +1,3425 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<script data-vs-theme-init>(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();</script>
+
+<meta charset="utf-8">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+
+  <!-- Google Analytics 4 - inline so it always loads -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VEQXJHYNHG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VEQXJHYNHG', { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure', linker: { domains: ['cybercorrect.com','www.cybercorrect.com','workspace.cybercorrect.com','cybercaution.com','www.cybercaution.com','platform.cybercaution.com','toolkits.cybercaution.com','vendorsoluce.com','www.vendorsoluce.com','platform.vendorsoluce.com','portal.vendorsoluce.com','cybersoluce.com','lite.cybersoluce.com','technosoluce.com','app.technosoluce.com','medisoluce.com','www.medisoluce.com','ermits.com','www.ermits.com','socialcaution.com','www.socialcaution.com','pandagarde.com','www.pandagarde.com'] } });
+    </script>
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./homepage_files/vendorsoluce.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./homepage_files/vendorsoluce.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./homepage_files/vendorsoluce.png">
+    <link rel="shortcut icon" type="image/png" href="./homepage_files/vendorsoluce.png">
+    <link rel="manifest" href="site.webmanifest">
+    <title>VendorSoluce&trade; - Vendor Risk Made Defensible | ERMITS</title>
+    <meta name="description" content="Transform unclear third-party risk into prioritized decisions, evidence-backed approvals, and continuous oversight with VendorSoluce&trade;.">
+    <meta name="keywords" content="supply chain security, NIST 800-161, vendor risk assessment, SBOM analysis, federal compliance, cybersecurity">
+    <!-- Security Headers -->
+    <!-- Note: X-Frame-Options, X-Content-Type-Options, and other security headers are set via HTTP headers in vercel.json -->
+    <!-- Meta tags for these headers are not effective and should be set via server configuration -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://rsms.me/">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">    <!-- Production Tailwind (compiled by npm run build) -->
+    <link href="assets/css/tailwind.css" rel="stylesheet"/>
+    <!-- VendorSoluce&trade; design system — tokens + components (aligned with CyberCaution/CyberCorrect) -->
+    <link href="assets/css/tokens.css" rel="stylesheet"/>
+    <link href="assets/css/components.css" rel="stylesheet"/>
+  <style>
+    /* Navigation link styles - consistent with CyberCaution pattern */
+    .nav-link {
+      color: rgb(55 65 81);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .dark .nav-link {
+      color: rgb(209 213 219);
+    }
+    
+    /* Hover effect ONLY for inactive links */
+    .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
+      color: #33691E !important;
+      background-color: rgba(51, 105, 30, 0.1) !important;
+    }
+    html.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
+      color: #66BB6A !important;
+      background-color: rgba(102, 187, 106, 0.12) !important;
+    }
+    
+    /* Active link styles - green background with white text */
+    .nav-link.nav-link-active,
+    .nav-link.bg-vendorsoluce-green,
+    nav a[title].active,
+    nav a[title][aria-current="page"] {
+      color: #33691E !important;
+      background: rgba(51,105,30,.08) !important;
+      font-weight: 700 !important;
+    }
+    html.dark .nav-link.nav-link-active,
+    html.dark .nav-link.bg-vendorsoluce-green,
+    html.dark nav a[title].active,
+    html.dark nav a[title][aria-current="page"] {
+      color: #66BB6A !important;
+      background: rgba(102,187,106,.12) !important;
+    }
+    
+    /* CRITICAL: Prevent ANY hover effects on active links */
+    .nav-link.nav-link-active:hover,
+    .nav-link.bg-vendorsoluce-green:hover,
+    nav a[title].active:hover,
+    nav a[title][aria-current="page"]:hover {
+      background: rgba(51,105,30,.08) !important;
+      color: #33691E !important;
+    }
+    html.dark .nav-link.nav-link-active:hover,
+    html.dark .nav-link.bg-vendorsoluce-green:hover,
+    html.dark nav a[title].active:hover,
+    html.dark nav a[title][aria-current="page"]:hover {
+      background: rgba(102,187,106,.12) !important;
+      color: #66BB6A !important;
+    }
+    
+    /* Mobile navigation link styles - same rules */
+    .mobile-nav-link {
+      color: rgb(55 65 81);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .dark .mobile-nav-link {
+      color: rgb(209 213 219);
+    }
+    
+    .mobile-nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
+      color: #33691E !important;
+      background-color: rgba(51, 105, 30, 0.1) !important;
+    }
+    html.dark .mobile-nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
+      color: #66BB6A !important;
+      background-color: rgba(102, 187, 106, 0.12) !important;
+    }
+    
+    .mobile-nav-link.nav-link-active,
+    .mobile-nav-link.bg-vendorsoluce-green {
+      color: #33691E !important;
+      background: rgba(51,105,30,.08) !important;
+      font-weight: 700 !important;
+    }
+    html.dark .mobile-nav-link.nav-link-active,
+    html.dark .mobile-nav-link.bg-vendorsoluce-green {
+      color: #66BB6A !important;
+      background: rgba(102,187,106,.12) !important;
+    }
+    
+    .mobile-nav-link.nav-link-active:hover,
+    .mobile-nav-link.bg-vendorsoluce-green:hover {
+      background: rgba(51,105,30,.08) !important;
+      color: #33691E !important;
+    }
+    html.dark .mobile-nav-link.nav-link-active:hover,
+    html.dark .mobile-nav-link.bg-vendorsoluce-green:hover {
+      background: rgba(102,187,106,.12) !important;
+      color: #66BB6A !important;
+    }
+    
+    /* Ensure SVG icons inherit the text color */
+    .nav-link svg,
+    .mobile-nav-link svg {
+      color: currentColor;
+    }
+/* Theme toggle: match homepage header (fixed shape, color, contrast) on all pages */
+    nav [data-tour="theme-toggle"] button,
+    nav button[data-theme-toggle] {
+      width: 2.25rem !important;
+      height: 2.25rem !important;
+      min-width: 2.25rem !important;
+      min-height: 2.25rem !important;
+      border-radius: 0.5rem !important;
+      background-color: rgb(243 244 246) !important;
+      color: rgb(55 65 81) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      transition: all 0.2s ease !important;
+    }
+    html.dark nav [data-tour="theme-toggle"] button,
+    html.dark nav button[data-theme-toggle] {
+      background-color: rgb(55 65 81) !important;
+      color: rgb(250 204 21) !important;
+    }
+    nav [data-tour="theme-toggle"] button:hover,
+    nav button[data-theme-toggle]:hover {
+      background-color: rgb(229 231 235) !important;
+    }
+    html.dark nav [data-tour="theme-toggle"] button:hover,
+    html.dark nav button[data-theme-toggle]:hover {
+      background-color: rgb(75 85 99) !important;
+    }
+    /* Theme toggle icons: same size and color on all pages */
+    nav [data-tour="theme-toggle"] button svg,
+    nav button[data-theme-toggle] svg {
+      width: 1.25rem !important;
+      height: 1.25rem !important;
+      color: inherit !important;
+    }
+    nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
+    nav button[data-theme-toggle] .lucide-sun.hidden-icon {
+      color: rgb(245 158 11) !important; /* amber-500 when visible */
+    }
+
+    /* Utility classes for inline styles */
+    .tagline-text {
+      letter-spacing: -0.02em;
+      margin-top: -3px;
+    }
+    .hidden-icon {
+      display: none;
+    }
+    .mobile-menu-position {
+      top: 64px;
+    }
+    .breadcrumb-position {
+      top: var(--nav-height, 64px);
+    }
+    :root {
+      --breadcrumb-height: 0px;
+    }
+    main {
+      padding-top: calc(var(--nav-height, 64px) + var(--breadcrumb-height));
+    }
+    .vs-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-size:0.65em;background:rgba(51,105,30,.12);color:var(--vendorsoluce-green);font-weight:600;vertical-align:middle;border:none}
+    html.dark .vs-badge{background:rgba(102,187,106,.18);color:var(--vendorsoluce-light-green)}
+  </style>
+  <style type="text/css" data-vite-dev-id="C:/Users/facel/Downloads/GitHub/ERMITS_PRODUCTION/05-vendorsoluce/src/components/chatbot/ChatWidget.css">/* ChatWidget.css */
+.chat-widget {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.chat-widget * {
+  box-sizing: border-box;
+}
+
+/* Animation classes */
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.3s ease-out;
+}
+
+.animate-slide-out-down {
+  animation: slideOutDown 0.3s ease-in;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+/* Custom scrollbar */
+.chat-widget ::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-widget ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-widget ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.chat-widget ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode scrollbar */
+.dark .chat-widget ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dark .chat-widget ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Message animations */
+.message-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.message-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+/* Typing indicator animation */
+.typing-dot {
+  animation: bounce 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .chat-widget {
+    bottom: 1rem !important;
+    right: 1rem !important;
+    left: 1rem !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+}
+
+/* Focus styles */
+.chat-widget button:focus-visible {
+  outline: 2px solid #33691E;
+  outline-offset: 2px;
+}
+
+.chat-widget textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #33691E;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .chat-widget {
+    border: 2px solid;
+  }
+  
+  .chat-widget button {
+    border: 1px solid;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .chat-widget * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+    
+    
+    /* Dark mode - let Tailwind's dark:text-white handle it, but ensure it works */
+    
+    
+    
+    
+    /* Dark mode - let Tailwind's dark:text-white handle it, but ensure it works */
+    
+    .dark .text-vendorsoluce-light-green,
+    html.dark .text-vendorsoluce-light-green,
+    [class~="dark"] .text-vendorsoluce-light-green {
+      color: var(--vendorsoluce-light-green) !important;
+    }
+    
+.text-vendorsoluce-light-green {
+  --tw-text-opacity: 1;
+  color: rgb(102 187 106 / var(--tw-text-opacity, 1));
+}
+.text-vendorsoluce-navy {
+  --tw-text-opacity: 1;
+  color: rgb(30 59 138 / var(--tw-text-opacity, 1));
+}
+.text-vendorsoluce-teal {
+  --tw-text-opacity: 1;
+  color: rgb(45 125 125 / var(--tw-text-opacity, 1));
+}
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+.text-white\/90 {
+  color: rgb(255 255 255 / 0.9);
+}
+.text-yellow-300 {
+  --tw-text-opacity: 1;
+  color: rgb(253 224 71 / var(--tw-text-opacity, 1));
+}
+.text-yellow-500 {
+  --tw-text-opacity: 1;
+  color: rgb(234 179 8 / var(--tw-text-opacity, 1));
+}
+.text-yellow-600 {
+  --tw-text-opacity: 1;
+  color: rgb(202 138 4 / var(--tw-text-opacity, 1));
+}
+.text-yellow-700 {
+  --tw-text-opacity: 1;
+  color: rgb(161 98 7 / var(--tw-text-opacity, 1));
+}
+.text-yellow-800 {
+  --tw-text-opacity: 1;
+  color: rgb(133 77 14 / var(--tw-text-opacity, 1));
+}
+.underline {
+  text-decoration-line: underline;
+}
+.placeholder-gray-500::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-placeholder-opacity, 1));
+}
+.placeholder-gray-500::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-placeholder-opacity, 1));
+}
+.opacity-0 {
+  opacity: 0;
+}
+.opacity-10 {
+  opacity: 0.1;
+}
+.opacity-100 {
+  opacity: 1;
+}
+.opacity-20 {
+  opacity: 0.2;
+}
+.opacity-5 {
+  opacity: 0.05;
+}
+.opacity-50 {
+  opacity: 0.5;
+}
+.opacity-60 {
+  opacity: 0.6;
+}
+.opacity-70 {
+  opacity: 0.7;
+}
+.opacity-75 {
+  opacity: 0.75;
+}
+.opacity-80 {
+  opacity: 0.8;
+}
+.opacity-90 {
+  opacity: 0.9;
+}
+.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-lg {
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-md {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-xl {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.outline {
+  outline-style: solid;
+}
+.ring-2 {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+.ring-blue-100 {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(219 234 254 / var(--tw-ring-opacity, 1));
+}
+.ring-offset-white {
+  --tw-ring-offset-color: #fff;
+}
+.invert {
+  --tw-invert: invert(100%);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.backdrop-blur-sm {
+  --tw-backdrop-blur: blur(4px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-shadow {
+  transition-property: box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.delay-1000 {
+  transition-delay: 1000ms;
+}
+.delay-300 {
+  transition-delay: 300ms;
+}
+.delay-500 {
+  transition-delay: 500ms;
+}
+.delay-700 {
+  transition-delay: 700ms;
+}
+.duration-1000 {
+  transition-duration: 1000ms;
+}
+.duration-200 {
+  transition-duration: 200ms;
+}
+.duration-300 {
+  transition-duration: 300ms;
+}
+.duration-500 {
+  transition-duration: 500ms;
+}
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ease-out {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+:root {
+  /* Primary Colors - Growth & Trust */
+  --vendorsoluce-green: #33691E;
+  --vendorsoluce-light-green: #66BB6A;
+  --vendorsoluce-dark-green: #2E5A1A;
+  --vendorsoluce-pale-green: #E8F5E8;
+  --neutral-gray: #6B7280;
+  
+  /* Risk Communication Colors */
+  --risk-critical: #DC2626;
+  --risk-high: #EA580C;
+  --risk-medium: #F59E0B;
+  --risk-low: #16A34A;
+  
+  /* Text Colors */
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --text-primary-dark: #F8FAFC;
+  --text-secondary-dark: #94A3B8;
+  
+  /* Theme variables - default to light mode */
+  --bg: #F9FAFB;
+  --bg-2: rgba(0,0,0,.04);
+  --card: rgba(255,255,255,.8);
+  --border: rgba(0,0,0,.12);
+  --text: rgba(0,0,0,.92);
+  --muted: rgba(0,0,0,.70);
+}
+
+/* Base HTML and body styling */
+html {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+html.dark {
+  --bg: #070A12;
+  --bg-2: rgba(255,255,255,.04);
+  --card: rgba(255,255,255,.06);
+  --border: rgba(255,255,255,.12);
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.70);
+}
+    
+    
+
+.placeholder\:text-gray-400::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
+
+.placeholder\:text-gray-400::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
+
+.after\:absolute::after {
+  content: var(--tw-content);
+  position: absolute;
+}
+
+.after\:left-\[2px\]::after {
+  content: var(--tw-content);
+  left: 2px;
+}
+
+.after\:top-\[2px\]::after {
+  content: var(--tw-content);
+  top: 2px;
+}
+
+.after\:h-5::after {
+  content: var(--tw-content);
+  height: 1.25rem;
+}
+
+.after\:w-5::after {
+  content: var(--tw-content);
+  width: 1.25rem;
+}
+
+.after\:rounded-full::after {
+  content: var(--tw-content);
+  border-radius: 9999px;
+}
+
+.after\:bg-white::after {
+  content: var(--tw-content);
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.after\:transition-all::after {
+  content: var(--tw-content);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.after\:content-\[\'\'\]::after {
+  --tw-content: '';
+  content: var(--tw-content);
+}
+
+.last\:border-0:last-child {
+  border-width: 0px;
+}
+
+.last\:border-b-0:last-child {
+  border-bottom-width: 0px;
+}
+
+.last\:pb-0:last-child {
+  padding-bottom: 0px;
+}
+
+.hover\:-translate-y-1:hover {
+  --tw-translate-y: -0.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.hover\:-translate-y-2:hover {
+  --tw-translate-y: -0.5rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.hover\:scale-105:hover {
+  --tw-scale-x: 1.05;
+  --tw-scale-y: 1.05;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.hover\:border-gray-300:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+}
+
+.hover\:border-gray-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity, 1));
+}
+
+.hover\:border-red-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(248 113 113 / var(--tw-border-opacity, 1));
+}
+
+.hover\:border-vendorsoluce-green:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(51 105 30 / var(--tw-border-opacity, 1));
+}
+
+.hover\:border-vendorsoluce-navy:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(30 59 138 / var(--tw-border-opacity, 1));
+}
+
+.hover\:border-vendorsoluce-teal:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(45 125 125 / var(--tw-border-opacity, 1));
+}
+
+.hover\:bg-black\/10:hover {
+  background-color: rgb(0 0 0 / 0.1);
+}
+
+.hover\:bg-blue-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 246 255 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-blue-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-800:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-green-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(187 247 208 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-orange-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 247 237 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-orange-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(194 65 12 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-purple-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(126 34 206 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-red-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-red-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-vendorsoluce-dark-green:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(42 86 24 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-vendorsoluce-green:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 105 30 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-vendorsoluce-green\/10:hover {
+  background-color: rgb(51 105 30 / 0.1);
+}
+
+.hover\:bg-vendorsoluce-green\/90:hover {
+  background-color: rgb(51 105 30 / 0.9);
+}
+
+.hover\:bg-vendorsoluce-navy:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 59 138 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-vendorsoluce-navy\/90:hover {
+  background-color: rgb(30 59 138 / 0.9);
+}
+
+.hover\:bg-vendorsoluce-pale-green:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(232 245 232 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-vendorsoluce-teal:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(45 125 125 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-vendorsoluce-teal\/90:hover {
+  background-color: rgb(45 125 125 / 0.9);
+}
+
+.hover\:bg-white\/10:hover {
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+.hover\:bg-white\/15:hover {
+  background-color: rgb(255 255 255 / 0.15);
+}
+
+.hover\:bg-white\/20:hover {
+  background-color: rgb(255 255 255 / 0.2);
+}
+
+.hover\:bg-white\/60:hover {
+  background-color: rgb(255 255 255 / 0.6);
+}
+
+.hover\:bg-opacity-90:hover {
+  --tw-bg-opacity: 0.9;
+}
+
+.hover\:text-blue-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-blue-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(30 64 175 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-gray-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-gray-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-gray-900:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-red-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-red-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-vendorsoluce-dark-green:hover {
+  --tw-text-opacity: 1;
+  color: rgb(42 86 24 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-vendorsoluce-green:hover {
+  --tw-text-opacity: 1;
+  color: rgb(51 105 30 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-vendorsoluce-navy:hover {
+  --tw-text-opacity: 1;
+  color: rgb(30 59 138 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.hover\:underline:hover {
+  text-decoration-line: underline;
+}
+
+.hover\:shadow-lg:hover {
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.hover\:shadow-md:hover {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.hover\:shadow-xl:hover {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+.focus\:border-transparent:focus {
+  border-color: transparent;
+}
+
+.focus\:border-vendorsoluce-green:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(51 105 30 / var(--tw-border-opacity, 1));
+}
+
+.focus\:border-vendorsoluce-navy:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(30 59 138 / var(--tw-border-opacity, 1));
+}
+
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus\:ring-2:focus {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-blue-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1));
+}
+
+.focus\:ring-vendorsoluce-green:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(51 105 30 / var(--tw-ring-opacity, 1));
+}
+
+.focus\:ring-vendorsoluce-green\/30:focus {
+  --tw-ring-color: rgb(51 105 30 / 0.3);
+}
+
+.focus\:ring-vendorsoluce-green\/50:focus {
+  --tw-ring-color: rgb(51 105 30 / 0.5);
+}
+
+.focus\:ring-vendorsoluce-navy:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(30 59 138 / var(--tw-ring-opacity, 1));
+}
+
+.focus\:ring-white:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity, 1));
+}
+
+.focus\:ring-offset-2:focus {
+  --tw-ring-offset-width: 2px;
+}
+
+.focus-visible\:outline-none:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus-visible\:ring-2:focus-visible {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus-visible\:ring-green-500:focus-visible {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(34 197 94 / var(--tw-ring-opacity, 1));
+}
+
+.focus-visible\:ring-offset-2:focus-visible {
+  --tw-ring-offset-width: 2px;
+}
+
+.disabled\:pointer-events-none:disabled {
+  pointer-events: none;
+}
+
+.disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed;
+}
+
+.disabled\:bg-gray-400:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
+}
+
+.disabled\:opacity-50:disabled {
+  opacity: 0.5;
+}
+
+.group:hover .group-hover\:visible {
+  visibility: visible;
+}
+
+.group:hover .group-hover\:-translate-y-1 {
+  --tw-translate-y: -0.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:hover .group-hover\:translate-x-1 {
+  --tw-translate-x: 0.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:hover .group-hover\:scale-105 {
+  --tw-scale-x: 1.05;
+  --tw-scale-y: 1.05;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:hover .group-hover\:scale-110 {
+  --tw-scale-x: 1.1;
+  --tw-scale-y: 1.1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:hover .group-hover\:border-vendorsoluce-green {
+  --tw-border-opacity: 1;
+  border-color: rgb(51 105 30 / var(--tw-border-opacity, 1));
+}
+
+.group:hover .group-hover\:bg-vendorsoluce-green {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 105 30 / var(--tw-bg-opacity, 1));
+}
+
+.group:hover .group-hover\:bg-white\/30 {
+  background-color: rgb(255 255 255 / 0.3);
+}
+
+.group:hover .group-hover\:text-vendorsoluce-green {
+  --tw-text-opacity: 1;
+  color: rgb(51 105 30 / var(--tw-text-opacity, 1));
+}
+
+.group:hover .group-hover\:text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
+}
+
+.group:hover .group-hover\:shadow-xl {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.peer:checked ~ .peer-checked\:bg-vendorsoluce-green {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 105 30 / var(--tw-bg-opacity, 1));
+}
+
+.peer:checked ~ .peer-checked\:after\:translate-x-full::after {
+  content: var(--tw-content);
+  --tw-translate-x: 100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.peer:checked ~ .peer-checked\:after\:border-white::after {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
+}
+
+.peer:focus ~ .peer-focus\:outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.peer:focus ~ .peer-focus\:ring-4 {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.peer:focus ~ .peer-focus\:ring-vendorsoluce-green\/20 {
+  --tw-ring-color: rgb(51 105 30 / 0.2);
+}
+
+.dark\:divide-gray-700:is(.dark *) > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-divide-opacity, 1));
+}
+
+n.dark\:border-blue-400:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(96 165 250 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-blue-600:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(37 99 235 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-blue-700:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(29 78 216 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-blue-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(30 64 175 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-gray-600:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-gray-700:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-gray-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(31 41 55 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-green-600:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(22 163 74 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-green-700:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(21 128 61 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-green-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(22 101 52 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-orange-600:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(234 88 12 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-orange-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(154 52 18 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-purple-600:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(147 51 234 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-purple-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 33 168 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-red-700:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(185 28 28 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-red-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(153 27 27 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-teal-700:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(15 118 110 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-vendorsoluce-green\/30:is(.dark *) {
+  border-color: rgb(51 105 30 / 0.3);
+}
+
+.dark\:border-vendorsoluce-light-green:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(102 187 106 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-yellow-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(133 77 14 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-b-gray-700:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-b-gray-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(31 41 55 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-l-gray-700:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-left-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-l-gray-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-left-color: rgb(31 41 55 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-r-gray-700:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-right-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-r-gray-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-right-color: rgb(31 41 55 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-t-gray-700:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
+}
+
+.dark\:border-t-gray-800:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(31 41 55 / var(--tw-border-opacity, 1));
+}
+
+.dark\:bg-blue-900:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 58 138 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-blue-900\/20:is(.dark *) {
+  background-color: rgb(30 58 138 / 0.2);
+}
+
+.dark\:bg-blue-900\/30:is(.dark *) {
+  background-color: rgb(30 58 138 / 0.3);
+}
+
+.dark\:bg-gray-600:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-gray-700:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-gray-800:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-gray-800\/30:is(.dark *) {
+  background-color: rgb(31 41 55 / 0.3);
+}
+
+.dark\:bg-gray-800\/50:is(.dark *) {
+  background-color: rgb(31 41 55 / 0.5);
+}
+
+.dark\:bg-gray-900:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-gray-900\/20:is(.dark *) {
+  background-color: rgb(17 24 39 / 0.2);
+}
+
+.dark\:bg-gray-900\/50:is(.dark *) {
+  background-color: rgb(17 24 39 / 0.5);
+}
+
+.dark\:bg-green-900:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(20 83 45 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-green-900\/10:is(.dark *) {
+  background-color: rgb(20 83 45 / 0.1);
+}
+
+.dark\:bg-green-900\/20:is(.dark *) {
+  background-color: rgb(20 83 45 / 0.2);
+}
+
+.dark\:bg-green-900\/30:is(.dark *) {
+  background-color: rgb(20 83 45 / 0.3);
+}
+
+.dark\:bg-orange-900\/20:is(.dark *) {
+  background-color: rgb(124 45 18 / 0.2);
+}
+
+.dark\:bg-orange-900\/30:is(.dark *) {
+  background-color: rgb(124 45 18 / 0.3);
+}
+
+.dark\:bg-purple-900:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(88 28 135 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-purple-900\/20:is(.dark *) {
+  background-color: rgb(88 28 135 / 0.2);
+}
+
+.dark\:bg-purple-900\/30:is(.dark *) {
+  background-color: rgb(88 28 135 / 0.3);
+}
+
+.dark\:bg-red-900:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(127 29 29 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-red-900\/20:is(.dark *) {
+  background-color: rgb(127 29 29 / 0.2);
+}
+
+.dark\:bg-red-900\/30:is(.dark *) {
+  background-color: rgb(127 29 29 / 0.3);
+}
+
+.dark\:bg-vendorsoluce-green:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 105 30 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-vendorsoluce-green\/20:is(.dark *) {
+  background-color: rgb(51 105 30 / 0.2);
+}
+
+.dark\:bg-vendorsoluce-navy:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 59 138 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-vendorsoluce-navy\/30:is(.dark *) {
+  background-color: rgb(30 59 138 / 0.3);
+}
+
+.dark\:bg-vendorsoluce-teal:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(45 125 125 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-yellow-400:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 204 21 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-yellow-800:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(133 77 14 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-yellow-900:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(113 63 18 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:bg-yellow-900\/20:is(.dark *) {
+  background-color: rgb(113 63 18 / 0.2);
+}
+
+.dark\:bg-yellow-900\/30:is(.dark *) {
+  background-color: rgb(113 63 18 / 0.3);
+}
+
+.dark\:from-blue-900\/20:is(.dark *) {
+  --tw-gradient-from: rgb(30 58 138 / 0.2) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(30 58 138 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark\:from-gray-800:is(.dark *) {
+  --tw-gradient-from: #1f2937 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(31 41 55 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark\:from-gray-800\/50:is(.dark *) {
+  --tw-gradient-from: rgb(31 41 55 / 0.5) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(31 41 55 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark\:from-gray-900:is(.dark *) {
+  --tw-gradient-from: #111827 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(17 24 39 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark\:from-green-900\/20:is(.dark *) {
+  --tw-gradient-from: rgb(20 83 45 / 0.2) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(20 83 45 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark\:from-orange-900\/20:is(.dark *) {
+  --tw-gradient-from: rgb(124 45 18 / 0.2) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(124 45 18 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark\:from-purple-900\/20:is(.dark *) {
+  --tw-gradient-from: rgb(88 28 135 / 0.2) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(88 28 135 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark\:from-red-900\/20:is(.dark *) {
+  --tw-gradient-from: rgb(127 29 29 / 0.2) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(127 29 29 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark\:from-teal-900\/20:is(.dark *) {
+  --tw-gradient-from: rgb(19 78 74 / 0.2) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(19 78 74 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark\:via-gray-800:is(.dark *) {
+  --tw-gradient-to: rgb(31 41 55 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #1f2937 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.dark\:via-gray-900:is(.dark *) {
+  --tw-gradient-to: rgb(17 24 39 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #111827 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.dark\:to-cyan-900\/20:is(.dark *) {
+  --tw-gradient-to: rgb(22 78 99 / 0.2) var(--tw-gradient-to-position);
+}
+
+.dark\:to-emerald-900\/20:is(.dark *) {
+  --tw-gradient-to: rgb(6 78 59 / 0.2) var(--tw-gradient-to-position);
+}
+
+.dark\:to-gray-700:is(.dark *) {
+  --tw-gradient-to: #374151 var(--tw-gradient-to-position);
+}
+
+.dark\:to-gray-800\/30:is(.dark *) {
+  --tw-gradient-to: rgb(31 41 55 / 0.3) var(--tw-gradient-to-position);
+}
+
+.dark\:to-gray-900:is(.dark *) {
+  --tw-gradient-to: #111827 var(--tw-gradient-to-position);
+}
+
+.dark\:to-gray-950:is(.dark *) {
+  --tw-gradient-to: #030712 var(--tw-gradient-to-position);
+}
+
+.dark\:to-indigo-900\/20:is(.dark *) {
+  --tw-gradient-to: rgb(49 46 129 / 0.2) var(--tw-gradient-to-position);
+}
+
+.dark\:to-orange-900\/20:is(.dark *) {
+  --tw-gradient-to: rgb(124 45 18 / 0.2) var(--tw-gradient-to-position);
+}
+
+.dark\:to-pink-900\/20:is(.dark *) {
+  --tw-gradient-to: rgb(131 24 67 / 0.2) var(--tw-gradient-to-position);
+}
+
+.dark\:to-yellow-900\/20:is(.dark *) {
+  --tw-gradient-to: rgb(113 63 18 / 0.2) var(--tw-gradient-to-position);
+}
+
+.dark\:stroke-gray-700:is(.dark *) {
+  stroke: #374151;
+}
+
+.dark\:text-blue-100:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(219 234 254 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-blue-200:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(191 219 254 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-blue-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(147 197 253 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-blue-400:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(96 165 250 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-gray-100:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(243 244 246 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-gray-200:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-gray-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-gray-400:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-gray-500:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-gray-600:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-gray-700:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-green-100:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(220 252 231 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-green-200:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(187 247 208 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-green-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(134 239 172 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-green-400:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(74 222 128 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-indigo-400:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(129 140 248 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-orange-100:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(255 237 213 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-orange-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(253 186 116 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-orange-400:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(251 146 60 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-purple-200:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(233 213 255 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-purple-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(216 180 254 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-purple-400:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(192 132 252 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-red-100:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(254 226 226 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-red-200:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(254 202 202 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-red-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(252 165 165 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-red-400:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-red-500:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-vendorsoluce-blue:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-vendorsoluce-light-green:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(102 187 106 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-vendorsoluce-teal:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(45 125 125 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-white:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-yellow-200:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(254 240 138 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-yellow-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(253 224 71 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-yellow-400:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(250 204 21 / var(--tw-text-opacity, 1));
+}
+
+.dark\:placeholder-gray-400:is(.dark *)::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-placeholder-opacity, 1));
+}
+
+.dark\:placeholder-gray-400:is(.dark *)::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-placeholder-opacity, 1));
+}
+
+.dark\:ring-blue-900\/20:is(.dark *) {
+  --tw-ring-color: rgb(30 58 138 / 0.2);
+}
+
+.dark\:placeholder\:text-gray-500:is(.dark *)::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+.dark\:placeholder\:text-gray-500:is(.dark *)::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+.dark\:hover\:border-gray-500:hover:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity, 1));
+}
+
+.dark\:hover\:border-gray-600:hover:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity, 1));
+}
+
+.dark\:hover\:border-vendorsoluce-teal:hover:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(45 125 125 / var(--tw-border-opacity, 1));
+}
+
+.dark\:hover\:bg-blue-900\/20:hover:is(.dark *) {
+  background-color: rgb(30 58 138 / 0.2);
+}
+
+.dark\:hover\:bg-gray-500:hover:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:hover\:bg-gray-600:hover:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:hover\:bg-gray-700:hover:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:hover\:bg-gray-800:hover:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:hover\:bg-gray-800\/50:hover:is(.dark *) {
+  background-color: rgb(31 41 55 / 0.5);
+}
+
+.dark\:hover\:bg-orange-900\/20:hover:is(.dark *) {
+  background-color: rgb(124 45 18 / 0.2);
+}
+
+.dark\:hover\:bg-red-900\/20:hover:is(.dark *) {
+  background-color: rgb(127 29 29 / 0.2);
+}
+
+.dark\:hover\:bg-vendorsoluce-dark-green:hover:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(42 86 24 / var(--tw-bg-opacity, 1));
+}
+
+.dark\:hover\:bg-vendorsoluce-green\/20:hover:is(.dark *) {
+  background-color: rgb(51 105 30 / 0.2);
+}
+
+.dark\:hover\:text-blue-200:hover:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(191 219 254 / var(--tw-text-opacity, 1));
+}
+
+.dark\:hover\:text-gray-200:hover:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity, 1));
+}
+
+.dark\:hover\:text-gray-300:hover:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity, 1));
+}
+
+.dark\:hover\:text-red-200:hover:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(254 202 202 / var(--tw-text-opacity, 1));
+}
+
+.dark\:hover\:text-red-300:hover:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(252 165 165 / var(--tw-text-opacity, 1));
+}
+
+.dark\:hover\:text-vendorsoluce-blue:hover:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity, 1));
+}
+
+.dark\:hover\:text-white:hover:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.peer:focus ~ .dark\:peer-focus\:ring-vendorsoluce-green\/40:is(.dark *) {
+  --tw-ring-color: rgb(51 105 30 / 0.4);
+}
+
+@media (min-width: 640px) {
+
+  .sm\:ml-2 {
+    margin-left: 0.5rem;
+  }
+
+  .sm\:inline {
+    display: inline;
+  }
+
+  .sm\:hidden {
+    display: none;
+  }
+
+  .sm\:h-12 {
+    height: 3rem;
+  }
+
+  .sm\:h-4 {
+    height: 1rem;
+  }
+
+  .sm\:h-7 {
+    height: 1.75rem;
+  }
+
+  .sm\:h-8 {
+    height: 2rem;
+  }
+
+  .sm\:w-12 {
+    width: 3rem;
+  }
+
+  .sm\:w-4 {
+    width: 1rem;
+  }
+
+  .sm\:w-7 {
+    width: 1.75rem;
+  }
+
+  .sm\:w-8 {
+    width: 2rem;
+  }
+
+  .sm\:w-auto {
+    width: auto;
+  }
+
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sm\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sm\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .sm\:flex-row {
+    flex-direction: row;
+  }
+
+  .sm\:items-center {
+    align-items: center;
+  }
+
+  .sm\:justify-between {
+    justify-content: space-between;
+  }
+
+  .sm\:gap-4 {
+    gap: 1rem;
+  }
+
+  .sm\:p-5 {
+    padding: 1.25rem;
+  }
+
+  .sm\:px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .sm\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .sm\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .sm\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .sm\:py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .sm\:pl-4 {
+    padding-left: 1rem;
+  }
+
+  .sm\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .sm\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .sm\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .sm\:text-\[10px\] {
+    font-size: 10px;
+  }
+
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .sm\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .sm\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .sm\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .sm\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .md\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+
+  .md\:mb-0 {
+    margin-bottom: 0px;
+  }
+
+  .md\:ml-6 {
+    margin-left: 1.5rem;
+  }
+
+  .md\:mt-0 {
+    margin-top: 0px;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:hidden {
+    display: none;
+  }
+
+  .md\:h-28 {
+    height: 7rem;
+  }
+
+  .md\:h-9 {
+    height: 2.25rem;
+  }
+
+  .md\:w-64 {
+    width: 16rem;
+  }
+
+  .md\:w-9 {
+    width: 2.25rem;
+  }
+
+  .md\:w-auto {
+    width: auto;
+  }
+
+  .md\:max-w-none {
+    max-width: none;
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
+  }
+
+  .md\:items-center {
+    align-items: center;
+  }
+
+  .md\:justify-between {
+    justify-content: space-between;
+  }
+
+  .md\:space-x-0\.5 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(0.125rem * var(--tw-space-x-reverse));
+    margin-left: calc(0.125rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
+  .md\:p-12 {
+    padding: 3rem;
+  }
+
+  .md\:pr-8 {
+    padding-right: 2rem;
+  }
+
+  .md\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .md\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .md\:text-\[10px\] {
+    font-size: 10px;
+  }
+
+  .md\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .md\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .md\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  .lg\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+
+  .lg\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+
+  .lg\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+
+  .lg\:h-32 {
+    height: 8rem;
+  }
+
+  .lg\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .lg\:flex-row {
+    flex-direction: row;
+  }
+
+  .lg\:flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  .lg\:items-start {
+    align-items: flex-start;
+  }
+
+  .lg\:items-center {
+    align-items: center;
+  }
+
+  .lg\:justify-between {
+    justify-content: space-between;
+  }
+
+  .lg\:gap-8 {
+    gap: 2rem;
+  }
+
+  .lg\:px-12 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .lg\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .lg\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .lg\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 1280px) {
+
+  .xl\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+
+  .xl\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+
+  .xl\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Light mode CSS variables */
+:root:not(.dark) {
+  --bg: #F9FAFB;
+  --bg-2: rgba(0,0,0,.04);
+  --card: rgba(255,255,255,.8);
+  --border: rgba(0,0,0,.12);
+  --text: rgba(0,0,0,.92);
+  --muted: rgba(0,0,0,.70);
+}
+
+/* Dark mode CSS variables */
+:root.dark {
+  --bg: #070A12;
+  --bg-2: rgba(255,255,255,.04);
+  --card: rgba(255,255,255,.06);
+  --border: rgba(255,255,255,.12);
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.70);
+}
+
+/* Base body styling - applies to all screen sizes */
+body {
+  background: var(--bg);
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Update body background for light mode */
+:root:not(.dark) body {
+  background: var(--bg) !important;
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+/* Update body background for dark mode */
+:root.dark body {
+  background: 
+    radial-gradient(1200px 800px at 20% 10%, rgba(0,163,255,.14), transparent 60%),
+    radial-gradient(900px 600px at 80% 0%, rgba(120,255,180,.10), transparent 60%),
+    radial-gradient(700px 500px at 70% 70%, rgba(0,114,198,.12), transparent 60%),
+    var(--bg) !important;
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+/* Ensure wrapper div also respects theme - override Tailwind classes */
+:root:not(.dark) #root > div,
+html:not(.dark) #root > div {
+  background-color: var(--bg) !important;
+}
+
+:root.dark #root > div,
+html.dark #root > div,
+.dark #root > div {
+  background-color: var(--bg) !important;
+}
+
+/* Explicit dark mode: main and sections so theme applies reliably */
+html.dark main,
+.dark main {
+  background-color: rgb(31 41 55 / 0.7) !important; /* gray-800/70 */
+}
+html.dark main section#problem,
+.dark main section#problem {
+  background-color: rgb(31 41 55 / 0.7) !important;
+}
+html.dark main section#solution,
+.dark main section#solution {
+  background-color: rgb(31 41 55 / 0.9) !important; /* gray-800/90 */
+}
+html.dark main section#cta,
+.dark main section#cta {
+  background-color: rgb(17 24 39) !important; /* gray-900 */
+}
+
+/* Pre-footer CTA: distinct from footer (gray-800), not same as footer (gray-900) */
+html.dark #action-cascade,
+.dark #action-cascade {
+  background-color: rgb(31 41 55) !important; /* gray-800 */
+}
+
+/* Hero section background - make overlay lighter in light mode */
+/* Target any absolute positioned divs inside hero section */
+:root:not(.dark) main > section.relative .absolute.inset-0,
+:root:not(.dark) main > section[class*="relative"] .absolute.inset-0 {
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+
+:root:not(.dark) main > section.relative .absolute.inset-0[class*="hero-overlay"],
+:root:not(.dark) main > section[class*="relative"] .absolute.inset-0[class*="hero-overlay"] {
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+:root:not(.dark) main > section.relative .absolute.inset-0[class*="hero-background"],
+:root:not(.dark) main > section[class*="relative"] .absolute.inset-0[class*="hero-background"] {
+  opacity: 0.3 !important;
+}
+/* Hero uses lighter green + stronger white overlay in light mode for a lighter section */
+:root:not(.dark) #hero .hero-background {
+  background-color: #4a7c59 !important; /* lighter sage green */
+  opacity: 1 !important;
+}
+:root:not(.dark) #hero .hero-overlay {
+  background: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* Hero section layout: content-sized, no stretch, clear spacing above metrics. */
+#hero {
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none;
+  display: block;
+  margin-bottom: 0 !important;
+  padding-bottom: 1.5rem !important;
+  box-sizing: border-box;
+}
+#hero .relative.z-20 > div {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+/* Overlay/background fill the hero only; no height:100% to avoid stretching section */
+#hero .hero-background,
+#hero .hero-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* Dark theme: align hero with page (gray-900) and ensure dark overlay for contrast */
+.dark #hero,
+html.dark #hero {
+  background-color: rgb(17 24 39);
+}
+.dark #hero .hero-background,
+.dark #hero .hero-overlay,
+html.dark #hero .hero-background,
+html.dark #hero .hero-overlay {
+  background-color: transparent;
+  background-image: none;
+}
+.dark #hero .hero-overlay,
+html.dark #hero .hero-overlay {
+  background: linear-gradient(to bottom, rgba(17,24,39,0.4) 0%, rgba(17,24,39,0.85) 100%);
+}
+
+/* Override Tailwind utility classes for light mode - sections after hero */
+:root:not(.dark) .bg-gray-900 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1)) !important;
+}
+
+:root:not(.dark) main > section.bg-gray-900,
+:root:not(.dark) main > section[class*="bg-gray-900"] {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1)) !important;
+}
+
+/* Hero section - special handling for light mode */
+:root:not(.dark) main > section.relative .absolute.inset-0.z-0,
+:root:not(.dark) main > section.relative .absolute.inset-0[class*="z-0"],
+:root:not(.dark) main > section[class*="relative"] .absolute.inset-0.z-0,
+:root:not(.dark) main > section[class*="relative"] .absolute.inset-0[class*="z-0"] {
+  background: rgba(255, 255, 255, 0.9) !important;
+  opacity: 1 !important;
+}
+
+:root:not(.dark) main > section.relative .absolute.inset-0.z-1,
+:root:not(.dark) main > section.relative .absolute.inset-0[class*="z-1"],
+:root:not(.dark) main > section[class*="relative"] .absolute.inset-0.z-1,
+:root:not(.dark) main > section[class*="relative"] .absolute.inset-0[class*="z-1"] {
+  background: rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+}
+
+/* Override section text colors in light mode only for non-hero sections (hero keeps white on dark bg) */
+:root:not(.dark) main > section.relative.text-white:not(#hero),
+:root:not(.dark) main > section[class*="relative"][class*="text-white"]:not(#hero),
+:root:not(.dark) main > section.relative.text-white:not(#hero) h1,
+:root:not(.dark) main > section.relative.text-white:not(#hero) h2,
+:root:not(.dark) main > section.relative.text-white:not(#hero) h3,
+:root:not(.dark) main > section.relative.text-white:not(#hero) p,
+:root:not(.dark) main > section.relative.text-white:not(#hero) span,
+:root:not(.dark) main > section[class*="relative"][class*="text-white"]:not(#hero) h1,
+:root:not(.dark) main > section[class*="relative"][class*="text-white"]:not(#hero) h2,
+:root:not(.dark) main > section[class*="relative"][class*="text-white"]:not(#hero) h3,
+:root:not(.dark) main > section[class*="relative"][class*="text-white"]:not(#hero) p,
+:root:not(.dark) main > section[class*="relative"][class*="text-white"]:not(#hero) span {
+  color: rgb(17 24 39) !important;
+}
+
+:root:not(.dark) main > section.relative.text-white:not(#hero) .text-gray-300,
+:root:not(.dark) main > section.relative.text-white:not(#hero) .text-gray-200,
+:root:not(.dark) main > section[class*="relative"][class*="text-white"]:not(#hero) .text-gray-300,
+:root:not(.dark) main > section[class*="relative"][class*="text-white"]:not(#hero) .text-gray-200 {
+  color: rgb(107 114 128) !important;
+}
+
+/* General text-white override for non-hero sections only (hero keeps white text on dark background) */
+:root:not(.dark) .text-white {
+  --tw-text-opacity: 1 !important;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1)) !important;
+}
+/* Hero headline block in light mode: dark text for contrast on light background */
+:root:not(.dark) #hero .max-w-7xl > div > div:first-child h1,
+:root:not(.dark) #hero .max-w-7xl > div > div:first-child h2,
+:root:not(.dark) #hero .max-w-7xl > div > div:first-child .text-white {
+  color: rgb(17 24 39) !important;
+}
+:root:not(.dark) #hero .max-w-7xl > div > div:first-child p,
+:root:not(.dark) #hero .max-w-7xl > div > div:first-child .text-gray-300 {
+  color: rgb(55 65 81) !important;
+}
+:root:not(.dark) #hero .max-w-7xl > div > div:first-child .text-red-400 {
+  color: rgb(185 28 28) !important;
+}
+:root:not(.dark) #hero .max-w-7xl .relative.z-20 > div:first-child .text-white {
+  color: rgb(17 24 39) !important;
+}
+/* Hero CTAs: ensure consistent contrast in both themes */
+:root:not(.dark) #hero .vs-btn-primary {
+  color: #ffffff !important;
+}
+:root:not(.dark) #hero .vs-btn-outline {
+  color: var(--vendorsoluce-green) !important;
+  border-color: var(--vendorsoluce-green) !important;
+}
+html.dark #hero .vs-btn-outline {
+  color: var(--vendorsoluce-light-green) !important;
+  border-color: var(--vendorsoluce-light-green) !important;
+}
+
+:root:not(.dark) main > section.bg-gray-900 h2,
+:root:not(.dark) main > section.bg-gray-900 h3,
+:root:not(.dark) main > section.bg-gray-900 p,
+:root:not(.dark) main > section[class*="bg-gray-900"] h2,
+:root:not(.dark) main > section[class*="bg-gray-900"] h3,
+:root:not(.dark) main > section[class*="bg-gray-900"] p {
+  --tw-text-opacity: 1 !important;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1)) !important;
+}
+
+:root:not(.dark) .text-gray-300 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1)) !important;
+}
+
+:root:not(.dark) .text-gray-400 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1)) !important;
+}
+
+/* Override dark cards for light mode */
+:root:not(.dark) .bg-gray-800 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1)) !important;
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1)) !important;
+}
+
+:root:not(.dark) .bg-gray-700 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1)) !important;
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1)) !important;
+}
+
+:root:not(.dark) .bg-gray-800 h3,
+:root:not(.dark) .bg-gray-800 p,
+:root:not(.dark) .bg-gray-700 h3,
+:root:not(.dark) .bg-gray-700 p {
+  --tw-text-opacity: 1 !important;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1)) !important;
+}
+
+:root:not(.dark) .bg-gray-800 .text-gray-300,
+:root:not(.dark) .bg-gray-700 .text-gray-300 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1)) !important;
+}
+
+:root:not(.dark) .bg-gray-800 .text-white,
+:root:not(.dark) .bg-gray-700 .text-white {
+  --tw-text-opacity: 1 !important;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1)) !important;
+}
+
+/* Override footer for light mode */
+:root:not(.dark) footer.bg-gray-900,
+:root:not(.dark) footer[class*="bg-gray-900"] {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1)) !important;
+}
+
+:root:not(.dark) footer.text-white,
+:root:not(.dark) footer[class*="text-white"],
+:root:not(.dark) footer .text-white {
+  --tw-text-opacity: 1 !important;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1)) !important;
+}
+
+:root:not(.dark) footer .text-gray-300,
+:root:not(.dark) footer .text-gray-400 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1)) !important;
+}
+
+:root:not(.dark) footer .border-gray-800 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1)) !important;
+}
+    .bg-vendorsoluce-green { background-color: var(--vendorsoluce-green); }
+    .text-vendorsoluce-green {
+      color: var(--vendorsoluce-green) !important;
+    }
+    
+    /* Ensure text-vendorsoluce-green is visible in light theme */
+    html:not(.dark) .text-vendorsoluce-green,
+    :not(.dark) .text-vendorsoluce-green {
+      color: var(--vendorsoluce-green) !important;
+    }
+    
+    /* Fix second line branding - use gray-700 in light theme instead of green/80 */
+    html:not(.dark) span[class*="text-vendorsoluce-green/80"],
+    :not(.dark) span[class*="text-vendorsoluce-green/80"] {
+      color: #374151 !important; /* gray-700 */
+    }
+    .bg-vendorsoluce-dark-green { background-color: var(--vendorsoluce-dark-green); }
+    .text-vendorsoluce-light-green { color: var(--vendorsoluce-light-green); }
+    .bg-vendorsoluce-pale-green { background-color: var(--vendorsoluce-pale-green); }
+    .border-vendorsoluce-green { border-color: var(--vendorsoluce-green); }
+    .hover\:bg-vendorsoluce-dark-green:hover { background-color: var(--vendorsoluce-dark-green); }
+    .hover\:bg-vendorsoluce-pale-green:hover { background-color: var(--vendorsoluce-pale-green); }
+    .hover\:text-vendorsoluce-green:hover { color: var(--vendorsoluce-green); }
+    /* CRITICAL: Dark mode branding - must be at the end for highest priority */
+    html.dark .text-vendorsoluce-green,
+    .dark .text-vendorsoluce-green,
+    html[class*="dark"] .text-vendorsoluce-green,
+    [class*="dark"] .text-vendorsoluce-green {
+      color: white !important;
+    }
+    html.dark .text-vendorsoluce-light-green,
+    .dark .text-vendorsoluce-light-green {
+      color: var(--vendorsoluce-light-green) !important;
+    }
+    /* Ensure second line branding uses green in dark mode - override opacity variant */
+    html.dark span[class*="text-vendorsoluce-green/80"],
+    .dark span[class*="text-vendorsoluce-green/80"],
+    html[class*="dark"] span[class*="text-vendorsoluce-green/80"],
+    [class*="dark"] span[class*="text-vendorsoluce-green/80"] {
+      color: var(--vendorsoluce-light-green) !important;
+    }</style>
+
+<!-- VSS static SEO: canonical + Open Graph + Twitter + JSON-LD (ERMITS baseline) -->
+<link rel="canonical" href="https://www.vendorsoluce.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ERMITS">
+<meta property="og:title" content="VendorSoluce&trade; - Vendor Risk Made Defensible | ERMITS">
+<meta property="og:description" content="Transform unclear third-party risk into prioritized decisions, evidence-backed approvals, and continuous oversight with VendorSoluce&trade;.">
+<meta property="og:image" content="https://www.vendorsoluce.com/social-preview.png">
+<meta property="og:url" content="https://www.vendorsoluce.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VendorSoluce&trade; - Vendor Risk Made Defensible | ERMITS">
+<meta name="twitter:description" content="Transform unclear third-party risk into prioritized decisions, evidence-backed approvals, and continuous oversight with VendorSoluce&trade;.">
+<meta name="twitter:image" content="https://www.vendorsoluce.com/social-preview.png">
+<meta name="twitter:url" content="https://www.vendorsoluce.com/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "VendorSoluce",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Vendor risk intelligence workspace for third-party risk review, dependency visibility, and supply chain assurance.",
+  "url": "https://www.vendorsoluce.com/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ERMITS",
+    "url": "https://ermits.com/"
+  }
+}
+</script>
+
+<!-- ERMITS global SEO bundle: merged into each page <head> by embed-header-footer.js (npm run build). Idempotent via meta name="ermits-seo-bundle". JSON-LD lives per-page (homepage SoftwareApplication; inner WebPage hybrid). -->
+<meta name="ermits-seo-bundle" content="1">
+<meta name="application-name" content="VendorSoluce">
+<meta name="author" content="ERMITS">
+<meta name="creator" content="ERMITS">
+<meta name="publisher" content="ERMITS">
+  <link href="assets/css/shell.css" rel="stylesheet"/>
+</head>
+  <body>
+    <!-- CANONICAL HEADER — Nav below; mobile drawer fragment: includes/mobile-menu-panel.html (npm run sync:mobile-menu). JS: assets/js/navigation.js -->
+<style>
+  .tagline-text { letter-spacing: -0.02em; margin-top: -3px; }
+#root, #root > div { pointer-events: auto !important; }
+  /* Theme toggle: match homepage header (fixed shape, color, contrast) on all pages */
+  nav [data-tour="theme-toggle"] button,
+  nav button[data-theme-toggle] {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    min-width: 2.25rem !important;
+    min-height: 2.25rem !important;
+    border-radius: 0.5rem !important;
+    background-color: rgb(243 244 246) !important;
+    color: rgb(55 65 81) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    transition: all 0.2s ease !important;
+  }
+  html.dark nav [data-tour="theme-toggle"] button,
+  html.dark nav button[data-theme-toggle] {
+    background-color: rgb(55 65 81) !important;
+    color: rgb(250 204 21) !important;
+  }
+  nav [data-tour="theme-toggle"] button:hover,
+  nav button[data-theme-toggle]:hover {
+    background-color: rgb(229 231 235) !important;
+  }
+  html.dark nav [data-tour="theme-toggle"] button:hover,
+  html.dark nav button[data-theme-toggle]:hover {
+    background-color: rgb(75 85 99) !important;
+  }
+  /* Theme toggle icons: same size and color on all pages */
+  nav [data-tour="theme-toggle"] button svg,
+  nav button[data-theme-toggle] svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    color: inherit !important;
+  }
+  nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
+  nav button[data-theme-toggle] .lucide-sun.hidden-icon {
+    color: rgb(245 158 11) !important; /* amber-500 when visible */
+  }
+</style>
+<nav class="glass-nav-vs fixed top-0 left-0 right-0 z-[99999] w-full max-w-[100vw]" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 w-full min-w-0">
+    <div class="grid h-16 w-full min-w-0 grid-cols-[minmax(0,1fr)_auto] md:grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-3 lg:gap-x-4">
+      <!-- Brand: logo + two-line branding — same logo size and text classes as footer (canonical) -->
+      <div class="flex items-center flex-shrink-0 min-w-0 md:max-w-none max-w-[calc(100%-60px)] col-start-1 row-start-1" data-tour="main-nav">
+        <a class="flex items-center min-w-0 group" href="/index.html">
+          <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" width="60" height="60" class="vs-brand-logo h-[3.75rem] w-[3.75rem] max-h-[3.75rem] max-w-[3.75rem] flex-shrink-0 transition-transform group-hover:scale-105 object-contain" loading="eager">
+          <span class="ml-1.5 min-w-0">
+            <span class="block text-[1.5rem] sm:text-[1.625rem] md:text-[1.75rem] font-bold text-vendorsoluce-green dark:text-white leading-tight">VendorSoluce&trade;</span>
+            <span class="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">Supply Chain Risk Intelligence</span>
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop nav: centered in middle column (md+) -->
+      <div class="hidden md:flex justify-center items-center min-w-0 relative z-[61] col-start-2 row-start-1">
+        <div class="flex items-center justify-center gap-1 flex-wrap">
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Home" href="/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-3.5 h-3.5 flex-shrink-0">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="How It Works" href="/how-it-works.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help w-3.5 h-3.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          How It Works
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Features" href="/features.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3.5 h-3.5 flex-shrink-0"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>Features</span>
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Vendor Review" href="/vendor-review.html" data-page="vendor-review">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check w-3.5 h-3.5 flex-shrink-0"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+          Vendor Review
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Trust" href="/trust.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-3.5 h-3.5 flex-shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+          </svg>
+          Trust
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Pricing" href="/pricing.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-3.5 h-3.5 flex-shrink-0">
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Pricing
+        </a>
+        </div>
+      </div>
+
+      
+      <div class="hidden md:flex items-center justify-end gap-2 flex-shrink-0 col-start-3 row-start-1">
+        <div data-tour="theme-toggle">
+          <button type="button" data-theme-toggle class="w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center flex-shrink-0" aria-label="Switch theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun w-5 h-5 text-amber-500 hidden-icon">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-5 h-5">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+            </svg>
+          </button>
+        </div>
+        <div data-tour="user-menu">
+          <a id="header-account-link-desktop" href="/account.html" data-nav="account" class="inline-flex w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 items-center justify-center flex-shrink-0" aria-label="User Account">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-5 h-5">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile: theme, menu; account inside drawer -->
+      <div class="flex items-center justify-end md:hidden flex-shrink-0 gap-1.5 col-start-2 row-start-1">
+        <div data-tour="theme-toggle">
+          <button type="button" data-theme-toggle class="w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center flex-shrink-0" aria-label="Switch theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun w-5 h-5 text-amber-500 hidden-icon"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-5 h-5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+          </button>
+        </div>
+        <button type="button" id="mobile-menu-hamburger-btn" data-mobile-menu-button="true" class="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none flex-shrink-0 w-9 h-9" aria-label="Open menu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+            <line x1="4" x2="20" y1="12" y2="12"></line>
+            <line x1="4" x2="20" y1="6" y2="6"></line>
+            <line x1="4" x2="20" y1="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Mobile menu and active nav: single source of truth in assets/js/navigation.js (injected by embed or loaded by page) -->
+
+<!-- Mobile Menu Panel (matches desktop nav order exactly) -->
+<div data-mobile-menu="true" class="md:hidden fixed left-0 right-0 z-50 hidden mobile-menu-position">
+  <div class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200/60 dark:border-gray-700/60 shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-3">
+      <div class="space-y-2">
+        <a href="/index.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home
+        </a>
+        <a href="/how-it-works.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help w-3.5 h-3.5 mr-2 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          How It Works
+        </a>
+        <a href="/features.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 mr-2">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+            <path d="M5 3v4"></path>
+            <path d="M19 17v4"></path>
+            <path d="M3 5h4"></path>
+            <path d="M17 19h4"></path>
+          </svg>
+          Features
+        </a>
+        <a href="/vendor-review.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center" data-page="vendor-review">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check w-3.5 h-3.5 mr-2 flex-shrink-0"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+          Vendor Review
+        </a>
+        <a href="/trust.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+          </svg>
+          Trust
+        </a>
+        <a href="/pricing.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Pricing
+        </a>
+        <a href="/faq.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle w-4 h-4 mr-2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+          FAQ
+        </a>
+        <div class="pt-2 border-t border-gray-200 dark:border-gray-700">
+          <a id="header-account-link" href="/account.html" class="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-4 h-4 mr-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Account
+          </a>
+        </div>
+      </div>
+      <div class="px-4 py-2 border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Legal</div>
+        <div class="space-y-1">
+          <a href="/legal/privacy-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Privacy Policy
+          </a>
+          <a href="/legal/cookie-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 15.5v.01"></path><path d="M12 12v.01"></path><path d="M11 17v.01"></path><path d="M7 14v.01"></path></svg>
+            Cookie Policy
+          </a>
+          <a href="/legal/terms.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+            Terms of Service
+          </a>
+          <a href="/legal/acceptable-use-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+            Acceptable Use Policy
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 pt-[var(--nav-height,64px)] bg-gray-100 dark:bg-gray-800/70">
+
+
+<section id="hero" class="relative text-white pt-4 sm:pt-6 pb-10 sm:pb-16 px-6 sm:px-8 lg:px-12 overflow-hidden">
+  <div class="absolute inset-0 z-0 hero-background"></div>
+  <div class="absolute inset-0 z-1 hero-overlay"></div>
+
+  <!-- Animated grid overlay (brand-green tint, mirrors CyberCaution pattern) -->
+  <div class="vs-hero-bg-layer z-[2] opacity-30">
+    <div class="h-full w-full vs-animated-grid"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto relative z-20">
+    <div class="max-w-3xl mx-auto text-center vs-fade-in-up">
+      <div class="vs-kicker mx-auto w-fit mb-4">Supply Chain Risk Intelligence</div>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white leading-tight">Understand Risk Across Your <span class="text-vendorsoluce-green dark:text-white">Vendor Ecosystem</span></h1>
+      <p class="text-lg md:text-xl text-gray-300 mb-7 leading-relaxed">Anticipate cascade failures before disruption spreads. NIST SP 800-161 aligned — from inherent risk through defensible decisions.</p>
+      <!-- Primary CTAs — mirrors CyberCaution/CyberCorrect hero CTA pattern -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6 mb-3">
+        <a href="radar/vendor-threat-radar.html" class="vs-btn-primary group">
+          Review Your Vendors
+          <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="https://www.platform.vendorsoluce.com/supply-chain-assessment" target="_blank" rel="noopener" class="vs-btn-outline group text-sm">
+          Assess Your Supply Chain
+          <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+      <p class="text-xs text-gray-600 dark:text-white/60 mb-6">No account required · 4–7 hours to first visibility · NIST SP 800-161 aligned</p>
+    </div>
+  </div>
+</section>
+<!-- Built differently: architecture & capabilities (compact, distinct from trust) -->
+<section class="pt-6 md:pt-8 pb-6 md:pb-8 bg-gray-100/80 dark:bg-gray-800/50 backdrop-blur-sm relative z-10" id="built-differently">
+  <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div class="vs-card p-6 md:p-8 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-lg">
+      <div class="text-center mb-6">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2">Built with privacy by design for defensible outcomes</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-300 max-w-xl mx-auto">Architecture and capabilities for defensible outcomes, not just checklists.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="rounded-lg border border-vendorsoluce-green/30 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Runs where you need it</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Browser-first, local build, or API-backed — one stack, configuration-gated delivery. Your environment drives the topology.</p>
+        </div>
+        <div class="rounded-lg border border-vendorsoluce-green/30 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Data under your control</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Client-side execution and optional air-gapped builds. Processing and storage stay inside your boundary.</p>
+        </div>
+        <div class="rounded-lg border border-vendorsoluce-green/30 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Audit-ready by design</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Single data model and audit trail from ingestion to approval. NIST SP 800-161–informed schema for structurally defensible outputs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Problem: surface risk before it becomes a breach (narrative + merged CTA copy) -->
+<section id="problem" class="pt-12 md:pt-16 pb-12 md:pb-16 px-6 sm:px-8 lg:px-12 section-alt relative z-10">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12 vs-fade-in-up">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white leading-tight">Surface risk before it becomes a breach.</h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-0">When vendor risk stays hidden or overlooked, it compounds—leadership lacks clear answers and failure modes go unaddressed. VendorSoluce&trade; surfaces that risk: get a clear view of exposure, prioritized next steps, and evidence-backed approvals, NIST SP 800-161 aligned.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 md:mb-12">
+      <div class="vs-card vs-problem-card-red p-6 vs-fade-in-up vs-delay-100">
+        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white">Reviews vs. defensible decisions</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Vendors are "reviewed," but approvals can't be justified under audit or executive scrutiny.</p>
+        <p class="text-sm text-gray-700 dark:text-gray-200"><span class="font-semibold">How we help:</span> <a href="how-it-works.html" class="text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">NIST-aligned assessments</a> and <a href="https://www.platform.vendorsoluce.com" target="_blank" rel="noopener noreferrer" class="text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">Evidence Vault</a> — link controls to proof so decisions are defensible.</p>
+      </div>
+      <div class="vs-card vs-problem-card-amber p-6 vs-fade-in-up vs-delay-200">
+        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white">Documents vs. accountable evidence</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Documents exist, but they aren't connected to decisions, owners, and explicit risk acceptance.</p>
+        <p class="text-sm text-gray-700 dark:text-gray-200"><span class="font-semibold">How we help:</span> <a href="features.html" class="text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">Evidence Vault</a> and <a href="features.html#remediation" class="text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">remediation tracker</a> — connect evidence to decisions and risk acceptance.</p>
+      </div>
+      <div class="vs-card vs-problem-card-amber p-6 vs-fade-in-up vs-delay-300">
+        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white">Signals vs. actions</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Signals appear, but they don't trigger reassessment. Drift becomes surprise.</p>
+        <p class="text-sm text-gray-700 dark:text-gray-200"><span class="font-semibold">How we help:</span> <a href="radar/vendor-threat-radar.html" class="text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">Vendor Threat Radar</a> and continuous monitoring — so drift triggers reassessment.</p>
+      </div>
+    </div>
+    <div class="text-center mt-10">
+      <a href="how-it-works.html" class="inline-flex items-center gap-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green font-semibold hover:underline">See How It Works <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+<!-- Solution: 3 steps (styling aligned with CyberCaution/CyberCorrect) -->
+<section id="solution" class="pt-12 md:pt-16 pb-6 md:pb-8 px-6 sm:px-8 lg:px-12 bg-white dark:bg-gray-900 relative z-10">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10 vs-fade-in-up">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white leading-tight">Three steps to vendor risk readiness.</h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">From risk visibility through assessment to evidence-backed decisions — a structured workflow that keeps pace with vendor and supply chain risk.</p>
+    </div>
+    <div class="vs-solution-steps mb-10">
+        <!-- Card 1: Radar — map the vendor landscape -->
+        <div class="vs-card vs-step-card vs-solution-step p-6 flex flex-col vs-fade-in-up vs-delay-100">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-full bg-vendorsoluce-green/10 flex items-center justify-center flex-shrink-0">
+              <span class="text-xl font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green">1</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Map vendor inherent risk</h3>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-2 leading-relaxed">Import vendors in bulk or add them one at a time. The Radar heatmap surfaces inherent risk, sector, and geography so priorities stay visible at a glance.</p>
+          <div class="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 mb-4 w-full shrink-0">
+            <img src="assets/images/vs-inherent-risk.png" alt="Inherent risk scoring — five-domain weighted assessment with score summary and tier" class="w-full h-auto block" loading="lazy" onerror="this.style.display='none'"/>
+          </div>
+          <a href="radar/vendor-threat-radar.html" class="group inline-flex items-center gap-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green font-semibold text-sm hover:underline">
+            Open Vendor Threat Radar
+            <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+        <!-- Card 2: Exposure — assess risk across the supply chain -->
+        <div class="vs-card vs-step-card vs-solution-step p-6 flex flex-col vs-fade-in-up vs-delay-200">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-full bg-vendorsoluce-green/10 flex items-center justify-center flex-shrink-0">
+              <span class="text-xl font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green">2</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Assess supply chain readiness</h3>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-2 leading-relaxed">Run NIST SP 800-161–aligned assessments across vendors and the wider supply chain. You get gap analysis and a clear, prioritized path for the next practical steps.</p>
+          <div class="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 mb-4 w-full shrink-0">
+            <img src="assets/images/vs-executive-summary.png" alt="Executive summary — portfolio snapshot, risk distribution, and vendor risk register" class="w-full h-auto block" loading="lazy" onerror="this.style.display='none'"/>
+          </div>
+          <a href="https://www.platform.vendorsoluce.com/supply-chain-assessment" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green font-semibold text-sm hover:underline">
+            Run supply chain assessment
+            <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+        <!-- Card 3: Dependency — track due diligence and evidence -->
+        <div class="vs-card vs-step-card vs-solution-step p-6 flex flex-col vs-fade-in-up vs-delay-300">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-full bg-vendorsoluce-green/10 flex items-center justify-center flex-shrink-0">
+              <span class="text-xl font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green">3</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Evidence-backed due diligence</h3>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-2 leading-relaxed">In the <strong>VendorSoluce&trade; Portal</strong>, close the loop on Radar findings: vendor assurance, evidence, remediation, and approvals. Decisions stay audit-ready and defensible.</p>
+          <div class="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 mb-4 w-full shrink-0">
+            <img src="assets/images/vs-due-diligence.png" alt="Due diligence recommendation — assessment depth tiers from enhanced to lightweight with control counts" class="w-full h-auto block" loading="lazy" onerror="this.style.display='none'"/>
+          </div>
+          <a href="https://www.portal.vendorsoluce.com" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green font-semibold text-sm hover:underline">
+            Open VendorSoluce&trade; Portal
+            <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+    </div>
+    <div class="text-center mt-12 mb-5 md:mb-8">
+      <a href="features.html" class="group inline-flex items-center gap-1.5 text-vendorsoluce-green dark:text-vendorsoluce-light-green font-semibold hover:underline">Explore Features<svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+<!-- Evolving options for risk intelligence -->
+<section id="deployment" class="pt-12 md:pt-16 pb-12 md:pb-16 px-6 sm:px-8 lg:px-12 section-alt relative z-10" aria-labelledby="deployment-heading">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-10 vs-fade-in-up">
+      <h2 id="deployment-heading" class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white leading-tight">Try free now, or get a version for your team</h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Use it in your browser with no sign-up, install it on your own systems, or run a shared version for your organization.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Option 1: Browser-based (free) -->
+      <div class="vs-card p-6 flex flex-col vs-fade-in-up vs-delay-100 group/card hover:shadow-lg hover:border-vendorsoluce-green/20 transition-all duration-200">
+        <div class="flex items-start gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-vendorsoluce-green/10 flex items-center justify-center flex-shrink-0 group-hover/card:bg-vendorsoluce-green/15 transition-colors" aria-hidden="true">
+            <svg class="w-5 h-5 text-vendorsoluce-green dark:text-vendorsoluce-light-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-gray-900 dark:text-white leading-snug min-w-0 pt-0.5">Use it in your browser</h3>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 flex-1">See which vendors and supply chains carry more risk — no account or setup. Your data stays in your browser.</p>
+        <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-2 mb-5" role="list">
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-vendorsoluce-green ring-1 ring-inset ring-vendorsoluce-green/25 dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-light-green/30" aria-hidden="true"><svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span class="min-w-0 leading-snug">No sign-up required</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-vendorsoluce-green ring-1 ring-inset ring-vendorsoluce-green/25 dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-light-green/30" aria-hidden="true"><svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span class="min-w-0 leading-snug">Data stays in your browser</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-vendorsoluce-green ring-1 ring-inset ring-vendorsoluce-green/25 dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-light-green/30" aria-hidden="true"><svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span class="min-w-0 leading-snug">Start in minutes</span></li>
+        </ul>
+        <a href="https://www.platform.vendorsoluce.com/supply-chain-assessment" target="_blank" rel="noopener noreferrer" class="group/link inline-flex items-center gap-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green font-semibold text-sm hover:underline mt-auto">
+          Try it free
+          <svg class="w-4 h-4 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+      <!-- Option 2: Local build (gated delivery) -->
+      <div class="vs-card p-6 flex flex-col border-vendorsoluce-green/30 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 dark:border-vendorsoluce-green/40 vs-fade-in-up vs-delay-200 group/card hover:shadow-lg hover:border-vendorsoluce-green/40 transition-all duration-200">
+        <div class="flex items-start gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-vendorsoluce-green/10 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+            <svg class="w-5 h-5 text-vendorsoluce-green dark:text-vendorsoluce-light-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="12" x="3" y="4" rx="2"/><path d="M3 16h18M8 20h8M12 16v4"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-gray-900 dark:text-white leading-snug min-w-0 pt-0.5">Install on your own systems</h3>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 flex-1">Run a version on your computers or network. Works offline; your data never has to leave your control.</p>
+        <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-2 mb-5" role="list">
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-vendorsoluce-green ring-1 ring-inset ring-vendorsoluce-green/25 dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-light-green/30" aria-hidden="true"><svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span class="min-w-0 leading-snug">Works offline</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-vendorsoluce-green ring-1 ring-inset ring-vendorsoluce-green/25 dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-light-green/30" aria-hidden="true"><svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span class="min-w-0 leading-snug">Your data stays local</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-vendorsoluce-green ring-1 ring-inset ring-vendorsoluce-green/25 dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-light-green/30" aria-hidden="true"><svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span class="min-w-0 leading-snug">Available after a short setup</span></li>
+        </ul>
+        <a href="download.html" class="group/link inline-flex items-center gap-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green font-semibold text-sm hover:underline mt-auto">
+          Get local version
+          <svg class="w-4 h-4 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        </a>
+      </div>
+      <!-- Option 3: Managed platform -->
+      <div class="vs-card p-6 flex flex-col vs-fade-in-up vs-delay-300 group/card hover:shadow-lg hover:border-vendorsoluce-green/20 transition-all duration-200">
+        <div class="flex items-start gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-vendorsoluce-green/10 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+            <svg class="w-5 h-5 text-vendorsoluce-green dark:text-vendorsoluce-light-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01"/><path d="M6 18h.01"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-gray-900 dark:text-white leading-snug min-w-0 pt-0.5">A shared version for your organization</h3>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 flex-1">Your whole team can assess vendors, store evidence, and keep records for audits — all in one place.</p>
+        <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-2 mb-5" role="list">
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-vendorsoluce-green ring-1 ring-inset ring-vendorsoluce-green/25 dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-light-green/30" aria-hidden="true"><svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span class="min-w-0 leading-snug">For your whole organization</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-vendorsoluce-green ring-1 ring-inset ring-vendorsoluce-green/25 dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-light-green/30" aria-hidden="true"><svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span class="min-w-0 leading-snug">Secure storage for evidence &amp; audits</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-vendorsoluce-green ring-1 ring-inset ring-vendorsoluce-green/25 dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-light-green/30" aria-hidden="true"><svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span class="min-w-0 leading-snug">Built for teams</span></li>
+        </ul>
+        <a href="contact.html" class="group/link inline-flex items-center gap-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green font-semibold text-sm hover:underline mt-auto">
+          Contact us
+          <svg class="w-4 h-4 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="text-center mt-8 md:mt-10">
+      <a href="pricing.html" class="inline-flex items-center gap-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green font-semibold hover:underline">View pricing<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+    </main>
+
+<!-- Pre-footer CTA (above footer, distinct from footer - uses gray-800 in dark mode) -->
+<div id="action-cascade" class="w-full pt-10 md:pt-12 lg:pt-14 pb-16 sm:pb-20 md:pb-24 px-6 sm:px-10 lg:px-14 bg-vendorsoluce-green/5 dark:bg-gray-800" role="complementary" aria-label="Next steps">
+  <div class="max-w-3xl mx-auto text-center px-4 sm:px-6 py-4 md:py-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">Assess your supply chain. Start here.</h2>
+    <p class="text-gray-600 dark:text-gray-300 text-sm mb-8">Run a supply chain assessment to get a clear view of risk. You can also <a href="radar/vendor-threat-radar.html" class="text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline font-medium">map vendors first in the threat radar</a>.</p>
+    <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-10 md:gap-12">
+      <a href="https://www.platform.vendorsoluce.com/supply-chain-assessment" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white bg-vendorsoluce-green hover:bg-vendorsoluce-dark-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-vendorsoluce-green/50 shadow-md hover:shadow-lg transition-all duration-200">Start Free Assessment <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      <a href="radar/vendor-threat-radar.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green bg-white dark:bg-gray-900 border-2 border-vendorsoluce-green dark:border-vendorsoluce-light-green hover:bg-vendorsoluce-green/5 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-vendorsoluce-green/40 dark:focus:ring-offset-gray-800 transition-all duration-200">Vendor Radar <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Footer branding styles */
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.brand-name {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--vendorsoluce-green);
+  margin-bottom: 2px;
+}
+.dark .brand-name {
+  color: white;
+}
+.brand-tagline {
+  font-size: 13px;
+  color: #6B7280;
+  margin-bottom: 1px;
+}
+.dark .brand-tagline {
+  color: #94A3B8;
+}
+.brand-attribution {
+  font-size: 11px;
+  color: #6B7280;
+}
+.dark .brand-attribution {
+  color: #94A3B8;
+}
+
+/* Dark mode footer - ensure background and text apply when Tailwind dark: is used */
+html.dark footer#footer,
+html.dark footer,
+.dark footer#footer,
+.dark footer {
+  background-color: rgb(17 24 39) !important; /* gray-900 */
+  color: rgb(255 255 255) !important;
+  border-top-color: rgb(31 41 55) !important; /* gray-800 */
+}
+html.dark footer .text-gray-500,
+html.dark footer .text-gray-600,
+.dark footer .text-gray-500,
+.dark footer .text-gray-600 {
+  color: rgb(209 213 219) !important; /* gray-300 */
+}
+html.dark footer .text-gray-400,
+.dark footer .text-gray-400 {
+  color: rgb(156 163 175) !important; /* gray-400 */
+}
+html.dark footer .border-gray-200\/50,
+html.dark footer .border-gray-700\/50,
+.dark footer .border-gray-200\/50,
+.dark footer .border-gray-700\/50 {
+  border-color: rgba(55, 65, 81, 0.5) !important; /* gray-700/50 */
+}
+
+/* Make footer borders extremely subtle - match background colors */
+footer.bg-white,
+footer[class*="bg-white"],
+footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.02) !important;
+}
+html.dark footer.bg-gray-800,
+html.dark footer[class*="bg-gray-800"],
+html.dark footer.bg-gray-900,
+html.dark footer[class*="bg-gray-900"],
+html.dark footer {
+  border-top: 1px solid rgba(31, 41, 55, 0.03) !important;
+}
+footer > div > div:last-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.02) !important;
+}
+html.dark footer > div > div:last-child {
+  border-top: 1px solid rgba(31, 41, 55, 0.03) !important;
+}
+</style>
+<!-- CANONICAL FOOTER TEMPLATE — Exact copy from index.html. Do not change; validate before propagating to other pages. -->
+<footer id="footer" class="bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white border-t border-gray-300 dark:border-gray-800 w-full flex-shrink-0">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-1.5 pb-0 w-full min-w-0">
+    <div class="vs-footer-grid grid grid-cols-1 md:grid-cols-5 gap-2 lg:gap-3 md:gap-x-4 w-full">
+
+      <!-- Company Info - CANONICAL FOOTER BRANDING: logo + three text lines (VendorSoluce&trade; / Supply Chain Risk Intelligence / by ERMITS). Do not change layout; this is the reference for all pages. -->
+      <div class="col-span-1 md:col-span-2 md:pr-4">
+        <div class="vs-footer-branding flex items-center mb-2">
+          <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" width="60" height="60" class="vs-brand-logo h-[3.75rem] w-[3.75rem] max-h-[3.75rem] max-w-[3.75rem] flex-shrink-0 transition-transform hover:scale-105 object-contain" loading="eager">
+          <span class="ml-1.5 min-w-0">
+            <span class="block text-[1.5rem] sm:text-[1.625rem] md:text-[1.75rem] font-bold text-vendorsoluce-green dark:text-white leading-tight">VendorSoluce&trade;</span>
+            <span class="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">Supply Chain Risk Intelligence</span>
+            <span class="block text-sm leading-tight text-gray-500 dark:text-gray-400 font-normal">by ERMITS</span>
+          </span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-snug">
+          Comprehensive supply chain risk management platform for modern organizations featuring assessments and automated compliance tools.
+        </p>
+      </div>
+
+      <!-- Solutions (platform/portal features) - absolute URLs so links work from vendorsoluce.com and from both www.platform.vendorsoluce.com and platform.vendorsoluce.com -->
+      <div class="md:pl-2">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Solutions</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="https://www.platform.vendorsoluce.com/supply-chain-assessment?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Supply Chain Assessment</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.platform.vendorsoluce.com/vendors?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+              <span>Vendor Dashboard</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.vendorsoluce.com/radar/vendor-threat-radar.html" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"></path><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Vendor Threat Radar</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.portal.vendorsoluce.com?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+              <span>Vendor Assurance Portal</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="md:pl-4">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Resources</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="/faq.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+              <span>FAQ</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/tutorial.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+              <span>Tutorial</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/best-practices.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
+              <span>Best Practices</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/download.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+              <span>Download</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/contact.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              <span>Contact</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="md:pl-2">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Legal</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="/legal/terms.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+              <span>Terms of Service</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/privacy-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>Privacy Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/cookie-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 15.5v.01"></path><path d="M12 12v.01"></path><path d="M11 17v.01"></path><path d="M7 14v.01"></path></svg>
+              <span>Cookie Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/acceptable-use-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+              <span>Acceptable Use Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Last row across all breakpoints: copyright left, badge right -->
+      <div class="col-span-full mt-1 pt-1 border-t border-gray-200/50 dark:border-gray-700/50 flex w-full flex-row flex-nowrap items-center justify-between gap-x-3 min-w-0 overflow-hidden">
+        <div class="min-w-0 flex-1 overflow-hidden">
+          <span class="text-xs text-gray-500 dark:text-gray-400 truncate block">&copy; 2026 ERMITS LLC. All rights reserved.</span>
+        </div>
+        <div class="flex flex-shrink-0 flex-nowrap items-center gap-x-4 ml-auto">
+          <div class="flex flex-shrink-0 items-center space-x-1.5 whitespace-nowrap px-2.5 py-1.5 rounded-lg bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 border border-vendorsoluce-green/30 dark:border-vendorsoluce-green/40">
+            <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" class="w-3.5 h-3.5 block opacity-100" loading="eager">
+            <span class="text-xs font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green">Local browser-based analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="includes/active-nav.js"></script>
+  <script>
+    // Breadcrumb height calculation
+    (function(){
+      function update(){
+        const bc = document.querySelector('[data-breadcrumb="true"], nav[aria-label="Breadcrumb"]');
+        document.documentElement.style.setProperty('--breadcrumb-height', bc ? (bc.offsetHeight + 'px') : '0px');
+      }
+      window.addEventListener('load', update);
+      window.addEventListener('resize', update);
+      document.addEventListener('DOMContentLoaded', update);
+    })();
+  </script>  <script src="assets/js/generated/route-manifest.js"></script>
+  <script src="assets/js/portal-config.js"></script>
+  <script src="assets/js/portal-links.js"></script>
+  <script src="includes/analytics.js" defer></script>
+
+</body>
+</html>

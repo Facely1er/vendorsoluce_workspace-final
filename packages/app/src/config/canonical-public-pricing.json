@@ -1,0 +1,9 @@
+{
+  "_doc": "Canonical public USD list prices in cents. Source: packages/website/pricing.html (https://www.vendorsoluce.com/pricing). Change website, this file, and Stripe Prices/Payment Links together.",
+  "starterOneTimeCents": 99900,
+  "starterUpdatesYearlyCents": 9900,
+  "professionalMonthlyCents": 18900,
+  "professionalAnnualCents": 181400,
+  "enterpriseMonthlyCents": 54900,
+  "enterpriseAnnualCents": 527000
+}

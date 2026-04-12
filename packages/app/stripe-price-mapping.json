@@ -1,0 +1,222 @@
+{
+  "prod_enterprise_plus_annual": [
+    {
+      "id": "price_1SDeb3IUB3FoXZdhQHPKzfEy",
+      "amount": 671000,
+      "interval": "year",
+      "nickname": "Enterprise Plus Annual"
+    }
+  ],
+  "prod_enterprise_plus": [
+    {
+      "id": "price_1SDeb3IUB3FoXZdhAiZ0Cryw",
+      "amount": 69900,
+      "interval": "month",
+      "nickname": "Enterprise Plus Monthly"
+    },
+    {
+      "id": "price_1SDeb3IUB3FoXZdhoh3lIaiM",
+      "amount": 671000,
+      "interval": "year",
+      "nickname": "Enterprise Plus Annual"
+    }
+  ],
+  "prod_compliance_suite_annual": [
+    {
+      "id": "price_1SDeb4IUB3FoXZdhqXd51W7C",
+      "amount": 287000,
+      "interval": "year",
+      "nickname": "Compliance Suite Annual"
+    }
+  ],
+  "prod_compliance_suite": [
+    {
+      "id": "price_1SDeb4IUB3FoXZdhfm0xRNs7",
+      "amount": 29900,
+      "interval": "month",
+      "nickname": "Compliance Suite Monthly"
+    },
+    {
+      "id": "price_1SDeb4IUB3FoXZdheg2gbYTo",
+      "amount": 287000,
+      "interval": "year",
+      "nickname": "Compliance Suite Annual"
+    }
+  ],
+  "prod_white_label_branding_annual": [
+    {
+      "id": "price_1SDeb5IUB3FoXZdhVnRVzEP8",
+      "amount": 48000,
+      "interval": "year",
+      "nickname": "White-Label Branding Annual"
+    }
+  ],
+  "prod_white_label_branding": [
+    {
+      "id": "price_1SDeb5IUB3FoXZdhhyykch2G",
+      "amount": 5000,
+      "interval": "month",
+      "nickname": "White-Label Branding Monthly"
+    },
+    {
+      "id": "price_1SDeb5IUB3FoXZdhPQReXHuc",
+      "amount": 48000,
+      "interval": "year",
+      "nickname": "White-Label Branding Annual"
+    }
+  ],
+  "prod_compliance_consulting_annual": [
+    {
+      "id": "price_1SDeb5IUB3FoXZdhxBRpbHCr",
+      "amount": 192000,
+      "interval": "year",
+      "nickname": "Compliance Consulting Annual"
+    }
+  ],
+  "prod_compliance_consulting": [
+    {
+      "id": "price_1SDeb6IUB3FoXZdhvMWpC2wD",
+      "amount": 20000,
+      "interval": "month",
+      "nickname": "Compliance Consulting Monthly"
+    },
+    {
+      "id": "price_1SDeb6IUB3FoXZdhx3gbyyVI",
+      "amount": 192000,
+      "interval": "year",
+      "nickname": "Compliance Consulting Annual"
+    }
+  ],
+  "prod_additional_vendors_annual": [
+    {
+      "id": "price_1SDeb6IUB3FoXZdhjn3eIsqu",
+      "amount": 1900,
+      "interval": "year",
+      "nickname": "Additional Vendors Annual"
+    }
+  ],
+  "prod_additional_vendors": [
+    {
+      "id": "price_1SDeb7IUB3FoXZdhZy1NxkUb",
+      "amount": 200,
+      "interval": "month",
+      "nickname": "Additional Vendors Monthly"
+    },
+    {
+      "id": "price_1SDeb7IUB3FoXZdhIIop7wuC",
+      "amount": 1900,
+      "interval": "year",
+      "nickname": "Additional Vendors Annual"
+    }
+  ],
+  "prod_additional_users_annual": [
+    {
+      "id": "price_1SDeb7IUB3FoXZdhgZESnEh1",
+      "amount": 4800,
+      "interval": "year",
+      "nickname": "Additional Users Annual"
+    }
+  ],
+  "prod_additional_users": [
+    {
+      "id": "price_1SDeb8IUB3FoXZdhqpR5LPZf",
+      "amount": 500,
+      "interval": "month",
+      "nickname": "Additional Users Monthly"
+    },
+    {
+      "id": "price_1SDeb8IUB3FoXZdhbJcS7CeL",
+      "amount": 4800,
+      "interval": "year",
+      "nickname": "Additional Users Annual"
+    }
+  ],
+  "prod_federal_annual": [
+    {
+      "id": "price_1SDeb8IUB3FoXZdhvwTx5S9E",
+      "amount": 0,
+      "interval": "year",
+      "nickname": "Federal Annual"
+    }
+  ],
+  "prod_federal": [
+    {
+      "id": "price_1SDeb9IUB3FoXZdhzIA6mzZN",
+      "amount": 0,
+      "interval": "month",
+      "nickname": "Federal Monthly"
+    },
+    {
+      "id": "price_1SDeb9IUB3FoXZdhhOn1aCgE",
+      "amount": 0,
+      "interval": "year",
+      "nickname": "Federal Annual"
+    }
+  ],
+  "prod_enterprise_annual": [
+    {
+      "id": "price_1SDeb9IUB3FoXZdhuAGQDAnH",
+      "amount": 431000,
+      "interval": "year",
+      "nickname": "Enterprise Annual"
+    }
+  ],
+  "prod_enterprise": [
+    {
+      "id": "price_1SDebAIUB3FoXZdhVCNrKzTl",
+      "amount": 44900,
+      "interval": "month",
+      "nickname": "Enterprise Monthly"
+    },
+    {
+      "id": "price_1SDebAIUB3FoXZdhxCMBROTw",
+      "amount": 431000,
+      "interval": "year",
+      "nickname": "Enterprise Annual"
+    }
+  ],
+  "prod_professional_annual": [
+    {
+      "id": "price_1SDebAIUB3FoXZdhLz1CmYab",
+      "amount": 143000,
+      "interval": "year",
+      "nickname": "Professional Annual"
+    }
+  ],
+  "prod_professional": [
+    {
+      "id": "price_1SDebBIUB3FoXZdhcPdM4wpJ",
+      "amount": 14900,
+      "interval": "month",
+      "nickname": "Professional Monthly"
+    },
+    {
+      "id": "price_1SDebBIUB3FoXZdhkYjMHNtc",
+      "amount": 143000,
+      "interval": "year",
+      "nickname": "Professional Annual"
+    }
+  ],
+  "prod_starter_annual": [
+    {
+      "id": "price_1SDebBIUB3FoXZdhpdchq6ar",
+      "amount": 47000,
+      "interval": "year",
+      "nickname": "Starter Annual"
+    }
+  ],
+  "prod_starter": [
+    {
+      "id": "price_1SDebCIUB3FoXZdh8dp42ehe",
+      "amount": 4900,
+      "interval": "month",
+      "nickname": "Starter Monthly"
+    },
+    {
+      "id": "price_1SDebCIUB3FoXZdhoTWIonmT",
+      "amount": 47000,
+      "interval": "year",
+      "nickname": "Starter Annual"
+    }
+  ]
+}

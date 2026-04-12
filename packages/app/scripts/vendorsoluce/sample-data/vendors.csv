@@ -1,0 +1,4 @@
+vendor_name,external_key,vendor_type,criticality,inherent_risk,substitution_difficulty,status
+Okta,okta,Identity,0.95,0.60,0.90,active
+AWS,aws,Infrastructure,0.98,0.55,0.85,active
+PayrollCo,payrollco,Processor,0.80,0.62,0.70,active

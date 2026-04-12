@@ -1,0 +1,1570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script data-vs-theme-init>(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="index, follow">
+
+  <title>Pricing  -  VendorSoluce&trade; | ERMITS</title>
+  <meta name="description" content="VendorSoluce&trade; pricing: local-first Starter, managed SaaS Professional, client-hosted Enterprise, and Federal &amp; custom programs—with subscription value for updates, feeds, and support." />
+  <!-- Tailwind CSS (compiled) -->
+  <link href="assets/css/tailwind.css" rel="stylesheet"/>
+  <!-- VendorSoluce&trade; design system — tokens + components -->
+  <link href="assets/css/tokens.css" rel="stylesheet"/>
+  <link href="assets/css/components.css" rel="stylesheet"/>
+  <style>
+:root {
+  --vendorsoluce-green: #33691E;
+  --vendorsoluce-light-green: #66BB6A;
+      --vendorsoluce-dark-green: #2E5A1A;
+  --vendorsoluce-pale-green: #E8F5E8;
+    }
+    
+    
+    
+
+    .bg-vendorsoluce-green { background-color: var(--vendorsoluce-green); }
+    
+    /* Fallback for browsers that don't support :not() with complex selectors */
+    .text-vendorsoluce-green {
+      color: var(--vendorsoluce-green) !important;
+    }
+    
+    /* Ensure text-vendorsoluce-green is visible in light theme */
+    html:not(.dark) .text-vendorsoluce-green,
+    :not(.dark) .text-vendorsoluce-green {
+      color: var(--vendorsoluce-green) !important;
+    }
+    
+    /* Fix second line branding - use gray-700 in light theme instead of green/80 */
+    html:not(.dark) span[class*="text-vendorsoluce-green/80"],
+    :not(.dark) span[class*="text-vendorsoluce-green/80"] {
+      color: #374151 !important; /* gray-700 */
+    }
+    
+    /* Dark mode - let Tailwind's dark:text-white handle it, but ensure it works */
+    
+    
+    
+    
+    /* Dark mode - let Tailwind's dark:text-white handle it, but ensure it works */
+    
+    html.dark .text-vendorsoluce-light-green,
+    .dark .text-vendorsoluce-light-green {
+      color: var(--vendorsoluce-light-green) !important;
+    }
+    /* CRITICAL: Dark mode branding - must be at the end for highest priority */
+    html.dark .text-vendorsoluce-green,
+    .dark .text-vendorsoluce-green,
+    html[class*="dark"] .text-vendorsoluce-green,
+    [class*="dark"] .text-vendorsoluce-green {
+      color: white !important;
+    }
+    html.dark .text-vendorsoluce-light-green,
+    .dark .text-vendorsoluce-light-green {
+      color: var(--vendorsoluce-light-green) !important;
+    }
+    /* Ensure second line branding uses green in dark mode - override opacity variant */
+    html.dark span[class*="text-vendorsoluce-green/80"],
+    .dark span[class*="text-vendorsoluce-green/80"],
+    html[class*="dark"] span[class*="text-vendorsoluce-green/80"],
+    [class*="dark"] span[class*="text-vendorsoluce-green/80"] {
+      color: var(--vendorsoluce-light-green) !important;
+    }
+    /* Navigation link styles - consistent with Home page */
+    .nav-link { color: rgb(55 65 81); text-decoration: none; transition: all 0.2s ease; }
+    .dark .nav-link { color: rgb(209 213 219); }
+    .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: #33691E !important; background-color: rgba(51, 105, 30, 0.1) !important; }
+    html.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: #66BB6A !important; background-color: rgba(102, 187, 106, 0.12) !important; }
+    .nav-link svg { color: currentColor; }
+    /* Active navigation link styles - only target navigation menu links (have title attribute), exclude brand logo */
+    nav a[title].active,
+    nav a[title][aria-current="page"] {
+      color: #33691E !important;
+      background: rgba(51,105,30,.08) !important;
+      font-weight: 700 !important;
+    }
+    html.dark nav a[title].active,
+    html.dark nav a[title][aria-current="page"] {
+      color: #66BB6A !important;
+      background: rgba(102,187,106,.12) !important;
+    }
+    nav a[title].active:hover,
+    nav a[title][aria-current="page"]:hover {
+      background: rgba(51,105,30,.12) !important;
+    }
+    html.dark nav a[title].active:hover,
+    html.dark nav a[title][aria-current="page"]:hover {
+      background: rgba(102,187,106,.18) !important;
+    }
+/* Theme toggle: match homepage header (fixed shape, color, contrast) on all pages */
+    nav [data-tour="theme-toggle"] button,
+    nav button[data-theme-toggle] {
+      width: 2.25rem !important;
+      height: 2.25rem !important;
+      min-width: 2.25rem !important;
+      min-height: 2.25rem !important;
+      border-radius: 0.5rem !important;
+      background-color: rgb(243 244 246) !important;
+      color: rgb(55 65 81) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      transition: all 0.2s ease !important;
+    }
+    html.dark nav [data-tour="theme-toggle"] button,
+    html.dark nav button[data-theme-toggle] {
+      background-color: rgb(55 65 81) !important;
+      color: rgb(250 204 21) !important;
+    }
+    nav [data-tour="theme-toggle"] button:hover,
+    nav button[data-theme-toggle]:hover {
+      background-color: rgb(229 231 235) !important;
+    }
+    html.dark nav [data-tour="theme-toggle"] button:hover,
+    html.dark nav button[data-theme-toggle]:hover {
+      background-color: rgb(75 85 99) !important;
+    }
+    /* Theme toggle icons: same size and color on all pages */
+    nav [data-tour="theme-toggle"] button svg,
+    nav button[data-theme-toggle] svg {
+      width: 1.25rem !important;
+      height: 1.25rem !important;
+      color: inherit !important;
+    }
+    nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
+    nav button[data-theme-toggle] .lucide-sun.hidden-icon {
+      color: rgb(245 158 11) !important; /* amber-500 when visible */
+    }
+    .vs-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-size:0.65em;background:rgba(51,105,30,.12);color:var(--vendorsoluce-green);font-weight:600;vertical-align:middle;border:none}
+    html.dark .vs-badge{background:rgba(102,187,106,.18);color:var(--vendorsoluce-light-green)}
+    
+    /* Utility classes for inline styles */
+    .tagline-text {
+      letter-spacing: -0.02em;
+      margin-top: -3px;
+    }
+    .hidden-icon {
+      display: none;
+    }
+    .mobile-menu-position {
+      top: 64px;
+    }
+    /* Ensure header nav is on top and clickable */
+    nav.sticky.top-0 { z-index: 99999 !important; pointer-events: auto !important; isolation: isolate; }
+    nav.sticky.top-0 a[href] { pointer-events: auto !important; cursor: pointer; }
+    </style>
+<style id="pricing-layout">
+  .pricing-hero-narrow { max-width: 42rem; }
+  @media (min-width: 768px) {
+    .pricing-intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; align-items: start; }
+  }
+  .plan-card-inner { padding: 1.75rem 1.75rem 2rem; }
+  @media (min-width: 1024px) {
+    .plan-card-inner { padding: 2rem 2rem 2.25rem; }
+  }
+  .compare-accordion { border-radius: 0.75rem; border: 1px solid rgb(229 231 235); overflow: hidden; margin-bottom: 0.75rem; }
+  .dark .compare-accordion { border-color: rgb(55 65 81); }
+  .compare-accordion > summary {
+    list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 0.875rem 1rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    color: rgb(55 65 81); background: rgb(249 250 251); border-bottom: 1px solid rgb(229 231 235);
+  }
+  .compare-accordion > summary::-webkit-details-marker { display: none; }
+  .dark .compare-accordion > summary {
+    color: rgb(209 213 219); background: rgb(31 41 55); border-bottom-color: rgb(55 65 81);
+  }
+  .compare-accordion > summary .compare-chevron { transition: transform 0.2s ease; flex-shrink: 0; opacity: 0.6; }
+  .compare-accordion[open] > summary .compare-chevron { transform: rotate(180deg); }
+  .compare-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .compare-table { width: 100%; min-width: 48rem; border-collapse: collapse; font-size: 0.8125rem; }
+  .compare-table thead th {
+    position: sticky; top: 0; z-index: 20; padding: 0.65rem 0.5rem; vertical-align: bottom;
+    background: rgb(249 250 251); border-bottom: 1px solid rgb(229 231 235);
+  }
+  .dark .compare-table thead th { background: rgb(31 41 55); border-bottom-color: rgb(55 65 81); }
+  .compare-table tbody td {
+    padding: 0.55rem 0.5rem; vertical-align: middle; border-bottom: 1px solid rgb(243 244 246);
+  }
+  .dark .compare-table tbody td { border-bottom-color: rgb(55 65 81); }
+  .compare-table tbody tr:hover td { background: rgb(249 250 251 / 0.6); }
+  .dark .compare-table tbody tr:hover td { background: rgb(31 41 55 / 0.5); }
+  .compare-table tbody tr:hover td.sticky-col { background: rgb(243 244 246); }
+  .dark .compare-table tbody tr:hover td.sticky-col { background: rgb(31 41 55); }
+  .compare-table .sticky-col {
+    position: sticky; left: 0; z-index: 10; text-align: left; font-weight: 600;
+    background: rgb(255 255 255); box-shadow: 4px 0 12px -4px rgb(0 0 0 / 0.08);
+  }
+  .dark .compare-table .sticky-col { background: rgb(17 24 39); box-shadow: 4px 0 12px -4px rgb(0 0 0 / 0.25); }
+  .compare-table thead .sticky-col { z-index: 30; background: rgb(249 250 251); }
+  .dark .compare-table thead .sticky-col { background: rgb(31 41 55); }
+  .compare-deliverable { display: block; font-weight: 600; color: rgb(17 24 39); }
+  .dark .compare-deliverable { color: rgb(243 244 246); }
+  .compare-note { display: block; font-size: 0.7rem; font-weight: 400; color: rgb(107 114 128); margin-top: 0.15rem; line-height: 1.35; }
+  .dark .compare-note { color: rgb(156 163 175); }
+</style>
+  
+<!-- VSS static SEO: canonical + Open Graph + Twitter + JSON-LD (ERMITS baseline) -->
+<link rel="canonical" href="https://www.vendorsoluce.com/pricing">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ERMITS">
+<meta property="og:title" content="Pricing - VendorSoluce&trade; | ERMITS">
+<meta property="og:description" content="VendorSoluce&trade; pricing: local-first Starter, managed SaaS Professional, client-hosted Enterprise, and Federal &amp; custom programs—with subscription value for updates, feeds, and support.">
+<meta property="og:image" content="https://www.vendorsoluce.com/social-preview.png">
+<meta property="og:url" content="https://www.vendorsoluce.com/pricing">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pricing - VendorSoluce&trade; | ERMITS">
+<meta name="twitter:description" content="VendorSoluce&trade; pricing: local-first Starter, managed SaaS Professional, client-hosted Enterprise, and Federal &amp; custom programs—with subscription value for updates, feeds, and support.">
+<meta name="twitter:image" content="https://www.vendorsoluce.com/social-preview.png">
+<meta name="twitter:url" content="https://www.vendorsoluce.com/pricing">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Pricing - VendorSoluce™ | ERMITS",
+  "url": "https://www.vendorsoluce.com/pricing",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ERMITS",
+    "url": "https://ermits.com/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "VendorSoluce",
+    "url": "https://www.vendorsoluce.com/"
+  },
+  "mainEntity": {
+    "@type": "SoftwareApplication",
+    "name": "VendorSoluce",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "Vendor risk intelligence workspace for third-party risk review, dependency visibility, and supply chain assurance.",
+    "url": "https://www.vendorsoluce.com/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ERMITS",
+      "url": "https://ermits.com/"
+    }
+  }
+}
+</script>
+
+<!-- ERMITS global SEO bundle: merged into each page <head> by embed-header-footer.js (npm run build). Idempotent via meta name="ermits-seo-bundle". JSON-LD lives per-page (homepage SoftwareApplication; inner WebPage hybrid). -->
+<meta name="ermits-seo-bundle" content="1">
+<meta name="application-name" content="VendorSoluce">
+<meta name="author" content="ERMITS">
+<meta name="creator" content="ERMITS">
+<meta name="publisher" content="ERMITS">
+  <link href="assets/css/shell.css" rel="stylesheet"/>
+</head>
+<body>
+    <div id="root" class="min-w-0"><div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col min-w-0 w-full"><!-- CANONICAL HEADER — Nav below; mobile drawer fragment: includes/mobile-menu-panel.html (npm run sync:mobile-menu). JS: assets/js/navigation.js -->
+<style>
+  .tagline-text { letter-spacing: -0.02em; margin-top: -3px; }
+#root, #root > div { pointer-events: auto !important; }
+  /* Theme toggle: match homepage header (fixed shape, color, contrast) on all pages */
+  nav [data-tour="theme-toggle"] button,
+  nav button[data-theme-toggle] {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    min-width: 2.25rem !important;
+    min-height: 2.25rem !important;
+    border-radius: 0.5rem !important;
+    background-color: rgb(243 244 246) !important;
+    color: rgb(55 65 81) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    transition: all 0.2s ease !important;
+  }
+  html.dark nav [data-tour="theme-toggle"] button,
+  html.dark nav button[data-theme-toggle] {
+    background-color: rgb(55 65 81) !important;
+    color: rgb(250 204 21) !important;
+  }
+  nav [data-tour="theme-toggle"] button:hover,
+  nav button[data-theme-toggle]:hover {
+    background-color: rgb(229 231 235) !important;
+  }
+  html.dark nav [data-tour="theme-toggle"] button:hover,
+  html.dark nav button[data-theme-toggle]:hover {
+    background-color: rgb(75 85 99) !important;
+  }
+  /* Theme toggle icons: same size and color on all pages */
+  nav [data-tour="theme-toggle"] button svg,
+  nav button[data-theme-toggle] svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    color: inherit !important;
+  }
+  nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
+  nav button[data-theme-toggle] .lucide-sun.hidden-icon {
+    color: rgb(245 158 11) !important; /* amber-500 when visible */
+  }
+</style>
+<nav class="glass-nav-vs fixed top-0 left-0 right-0 z-[99999] w-full max-w-[100vw]" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 w-full min-w-0">
+    <div class="grid h-16 w-full min-w-0 grid-cols-[minmax(0,1fr)_auto] md:grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-3 lg:gap-x-4">
+      <!-- Brand: logo + two-line branding — same logo size and text classes as footer (canonical) -->
+      <div class="flex items-center flex-shrink-0 min-w-0 md:max-w-none max-w-[calc(100%-60px)] col-start-1 row-start-1" data-tour="main-nav">
+        <a class="flex items-center min-w-0 group" href="/index.html">
+          <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" width="60" height="60" class="vs-brand-logo h-[3.75rem] w-[3.75rem] max-h-[3.75rem] max-w-[3.75rem] flex-shrink-0 transition-transform group-hover:scale-105 object-contain" loading="eager">
+          <span class="ml-1.5 min-w-0">
+            <span class="block text-[1.5rem] sm:text-[1.625rem] md:text-[1.75rem] font-bold text-vendorsoluce-green dark:text-white leading-tight">VendorSoluce&trade;</span>
+            <span class="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">Supply Chain Risk Intelligence</span>
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop nav: centered in middle column (md+) -->
+      <div class="hidden md:flex justify-center items-center min-w-0 relative z-[61] col-start-2 row-start-1">
+        <div class="flex items-center justify-center gap-1 flex-wrap">
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Home" href="/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-3.5 h-3.5 flex-shrink-0">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="How It Works" href="/how-it-works.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help w-3.5 h-3.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          How It Works
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Features" href="/features.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3.5 h-3.5 flex-shrink-0"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>Features</span>
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Vendor Review" href="/vendor-review.html" data-page="vendor-review">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check w-3.5 h-3.5 flex-shrink-0"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+          Vendor Review
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Trust" href="/trust.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-3.5 h-3.5 flex-shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+          </svg>
+          Trust
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Pricing" href="/pricing.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-3.5 h-3.5 flex-shrink-0">
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Pricing
+        </a>
+        </div>
+      </div>
+
+      
+      <div class="hidden md:flex items-center justify-end gap-2 flex-shrink-0 col-start-3 row-start-1">
+        <div data-tour="theme-toggle">
+          <button type="button" data-theme-toggle class="w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center flex-shrink-0" aria-label="Switch theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun w-5 h-5 text-amber-500 hidden-icon">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-5 h-5">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+            </svg>
+          </button>
+        </div>
+        <div data-tour="user-menu">
+          <a id="header-account-link-desktop" href="/account.html" data-nav="account" class="inline-flex w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 items-center justify-center flex-shrink-0" aria-label="User Account">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-5 h-5">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile: theme, menu; account inside drawer -->
+      <div class="flex items-center justify-end md:hidden flex-shrink-0 gap-1.5 col-start-2 row-start-1">
+        <div data-tour="theme-toggle">
+          <button type="button" data-theme-toggle class="w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center flex-shrink-0" aria-label="Switch theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun w-5 h-5 text-amber-500 hidden-icon"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-5 h-5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+          </button>
+        </div>
+        <button type="button" id="mobile-menu-hamburger-btn" data-mobile-menu-button="true" class="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none flex-shrink-0 w-9 h-9" aria-label="Open menu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+            <line x1="4" x2="20" y1="12" y2="12"></line>
+            <line x1="4" x2="20" y1="6" y2="6"></line>
+            <line x1="4" x2="20" y1="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Mobile menu and active nav: single source of truth in assets/js/navigation.js (injected by embed or loaded by page) -->
+
+<!-- Mobile Menu Panel (matches desktop nav order exactly) -->
+<div data-mobile-menu="true" class="md:hidden fixed left-0 right-0 z-50 hidden mobile-menu-position">
+  <div class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200/60 dark:border-gray-700/60 shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-3">
+      <div class="space-y-2">
+        <a href="/index.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home
+        </a>
+        <a href="/how-it-works.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help w-3.5 h-3.5 mr-2 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          How It Works
+        </a>
+        <a href="/features.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 mr-2">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+            <path d="M5 3v4"></path>
+            <path d="M19 17v4"></path>
+            <path d="M3 5h4"></path>
+            <path d="M17 19h4"></path>
+          </svg>
+          Features
+        </a>
+        <a href="/vendor-review.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center" data-page="vendor-review">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check w-3.5 h-3.5 mr-2 flex-shrink-0"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+          Vendor Review
+        </a>
+        <a href="/trust.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+          </svg>
+          Trust
+        </a>
+        <a href="/pricing.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Pricing
+        </a>
+        <a href="/faq.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle w-4 h-4 mr-2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+          FAQ
+        </a>
+        <div class="pt-2 border-t border-gray-200 dark:border-gray-700">
+          <a id="header-account-link" href="/account.html" class="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-4 h-4 mr-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Account
+          </a>
+        </div>
+      </div>
+      <div class="px-4 py-2 border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Legal</div>
+        <div class="space-y-1">
+          <a href="/legal/privacy-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Privacy Policy
+          </a>
+          <a href="/legal/cookie-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 15.5v.01"></path><path d="M12 12v.01"></path><path d="M11 17v.01"></path><path d="M7 14v.01"></path></svg>
+            Cookie Policy
+          </a>
+          <a href="/legal/terms.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+            Terms of Service
+          </a>
+          <a href="/legal/acceptable-use-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+            Acceptable Use Policy
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 min-w-0 w-full pt-[var(--nav-height,64px)]">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumb" class="sticky top-[var(--nav-height,64px)] z-40 w-full min-h-10 flex items-center text-sm border-b border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm px-6 sm:px-8 lg:px-12" data-breadcrumb="true">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-1">
+                    <div class="flex items-center">
+                        <a class="transition-colors flex items-center text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green" href="/index.html">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home h-4 w-4 mr-1"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Home</a>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right h-4 w-4 flex-shrink-0 text-gray-400"><path d="m9 18 6-6-6-6"></path></svg>
+                    <div class="flex items-center">
+                        <span class="font-medium flex items-center text-vendorsoluce-green">Pricing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+<div class="py-12 md:py-16 px-6 sm:px-8 lg:px-12 bg-white dark:bg-gray-900 min-w-0">
+<div class="max-w-7xl mx-auto min-w-0 w-full">
+<div class="mb-14 md:mb-16">
+<div class="text-center mb-10 md:mb-12">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-5 tracking-tight">Plans and how you deploy</h2>
+<p class="text-base md:text-lg text-gray-600 dark:text-gray-300 pricing-hero-narrow mx-auto leading-relaxed">Choose <strong class="text-gray-800 dark:text-gray-200">Starter</strong> to run assessments in the browser, <strong class="text-gray-800 dark:text-gray-200">Professional</strong> for our hosted app with a vendor portal and team collaboration, or <strong class="text-gray-800 dark:text-gray-200">Enterprise</strong> when you need the product on your own infrastructure. <strong class="text-gray-800 dark:text-gray-200">Federal &amp; custom</strong> is for defense and regulated programs—we scope it with you.</p>
+        </div>
+<div class="mb-12 md:mb-14 max-w-3xl mx-auto rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50/90 dark:bg-gray-800/40 p-6 md:p-8">
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">What changes between plans</h3>
+<p class="text-sm md:text-[0.9375rem] text-gray-600 dark:text-gray-300 leading-relaxed mb-0">Higher tiers add shared storage, report history, a vendor-facing portal, SSO, APIs, and stricter support commitments. Starter keeps data on the device; cloud plans encrypt customer data in our environment. Details and limits are in the comparison below.</p>
+        </div>
+<!-- Plan IDs (checkout?plan=) must match app TierKey: starter, professional, enterprise, federal. Federal links to contact. -->
+<!-- Dollar amounts: keep in sync with packages/app/src/config/canonical-public-pricing.json (platform app UI, checkout copy, Stripe rebuild/verify scripts). -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-6xl mx-auto">
+
+<!-- ── STARTER ── -->
+<div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 hover:shadow-xl flex flex-col">
+  <div class="plan-card-inner flex flex-col flex-1">
+
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <div class="flex items-center justify-center mb-3">
+        <div class="p-2 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-100 ring-1 ring-blue-200/80 dark:ring-blue-800/60">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white ml-3">Starter</h3>
+      </div>
+      <!-- Tagline -->
+      <p class="text-xs font-semibold uppercase tracking-wide text-blue-700 dark:text-blue-100 mb-2">Runs in your browser</p>
+      <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-w-md mx-auto">For teams that want vendor assessments without sending data to our cloud. Best for pilots and strict data-location needs.</p>
+    </div>
+
+    <!-- Price -->
+    <div class="text-center mb-6">
+      <div class="text-4xl font-bold text-gray-900 dark:text-white mb-1">$999</div>
+      <div class="text-sm text-gray-500 dark:text-gray-400">one-time license <span class="font-medium text-gray-600 dark:text-gray-300">(single purchase, no recurring fees)</span></div>
+      <div class="mt-2 px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+        <span class="text-xs font-medium text-gray-700 dark:text-gray-300">Optional add-on:</span>
+        <span class="text-xs text-gray-600 dark:text-gray-400"> $99/yr Updates &amp; Feeds — separate SKU, sold separately</span>
+      </div>
+    </div>
+
+    <!-- Who it's for -->
+    <div class="mb-4 bg-blue-50 dark:bg-blue-900/10 rounded-lg px-3 py-3 border border-blue-100 dark:border-blue-900/30">
+      <p class="text-xs font-semibold text-blue-700 dark:text-blue-300 uppercase tracking-wide mb-2">Best for</p>
+      <ul class="space-y-2.5 text-xs leading-relaxed text-blue-800 dark:text-blue-200">
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>Small teams &amp; pilots</span>
+        </li>
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>Data stays on your device</span>
+        </li>
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>One-time license, predictable cost</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Features -->
+    <div class="mb-6 flex-1">
+      <h4 class="font-semibold text-gray-900 dark:text-white mb-4 text-sm uppercase tracking-wide">What you get</h4>
+      <ul class="space-y-3 leading-relaxed">
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-500 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300"><strong class="font-medium">Vendor reports</strong> — standard layout, PDF export</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-500 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300">NIST SP 800-161 inherent risk scoring — runs entirely client-side</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-500 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300">Vendor Threat Radar for up to <strong class="font-medium">25 vendors</strong></span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-500 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300">Dashboard and assessment workflows</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-500 dark:text-green-400 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300">Up to <strong class="font-medium">5 team members</strong> · 2GB local storage</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-blue-500 dark:text-blue-400 mr-2 mt-0.5 flex-shrink-0"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+          <span class="text-sm text-gray-600 dark:text-gray-400"><strong class="font-medium">Optional:</strong> $99/yr — updates, feed refreshes, email support</span>
+        </li>
+        <!-- Not included -->
+        <li class="flex items-start mt-1 opacity-50">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-gray-400 mr-2 mt-0.5 flex-shrink-0"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Vendor portal for evidence upload</span>
+        </li>
+        <li class="flex items-start opacity-50">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-gray-400 mr-2 mt-0.5 flex-shrink-0"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
+          <span class="text-sm text-gray-500 dark:text-gray-400">API access &amp; custom report sections</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <a href="https://www.platform.vendorsoluce.com/checkout?plan=starter" class="block w-full text-center px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold text-sm hover:border-vendorsoluce-green hover:text-vendorsoluce-green dark:hover:border-vendorsoluce-light-green dark:hover:text-vendorsoluce-light-green transition-colors duration-200">
+      Get Starter License
+    </a>
+  </div>
+</div>
+
+<!-- ── PROFESSIONAL ── -->
+<div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-xl border-2 border-vendorsoluce-green dark:border-vendorsoluce-light-green transition-all duration-200 hover:shadow-2xl flex flex-col">
+  <div class="plan-card-inner flex flex-col flex-1">
+
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <div class="flex items-center justify-center mb-3">
+        <div class="p-2 rounded-lg bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/20 text-vendorsoluce-green dark:text-vendorsoluce-light-green">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white ml-3">Professional</h3>
+      </div>
+      <!-- Tagline -->
+      <p class="text-xs font-semibold uppercase tracking-wide text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Hosted app &amp; vendor portal</p>
+      <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-w-md mx-auto">Reports, versioning, and a portal so vendors submit evidence without endless email. For teams managing an active vendor portfolio.</p>
+    </div>
+
+    <!-- Price -->
+    <div class="text-center mb-6">
+      <div class="text-4xl font-bold text-gray-900 dark:text-white mb-1">$189<span class="text-xl font-normal text-gray-500 dark:text-gray-400">/mo</span></div>
+      <div class="text-sm text-gray-500 dark:text-gray-400">or $1,814/yr <span class="text-vendorsoluce-green dark:text-vendorsoluce-light-green font-medium">(Save 20%)</span></div>
+    </div>
+
+    <!-- Who it's for -->
+    <div class="mb-4 bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/10 rounded-lg px-3 py-3 border border-vendorsoluce-green/20 dark:border-vendorsoluce-green/30">
+      <p class="text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green uppercase tracking-wide mb-2">Best for</p>
+      <ul class="space-y-2.5 text-xs leading-relaxed text-gray-700 dark:text-gray-300">
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-vendorsoluce-green dark:text-vendorsoluce-light-green shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>Procurement, security, and GRC teams</span>
+        </li>
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-vendorsoluce-green dark:text-vendorsoluce-light-green shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>Board- or audit-ready reporting</span>
+        </li>
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-vendorsoluce-green dark:text-vendorsoluce-light-green shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>Full workflow before Enterprise tier</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Features -->
+    <div class="mb-6 flex-1">
+      <h4 class="font-semibold text-gray-900 dark:text-white mb-4 text-sm uppercase tracking-wide">What you get</h4>
+      <ul class="space-y-3 leading-relaxed">
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-vendorsoluce-green dark:text-vendorsoluce-light-green mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300"><strong class="font-medium text-gray-900 dark:text-white">Vendor reports</strong> — multiple layouts, portfolio views, saved versions</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-vendorsoluce-green dark:text-vendorsoluce-light-green mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300"><strong class="font-medium text-gray-900 dark:text-white">Vendor portal</strong> — evidence upload, status, and sign-off. Up to <strong class="font-medium">25 active vendor programs</strong>.</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-vendorsoluce-green dark:text-vendorsoluce-light-green mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300">NIST-aligned scoring plus dependency vulnerability checks</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-vendorsoluce-green dark:text-vendorsoluce-light-green mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300">Automated workflows and custom templates</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-vendorsoluce-green dark:text-vendorsoluce-light-green mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300">Your branding on reports · API (10K calls/mo)</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-vendorsoluce-green dark:text-vendorsoluce-light-green mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300">Up to <strong class="font-medium">100 vendor assessments</strong> · 25 team members · 15GB encrypted storage</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-vendorsoluce-green dark:text-vendorsoluce-light-green mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-300">Priority support, updates, and threat feed refreshes included</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="flex flex-col gap-2">
+      <a href="https://www.platform.vendorsoluce.com/checkout?plan=professional&interval=month" class="block w-full text-center px-4 py-2.5 rounded-lg bg-vendorsoluce-green hover:bg-vendorsoluce-dark-green text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200">
+        Start Monthly — $189/mo
+      </a>
+      <a href="https://www.platform.vendorsoluce.com/checkout?plan=professional&interval=year" class="block w-full text-center px-4 py-2.5 rounded-lg border-2 border-vendorsoluce-green dark:border-vendorsoluce-light-green text-vendorsoluce-green dark:text-vendorsoluce-light-green font-semibold text-sm hover:bg-vendorsoluce-green/10 dark:hover:bg-vendorsoluce-green/10 transition-all duration-200">
+        Start Annual — $1,814/yr (Save 20%)
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── ENTERPRISE ── -->
+<div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 hover:shadow-xl flex flex-col">
+  <div class="plan-card-inner flex flex-col flex-1">
+
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <div class="flex items-center justify-center mb-3">
+        <div class="p-2 rounded-lg bg-purple-50 dark:bg-purple-950/80 text-purple-700 dark:text-purple-50 ring-1 ring-purple-200/80 dark:ring-purple-500/40 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white ml-3">Enterprise</h3>
+      </div>
+      <!-- Tagline: high contrast on card (gray-800) — purple tint in dark via band -->
+      <p class="text-xs font-semibold uppercase tracking-wide text-purple-800 dark:text-purple-50 mb-2 px-2 py-1.5 rounded-md bg-purple-100/90 dark:bg-purple-950/90 dark:ring-1 dark:ring-purple-500/35 leading-snug">Your infrastructure. Your branding. Your SLA.</p>
+      <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed max-w-md mx-auto">Run VendorSoluce on your infrastructure with your branding, SSO, full APIs, and custom report sections—ideal when data must stay in your environment.</p>
+    </div>
+
+    <!-- Price -->
+    <div class="text-center mb-6">
+      <div class="text-4xl font-bold text-gray-900 dark:text-white mb-1">$549<span class="text-xl font-normal text-gray-500 dark:text-gray-400">/mo</span></div>
+      <div class="text-sm text-gray-500 dark:text-gray-300">or $5,270/yr <span class="text-purple-700 dark:text-purple-200 font-medium">(Save 20%)</span> · SLA in agreement</div>
+    </div>
+
+    <!-- Who it's for -->
+    <div class="mb-4 bg-purple-50 dark:bg-purple-950/35 rounded-lg px-3 py-3 border border-purple-100 dark:border-purple-600/40">
+      <p class="text-xs font-semibold text-purple-800 dark:text-purple-200 uppercase tracking-wide mb-2">Best for</p>
+      <ul class="space-y-2.5 text-xs leading-relaxed text-gray-700 dark:text-gray-200">
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-purple-600 dark:text-purple-300 shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>Your servers or private cloud</span>
+        </li>
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-purple-600 dark:text-purple-300 shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>Consulting &amp; multi-client TPRM</span>
+        </li>
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-purple-600 dark:text-purple-300 shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>Integrate with your GRC or internal tools</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Features -->
+    <div class="mb-6 flex-1">
+      <h4 class="font-semibold text-gray-900 dark:text-white mb-4 text-sm uppercase tracking-wide">Everything in Professional, plus</h4>
+      <ul class="space-y-3 leading-relaxed">
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-purple-600 dark:text-purple-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200"><strong class="font-medium text-gray-900 dark:text-white">Vendor reports</strong> — custom sections, your branding, reports via API</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-purple-600 dark:text-purple-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200"><strong class="font-medium text-gray-900 dark:text-white">Vendor portal</strong> — single sign-on, your domain, <strong class="font-medium">unlimited vendor programs</strong></span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-purple-600 dark:text-purple-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200">Deployment on your infrastructure (per contract)</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-purple-600 dark:text-purple-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200">Full API and custom integrations · multiple organizations</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-purple-600 dark:text-purple-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200">Unlimited team members and assessments · 200GB encrypted storage</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-purple-600 dark:text-purple-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200">Dedicated account manager · SLA guarantee · 24/7 email/ticket support</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="flex flex-col gap-2">
+      <a href="https://www.platform.vendorsoluce.com/checkout?plan=enterprise&interval=month" class="block w-full text-center px-4 py-2.5 rounded-lg border-2 border-purple-300 dark:border-purple-500/70 text-purple-800 dark:text-purple-100 font-semibold text-sm hover:bg-purple-50 dark:hover:bg-purple-950/50 transition-colors duration-200">
+        Start Monthly — $549/mo
+      </a>
+      <a href="https://www.platform.vendorsoluce.com/checkout?plan=enterprise&interval=year" class="block w-full text-center px-4 py-2.5 rounded-lg border-2 border-purple-300 dark:border-purple-500/70 text-purple-800 dark:text-purple-100 font-semibold text-sm hover:bg-purple-50 dark:hover:bg-purple-950/50 transition-colors duration-200">
+        Start Annual — $5,270/yr (Save 20%)
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FEDERAL & CUSTOM ── -->
+<div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 hover:shadow-xl flex flex-col">
+  <div class="plan-card-inner flex flex-col flex-1">
+
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <div class="flex items-center justify-center mb-3">
+        <div class="p-2 rounded-lg bg-orange-50 dark:bg-orange-950/80 text-orange-700 dark:text-orange-50 ring-1 ring-orange-200/80 dark:ring-orange-500/40 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path><path d="m9 12 2 2 4-4"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white ml-3">Federal &amp; Custom</h3>
+      </div>
+      <!-- Tagline: high contrast on card (gray-800) — orange tint in dark via band -->
+      <p class="text-xs font-semibold uppercase tracking-wide text-orange-800 dark:text-orange-50 mb-2 px-2 py-1.5 rounded-md bg-orange-100/90 dark:bg-orange-950/90 dark:ring-1 dark:ring-orange-500/35 leading-snug">Regulated supply chains. Scoped with you.</p>
+      <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed max-w-md mx-auto">For defense and federal contractors who need CMMC, FedRAMP-aligned, and FISMA-oriented workflows. Pricing is set with your program team.</p>
+    </div>
+
+    <!-- Price -->
+    <div class="text-center mb-6">
+      <div class="text-3xl font-bold text-gray-900 dark:text-white mb-1">Custom</div>
+      <div class="text-sm text-gray-500 dark:text-gray-300">priced with your team</div>
+    </div>
+
+    <!-- Who it's for -->
+    <div class="mb-4 bg-orange-50 dark:bg-orange-950/35 rounded-lg px-3 py-3 border border-orange-100 dark:border-orange-600/40">
+      <p class="text-xs font-semibold text-orange-700 dark:text-orange-200 uppercase tracking-wide mb-2">Best for</p>
+      <ul class="space-y-2.5 text-xs leading-relaxed text-gray-700 dark:text-gray-200">
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-orange-600 dark:text-orange-300 shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>Defense &amp; federal agencies</span>
+        </li>
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-orange-600 dark:text-orange-300 shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>Regulated primes &amp; contractors</span>
+        </li>
+        <li class="flex gap-2 items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-orange-600 dark:text-orange-300 shrink-0 mt-0.5"><path d="m9 18 6-6-6-6"></path></svg>
+          <span>CMMC, FedRAMP &amp; FISMA programs</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Features -->
+    <div class="mb-6 flex-1">
+      <h4 class="font-semibold text-gray-900 dark:text-white mb-4 text-sm uppercase tracking-wide">Everything in Enterprise, plus</h4>
+      <ul class="space-y-3 leading-relaxed">
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-orange-600 dark:text-orange-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200"><strong class="font-medium text-gray-900 dark:text-white">CMMC 2.0</strong> workflows and supply-chain reporting</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-orange-600 dark:text-orange-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200"><strong class="font-medium text-gray-900 dark:text-white">FedRAMP &amp; FISMA</strong>-oriented tracking and templates</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-orange-600 dark:text-orange-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200">Government-style vendor reports with audit-friendly formatting</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-orange-600 dark:text-orange-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200">Vendor portal with government branding options</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-orange-600 dark:text-orange-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200">APIs and integrations · 1TB storage</span>
+        </li>
+        <li class="flex items-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-orange-600 dark:text-orange-300 mr-2 mt-0.5 flex-shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span class="text-sm text-gray-700 dark:text-gray-200">Dedicated federal support team · Federal SLA</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <a href="/contact.html" class="block w-full text-center px-4 py-2.5 rounded-lg border-2 border-orange-300 dark:border-orange-500/70 text-orange-700 dark:text-orange-100 font-semibold text-sm hover:bg-orange-50 dark:hover:bg-orange-950/50 transition-colors duration-200">
+      Contact for Federal Pricing
+    </a>
+  </div>
+</div>
+
+</div>
+<div class="max-w-7xl mx-auto px-0 sm:px-0 mb-10 mt-14 pt-12 border-t border-gray-200 dark:border-gray-700">
+<div class="text-center mb-8 md:mb-10">
+<h2 class="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-3 tracking-tight">Deliverables by plan</h2>
+<p class="text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed mb-4">Open a section to compare plans. Icons mean included or not; short text explains limits where it matters.</p>
+<div class="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-gray-500 dark:text-gray-400">
+<span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400 shrink-0"><path d="M20 6 9 17l-5-5"></path></svg> Included</span>
+<span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-red-500 dark:text-red-400 shrink-0"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg> Not included</span>
+</div>
+</div>
+
+<details class="compare-accordion" open>
+<summary>Risk &amp; compliance <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="compare-chevron"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<div class="compare-table-wrap bg-white dark:bg-gray-900">
+<table class="compare-table text-gray-700 dark:text-gray-200">
+<thead>
+<tr>
+  <th scope="col" class="sticky-col min-w-[10.5rem] max-w-[12rem] text-left text-xs font-semibold text-gray-900 dark:text-white">Feature</th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Starter</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Local · browser</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green"><div>Professional</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Managed SaaS</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Enterprise</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Client-hosted</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Federal &amp; Custom</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Regulated</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Vendor risk scoring</span><span class="compare-note">Framework-aligned</span></td>
+  <td class="text-center leading-snug">In your browser</td>
+  <td class="text-center leading-snug">Hosted; data saved</td>
+  <td class="text-center leading-snug">On your systems</td>
+  <td class="text-center leading-snug">Federal programs</td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">NIST 800-161 (supply chain)</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Open-source dependency checks</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">CMMC 2.0</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">FedRAMP &amp; FISMA</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Vendor capacity</span><span class="compare-note">Typical portfolio size</span></td>
+  <td class="text-center leading-snug">~50 active<br><span class="text-[0.7rem] text-gray-500 dark:text-gray-400">browser limit</span></td>
+  <td class="text-center leading-snug">Unlimited</td>
+  <td class="text-center leading-snug">Unlimited</td>
+  <td class="text-center leading-snug">Unlimited<br><span class="text-[0.7rem] text-gray-500 dark:text-gray-400">per contract</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+
+<details class="compare-accordion">
+<summary>Vendor reports <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="compare-chevron"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<div class="compare-table-wrap bg-white dark:bg-gray-900">
+<table class="compare-table text-gray-700 dark:text-gray-200">
+<thead>
+<tr>
+  <th scope="col" class="sticky-col min-w-[10.5rem] max-w-[12rem] text-left text-xs font-semibold text-gray-900 dark:text-white">Feature</th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Starter</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Local · browser</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green"><div>Professional</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Managed SaaS</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Enterprise</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Client-hosted</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Federal &amp; Custom</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Regulated</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Generate &amp; download report (PDF)</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">On-the-fly — not stored</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Report history &amp; versioning</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-red-600 dark:text-red-400"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></span><span class="block text-[0.7rem]">Browser storage limit</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Portfolio summaries</span></td>
+  <td class="text-center">In-session only</td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Persistent</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Persistent</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Persistent</span></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Custom report sections</span></td>
+  <td class="text-center">Standard template only</td>
+  <td class="text-center">Standard + custom templates</td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Full custom sections</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Audit-friendly format</span></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Custom branding</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Reports via API</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+
+<details class="compare-accordion">
+<summary>Vendor portal <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="compare-chevron"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<div class="compare-table-wrap bg-white dark:bg-gray-900">
+<table class="compare-table text-gray-700 dark:text-gray-200">
+<thead>
+<tr>
+  <th scope="col" class="sticky-col min-w-[10.5rem] max-w-[12rem] text-left text-xs font-semibold text-gray-900 dark:text-white">Feature</th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Starter</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Local · browser</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green"><div>Professional</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Managed SaaS</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Enterprise</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Client-hosted</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Federal &amp; Custom</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Regulated</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Portal for vendors</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-red-600 dark:text-red-400"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></span><span class="block text-[0.7rem]">Needs hosting</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Managed</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Self-hosted</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Gov branding</span></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Evidence file submission</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-red-600 dark:text-red-400"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></span><span class="block text-[0.7rem]">File size limit</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Cloud storage</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Your storage</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Gov-grade storage</span></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Status &amp; sign-off</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Single sign-on &amp; custom domain</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Concurrent vendor programs</span></td>
+  <td class="text-center">None</td>
+  <td class="text-center">Up to 25</td>
+  <td class="text-center">Unlimited</td>
+  <td class="text-center">Unlimited</td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+
+<details class="compare-accordion">
+<summary>Data &amp; hosting <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="compare-chevron"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<div class="compare-table-wrap bg-white dark:bg-gray-900">
+<table class="compare-table text-gray-700 dark:text-gray-200">
+<thead>
+<tr>
+  <th scope="col" class="sticky-col min-w-[10.5rem] max-w-[12rem] text-left text-xs font-semibold text-gray-900 dark:text-white">Feature</th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Starter</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Local · browser</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green"><div>Professional</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Managed SaaS</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Enterprise</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Client-hosted</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Federal &amp; Custom</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Regulated</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Data location</span></td>
+  <td class="text-center leading-snug">Your browser only — nothing leaves your device</td>
+  <td class="text-center leading-snug">VendorSoluce cloud (encrypted)</td>
+  <td class="text-center leading-snug">Your infrastructure</td>
+  <td class="text-center leading-snug">Your infrastructure or approved gov cloud</td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Team access</span></td>
+  <td class="text-center">Single browser session</td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Up to 25 members</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Unlimited</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Unlimited</span></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Storage</span></td>
+  <td class="text-center">~5–10MB browser limit</td>
+  <td class="text-center">15GB encrypted</td>
+  <td class="text-center">200GB (your hardware)</td>
+  <td class="text-center">1TB+</td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Encrypted cloud storage</span></td>
+  <td class="text-center">—</td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+
+<details class="compare-accordion">
+<summary>API &amp; integrations <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="compare-chevron"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<div class="compare-table-wrap bg-white dark:bg-gray-900">
+<table class="compare-table text-gray-700 dark:text-gray-200">
+<thead>
+<tr>
+  <th scope="col" class="sticky-col min-w-[10.5rem] max-w-[12rem] text-left text-xs font-semibold text-gray-900 dark:text-white">Feature</th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Starter</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Local · browser</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green"><div>Professional</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Managed SaaS</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Enterprise</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Client-hosted</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Federal &amp; Custom</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Regulated</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">API access</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center">10K calls/mo</td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Full</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Full + federal APIs</span></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Custom integrations</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Multiple organizations</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Automated workflows</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+
+<details class="compare-accordion">
+<summary>Support &amp; SLA <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="compare-chevron"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<div class="compare-table-wrap bg-white dark:bg-gray-900">
+<table class="compare-table text-gray-700 dark:text-gray-200">
+<thead>
+<tr>
+  <th scope="col" class="sticky-col min-w-[10.5rem] max-w-[12rem] text-left text-xs font-semibold text-gray-900 dark:text-white">Feature</th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Starter</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Local · browser</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green"><div>Professional</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Managed SaaS</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Enterprise</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Client-hosted</div></th>
+  <th scope="col" class="text-center text-xs font-semibold text-gray-900 dark:text-white"><div>Federal &amp; Custom</div><div class="text-[0.65rem] font-normal text-gray-500 dark:text-gray-400 mt-0.5">Regulated</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Support</span></td>
+  <td class="text-center leading-snug">Email</td>
+  <td class="text-center leading-snug">Priority email</td>
+  <td class="text-center leading-snug">24/7 tickets + phone (business hours)</td>
+  <td class="text-center leading-snug">Dedicated federal team</td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">Dedicated account manager</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-check text-green-600 dark:text-emerald-400 mx-auto"><path d="M20 6 9 17l-5-5"></path></svg></td>
+</tr>
+<tr>
+  <td class="sticky-col"><span class="compare-deliverable">SLA guarantee</span></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-x text-red-600 dark:text-red-400 mx-auto"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">In your contract</span></td>
+  <td class="text-center leading-snug"><span class="inline-flex justify-center mb-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-600 dark:text-emerald-400"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="block text-[0.7rem]">Federal SLA</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+
+</div>
+<div class="py-8 px-6 sm:px-8 lg:px-12 bg-yellow-50 dark:bg-yellow-900/10 border-t border-yellow-200 dark:border-yellow-800">
+<div class="max-w-7xl mx-auto">
+<div class="bg-white dark:bg-gray-800 rounded-lg p-6 border border-yellow-200 dark:border-yellow-800">
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle mr-2 text-yellow-600 dark:text-yellow-400"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+Important Legal Disclaimers
+</h3>
+<div class="text-sm text-gray-600 dark:text-gray-300 space-y-3">
+<p><strong>Compliance &amp; risk tools.</strong> VendorSoluce helps you track and report against common frameworks (including NIST, CMMC, FedRAMP, FISMA). Tools are aids only—they do not guarantee certification, compliance, or audit outcomes. You remain responsible for how you use outputs.</p>
+<p><strong>“Unlimited,” support, storage, SLAs, and scores.</strong> Unlimited features follow fair use. Support times are targets. Storage caps and retention apply as in your plan or contract. Risk and analytics are informational, not a substitute for professional judgment or testing. Third-party threat and vulnerability data is provided as-is.</p>
+<p class="text-xs pt-1">Full terms, limits, and disclaimers: <a href="/legal/terms.html" class="text-vendorsoluce-green dark:text-vendorsoluce-light-green underline">Terms of Service</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class="py-8 md:py-10 px-6 sm:px-8 lg:px-12 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-4xl mx-auto">
+    <div class="modern-card p-5 md:p-6 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 text-center">
+      <h2 class="text-lg md:text-xl font-semibold mb-1.5 text-gray-900 dark:text-white">Get Started</h2>
+      <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 max-w-md mx-auto">Subscribe on the platform or contact us for Federal and custom pricing.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="https://www.platform.vendorsoluce.com/pricing" class="inline-flex items-center justify-center px-5 py-2.5 bg-vendorsoluce-green hover:bg-vendorsoluce-dark-green text-white font-semibold text-sm rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+          Platform pricing
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </a>
+        <a href="/contact.html" class="inline-flex items-center justify-center px-5 py-2.5 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold text-sm rounded-lg shadow-md border border-gray-200 dark:border-gray-600 transition-all duration-300">
+          Contact us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<style>
+/* Footer branding styles */
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.brand-name {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--vendorsoluce-green);
+  margin-bottom: 2px;
+}
+.dark .brand-name {
+  color: white;
+}
+.brand-tagline {
+  font-size: 13px;
+  color: #6B7280;
+  margin-bottom: 1px;
+}
+.dark .brand-tagline {
+  color: #94A3B8;
+}
+.brand-attribution {
+  font-size: 11px;
+  color: #6B7280;
+}
+.dark .brand-attribution {
+  color: #94A3B8;
+}
+
+/* Make footer borders extremely subtle - match background colors */
+footer.bg-white,
+footer[class*="bg-white"],
+footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.02) !important;
+}
+html.dark footer.bg-gray-800,
+html.dark footer[class*="bg-gray-800"],
+html.dark footer {
+  border-top: 1px solid rgba(31, 41, 55, 0.03) !important;
+}
+footer > div > div:last-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.02) !important;
+}
+html.dark footer > div > div:last-child {
+  border-top: 1px solid rgba(31, 41, 55, 0.03) !important;
+}
+</style>
+<!--
+  CONSISTENT FOOTER FOR VENDORSOLUCE
+  Matches React Footer styling with dark background
+-->
+<!-- CANONICAL FOOTER TEMPLATE — Exact copy from index.html. Do not change; validate before propagating to other pages. -->
+<footer id="footer" class="bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white border-t border-gray-300 dark:border-gray-800 w-full flex-shrink-0">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-1.5 pb-0 w-full min-w-0">
+    <div class="vs-footer-grid grid grid-cols-1 md:grid-cols-5 gap-2 lg:gap-3 md:gap-x-4 w-full">
+
+      <!-- Company Info - CANONICAL FOOTER BRANDING: logo + three text lines (VendorSoluce&trade; / Supply Chain Risk Intelligence / by ERMITS). Do not change layout; this is the reference for all pages. -->
+      <div class="col-span-1 md:col-span-2 md:pr-4">
+        <div class="vs-footer-branding flex items-center mb-2">
+          <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" width="60" height="60" class="vs-brand-logo h-[3.75rem] w-[3.75rem] max-h-[3.75rem] max-w-[3.75rem] flex-shrink-0 transition-transform hover:scale-105 object-contain" loading="eager">
+          <span class="ml-1.5 min-w-0">
+            <span class="block text-[1.5rem] sm:text-[1.625rem] md:text-[1.75rem] font-bold text-vendorsoluce-green dark:text-white leading-tight">VendorSoluce&trade;</span>
+            <span class="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">Supply Chain Risk Intelligence</span>
+            <span class="block text-sm leading-tight text-gray-500 dark:text-gray-400 font-normal">by ERMITS</span>
+          </span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-snug">
+          Comprehensive supply chain risk management platform for modern organizations featuring assessments and automated compliance tools.
+        </p>
+      </div>
+
+      <!-- Solutions (platform/portal features) - absolute URLs so links work from vendorsoluce.com and from both www.platform.vendorsoluce.com and platform.vendorsoluce.com -->
+      <div class="md:pl-2">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Solutions</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="https://www.platform.vendorsoluce.com/supply-chain-assessment?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Supply Chain Assessment</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.platform.vendorsoluce.com/vendors?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+              <span>Vendor Dashboard</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.vendorsoluce.com/radar/vendor-threat-radar.html" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"></path><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Vendor Threat Radar</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.portal.vendorsoluce.com?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+              <span>Vendor Assurance Portal</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="md:pl-4">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Resources</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="/faq.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+              <span>FAQ</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/tutorial.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+              <span>Tutorial</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/best-practices.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
+              <span>Best Practices</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/download.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+              <span>Download</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/contact.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              <span>Contact</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="md:pl-2">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Legal</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="/legal/terms.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+              <span>Terms of Service</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/privacy-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>Privacy Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/cookie-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 15.5v.01"></path><path d="M12 12v.01"></path><path d="M11 17v.01"></path><path d="M7 14v.01"></path></svg>
+              <span>Cookie Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/acceptable-use-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+              <span>Acceptable Use Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Last row across all breakpoints: copyright left, badge right -->
+      <div class="col-span-full mt-1 pt-1 border-t border-gray-200/50 dark:border-gray-700/50 flex w-full flex-row flex-nowrap items-center justify-between gap-x-3 min-w-0 overflow-hidden">
+        <div class="min-w-0 flex-1 overflow-hidden">
+          <span class="text-xs text-gray-500 dark:text-gray-400 truncate block">&copy; 2026 ERMITS LLC. All rights reserved.</span>
+        </div>
+        <div class="flex flex-shrink-0 flex-nowrap items-center gap-x-4 ml-auto">
+          <div class="flex flex-shrink-0 items-center space-x-1.5 whitespace-nowrap px-2.5 py-1.5 rounded-lg bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 border border-vendorsoluce-green/30 dark:border-vendorsoluce-green/40">
+            <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" class="w-3.5 h-3.5 block opacity-100" loading="eager">
+            <span class="text-xs font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green">Local browser-based analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+  <script src="assets/js/main.js"></script>
+  <script src="includes/active-nav.js"></script>
+  <script src="includes/analytics.js" defer></script>
+  <script src="includes/breadcrumb.js"></script>  <script src="assets/js/generated/route-manifest.js"></script>
+  <script src="assets/js/portal-config.js"></script>
+  <script src="assets/js/portal-links.js"></script>
+  
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+# Apex → www (301); covers shared links e.g. /radar/vendor-threat-radar
+https://vendorsoluce.com/* https://www.vendorsoluce.com/:splat 301!
+
+/how-it-works /how-it-works.html 200
+/pricing /pricing.html 200
+/faq /faq.html 200
+/contact /contact.html 200
+/contact/ /contact.html 200
+/trust /trust.html 200
+/legal /legal/index.html 200
+/legal/privacy /legal/privacy-policy.html 200
+/legal/terms /legal/terms.html 200
+/legal/aup /legal/acceptable-use-policy.html 200
+/legal/cookies /legal/cookie-policy.html 200
+/best-practices /best-practices.html 200
+/vira-methodology /vira-methodology.html 200
+/features /features.html 200
+/vendor-review /vendor-review.html 200
+/download /download.html 200
+/account /account.html 200
+/tutorial /tutorial.html 200
+/app/* https://www.platform.vendorsoluce.com/:splat 301

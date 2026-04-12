@@ -1,0 +1,33 @@
+{
+  "fixed": [
+    {
+      "name": "Federal Monthly",
+      "oldPriceId": "price_1SDeb9IUB3FoXZdhzIA6mzZN",
+      "newPriceId": "price_1SEW7LIUB3FoXZdhCMLRq822",
+      "amount": 99900,
+      "status": "fixed"
+    },
+    {
+      "name": "Federal Annual",
+      "oldPriceId": "price_1SDeb9IUB3FoXZdhhOn1aCgE",
+      "newPriceId": "price_1SEW7MIUB3FoXZdhbOONitHb",
+      "amount": 959000,
+      "status": "fixed"
+    },
+    {
+      "name": "Additional Users Monthly",
+      "oldPriceId": "price_1SDeb8IUB3FoXZdhqpR5LPZf",
+      "newPriceId": "price_1SEW7NIUB3FoXZdhkqaB5Qd5",
+      "amount": 1000,
+      "status": "fixed"
+    },
+    {
+      "name": "Additional Users Annual",
+      "oldPriceId": "price_1SDeb8IUB3FoXZdhbJcS7CeL",
+      "newPriceId": "price_1SEW7OIUB3FoXZdha3XuErNl",
+      "amount": 9600,
+      "status": "fixed"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,66 @@
+/* VendorRiskTable component styles */
+
+/* Ensure table fits viewport without horizontal scroll */
+.vendor-risk-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.vendor-risk-table-wrapper table {
+  table-layout: fixed;
+}
+
+/* Column width distribution - balanced for full content visibility */
+.vendor-risk-table-wrapper col:nth-child(1) { width: 2%; }
+.vendor-risk-table-wrapper col:nth-child(2) { width: 17%; }
+.vendor-risk-table-wrapper col:nth-child(3) { width: 8%; }
+.vendor-risk-table-wrapper col:nth-child(4) { width: 13%; }   /* Risk Level - "!!! Critical" + "Action required" */
+.vendor-risk-table-wrapper col:nth-child(5) { width: 11%; }
+.vendor-risk-table-wrapper col:nth-child(6) { width: 10%; }
+.vendor-risk-table-wrapper col:nth-child(7) { width: 12%; }
+.vendor-risk-table-wrapper col:nth-child(8) { width: 14%; }
+.vendor-risk-table-wrapper col:nth-child(9) { width: 13%; }
+
+.vendor-risk-table__score-track {
+  height: 0.5rem;
+  width: 2.5rem;
+  min-width: 2rem;
+  border-radius: 0.25rem;
+  background-color: rgb(229 231 235);
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .vendor-risk-table__score-track {
+    width: 3.5rem;
+  }
+}
+
+.dark .vendor-risk-table__score-track {
+  background-color: rgb(55 65 81);
+}
+
+.vendor-risk-table__score-fill {
+  height: 100%;
+  border-radius: 0.25rem;
+  width: attr(data-score %, 0%);
+  transition: width 0.2s ease-out;
+}
+
+.vendor-risk-table__score-fill--high {
+  background-color: rgb(34 197 94);
+}
+
+.vendor-risk-table__score-fill--medium {
+  background-color: rgb(234 179 8);
+}
+
+.vendor-risk-table__score-fill--low {
+  background-color: rgb(249 115 22);
+}
+
+.vendor-risk-table__score-fill--critical {
+  background-color: rgb(239 68 68);
+}

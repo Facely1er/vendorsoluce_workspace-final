@@ -1,0 +1,21 @@
+{
+  "name": "shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared configurations and utilities for VendorSoluce packages",
+  "main": "index.js",
+  "exports": {
+    "./tailwind-colors": "./tailwind-colors.js",
+    "./tailwind-config": "./tailwind-config.js",
+    "./constants/routes": "./src/constants/routes/index.ts",
+    "./utils/lazyModules": "./src/utils/lazyModules.ts",
+    "./domain/vendorsoluce": "./src/domain/vendorsoluce.ts"
+  },
+  "scripts": {
+    "verify:runtime-dedup": "node scripts/verify-runtime-dedup.mjs"
+  },
+  "dependencies": {
+    "@ermits/dependency-graph": "file:../dependency-graph"
+  }
+}

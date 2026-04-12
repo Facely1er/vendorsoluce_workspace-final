@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script data-vs-theme-init>(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Threat Radar - Functional Test Suite | ERMITS</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f9fafb; color: #1f2937; padding: 20px; line-height: 1.6; }
+        h1 { font-size: 1.5rem; font-weight: 700; color: #2e7d32; margin-bottom: 8px; }
+        .subtitle { color: #6b7280; margin-bottom: 24px; }
+        .test-group { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .test-group h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 12px; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }
+        .test-item { display: flex; align-items: center; padding: 8px 12px; margin: 4px 0; border-radius: 6px; font-size: 0.9rem; }
+        .test-item .status { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 14px; flex-shrink: 0; }
+        .test-item .name { flex: 1; }
+        .test-item .detail { color: #6b7280; font-size: 0.8rem; margin-left: 12px; }
+        .pass { background: #f0fdf4; }
+        .pass .status { background: #22c55e; color: white; }
+        .fail { background: #fef2f2; }
+        .fail .status { background: #ef4444; color: white; }
+        .pending { background: #f5f5f5; }
+        .pending .status { background: #9ca3af; color: white; }
+        .summary { display: flex; gap: 16px; margin-bottom: 24px; }
+        .summary-card { flex: 1; background: white; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .summary-card .value { font-size: 2rem; font-weight: 700; }
+        .summary-card .label { font-size: 0.8rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+        .summary-card.pass-card .value { color: #22c55e; }
+        .summary-card.fail-card .value { color: #ef4444; }
+        .summary-card.total-card .value { color: #2e7d32; }
+        .run-btn { background: #2e7d32; color: white; border: none; padding: 12px 32px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-bottom: 24px; }
+        .run-btn:hover { background: #1b5e20; }
+        .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        #log { background: #1f2937; color: #d1d5db; padding: 16px; border-radius: 8px; font-family: monospace; font-size: 0.8rem; max-height: 300px; overflow-y: auto; margin-top: 16px; white-space: pre-wrap; }
+        .log-pass { color: #4ade80; }
+        .log-fail { color: #f87171; }
+        .log-info { color: #60a5fa; }
+        .iframe-container { width: 100%; height: 0; overflow: hidden; }
+    </style>
+
+<!-- ERMITS global SEO bundle: merged into each page <head> by embed-header-footer.js (npm run build). Idempotent via meta name="ermits-seo-bundle". -->
+<meta name="ermits-seo-bundle" content="1">
+<meta name="application-name" content="VendorSoluce">
+<meta name="author" content="ERMITS">
+<meta name="creator" content="ERMITS">
+<meta name="publisher" content="ERMITS">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "VendorSoluce",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Vendor risk intelligence workspace for third-party risk review, dependency visibility, and supply chain assurance.",
+  "url": "https://vendorsoluce.com/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ERMITS",
+    "url": "https://ermits.com/"
+  }
+}
+</script>
+
+
+<meta name="twitter:card" content="summary">
+  <link href="../assets/css/shell.css" rel="stylesheet"/>
+</head>
+<body>
+    <h1>Vendor Threat Radar - Functional Test Suite</h1>
+    <p class="subtitle">Automated tests for the radar page structure, JavaScript functions, and UI elements</p>
+    
+    <button class="run-btn" id="runBtn" onclick="runTests()">Run All Tests</button>
+    
+    <div class="summary" id="summary" style="display:none;">
+        <div class="summary-card pass-card"><div class="value" id="passCount">0</div><div class="label">Passed</div></div>
+        <div class="summary-card fail-card"><div class="value" id="failCount">0</div><div class="label">Failed</div></div>
+        <div class="summary-card total-card"><div class="value" id="totalCount">0</div><div class="label">Total</div></div>
+    </div>
+    
+    <div id="results"></div>
+    <div id="log"></div>
+    
+    <div class="iframe-container">
+        <iframe id="radarFrame" src="vendor-threat-radar.html" style="width:1280px;height:900px;border:none;"></iframe>
+    </div>
+
+<script>
+const tests = [];
+let passed = 0, failed = 0;
+
+function log(msg, type) {
+    const el = document.getElementById('log');
+    const cls = type === 'pass' ? 'log-pass' : type === 'fail' ? 'log-fail' : 'log-info';
+    el.innerHTML += `<span class="${cls}">${msg}</span>\n`;
+    el.scrollTop = el.scrollHeight;
+}
+
+function addResult(group, name, pass, detail) {
+    tests.push({ group, name, pass, detail });
+    if (pass) passed++; else failed++;
+}
+
+function renderResults() {
+    const groups = {};
+    tests.forEach(t => {
+        if (!groups[t.group]) groups[t.group] = [];
+        groups[t.group].push(t);
+    });
+    
+    let html = '';
+    for (const [group, items] of Object.entries(groups)) {
+        const groupPass = items.filter(i => i.pass).length;
+        html += `<div class="test-group"><h2>${group} (${groupPass}/${items.length})</h2>`;
+        items.forEach(t => {
+            const cls = t.pass ? 'pass' : 'fail';
+            const icon = t.pass ? '&#10003;' : '&#10007;';
+            html += `<div class="test-item ${cls}"><div class="status">${icon}</div><div class="name">${t.name}</div>${t.detail ? `<div class="detail">${t.detail}</div>` : ''}</div>`;
+        });
+        html += '</div>';
+    }
+    
+    document.getElementById('results').innerHTML = html;
+    document.getElementById('passCount').textContent = passed;
+    document.getElementById('failCount').textContent = failed;
+    document.getElementById('totalCount').textContent = passed + failed;
+    document.getElementById('summary').style.display = 'flex';
+}
+
+function runTests() {
+    const btn = document.getElementById('runBtn');
+    btn.disabled = true;
+    btn.textContent = 'Loading radar page...';
+    passed = 0;
+    failed = 0;
+    tests.length = 0;
+    document.getElementById('log').innerHTML = '';
+    
+    const iframe = document.getElementById('radarFrame');
+    iframe.parentElement.style.height = '1px';
+    
+    iframe.onload = function() {
+        btn.textContent = 'Running tests...';
+        log('Radar page loaded, running tests...', 'info');
+        
+        setTimeout(() => {
+            try {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                const win = iframe.contentWindow;
+                
+                runStructureTests(doc);
+                runCSSTests(doc);
+                runElementTests(doc);
+                runJavaScriptTests(doc, win);
+                runFunctionalTests(doc, win);
+                runAccessibilityTests(doc);
+                
+            } catch (e) {
+                log('ERROR: ' + e.message, 'fail');
+                addResult('Critical', 'Page loads without crash', false, e.message);
+            }
+            
+            renderResults();
+            btn.textContent = `Tests complete: ${passed} passed, ${failed} failed`;
+            log(`\n=== COMPLETE: ${passed} passed, ${failed} failed out of ${passed + failed} total ===`, passed === 0 || failed > 0 ? 'fail' : 'pass');
+        }, 2000);
+    };
+    
+    iframe.onerror = function() {
+        log('FATAL: Could not load vendor-threat-radar.html', 'fail');
+        addResult('Critical', 'Page loads', false, 'iframe load error');
+        renderResults();
+        btn.textContent = 'Load failed';
+    };
+    
+    iframe.src = 'vendor-threat-radar.html?' + Date.now();
+}
+
+function runStructureTests(doc) {
+    const group = 'HTML Structure';
+    log('\n--- HTML Structure Tests ---', 'info');
+    
+    const doctype = doc.doctype;
+    addResult(group, 'DOCTYPE present', !!doctype, doctype ? doctype.name : 'missing');
+    log(doctype ? 'PASS: DOCTYPE present' : 'FAIL: DOCTYPE missing', doctype ? 'pass' : 'fail');
+    
+    const html = doc.documentElement;
+    addResult(group, 'html[lang] attribute', html.getAttribute('lang') === 'en', html.getAttribute('lang'));
+    
+    const head = doc.head;
+    addResult(group, '<head> exists', !!head);
+    
+    const body = doc.body;
+    addResult(group, '<body> exists', !!body);
+    
+    const title = doc.title;
+    const hasTitle = title && title.includes('Vendor') && title.includes('Radar');
+    addResult(group, 'Title contains "Vendor Radar"', hasTitle, title);
+    log(hasTitle ? `PASS: Title = "${title}"` : `FAIL: Title = "${title}"`, hasTitle ? 'pass' : 'fail');
+    
+    const meta = doc.querySelector('meta[name="viewport"]') || doc.querySelector('meta[content*="width=device-width"]');
+    addResult(group, 'Viewport meta tag', !!meta);
+    
+    const charset = doc.querySelector('meta[charset]');
+    addResult(group, 'Charset meta tag', !!charset, charset ? charset.getAttribute('charset') : 'missing');
+    
+    const main = doc.querySelector('main');
+    addResult(group, '<main> element exists', !!main);
+    
+    const nav = doc.querySelector('nav');
+    addResult(group, '<nav> element exists', !!nav);
+    
+    const footer = doc.querySelector('footer');
+    addResult(group, '<footer> element exists', !!footer);
+}
+
+function runCSSTests(doc) {
+    const group = 'CSS & Styles';
+    log('\n--- CSS Tests ---', 'info');
+    
+    const tailwind = doc.querySelector('link[href*="tailwind"]');
+    addResult(group, 'Tailwind CSS loaded', !!tailwind);
+    
+    const fonts = doc.querySelector('link[href*="fonts.googleapis"]');
+    addResult(group, 'Google Fonts loaded', !!fonts);
+    
+    const chartjs = doc.querySelector('script[src*="chart.js"]');
+    addResult(group, 'Chart.js loaded', !!chartjs);
+    log(chartjs ? 'PASS: Chart.js script tag found' : 'FAIL: Chart.js script tag missing', chartjs ? 'pass' : 'fail');
+    
+    const styles = doc.querySelectorAll('style');
+    addResult(group, 'Inline styles present', styles.length > 0, `${styles.length} style blocks`);
+    
+    const root = doc.querySelector(':root');
+    const computedStyle = doc.defaultView.getComputedStyle(root);
+    const greenVar = computedStyle.getPropertyValue('--vendorsoluce-green').trim();
+    addResult(group, 'CSS variable --vendorsoluce-green', greenVar.length > 0, greenVar || 'not set');
+}
+
+function runElementTests(doc) {
+    const group = 'UI Elements';
+    log('\n--- UI Element Tests ---', 'info');
+    
+    const elements = {
+        'sonarCanvas': 'Sonar Radar Canvas',
+        'vendorList': 'Vendor List Container',
+        'inherentChart': 'Risk Distribution Chart Canvas',
+        'sectorChart': 'Sector Distribution Chart Canvas',
+        'geoChart': 'Geographic Distribution Chart Canvas',
+        'vendorModal': 'Add/Edit Vendor Modal',
+        'vendorForm': 'Vendor Form',
+        'riskFilter': 'Risk Filter Select',
+        'alertBanner': 'Alert Banner',
+        'criticalCount': 'Critical Count Display',
+        'highCount': 'High Count Display',
+        'mediumCount': 'Medium Count Display',
+        'lowCount': 'Low Count Display',
+        'totalCount': 'Total Count Display',
+        'avgRisk': 'Average Risk Display',
+        'timestamp': 'Timestamp Display'
+    };
+    
+    for (const [id, label] of Object.entries(elements)) {
+        const el = doc.getElementById(id);
+        addResult(group, `${label} (#${id})`, !!el, el ? el.tagName : 'not found');
+        if (!el) log(`FAIL: Missing element #${id}`, 'fail');
+    }
+    
+    const radarContainer = doc.querySelector('.radar-container');
+    addResult(group, 'Radar container (.radar-container)', !!radarContainer);
+    
+    const radarHeader = doc.querySelector('.radar-header');
+    addResult(group, 'Radar header (.radar-header)', !!radarHeader);
+    
+    const toolbar = doc.querySelector('.toolbar');
+    addResult(group, 'Toolbar (.toolbar)', !!toolbar);
+    
+    const statsGrid = doc.querySelector('.stats-grid');
+    addResult(group, 'Stats grid (.stats-grid)', !!statsGrid);
+    
+    const contentGrid = doc.querySelector('.content-grid');
+    addResult(group, 'Content grid (.content-grid)', !!contentGrid);
+    
+    const chartsGrid = doc.querySelector('.charts-grid');
+    addResult(group, 'Charts grid (.charts-grid)', !!chartsGrid);
+    
+    const themeToggle = doc.querySelector('.theme-toggle') || doc.querySelector('[data-theme-toggle]');
+    addResult(group, 'Theme toggle button', !!themeToggle);
+}
+
+function runJavaScriptTests(doc, win) {
+    const group = 'JavaScript Functions';
+    log('\n--- JavaScript Function Tests ---', 'info');
+    
+    const functions = [
+        'openAddVendor', 'closeVendorModal', 'editVendor', 'deleteVendor',
+        'scanVendors', 'clearAllVendors', 'exportVendors', 'importVendors',
+        'generateComprehensiveReport', 'filterVendors', 'viewVendorDetails',
+        'toggleDarkMode'
+    ];
+    
+    for (const fn of functions) {
+        const exists = typeof win[fn] === 'function';
+        addResult(group, `window.${fn}()`, exists, exists ? 'function' : typeof win[fn]);
+        if (!exists) log(`FAIL: window.${fn} is ${typeof win[fn]}`, 'fail');
+    }
+    
+    // vendorData may be in closure (not on window); both are acceptable
+    const hasVendorData = Array.isArray(win.vendorData);
+    const vendorDataOk = hasVendorData || win.vendorData === undefined;
+    addResult(group, 'vendorData array or not exposed', vendorDataOk, hasVendorData ? `${win.vendorData.length} vendors` : (win.vendorData === undefined ? 'not exposed (closure)' : typeof win.vendorData));
+    log(vendorDataOk ? (hasVendorData ? `PASS: vendorData has ${win.vendorData.length} vendors` : 'PASS: vendorData in closure (not on window)') : 'FAIL: vendorData invalid', vendorDataOk ? 'pass' : 'fail');
+    
+    if (hasVendorData && win.vendorData.length > 0) {
+        const v = win.vendorData[0];
+        const hasProps = v.name && v.category && v.id;
+        addResult(group, 'Vendor objects have required properties', hasProps, hasProps ? `name="${v.name}"` : 'missing props');
+    }
+    
+    const hasChart = typeof win.Chart !== 'undefined';
+    addResult(group, 'Chart.js loaded globally', hasChart, hasChart ? 'Chart constructor available' : 'not loaded');
+}
+
+function runFunctionalTests(doc, win) {
+    const group = 'Functional';
+    log('\n--- Functional Tests ---', 'info');
+    
+    // Vendor list rendered
+    const vendorList = doc.getElementById('vendorList');
+    const hasVendorItems = vendorList && (vendorList.querySelectorAll('.vendor-item').length > 0 || vendorList.querySelectorAll('[class*="vendor"]').length > 0);
+    const vendorChildren = vendorList ? vendorList.children.length : 0;
+    addResult(group, 'Vendor list has content', vendorChildren > 0, `${vendorChildren} child elements`);
+    log(`Vendor list children: ${vendorChildren}`, 'info');
+    
+    // Stats populated
+    const totalEl = doc.getElementById('totalCount');
+    const totalVal = totalEl ? totalEl.textContent.trim() : '0';
+    const statsPopulated = totalVal !== '0' && totalVal !== '';
+    addResult(group, 'Stats counters populated', statsPopulated, `totalCount="${totalVal}"`);
+    log(`Total count value: "${totalVal}"`, statsPopulated ? 'pass' : 'info');
+    
+    // Timestamp updated
+    const tsEl = doc.getElementById('timestamp');
+    const tsVal = tsEl ? tsEl.textContent.trim() : '';
+    addResult(group, 'Timestamp displayed', tsVal.length > 0, tsVal || 'empty');
+    
+    // Sonar canvas has content
+    const canvas = doc.getElementById('sonarCanvas');
+    let canvasHasContent = false;
+    if (canvas && canvas.getContext) {
+        try {
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, Math.min(canvas.width, 10), Math.min(canvas.height, 10));
+            canvasHasContent = imageData.data.some(pixel => pixel !== 0);
+        } catch (e) {
+            canvasHasContent = canvas.width > 0 && canvas.height > 0;
+        }
+    }
+    addResult(group, 'Sonar radar canvas rendered', canvasHasContent, canvas ? `${canvas.width}x${canvas.height}` : 'no canvas');
+    
+    // Modal initially hidden
+    const modal = doc.getElementById('vendorModal');
+    if (modal) {
+        const modalStyle = doc.defaultView.getComputedStyle(modal);
+        const isHidden = modalStyle.display === 'none' || !modal.classList.contains('active');
+        addResult(group, 'Vendor modal initially hidden', isHidden);
+    }
+    
+    // Filter select functional
+    const filter = doc.getElementById('riskFilter');
+    if (filter) {
+        const optionCount = filter.options.length;
+        addResult(group, 'Risk filter has options', optionCount >= 5, `${optionCount} options`);
+    }
+    
+    // No console errors from our code
+    const scripts = doc.querySelectorAll('script:not([src])');
+    addResult(group, 'Inline scripts present', scripts.length > 0, `${scripts.length} script blocks`);
+    
+    // Nav is rendered
+    const navLinks = doc.querySelectorAll('nav a[href]');
+    addResult(group, 'Navigation links present', navLinks.length > 0, `${navLinks.length} links`);
+    
+    // Footer is rendered
+    const footerLinks = doc.querySelectorAll('footer a[href]');
+    addResult(group, 'Footer links present', footerLinks.length > 0, `${footerLinks.length} links`);
+}
+
+function runAccessibilityTests(doc) {
+    const group = 'Accessibility';
+    log('\n--- Accessibility Tests ---', 'info');
+    
+    const mainLandmark = doc.querySelector('main[aria-label], main[role="main"]');
+    addResult(group, 'Main landmark labeled', !!mainLandmark, mainLandmark ? mainLandmark.getAttribute('aria-label') : 'no label');
+    
+    const navLandmark = doc.querySelector('nav');
+    addResult(group, 'Navigation landmark', !!navLandmark);
+    
+    const images = doc.querySelectorAll('img');
+    const allHaveAlt = Array.from(images).every(img => img.hasAttribute('alt'));
+    addResult(group, 'All images have alt text', images.length === 0 || allHaveAlt, `${images.length} images`);
+    
+    const buttons = doc.querySelectorAll('button');
+    const buttonsLabeled = Array.from(buttons).filter(btn => {
+        return btn.textContent.trim().length > 0 || btn.getAttribute('aria-label') || btn.getAttribute('title');
+    });
+    addResult(group, 'Buttons have labels', buttonsLabeled.length === buttons.length, `${buttonsLabeled.length}/${buttons.length}`);
+    
+    const formInputs = doc.querySelectorAll('input:not([type="hidden"]):not([type="file"]), select, textarea');
+    const inputsLabeled = Array.from(formInputs).filter(input => {
+        const id = input.id;
+        return (id && doc.querySelector(`label[for="${id}"]`)) || input.getAttribute('aria-label') || input.closest('label');
+    });
+    addResult(group, 'Form inputs have labels', inputsLabeled.length === formInputs.length, `${inputsLabeled.length}/${formInputs.length}`);
+    
+    const skipLink = doc.querySelector('a[href="#radar-main"], a[href="#main"]');
+    addResult(group, 'Skip navigation link', !!skipLink, skipLink ? 'present' : 'missing (optional)');
+}
+</script>
+</body>
+</html>

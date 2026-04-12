@@ -1,0 +1,1172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script data-vs-theme-init>(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="index, follow">
+
+  <title>VIRA Methodology — VendorSoluce&trade; | ERMITS</title>
+  <meta name="description" content="VIRA (Vendor Inherent Risk Assessment): the structured methodology behind VendorSoluce&trade; inherent risk scoring. NIST SP 800-161 aligned, five-domain framework." />
+  <!-- Tailwind CSS (compiled) -->
+  <link href="assets/css/tailwind.css" rel="stylesheet"/>
+  <!-- VendorSoluce&trade; design system — tokens + components -->
+  <link href="assets/css/tokens.css" rel="stylesheet"/>
+  <link href="assets/css/components.css" rel="stylesheet"/>
+  <link href="assets/css/vira-methodology.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --vendorsoluce-green: #33691E;
+      --vendorsoluce-light-green: #66BB6A;
+      --vendorsoluce-dark-green: #2E5A1A;
+      --vendorsoluce-pale-green: #E8F5E8;
+    }
+    
+    
+    
+
+    .bg-vendorsoluce-green { background-color: var(--vendorsoluce-green); }
+    
+    /* Fallback for browsers that don't support :not() with complex selectors */
+    .text-vendorsoluce-green {
+      color: var(--vendorsoluce-green) !important;
+    }
+    
+    /* Ensure text-vendorsoluce-green is visible in light theme */
+    html:not(.dark) .text-vendorsoluce-green,
+    :not(.dark) .text-vendorsoluce-green {
+      color: var(--vendorsoluce-green) !important;
+    }
+    
+    /* Fix second line branding - use gray-700 in light theme instead of green/80 */
+    html:not(.dark) span[class*="text-vendorsoluce-green/80"],
+    :not(.dark) span[class*="text-vendorsoluce-green/80"] {
+      color: #374151 !important; /* gray-700 */
+    }
+    
+    /* Dark mode - let Tailwind's dark:text-white handle it, but ensure it works */
+    
+    
+    
+    
+    /* Dark mode - let Tailwind's dark:text-white handle it, but ensure it works */
+    
+    html.dark .text-vendorsoluce-light-green,
+    .dark .text-vendorsoluce-light-green {
+      color: var(--vendorsoluce-light-green) !important;
+    }
+    .bg-vendorsoluce-dark-green { background-color: var(--vendorsoluce-dark-green); }
+    .text-vendorsoluce-light-green { color: var(--vendorsoluce-light-green); }
+    .bg-vendorsoluce-pale-green { background-color: var(--vendorsoluce-pale-green); }
+    .border-vendorsoluce-green { border-color: var(--vendorsoluce-green); }
+    .hover\:bg-vendorsoluce-dark-green:hover { background-color: var(--vendorsoluce-dark-green); }
+    .hover\:bg-vendorsoluce-pale-green:hover { background-color: var(--vendorsoluce-pale-green); }
+    .hover\:text-vendorsoluce-green:hover { color: var(--vendorsoluce-green); }
+    /* CRITICAL: Dark mode branding - must be at the end for highest priority */
+    html.dark .text-vendorsoluce-green,
+    .dark .text-vendorsoluce-green,
+    html[class*="dark"] .text-vendorsoluce-green,
+    [class*="dark"] .text-vendorsoluce-green {
+      color: white !important;
+    }
+    html.dark .text-vendorsoluce-light-green,
+    .dark .text-vendorsoluce-light-green {
+      color: var(--vendorsoluce-light-green) !important;
+    }
+    /* Ensure second line branding uses green in dark mode - override opacity variant */
+    html.dark span[class*="text-vendorsoluce-green/80"],
+    .dark span[class*="text-vendorsoluce-green/80"],
+    html[class*="dark"] span[class*="text-vendorsoluce-green/80"],
+    [class*="dark"] span[class*="text-vendorsoluce-green/80"] {
+      color: var(--vendorsoluce-light-green) !important;
+    }
+    /* Navigation link styles - consistent with Home page */
+    .nav-link { color: rgb(55 65 81); text-decoration: none; transition: all 0.2s ease; }
+    .dark .nav-link { color: rgb(209 213 219); }
+    .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: #33691E !important; background-color: rgba(51, 105, 30, 0.1) !important; }
+    html.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):not(.active):hover { color: #66BB6A !important; background-color: rgba(102, 187, 106, 0.12) !important; }
+    .nav-link svg { color: currentColor; }
+    /* Active navigation link styles - only target navigation menu links (have title attribute), exclude brand logo */
+    nav a[title].active,
+    nav a[title][aria-current="page"] {
+      color: #33691E !important;
+      background: rgba(51,105,30,.08) !important;
+      font-weight: 700 !important;
+    }
+    html.dark nav a[title].active,
+    html.dark nav a[title][aria-current="page"] {
+      color: #66BB6A !important;
+      background: rgba(102,187,106,.12) !important;
+    }
+    nav a[title].active:hover,
+    nav a[title][aria-current="page"]:hover {
+      background: rgba(51,105,30,.12) !important;
+    }
+    html.dark nav a[title].active:hover,
+    html.dark nav a[title][aria-current="page"]:hover {
+      background: rgba(102,187,106,.18) !important;
+    }
+.vs-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-size:0.65em;background:rgba(51,105,30,.12);color:var(--vendorsoluce-green);font-weight:600;vertical-align:middle;border:none}
+    html.dark .vs-badge{background:rgba(102,187,106,.18);color:var(--vendorsoluce-light-green)}
+    
+    /* Utility classes for inline styles */
+    .tagline-text {
+      letter-spacing: -0.02em;
+      margin-top: -3px;
+    }
+    .hidden-icon {
+      display: none;
+    }
+    .mobile-menu-position {
+      top: 64px;
+    }
+    nav.sticky.top-0 { z-index: 99999 !important; pointer-events: auto !important; isolation: isolate; }
+    nav.sticky.top-0 a[href] { pointer-events: auto !important; cursor: pointer; }
+    </style>
+
+<!-- VSS static SEO: canonical + Open Graph + Twitter + JSON-LD (ERMITS baseline) -->
+<link rel="canonical" href="https://www.vendorsoluce.com/vira-methodology">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ERMITS">
+<meta property="og:title" content="VIRA Methodology — VendorSoluce&trade; | ERMITS">
+<meta property="og:description" content="VIRA (Vendor Inherent Risk Assessment): the structured methodology behind VendorSoluce&trade; inherent risk scoring. NIST SP 800-161 aligned, five-domain framework.">
+<meta property="og:image" content="https://www.vendorsoluce.com/social-preview.png">
+<meta property="og:url" content="https://www.vendorsoluce.com/vira-methodology">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VIRA Methodology — VendorSoluce&trade; | ERMITS">
+<meta name="twitter:description" content="VIRA (Vendor Inherent Risk Assessment): the structured methodology behind VendorSoluce&trade; inherent risk scoring. NIST SP 800-161 aligned, five-domain framework.">
+<meta name="twitter:image" content="https://www.vendorsoluce.com/social-preview.png">
+<meta name="twitter:url" content="https://www.vendorsoluce.com/vira-methodology">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "VIRA Methodology — VendorSoluce™ | ERMITS",
+  "url": "https://www.vendorsoluce.com/vira-methodology",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ERMITS",
+    "url": "https://ermits.com/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "VendorSoluce",
+    "url": "https://www.vendorsoluce.com/"
+  },
+  "mainEntity": {
+    "@type": "SoftwareApplication",
+    "name": "VendorSoluce",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "Vendor risk intelligence workspace for third-party risk review, dependency visibility, and supply chain assurance.",
+    "url": "https://www.vendorsoluce.com/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ERMITS",
+      "url": "https://ermits.com/"
+    }
+  }
+}
+</script>
+
+<!-- ERMITS global SEO bundle: merged into each page <head> by embed-header-footer.js (npm run build). Idempotent via meta name="ermits-seo-bundle". JSON-LD lives per-page (homepage SoftwareApplication; inner WebPage hybrid). -->
+<meta name="ermits-seo-bundle" content="1">
+<meta name="application-name" content="VendorSoluce">
+<meta name="author" content="ERMITS">
+<meta name="creator" content="ERMITS">
+<meta name="publisher" content="ERMITS">
+  <link href="assets/css/shell.css" rel="stylesheet"/>
+</head>
+
+
+    <body>
+    <div id="root"><div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col"><!-- CANONICAL HEADER — Nav below; mobile drawer fragment: includes/mobile-menu-panel.html (npm run sync:mobile-menu). JS: assets/js/navigation.js -->
+<style>
+  .tagline-text { letter-spacing: -0.02em; margin-top: -3px; }
+#root, #root > div { pointer-events: auto !important; }
+  /* Theme toggle: match homepage header (fixed shape, color, contrast) on all pages */
+  nav [data-tour="theme-toggle"] button,
+  nav button[data-theme-toggle] {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    min-width: 2.25rem !important;
+    min-height: 2.25rem !important;
+    border-radius: 0.5rem !important;
+    background-color: rgb(243 244 246) !important;
+    color: rgb(55 65 81) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    transition: all 0.2s ease !important;
+  }
+  html.dark nav [data-tour="theme-toggle"] button,
+  html.dark nav button[data-theme-toggle] {
+    background-color: rgb(55 65 81) !important;
+    color: rgb(250 204 21) !important;
+  }
+  nav [data-tour="theme-toggle"] button:hover,
+  nav button[data-theme-toggle]:hover {
+    background-color: rgb(229 231 235) !important;
+  }
+  html.dark nav [data-tour="theme-toggle"] button:hover,
+  html.dark nav button[data-theme-toggle]:hover {
+    background-color: rgb(75 85 99) !important;
+  }
+  /* Theme toggle icons: same size and color on all pages */
+  nav [data-tour="theme-toggle"] button svg,
+  nav button[data-theme-toggle] svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    color: inherit !important;
+  }
+  nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
+  nav button[data-theme-toggle] .lucide-sun.hidden-icon {
+    color: rgb(245 158 11) !important; /* amber-500 when visible */
+  }
+</style>
+<nav class="glass-nav-vs fixed top-0 left-0 right-0 z-[99999] w-full max-w-[100vw]" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 w-full min-w-0">
+    <div class="grid h-16 w-full min-w-0 grid-cols-[minmax(0,1fr)_auto] md:grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-3 lg:gap-x-4">
+      <!-- Brand: logo + two-line branding — same logo size and text classes as footer (canonical) -->
+      <div class="flex items-center flex-shrink-0 min-w-0 md:max-w-none max-w-[calc(100%-60px)] col-start-1 row-start-1" data-tour="main-nav">
+        <a class="flex items-center min-w-0 group" href="/index.html">
+          <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" width="60" height="60" class="vs-brand-logo h-[3.75rem] w-[3.75rem] max-h-[3.75rem] max-w-[3.75rem] flex-shrink-0 transition-transform group-hover:scale-105 object-contain" loading="eager">
+          <span class="ml-1.5 min-w-0">
+            <span class="block text-[1.5rem] sm:text-[1.625rem] md:text-[1.75rem] font-bold text-vendorsoluce-green dark:text-white leading-tight">VendorSoluce&trade;</span>
+            <span class="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">Supply Chain Risk Intelligence</span>
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop nav: centered in middle column (md+) -->
+      <div class="hidden md:flex justify-center items-center min-w-0 relative z-[61] col-start-2 row-start-1">
+        <div class="flex items-center justify-center gap-1 flex-wrap">
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Home" href="/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-3.5 h-3.5 flex-shrink-0">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="How It Works" href="/how-it-works.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help w-3.5 h-3.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          How It Works
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Features" href="/features.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3.5 h-3.5 flex-shrink-0"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>Features</span>
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Vendor Review" href="/vendor-review.html" data-page="vendor-review">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check w-3.5 h-3.5 flex-shrink-0"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+          Vendor Review
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Trust" href="/trust.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-3.5 h-3.5 flex-shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+          </svg>
+          Trust
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Pricing" href="/pricing.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-3.5 h-3.5 flex-shrink-0">
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Pricing
+        </a>
+        </div>
+      </div>
+
+      
+      <div class="hidden md:flex items-center justify-end gap-2 flex-shrink-0 col-start-3 row-start-1">
+        <div data-tour="theme-toggle">
+          <button type="button" data-theme-toggle class="w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center flex-shrink-0" aria-label="Switch theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun w-5 h-5 text-amber-500 hidden-icon">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-5 h-5">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+            </svg>
+          </button>
+        </div>
+        <div data-tour="user-menu">
+          <a id="header-account-link-desktop" href="/account.html" data-nav="account" class="inline-flex w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 items-center justify-center flex-shrink-0" aria-label="User Account">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-5 h-5">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile: theme, menu; account inside drawer -->
+      <div class="flex items-center justify-end md:hidden flex-shrink-0 gap-1.5 col-start-2 row-start-1">
+        <div data-tour="theme-toggle">
+          <button type="button" data-theme-toggle class="w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center flex-shrink-0" aria-label="Switch theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun w-5 h-5 text-amber-500 hidden-icon"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-5 h-5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+          </button>
+        </div>
+        <button type="button" id="mobile-menu-hamburger-btn" data-mobile-menu-button="true" class="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none flex-shrink-0 w-9 h-9" aria-label="Open menu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+            <line x1="4" x2="20" y1="12" y2="12"></line>
+            <line x1="4" x2="20" y1="6" y2="6"></line>
+            <line x1="4" x2="20" y1="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Mobile menu and active nav: single source of truth in assets/js/navigation.js (injected by embed or loaded by page) -->
+
+<!-- Mobile Menu Panel (matches desktop nav order exactly) -->
+<div data-mobile-menu="true" class="md:hidden fixed left-0 right-0 z-50 hidden mobile-menu-position">
+  <div class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200/60 dark:border-gray-700/60 shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-3">
+      <div class="space-y-2">
+        <a href="/index.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home
+        </a>
+        <a href="/how-it-works.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help w-3.5 h-3.5 mr-2 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          How It Works
+        </a>
+        <a href="/features.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 mr-2">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+            <path d="M5 3v4"></path>
+            <path d="M19 17v4"></path>
+            <path d="M3 5h4"></path>
+            <path d="M17 19h4"></path>
+          </svg>
+          Features
+        </a>
+        <a href="/vendor-review.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center" data-page="vendor-review">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check w-3.5 h-3.5 mr-2 flex-shrink-0"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+          Vendor Review
+        </a>
+        <a href="/trust.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+          </svg>
+          Trust
+        </a>
+        <a href="/pricing.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Pricing
+        </a>
+        <a href="/faq.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle w-4 h-4 mr-2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+          FAQ
+        </a>
+        <div class="pt-2 border-t border-gray-200 dark:border-gray-700">
+          <a id="header-account-link" href="/account.html" class="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-4 h-4 mr-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Account
+          </a>
+        </div>
+      </div>
+      <div class="px-4 py-2 border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Legal</div>
+        <div class="space-y-1">
+          <a href="/legal/privacy-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Privacy Policy
+          </a>
+          <a href="/legal/cookie-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 15.5v.01"></path><path d="M12 12v.01"></path><path d="M11 17v.01"></path><path d="M7 14v.01"></path></svg>
+            Cookie Policy
+          </a>
+          <a href="/legal/terms.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+            Terms of Service
+          </a>
+          <a href="/legal/acceptable-use-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+            Acceptable Use Policy
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 pt-[var(--nav-height,64px)]">
+    <nav aria-label="Breadcrumb" class="sticky top-[var(--nav-height,64px)] z-40 w-full min-h-10 flex items-center text-sm border-b border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm px-6 sm:px-8 lg:px-12" data-breadcrumb="true">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="flex items-center space-x-1">
+                <a class="transition-colors flex items-center text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green" href="/index.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home h-4 w-4 mr-1"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Home</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right h-4 w-4 flex-shrink-0 text-gray-400"><path d="m9 18 6-6-6-6"></path></svg>
+                <a class="transition-colors text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green" href="/how-it-works.html">How It Works</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right h-4 w-4 flex-shrink-0 text-gray-400"><path d="m9 18 6-6-6-6"></path></svg>
+                <span class="font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green">VIRA Methodology</span>
+            </div>
+        </div>
+    </nav>
+    <div class="vira-doc">
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Methodology Documentation
+    </div>
+    <div class="hero-eyebrow">VendorSoluce&trade; · NIST SP 800-161 Aligned</div>
+    <h1 class="hero-title">
+      VIRA<span class="gold">™</span><br>
+      <span class="accent">Vendor Inherent Risk</span><br>Assessment
+    </h1>
+    <p class="hero-subtitle">
+      The structured methodology for determining a vendor's risk level before any controls or mitigations are considered — using observable relationship characteristics only.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        NIST SP 800-161 Rev 1
+      </div>
+      <div class="hero-meta-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+        International applicability
+      </div>
+      <div class="hero-meta-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Version 1.0 · 2026
+      </div>
+      <div class="hero-meta-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        ERMITS LLC · Proprietary
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Content -->
+<div class="page">
+
+  <!-- 1. What VIRA is -->
+  <section class="section" id="what-is-vira">
+    <div class="section-label">01 — Overview</div>
+    <h2 class="section-title">What <em>VIRA</em> is</h2>
+    <div class="section-body">
+      <p>VIRA™ — Vendor Inherent Risk Assessment — is the proprietary methodology that powers VendorSoluce&trade; inherent risk scoring. It is the structured process for determining how much risk a vendor relationship represents to your organization, evaluated entirely from observable facts about the relationship itself.</p>
+      <p>VIRA produces a scored inherent risk tier — <strong>Critical, High, Medium, or Low</strong> — that tells your procurement and security teams what level of due diligence is required before onboarding or renewing a vendor. It is not a security assessment. It does not evaluate what the vendor has done to protect themselves. It evaluates what they represent to you.</p>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-card-label">Core principle</div>
+      <div class="principle-card-text">"Inherent risk is a property of the relationship, not the vendor. It is determined entirely from observable facts about what the vendor does, what data they touch, and what happens to your organization if they fail — not from what they claim about their own security."</div>
+    </div>
+
+    <div class="two-col">
+      <div class="info-box">
+        <div class="info-box-label">VIRA answers</div>
+        <div class="info-box-title">How much risk are we potentially taking on?</div>
+        <div class="info-box-body">Before any questionnaire, before any certification review, before any evidence collection. This is your baseline exposure — the worst case if this vendor has no controls at all.</div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label">VIRA does not answer</div>
+        <div class="info-box-title">How well has the vendor mitigated that risk?</div>
+        <div class="info-box-body">That is a residual risk question — answered by reviewing certifications, questionnaire responses, evidence, and controls. VIRA always precedes residual risk assessment.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Why inherent risk matters -->
+  <section class="section" id="why-it-matters">
+    <div class="section-label">02 — Rationale</div>
+    <h2 class="section-title">Why inherent risk must be assessed <em>first</em></h2>
+    <div class="section-body">
+      <p>Most organizations send the same 200-question security questionnaire to every vendor regardless of risk level. This wastes resources on low-risk vendors and — more critically — fails to calibrate effort toward the relationships that actually matter.</p>
+      <p>VIRA solves this by establishing the risk baseline before any vendor interaction begins. A vendor cannot influence their inherent risk score by presenting certifications or pointing to controls. The score reflects structural facts: what data they process, how deeply they're integrated, how critical their service is, and what regulatory obligations attach. These facts are determined by your organization, not self-reported by the vendor.</p>
+      <p>This matters for three specific reasons when a regulator, auditor, or customer asks about your third-party risk program:</p>
+    </div>
+    <div class="two-col" style="margin-top:1.5rem">
+      <div class="info-box">
+        <div class="info-box-label">Defensibility</div>
+        <div class="info-box-title">Auditable rationale for every decision</div>
+        <div class="info-box-body">Every tier assignment traces to specific, observable inputs — not judgment calls. "This vendor is High because they process 50,000+ customer records, have production API access, and require a DPA under GDPR."</div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label">Proportionality</div>
+        <div class="info-box-title">Due diligence scaled to actual exposure</div>
+        <div class="info-box-body">Low-risk vendors get a lightweight self-attestation process. Critical vendors get full questionnaires, evidence review, and executive sign-off. Resources follow risk.</div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label">Independence</div>
+        <div class="info-box-title">Score is not influenced by vendor claims</div>
+        <div class="info-box-body">A vendor cannot improve their inherent risk score by presenting a SOC 2 report or an ISO 27001 certificate. Those reduce residual risk. Inherent risk reflects the nature of the relationship.</div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label">Consistency</div>
+        <div class="info-box-title">Same methodology across every vendor</div>
+        <div class="info-box-body">VIRA produces comparable scores across your entire portfolio — new vendors, legacy vendors, and renewals. Historical comparisons are meaningful because the methodology doesn't change.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. The five domains -->
+  <section class="section" id="five-domains">
+    <div class="section-label">03 — Assessment domains</div>
+    <h2 class="section-title">The <em>five domains</em> of inherent risk</h2>
+    <div class="section-body">
+      <p>VIRA evaluates inherent risk across five domains, each scored 0–100 and combined using a weighted formula. Domains are weighted to reflect their empirical contribution to third-party breach impact, grounded in NIST SP 800-161 Rev 1 (C-SCRM) guidance.</p>
+    </div>
+
+    <div class="domain-grid">
+      <div class="domain-item">
+        <div class="domain-num d1">D1</div>
+        <div class="domain-content">
+          <div class="domain-name">Data sensitivity</div>
+          <div class="domain-desc">The regulatory and operational consequences of a breach, determined by which categories of data the vendor accesses or processes, how many records are involved, whether data crosses borders, and the vendor's processing role (processor vs. sub-processor).</div>
+          <div class="domain-factors">
+            <span class="df">Biometric</span><span class="df">Health / PHI</span><span class="df">Children's data</span>
+            <span class="df">Credentials</span><span class="df">Financial</span><span class="df">PII</span>
+            <span class="df">Record volume</span><span class="df">Cross-border transfer</span><span class="df">Processing role</span>
+          </div>
+        </div>
+        <div class="domain-weight">30%</div>
+      </div>
+      <div class="domain-item">
+        <div class="domain-num d2">D2</div>
+        <div class="domain-content">
+          <div class="domain-name">Operational criticality</div>
+          <div class="domain-desc">The business impact if this vendor's service is interrupted or compromised — ranging from mission-critical (the organization cannot operate without it) to peripheral (the organization continues normally). Factors include recovery time objective and whether alternatives exist.</div>
+          <div class="domain-factors">
+            <span class="df">Business impact tier</span><span class="df">Recovery time objective</span>
+            <span class="df">Availability of alternatives</span><span class="df">User scope</span>
+          </div>
+        </div>
+        <div class="domain-weight">25%</div>
+      </div>
+      <div class="domain-item">
+        <div class="domain-num d3">D3</div>
+        <div class="domain-content">
+          <div class="domain-name">Access & integration scope</div>
+          <div class="domain-desc">The depth of technical exposure — how embedded the vendor is in your environment. Privileged access and production system access carry the heaviest weights because they represent the greatest lateral movement potential in a compromise.</div>
+          <div class="domain-factors">
+            <span class="df">Privileged / admin access</span><span class="df">Production system access</span>
+            <span class="df">Network access</span><span class="df">Physical access</span><span class="df">Integration depth</span>
+          </div>
+        </div>
+        <div class="domain-weight">20%</div>
+      </div>
+      <div class="domain-item">
+        <div class="domain-num d4">D4</div>
+        <div class="domain-content">
+          <div class="domain-name">Regulatory surface</div>
+          <div class="domain-desc">Which regulatory frameworks attach because of this vendor relationship — determining the contractual, evidentiary, and penalty consequences of a breach or non-compliance event. HIPAA, CMMC, and FedRAMP carry the greatest weights due to mandatory contractual obligations and enforcement mechanisms.</div>
+          <div class="domain-factors">
+            <span class="df">HIPAA / BAA required</span><span class="df">GDPR / DPA required</span>
+            <span class="df">MODPA</span><span class="df">CMMC</span><span class="df">FedRAMP</span>
+            <span class="df">PCI-DSS</span><span class="df">SOX</span><span class="df">Export controls</span>
+          </div>
+        </div>
+        <div class="domain-weight">15%</div>
+      </div>
+      <div class="domain-item">
+        <div class="domain-num d5">D5</div>
+        <div class="domain-content">
+          <div class="domain-name">Concentration & 4th-party risk</div>
+          <div class="domain-desc">Single-source dependency and sub-processor visibility. A sole provider of a mission-critical function creates systemic risk regardless of their security posture. Unknown sub-processors represent uncharacterized exposure that cannot be assessed until mapped.</div>
+          <div class="domain-factors">
+            <span class="df">Sole provider status</span><span class="df">Sub-processor count</span>
+            <span class="df">Geographic / jurisdictional risk</span><span class="df">Vendor maturity</span>
+          </div>
+        </div>
+        <div class="domain-weight">10%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Scoring formula -->
+  <section class="section" id="scoring-formula">
+    <div class="section-label">04 — Scoring</div>
+    <h2 class="section-title">The <em>scoring formula</em></h2>
+    <div class="section-body">
+      <p>Each domain is scored independently on a 0–100 scale using observable inputs. Domain scores are then combined using a weighted formula to produce a raw inherent score. Non-negotiable override conditions may elevate the final tier above the weighted result.</p>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">// VIRA scoring formula — version 1.0</div>
+      <div class="formula-line">
+        <span class="var">raw_score</span><span class="op">=</span>
+        <span class="var">D1</span><span class="op">×</span><span class="num">0.30</span>
+        <span class="op">+</span><span class="var">D2</span><span class="op">×</span><span class="num">0.25</span>
+        <span class="op">+</span><span class="var">D3</span><span class="op">×</span><span class="num">0.20</span>
+        <span class="op">+</span><span class="var">D4</span><span class="op">×</span><span class="num">0.15</span>
+        <span class="op">+</span><span class="var">D5</span><span class="op">×</span><span class="num">0.10</span>
+      </div>
+      <div class="formula-line" style="margin-top:.5rem;">
+        <span class="var">final_score</span><span class="op">=</span>
+        <span class="var">max</span><span class="op">(</span><span class="var">raw_score</span><span class="op">,</span><span class="var"> override_minimum</span><span class="op">)</span>
+        <span class="comment">// override_minimum = 0 if no overrides apply</span>
+      </div>
+      <div class="formula-result">
+        <span class="var">inherent_risk_tier</span> = tier lookup on <span class="var">final_score</span>
+        &nbsp;&nbsp;// Critical ≥75 · High 50–74 · Medium 25–49 · Low &lt;25
+      </div>
+    </div>
+
+    <div class="section-body" style="margin-top:1.25rem;">
+      <p><strong>All domain inputs are capped at 100.</strong> Within each domain, factors are individually weighted and summed, then capped. This prevents any single factor from producing an artificially extreme domain score while still reflecting the compounding effect of multiple high-risk inputs.</p>
+      <p><strong>Partial scores are not interpolated.</strong> Each observable input produces a discrete point value — there are no fuzzy or probabilistic inputs. This keeps the methodology auditable: every point in the score traces to a specific observed characteristic.</p>
+    </div>
+  </section>
+
+  <!-- 5. Non-negotiable overrides -->
+  <section class="section" id="overrides">
+    <div class="section-label">05 — Override conditions</div>
+    <h2 class="section-title">Non-negotiable <em>overrides</em></h2>
+    <div class="section-body">
+      <p>Four conditions force a minimum tier regardless of the weighted score. These exist because the domain-weighted average can mask a single catastrophic risk factor. A vendor with a 20/100 weighted score who has privileged access to your production database should never be classified as Low risk.</p>
+      <p>Overrides are evaluated after the weighted score is calculated. If the calculated tier is already at or above the override minimum, no change is made. If it is below, the score is elevated to the minimum value for the required tier.</p>
+    </div>
+
+    <table class="override-table">
+      <thead>
+        <tr><th>Condition</th><th>Rationale</th><th>Minimum tier</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tier 1 sensitive data processing<br><span style="font-size:.72rem;color:var(--txt3);font-weight:400">(Health, Biometric, Children's data)</span></td>
+          <td style="color:var(--txt2)">Regulatory penalties and reputational consequences of a breach involving these categories are disproportionately severe. HIPAA, COPPA, and GDPR Art. 9 impose significantly elevated obligations.</td>
+          <td><span class="min-tier mt-high">High</span></td>
+        </tr>
+        <tr>
+          <td>Privileged or admin system access</td>
+          <td style="color:var(--txt2)">Privileged access enables lateral movement, credential harvesting, and complete environment compromise. A vendor with admin credentials represents a standing threat actor if their own systems are compromised.</td>
+          <td><span class="min-tier mt-high">High</span></td>
+        </tr>
+        <tr>
+          <td>Sole provider of a mission-critical function<br><span style="font-size:.72rem;color:var(--txt3);font-weight:400">(no documented alternative)</span></td>
+          <td style="color:var(--txt2)">Single-source dependency on a mission-critical function creates systemic risk that cannot be mitigated through vendor controls alone. The organization's resilience is structurally dependent on this vendor's continuity.</td>
+          <td><span class="min-tier mt-high">High</span></td>
+        </tr>
+        <tr>
+          <td>Regulated processing requiring a BAA<br><span style="font-size:.72rem;color:var(--txt3);font-weight:400">(HIPAA Business Associate Agreement)</span></td>
+          <td style="color:var(--txt2)">HIPAA mandates a signed BAA before any PHI sharing. The legal obligation and downstream liability exposure — regardless of the vendor's security posture — requires at minimum standard due diligence.</td>
+          <td><span class="min-tier mt-med">Medium</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 6. Risk tiers -->
+  <section class="section" id="risk-tiers">
+    <div class="section-label">06 — Risk tiers</div>
+    <h2 class="section-title">The four <em>risk tiers</em></h2>
+    <div class="section-body">
+      <p>VIRA produces four output tiers. The tier determines the required due diligence level before onboarding approval — not just a label, but a prescribed process depth.</p>
+    </div>
+
+    <div class="tier-grid">
+      <div class="tier-cell tc-crit">
+        <div class="tier-range">75–100</div>
+        <div class="tier-name">Critical</div>
+        <div class="tier-desc">Severe structural exposure. Multiple high-weight factors converge — typically privileged access, Tier 1 data, and mission-critical function combined.</div>
+        <div class="tier-dd">Enhanced due diligence required</div>
+      </div>
+      <div class="tier-cell tc-high">
+        <div class="tier-range">50–74</div>
+        <div class="tier-name">High</div>
+        <div class="tier-desc">Significant exposure from one or more domains. Often: production access + significant data volume, or sole provider of an important function.</div>
+        <div class="tier-dd">Standard-plus due diligence</div>
+      </div>
+      <div class="tier-cell tc-med">
+        <div class="tier-range">25–49</div>
+        <div class="tier-name">Medium</div>
+        <div class="tier-desc">Moderate exposure. Vendor processes personal data or has system integration, but neither the data sensitivity nor the operational criticality reaches the higher threshold.</div>
+        <div class="tier-dd">Standard due diligence</div>
+      </div>
+      <div class="tier-cell tc-low">
+        <div class="tier-range">0–24</div>
+        <div class="tier-name">Low</div>
+        <div class="tier-desc">Limited structural exposure. Minimal data access, peripheral operational role, no privileged access, no significant regulatory surface.</div>
+        <div class="tier-dd">Lightweight due diligence</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Due diligence requirements -->
+  <section class="section" id="due-diligence">
+    <div class="section-label">07 — Due diligence</div>
+    <h2 class="section-title">Required due diligence <em>by tier</em></h2>
+    <div class="section-body">
+      <p>The inherent risk tier determines the minimum due diligence process required before onboarding approval. These requirements are prescribed — they are not negotiable based on vendor size, relationship history, or contract value. The tier reflects structural risk; due diligence requirements follow from the tier.</p>
+    </div>
+
+    <div class="dd-grid">
+      <div class="dd-row">
+        <div>
+          <div class="dd-tier-name" style="color:var(--c-crit)">Critical</div>
+          <div class="dd-level">Enhanced</div>
+        </div>
+        <div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.55;">Full security questionnaire (150+ controls), independent evidence review, on-site or virtual technical assessment, executive sign-off, legal review of all contract terms, and annual mandatory reassessment.</div>
+          <div class="dd-requirements">
+            <span class="dd-req">Full questionnaire (150+)</span>
+            <span class="dd-req">Evidence vault review</span>
+            <span class="dd-req">Penetration test results</span>
+            <span class="dd-req">SOC 2 Type II</span>
+            <span class="dd-req">ISO 27001 certificate</span>
+            <span class="dd-req">Legal contract review</span>
+            <span class="dd-req">Executive approval</span>
+            <span class="dd-req">Quarterly monitoring</span>
+          </div>
+        </div>
+      </div>
+      <div class="dd-row">
+        <div>
+          <div class="dd-tier-name" style="color:var(--c-high)">High</div>
+          <div class="dd-level">Standard-plus</div>
+        </div>
+        <div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.55;">Standard security questionnaire (80+ controls), evidence review for key controls, certification verification, execution of required legal agreements (DPA, BAA where applicable), bi-annual reassessment.</div>
+          <div class="dd-requirements">
+            <span class="dd-req">Security questionnaire (80+)</span>
+            <span class="dd-req">SOC 2 Type II or equivalent</span>
+            <span class="dd-req">Evidence review</span>
+            <span class="dd-req">DPA / BAA execution</span>
+            <span class="dd-req">Insurance verification</span>
+            <span class="dd-req">Annual reassessment</span>
+          </div>
+        </div>
+      </div>
+      <div class="dd-row">
+        <div>
+          <div class="dd-tier-name" style="color:var(--c-med)">Medium</div>
+          <div class="dd-level">Standard</div>
+        </div>
+        <div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.55;">Standard security questionnaire, self-attestation acceptable for some controls, certification review, privacy notice review. Annual reassessment.</div>
+          <div class="dd-requirements">
+            <span class="dd-req">Security questionnaire</span>
+            <span class="dd-req">Certification attestation</span>
+            <span class="dd-req">Privacy notice review</span>
+            <span class="dd-req">Annual reassessment</span>
+          </div>
+        </div>
+      </div>
+      <div class="dd-row">
+        <div>
+          <div class="dd-tier-name" style="color:var(--c-low)">Low</div>
+          <div class="dd-level">Lightweight</div>
+        </div>
+        <div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.55;">Simplified self-attestation form covering basic security hygiene. Periodic monitoring. Annual review or upon material change to the relationship.</div>
+          <div class="dd-requirements">
+            <span class="dd-req">Self-attestation form</span>
+            <span class="dd-req">Basic security check</span>
+            <span class="dd-req">Annual review</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Process -->
+  <section class="section" id="process">
+    <div class="section-label">08 — Process</div>
+    <h2 class="section-title">The VIRA <em>assessment process</em></h2>
+    <div class="section-body">
+      <p>VIRA is conducted as the first step in the VendorSoluce&trade; vendor lifecycle — before any vendor interaction, questionnaire, or evidence collection. The process is completed by the organization's risk or procurement team, not by the vendor.</p>
+    </div>
+
+    <div class="process-flow" style="margin-top:1.75rem">
+      <div class="process-step">
+        <div class="process-step-left">
+          <div class="process-step-num">01</div>
+          <div class="process-connector"></div>
+        </div>
+        <div class="process-step-body">
+          <div class="process-step-title">Vendor intake — relationship characterization</div>
+          <div class="process-step-desc">Complete the VIRA intake form covering all five domains. Inputs are based on your organization's knowledge of the proposed relationship — service scope, data access rights, integration depth, and applicable regulatory frameworks. The vendor does not participate in this step.</div>
+          <div class="process-step-output">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Output: Five domain scores
+          </div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-left">
+          <div class="process-step-num">02</div>
+          <div class="process-connector"></div>
+        </div>
+        <div class="process-step-body">
+          <div class="process-step-title">Weighted score calculation</div>
+          <div class="process-step-desc">Domain scores are combined using VIRA's weighted formula (D1×0.30 + D2×0.25 + D3×0.20 + D4×0.15 + D5×0.10) to produce a raw inherent score. Override conditions are then evaluated — if any apply, the score is elevated to the minimum for the required tier.</div>
+          <div class="process-step-output">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Output: Final inherent risk score (0–100)
+          </div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-left">
+          <div class="process-step-num">03</div>
+          <div class="process-connector"></div>
+        </div>
+        <div class="process-step-body">
+          <div class="process-step-title">Tier assignment and report generation</div>
+          <div class="process-step-desc">The final score maps to an inherent risk tier. The VIRA report is generated — documenting the score, domain breakdown, factor chips, override conditions, applicable regulations, and the prescribed due diligence requirements. This report becomes part of the vendor file.</div>
+          <div class="process-step-output">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Output: VIRA Inherent Risk Report
+          </div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-left">
+          <div class="process-step-num">04</div>
+          <div class="process-connector"></div>
+        </div>
+        <div class="process-step-body">
+          <div class="process-step-title">Due diligence — residual risk assessment</div>
+          <div class="process-step-desc">Based on the tier, the prescribed due diligence process begins. The vendor receives a security questionnaire calibrated to their tier. Evidence is collected, certifications are verified, and required legal agreements are executed. This produces the residual risk assessment.</div>
+          <div class="process-step-output">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Output: Residual risk assessment + evidence vault
+          </div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-left">
+          <div class="process-step-num">05</div>
+          <div class="process-connector"></div>
+        </div>
+        <div class="process-step-body">
+          <div class="process-step-title">Onboarding decision and ongoing monitoring</div>
+          <div class="process-step-desc">The combination of inherent risk tier and residual risk assessment drives the onboarding decision. Approved vendors enter the portfolio. VIRA scores are reassessed annually, or upon any material change to the relationship (expanded data access, new integration, service scope change).</div>
+          <div class="process-step-output">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Output: Approved vendor record in portfolio
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Inherent vs residual -->
+  <section class="section" id="inherent-vs-residual">
+    <div class="section-label">09 — Scope boundary</div>
+    <h2 class="section-title">Inherent vs. <em>residual risk</em></h2>
+    <div class="section-body">
+      <p>VIRA's scope ends at the inherent risk score. Understanding what falls inside and outside that boundary is essential to using the methodology correctly.</p>
+    </div>
+
+    <table class="compare-table" style="margin-top:1.5rem">
+      <thead>
+        <tr><th>Factor</th><th>Inherent risk (VIRA)</th><th>Residual risk (post-VIRA)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Who determines it</td>
+          <td>Your organization — from observed relationship facts</td>
+          <td>Evaluated jointly — questionnaire responses, certifications, evidence</td>
+        </tr>
+        <tr>
+          <td>Vendor certifications</td>
+          <td>Not considered — SOC 2, ISO 27001 do not affect inherent score</td>
+          <td>Primary inputs — reviewed and verified during due diligence</td>
+        </tr>
+        <tr>
+          <td>Security questionnaire</td>
+          <td>Not used — inherent risk precedes vendor interaction</td>
+          <td>Required — depth calibrated to inherent risk tier</td>
+        </tr>
+        <tr>
+          <td>When it changes</td>
+          <td>When the nature of the relationship changes — new data access, new integration, expanded scope</td>
+          <td>When vendor controls improve or deteriorate — new certifications, findings, incidents</td>
+        </tr>
+        <tr>
+          <td>Can vendor improve it?</td>
+          <td>No — inherent risk reflects the relationship, not vendor actions</td>
+          <td>Yes — better controls, evidence, and certifications reduce residual risk</td>
+        </tr>
+        <tr>
+          <td>Audit defensibility</td>
+          <td>Fully auditable — every point traces to an observable input</td>
+          <td>Depends on evidence quality and documentation discipline</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 10. Framework alignment -->
+  <section class="section" id="alignment">
+    <div class="section-label">10 — Framework alignment</div>
+    <h2 class="section-title"><em>Standards alignment</em></h2>
+    <div class="section-body">
+      <p>VIRA is grounded in established third-party risk management standards. The five-domain structure and weighting rationale draw directly from the following frameworks:</p>
+    </div>
+    <div class="two-col" style="margin-top:1.5rem">
+      <div class="info-box">
+        <div class="info-box-label"><span class="tag tag-mint">Primary</span></div>
+        <div class="info-box-title">NIST SP 800-161 Rev 1<br>C-SCRM for Systems and Organizations</div>
+        <div class="info-box-body">Provides the foundational supply chain risk management framework — including the concept of inherent vs. residual risk, supplier criticality tiering, and the requirement to assess risk before supplier interaction. Domain 2 (operational criticality) and Domain 5 (concentration) map directly to NIST 800-161 supply chain risk categories.</div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label"><span class="tag tag-mint">Primary</span></div>
+        <div class="info-box-title">NIST CSF 2.0<br>Cybersecurity Framework</div>
+        <div class="info-box-body">Governs the Govern and Identify functions, including third-party risk identification and supplier risk management. VIRA's domain structure reflects the CSF's emphasis on understanding the organizational context of risk before implementing controls.</div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label"><span class="tag tag-gold">Regulatory</span></div>
+        <div class="info-box-title">ISO/IEC 27036<br>Information Security for Supplier Relationships</div>
+        <div class="info-box-body">Provides specific guidance on supplier risk assessment — including the principle that risk assessment precedes supplier engagement, and the requirement for documented risk criteria. VIRA's tier-to-due-diligence mapping aligns with ISO 27036-3 acquisition process requirements.</div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label"><span class="tag tag-gold">Regulatory</span></div>
+        <div class="info-box-title">GDPR Article 28<br>Processor obligations</div>
+        <div class="info-box-body">Requires controllers to use only processors that provide sufficient guarantees — implying a documented assessment of processor risk before engagement. Domain 4 (regulatory surface) incorporates GDPR's DPA requirement and data transfer obligations as explicit risk factors.</div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-eyebrow">Ready to apply VIRA™</div>
+  <h2 class="cta-title">Start your first inherent risk assessment</h2>
+  <p class="cta-desc">The VIRA assessment takes approximately 15 minutes per vendor. Results feed directly into your vendor portfolio — no backend required.</p>
+  <div class="cta-actions">
+    <a href="/radar/vendor-inherent-risk-report.html" class="cta-btn-primary">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect width="8" height="4" x="8" y="3" rx="1"/></svg>
+      Run VIRA assessment →
+    </a>
+    <a href="/radar/vendor-inherent-risk-report.html" class="cta-btn-outline">
+      View portfolio report →
+    </a>
+  </div>
+</section>
+
+</div></main>
+<style>
+/* Footer branding styles */
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.brand-name {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--vendorsoluce-green);
+  margin-bottom: 2px;
+}
+.dark .brand-name {
+  color: white;
+}
+.brand-tagline {
+  font-size: 13px;
+  color: #6B7280;
+  margin-bottom: 1px;
+}
+.dark .brand-tagline {
+  color: #94A3B8;
+}
+.brand-attribution {
+  font-size: 11px;
+  color: #6B7280;
+}
+.dark .brand-attribution {
+  color: #94A3B8;
+}
+
+/* Make footer borders extremely subtle - match background colors */
+footer.bg-white,
+footer[class*="bg-white"],
+footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.02) !important;
+}
+html.dark footer.bg-gray-800,
+html.dark footer[class*="bg-gray-800"],
+html.dark footer {
+  border-top: 1px solid rgba(31, 41, 55, 0.03) !important;
+}
+footer > div > div:last-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.02) !important;
+}
+html.dark footer > div > div:last-child {
+  border-top: 1px solid rgba(31, 41, 55, 0.03) !important;
+}
+</style>
+<footer id="footer" class="bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white border-t border-gray-300 dark:border-gray-800 w-full flex-shrink-0">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-1.5 pb-0 w-full min-w-0">
+    <div class="vs-footer-grid grid grid-cols-1 md:grid-cols-5 gap-2 lg:gap-3 md:gap-x-4 w-full">
+
+      <!-- Company Info - CANONICAL FOOTER BRANDING: logo + three text lines (VendorSoluce&trade; / Supply Chain Risk Intelligence / by ERMITS). Do not change layout; this is the reference for all pages. -->
+      <div class="col-span-1 md:col-span-2 md:pr-4">
+        <div class="vs-footer-branding flex items-center mb-2">
+          <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" width="60" height="60" class="vs-brand-logo h-[3.75rem] w-[3.75rem] max-h-[3.75rem] max-w-[3.75rem] flex-shrink-0 transition-transform hover:scale-105 object-contain" loading="eager">
+          <span class="ml-1.5 min-w-0">
+            <span class="block text-[1.5rem] sm:text-[1.625rem] md:text-[1.75rem] font-bold text-vendorsoluce-green dark:text-white leading-tight">VendorSoluce&trade;</span>
+            <span class="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">Supply Chain Risk Intelligence</span>
+            <span class="block text-sm leading-tight text-gray-500 dark:text-gray-400 font-normal">by ERMITS</span>
+          </span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-snug">
+          Comprehensive supply chain risk management platform for modern organizations featuring assessments and automated compliance tools.
+        </p>
+      </div>
+
+      <!-- Solutions (platform/portal features) - absolute URLs so links work from vendorsoluce.com and from both www.platform.vendorsoluce.com and platform.vendorsoluce.com -->
+      <div class="md:pl-2">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Solutions</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="https://www.platform.vendorsoluce.com/supply-chain-assessment" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Supply Chain Assessment</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.platform.vendorsoluce.com/vendors" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+              <span>Vendor Dashboard</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.vendorsoluce.com/radar/vendor-threat-radar.html" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"></path><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Vendor Threat Radar</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.portal.vendorsoluce.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+              <span>Vendor Assurance Portal</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="md:pl-4">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Resources</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="/faq.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+              <span>FAQ</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/tutorial.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+              <span>Tutorial</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/best-practices.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
+              <span>Best Practices</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/download.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+              <span>Download</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/contact.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              <span>Contact</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="md:pl-2">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Legal</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="/legal/terms.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+              <span>Terms of Service</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/privacy-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>Privacy Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/cookie-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 15.5v.01"></path><path d="M12 12v.01"></path><path d="M11 17v.01"></path><path d="M7 14v.01"></path></svg>
+              <span>Cookie Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/acceptable-use-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+              <span>Acceptable Use Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Last row across all breakpoints: copyright left, badge right -->
+      <div class="col-span-full mt-1 pt-1 border-t border-gray-200/50 dark:border-gray-700/50 flex w-full flex-row flex-nowrap items-center justify-between gap-x-3 min-w-0 overflow-hidden">
+        <div class="min-w-0 flex-1 overflow-hidden">
+          <span class="text-xs text-gray-500 dark:text-gray-400 truncate block">&copy; 2026 ERMITS LLC. All rights reserved.</span>
+        </div>
+        <div class="flex flex-shrink-0 flex-nowrap items-center gap-x-4 ml-auto">
+          <div class="flex flex-shrink-0 items-center space-x-1.5 whitespace-nowrap px-2.5 py-1.5 rounded-lg bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 border border-vendorsoluce-green/30 dark:border-vendorsoluce-green/40">
+            <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" class="w-3.5 h-3.5 block opacity-100" loading="eager">
+            <span class="text-xs font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green">Local browser-based analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="assets/js/main.js"></script>
+  <script src="includes/active-nav.js"></script>
+  <script src="includes/analytics.js" defer></script>
+  <script src="includes/breadcrumb.js"></script>  <script src="assets/js/generated/route-manifest.js"></script>
+  <script src="assets/js/portal-config.js"></script>
+  <script src="assets/js/portal-links.js"></script>
+  
+</body>
+</html>
+

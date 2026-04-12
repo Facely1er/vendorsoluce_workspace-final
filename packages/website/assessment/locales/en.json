@@ -1,0 +1,202 @@
+{
+  "assessment": {
+    "title": "Supply Chain Risk Assessment",
+    "subtitle": "Comprehensive NIST SP 800-161 aligned assessment",
+    "view": "View Assessment",
+    "current": "Current Assessment",
+    "complete": "Complete",
+    "incomplete": "Incomplete",
+    "overallScore": "Overall Score",
+    "score": "Score",
+    "backToStart": "Back to Assessment Start",
+    "restartAssessment": "Restart Assessment",
+    "section": "Section",
+    "sectionProgress": "Section Progress",
+    "previousSection": "Previous Section",
+    "nextSection": "Next Section",
+    "viewResults": "View Results",
+    "startScreen": {
+      "startAssessment": "Start Assessment",
+      "nistAligned": "NIST Aligned",
+      "nistDescription": "Assessment based on NIST SP 800-161 Supply Chain Risk Management framework",
+      "comprehensive": "Comprehensive",
+      "comprehensiveDescription": "24 questions across 6 key supply chain security domains",
+      "actionable": "Actionable",
+      "actionableDescription": "Get personalized recommendations and a detailed compliance report",
+      "infoMessage": "This assessment will help you evaluate your organization's supply chain security posture against NIST SP 800-161 guidelines. You'll receive a detailed score and actionable recommendations to improve your security posture."
+    },
+    "onboarding": {
+      "nameYourAssessment": "Name Your Assessment",
+      "assessmentDescription": "Give your assessment a descriptive name to help you identify it later. This name will appear in your assessment list and reports.",
+      "assessmentNameLabel": "Assessment Name",
+      "assessmentNamePlaceholder": "e.g., Q3 2025 Supply Chain Assessment",
+      "whatToExpect": "What to expect:",
+      "expectation1": "24 questions across 6 supply chain security domains aligned with NIST SP 800-161",
+      "expectation2": "Typically takes 15-20 minutes to complete (varies by organization size)",
+      "expectation3": "Your progress is automatically saved as you complete each section",
+      "expectation4": "Detailed results with automated scoring and actionable recommendations",
+      "continueToAssessment": "Continue to Assessment"
+    },
+    "progress": {
+      "progressLabel": "Progress: {{answered}} / {{total}} questions",
+      "questionsAnswered": "{{count}} / {{total}}"
+    }
+  },
+  "supplyChain": {
+    "sections": {
+      "supplier": {
+        "title": "Supplier Management",
+        "description": "Evaluate supplier onboarding, monitoring, and management processes",
+        "questions": {
+          "sr1": {
+            "question": "Do you have a formal supplier onboarding process?",
+            "guidance": "A structured onboarding process ensures all suppliers meet minimum security requirements before engagement"
+          },
+          "sr2": {
+            "question": "Are supplier security capabilities regularly reviewed?",
+            "guidance": "Regular reviews help ensure suppliers maintain adequate security posture throughout the relationship"
+          },
+          "sr3": {
+            "question": "Do you maintain an approved supplier list?",
+            "guidance": "An approved supplier list helps control which vendors can access your systems and data"
+          },
+          "sr4": {
+            "question": "Are supplier termination procedures documented?",
+            "guidance": "Clear termination procedures ensure secure offboarding and protection of organizational assets"
+          }
+        }
+      },
+      "threat": {
+        "title": "Threat Management",
+        "description": "Assess threat intelligence and supply chain threat awareness capabilities",
+        "questions": {
+          "tm1": {
+            "question": "Do you have access to threat intelligence?",
+            "guidance": "Current threat intelligence helps organizations understand and prepare for supply chain threats"
+          },
+          "tm2": {
+            "question": "Are supply chain threats regularly assessed?",
+            "guidance": "Regular threat assessments help identify emerging risks in your supply chain"
+          },
+          "tm3": {
+            "question": "Do you share threat information with suppliers?",
+            "guidance": "Sharing relevant threat information helps suppliers better protect your organization"
+          },
+          "tm4": {
+            "question": "Are threat hunting activities conducted?",
+            "guidance": "Proactive threat hunting helps identify advanced threats that may have bypassed traditional defenses"
+          }
+        }
+      },
+      "vulnerability": {
+        "title": "Vulnerability Management",
+        "description": "Assess vulnerability identification, tracking, and remediation processes",
+        "questions": {
+          "vm1": {
+            "question": "Do you have a vulnerability management program?",
+            "guidance": "A comprehensive vulnerability management program is essential for maintaining security across the supply chain"
+          },
+          "vm2": {
+            "question": "Are vulnerabilities tracked and prioritized?",
+            "guidance": "Systematic tracking and prioritization ensures critical vulnerabilities are addressed promptly"
+          },
+          "vm3": {
+            "question": "Do you require vulnerability disclosure from suppliers?",
+            "guidance": "Suppliers should be required to disclose known vulnerabilities in their products and services"
+          },
+          "vm4": {
+            "question": "Are patch management processes documented?",
+            "guidance": "Clear patch management processes help ensure timely remediation of identified vulnerabilities"
+          }
+        }
+      },
+      "information": {
+        "title": "Information Security",
+        "description": "Assess information security controls and practices within your supply chain",
+        "questions": {
+          "is1": {
+            "question": "Do you have documented information security policies?",
+            "guidance": "Organizations should maintain current, documented information security policies that address supply chain risks"
+          },
+          "is2": {
+            "question": "Are security requirements included in vendor contracts?",
+            "guidance": "All vendor agreements should include specific security requirements and compliance obligations"
+          },
+          "is3": {
+            "question": "Do you conduct regular security assessments of vendors?",
+            "guidance": "Regular security assessments help identify and mitigate evolving risks in your supply chain"
+          },
+          "is4": {
+            "question": "Is sensitive data classification and handling documented?",
+            "guidance": "Clear data classification and handling procedures ensure appropriate protection throughout the supply chain"
+          }
+        }
+      },
+      "incident": {
+        "title": "Incident Response",
+        "description": "Evaluate incident response capabilities and supply chain coordination",
+        "questions": {
+          "ir1": {
+            "question": "Do you have an incident response plan?",
+            "guidance": "A comprehensive incident response plan should address supply chain-related security incidents"
+          },
+          "ir2": {
+            "question": "Are suppliers required to report security incidents?",
+            "guidance": "Suppliers should be contractually obligated to report security incidents that may affect your organization"
+          },
+          "ir3": {
+            "question": "Do you conduct incident response exercises?",
+            "guidance": "Regular exercises help ensure your team is prepared to respond effectively to supply chain incidents"
+          },
+          "ir4": {
+            "question": "Are lessons learned documented and shared?",
+            "guidance": "Documenting and sharing lessons learned helps improve future incident response capabilities"
+          }
+        }
+      },
+      "lifecycle": {
+        "title": "Lifecycle Management",
+        "description": "Evaluate product and service lifecycle security management",
+        "questions": {
+          "sl1": {
+            "question": "Are security requirements defined for the entire lifecycle?",
+            "guidance": "Security should be considered throughout the entire product or service lifecycle"
+          },
+          "sl2": {
+            "question": "Do you conduct security reviews at lifecycle milestones?",
+            "guidance": "Regular security reviews at key milestones help ensure continued security posture"
+          },
+          "sl3": {
+            "question": "Are end-of-life procedures documented?",
+            "guidance": "Clear end-of-life procedures ensure secure disposal or decommissioning of products and services"
+          },
+          "sl4": {
+            "question": "Do you track product and service dependencies?",
+            "guidance": "Understanding dependencies helps identify potential single points of failure in your supply chain"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "yes": "Yes",
+    "no": "No",
+    "partial": "Partial"
+  },
+  "results": {
+    "title": "Assessment Results",
+    "overallScore": "Overall Score",
+    "sectionScores": "Section Scores",
+    "topGaps": "Top Gaps",
+    "topGapsDescription": "Questions answered 'No' or 'Partial' that require attention:",
+    "downloadJson": "Download JSON",
+    "downloadPdf": "Download PDF Report",
+    "restart": "Restart Assessment",
+    "noGaps": "No gaps identified. Great job!",
+    "completedAt": "Completed at",
+    "reportTitle": "Supply Chain Risk Assessment Report",
+    "framework": "NIST SP 800-161 Supply Chain Risk Management",
+    "executiveSummary": "Executive Summary",
+    "recommendations": "Recommendations"
+  }
+}

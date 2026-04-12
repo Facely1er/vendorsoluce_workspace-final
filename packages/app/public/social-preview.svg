@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a2e1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#33691E;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#66BB6A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#33691E;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Decorative grid pattern -->
+  <g opacity="0.06">
+    <line x1="200" y1="0" x2="200" y2="630" stroke="white" stroke-width="1"/>
+    <line x1="400" y1="0" x2="400" y2="630" stroke="white" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="630" stroke="white" stroke-width="1"/>
+    <line x1="800" y1="0" x2="800" y2="630" stroke="white" stroke-width="1"/>
+    <line x1="1000" y1="0" x2="1000" y2="630" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="126" x2="1200" y2="126" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="252" x2="1200" y2="252" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="378" x2="1200" y2="378" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="504" x2="1200" y2="504" stroke="white" stroke-width="1"/>
+  </g>
+  <!-- Shield icon -->
+  <g transform="translate(100, 180)">
+    <path d="M50 0 L100 25 L100 65 C100 95 75 120 50 130 C25 120 0 95 0 65 L0 25 Z" fill="#66BB6A" opacity="0.9"/>
+    <path d="M50 20 L35 55 L50 50 L65 55 Z" fill="white" opacity="0.8" transform="translate(0, 5)"/>
+    <path d="M42 60 L50 80 L70 40" stroke="white" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- Main text -->
+  <text x="240" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="white">VendorSoluce</text>
+  <rect x="240" y="260" width="120" height="4" rx="2" fill="url(#accent)"/>
+  <text x="240" y="310" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="400" fill="#B0D0A0">Supply Chain Risk Management Platform</text>
+  <!-- Feature bullets -->
+  <g font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#A0C8A0">
+    <text x="240" y="380">&#x2713;  NIST SP 800-161 Aligned</text>
+    <text x="240" y="415">&#x2713;  Vendor Risk Assessment</text>
+    <text x="600" y="380">&#x2713;  SBOM Analysis</text>
+    <text x="600" y="415">&#x2713;  Compliance Automation</text>
+  </g>
+  <!-- Domain -->
+  <text x="240" y="530" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#66BB6A" font-weight="600">vendorsoluce.com</text>
+  <!-- Bottom accent bar -->
+  <rect x="0" y="620" width="1200" height="10" fill="url(#accent)"/>
+</svg>

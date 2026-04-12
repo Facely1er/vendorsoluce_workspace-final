@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script data-vs-theme-init>(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();</script>
+  <meta charset="utf-8">
+  <meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radar verification | ERMITS</title>
+
+<!-- ERMITS global SEO bundle: merged into each page <head> by embed-header-footer.js (npm run build). Idempotent via meta name="ermits-seo-bundle". -->
+<meta name="ermits-seo-bundle" content="1">
+<meta name="application-name" content="VendorSoluce">
+<meta name="author" content="ERMITS">
+<meta name="creator" content="ERMITS">
+<meta name="publisher" content="ERMITS">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "VendorSoluce",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Vendor risk intelligence workspace for third-party risk review, dependency visibility, and supply chain assurance.",
+  "url": "https://vendorsoluce.com/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ERMITS",
+    "url": "https://ermits.com/"
+  }
+}
+</script>
+
+
+<meta name="twitter:card" content="summary">
+  <link href="../assets/css/shell.css" rel="stylesheet"/>
+</head>
+<body>
+  <h1>Vendor Threat Radar – verification</h1>
+  <p>Open the <a href="vendor-threat-radar.html">Vendor Threat Radar</a> in this tab, then run the checks below in the browser console (F12).</p>
+  <pre id="instructions">
+// Paste and run in console on vendor-threat-radar.html:
+
+(function() {
+  var out = [];
+  function ok(condition, msg) { out.push((condition ? 'PASS' : 'FAIL') + ': ' + msg); }
+  function note(msg) { out.push('NOTE: ' + msg); }
+
+  // 1. Mode selector DOM
+  var radios = document.querySelectorAll('input[name="radarMode"]');
+  ok(radios.length === 3, 'Three mode radios (baseline, real, hybrid)');
+  ok(document.getElementById('radarModeBaseline') && document.getElementById('radarModeReal') && document.getElementById('radarModeHybrid'), 'Mode radio IDs present');
+
+  // 2. Mode selector interactive
+  var fieldset = document.querySelector('.mode-fieldset');
+  var style = fieldset ? getComputedStyle(fieldset) : null;
+  ok(!style || style.pointerEvents !== 'none', 'Mode fieldset has pointer-events (not none)');
+
+  // 3. CSV Import
+  var csvInput = document.getElementById('csvImport');
+  ok(!!csvInput && csvInput.type === 'file', 'File input #csvImport exists');
+  ok(typeof window.importVendors === 'function', 'importVendors on window');
+  ok(typeof window.downloadVendorCsvTemplate === 'function', 'downloadVendorCsvTemplate on window');
+
+  // 4. Add Vendor
+  ok(typeof window.openAddVendor === 'function', 'openAddVendor on window');
+
+  // 5. Template link/button
+  var templateBtn = document.getElementById('csvTemplateLink');
+  ok(!!templateBtn, 'Download template control (csvTemplateLink) present');
+
+  // 6. Details open by default
+  var details = document.querySelector('.csv-format-details');
+  ok(!!details, 'CSV format details element present');
+  note('details.open = ' + (details ? details.hasAttribute('open') : 'N/A'));
+
+  console.log(out.join('\n'));
+  return out;
+})();
+  </pre>
+  <p><strong>Expected:</strong> All lines should show <code>PASS</code>. If any show <code>FAIL</code>, the radar page has a bug.</p>
+</body>
+</html>

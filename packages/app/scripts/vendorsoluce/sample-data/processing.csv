@@ -1,0 +1,3 @@
+processing_name,external_key,sensitivity,regulatory_weight,cross_border
+Employee Payroll,pa_payroll,0.90,0.80,false
+Customer Support Recordings,pa_support_rec,0.82,0.75,true

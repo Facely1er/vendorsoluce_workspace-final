@@ -1,0 +1,147 @@
+
+:root{
+  --nav-height:64px;
+  --breadcrumb-height:40px;
+  --page-top-offset:calc(var(--nav-height) + var(--breadcrumb-height));
+  --page-intro-pad-mobile:3rem;
+  --page-intro-pad-desktop:4rem;
+}
+
+/* Canonical shell geometry */
+body{
+  min-height:100vh;
+}
+
+main{
+  padding-top:var(--page-top-offset);
+}
+
+nav[aria-label="Breadcrumb"]{
+  margin-top:0 !important;
+  position:sticky !important;
+  top:var(--nav-height) !important;
+  z-index:40 !important;
+  min-height:2.5rem;
+  display:flex;
+  align-items:center;
+  width:100%;
+  flex-shrink:0;
+}
+
+main nav[aria-label="Breadcrumb"] + *{
+  padding-top:var(--page-intro-pad-mobile) !important;
+  scroll-margin-top:calc(var(--page-top-offset) + 8px);
+}
+
+@media (min-width:768px){
+  main nav[aria-label="Breadcrumb"] + *{
+    padding-top:var(--page-intro-pad-desktop) !important;
+  }
+}
+
+/* Pages without breadcrumbs */
+main > section:first-child,
+main > header:first-child,
+main > div:first-child{
+  scroll-margin-top:calc(var(--page-top-offset) + 8px);
+}
+
+/* Canonical header behavior */
+nav.fixed.top-0,
+nav[class*="fixed"]{
+  position:fixed !important;
+  top:0;
+  left:0;
+  right:0;
+  z-index:99999 !important;
+  pointer-events:auto !important;
+  isolation:isolate;
+}
+
+nav a[href],
+nav button{
+  pointer-events:auto !important;
+  cursor:pointer;
+}
+
+.mobile-menu-position{
+  top:var(--nav-height);
+}
+
+/* Canonical theme toggle */
+nav [data-tour="theme-toggle"] button,
+nav button[data-theme-toggle]{
+  width:2.25rem !important;
+  height:2.25rem !important;
+  min-width:2.25rem !important;
+  min-height:2.25rem !important;
+  border-radius:.5rem !important;
+  background-color:rgb(243 244 246) !important;
+  color:rgb(55 65 81) !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  flex-shrink:0 !important;
+  transition:all .2s ease !important;
+}
+
+html.dark nav [data-tour="theme-toggle"] button,
+html.dark nav button[data-theme-toggle]{
+  background-color:rgb(55 65 81) !important;
+  color:rgb(250 204 21) !important;
+}
+
+nav [data-tour="theme-toggle"] button:hover,
+nav button[data-theme-toggle]:hover{
+  background-color:rgb(229 231 235) !important;
+}
+
+html.dark nav [data-tour="theme-toggle"] button:hover,
+html.dark nav button[data-theme-toggle]:hover{
+  background-color:rgb(75 85 99) !important;
+}
+
+nav [data-tour="theme-toggle"] button svg,
+nav button[data-theme-toggle] svg{
+  width:1.25rem !important;
+  height:1.25rem !important;
+  color:inherit !important;
+}
+
+/* Protect brand lockup from active-nav styles */
+nav [data-tour="main-nav"] a,
+nav [data-tour="main-nav"] a:hover,
+nav [data-tour="main-nav"] a.active,
+nav [data-tour="main-nav"] a[aria-current="page"],
+nav [data-tour="main-nav"] a:focus{
+  color:inherit !important;
+  background:transparent !important;
+  font-weight:inherit !important;
+}
+
+nav a[aria-current="page"][style*="pointer-events: none"],
+nav a[aria-current="page"].cursor-default{
+  pointer-events:none !important;
+  opacity:.9;
+}
+
+nav a[aria-current="page"][style*="pointer-events: none"]:hover,
+nav a[aria-current="page"].cursor-default:hover{
+  transform:none !important;
+  box-shadow:none !important;
+}
+
+/* Canonical breadcrumb spacing */
+nav[aria-label="Breadcrumb"] .max-w-7xl,
+nav[aria-label="Breadcrumb"] .max-w-6xl,
+nav[aria-label="Breadcrumb"] .w-full{
+  width:100%;
+}
+
+.tagline-text{
+  letter-spacing:-0.02em;
+  margin-top:-3px;
+}
+.hidden-icon{
+  display:none;
+}

@@ -1,0 +1,28 @@
+# Git Commit and Push Commands
+# Run these commands in Git Bash, Command Prompt, or VS Code Terminal
+
+# Navigate to project directory
+cd "C:\Users\facel\Downloads\GitHub\ERMITS_PRODUCTION\05-vendorsoluce"
+
+# Check status
+git status
+
+# Add all files
+git add .
+
+# Commit with message
+git commit -m "Complete trial and onboarding system implementation
+
+- Add database migration for onboarding tracking columns
+- Deploy all 4 edge functions (trial-cron, manage-trial-expiration, send-trial-notification, send-onboarding-complete-email)
+- Set up daily cron job for trial management
+- Configure environment variables (RESEND_API_KEY, EMAIL_FROM, SITE_URL)
+- Fix security issues: Remove hardcoded credentials from documentation
+- Add comprehensive setup documentation and scripts
+- Update database types with onboarding columns
+
+System is now 100% operational for 14-day trial management and onboarding automation."
+
+# Push to remote
+git push
+

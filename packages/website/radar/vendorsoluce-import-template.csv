@@ -1,0 +1,6 @@
+Name,Category,Data Types,Sector,Location,Contact,Notes,Provides Software,SBOM Available,SBOM Format,OSS Exposure
+AWS,critical,PII;Financial;Confidential,Cloud Infrastructure,United States,security@aws.amazon.com,Primary cloud infrastructure provider,No,No,,
+Salesforce,strategic,PII;Financial,SaaS,United States,security@salesforce.com,CRM platform for sales management,No,No,,
+GitHub,strategic,IP;Confidential,Development Tools,United States,security@github.com,Source code repository and collaboration,Yes,Yes,SPDX,High
+Okta,critical,PII,Security,United States,security@okta.com,Identity and access management platform,No,No,,
+Zoom,tactical,PII;Confidential,Collaboration,United States,security@zoom.us,Video conferencing platform,No,No,,

@@ -1,0 +1,57 @@
+# Git Commit Commands for Stripe Integration
+
+## Quick Commit Commands
+
+```bash
+# Add all files
+git add .
+
+# Commit with comprehensive message
+git commit -m "feat: Complete Stripe integration with distinctive monthly/annual product catalog
+
+- Add comprehensive Stripe product catalog with monthly/annual separation
+- Implement complete Stripe service with error handling and webhooks
+- Create enhanced pricing components with add-on support
+- Add database schema for subscription management
+- Fix price mismatches for Federal and Additional Users products
+- Include webhook handler for Supabase Edge Functions
+- Add revenue analytics dashboard component
+- Implement complete checkout flow testing
+
+BREAKING CHANGE: Updated product catalog structure with distinctive billing models"
+
+# Push to main branch
+git push origin main
+```
+
+## Alternative: Use GitHub Desktop or VS Code Git Integration
+
+If command line Git is not available, you can:
+
+1. **GitHub Desktop**: Open the repository in GitHub Desktop and commit through the GUI
+2. **VS Code**: Use the Source Control panel in VS Code to stage and commit changes
+3. **GitHub Web**: Upload files directly through the GitHub web interface
+
+## Files Modified/Created
+
+### Core Integration
+- `src/lib/stripeProducts.ts` - Complete product catalog
+- `src/services/stripeService.ts` - Stripe service integration
+- `src/components/pricing/StripePricingCard.tsx` - Enhanced pricing component
+- `src/pages/Pricing.tsx` - Complete pricing page
+- `src/components/analytics/RevenueDashboard.tsx` - Revenue analytics
+
+### Database & Backend
+- `supabase/migrations/20250101000000_stripe_integration.sql` - Database schema
+- `supabase/functions/stripe-webhook/index.ts` - Webhook handler
+
+### Testing & Scripts
+- `test-stripe-integration.js` - Integration tests
+- `simple-stripe-test.js` - Simplified tests
+- `fix-price-mismatches.js` - Price fix script
+- `simple-checkout-test.js` - Checkout tests
+
+### Documentation
+- `PRODUCTION_DEPLOYMENT_COMPLETE.md` - Deployment summary
+- `WEBHOOK_SETUP_GUIDE.md` - Webhook setup
+- `COMMIT_SUMMARY.md` - This commit summary

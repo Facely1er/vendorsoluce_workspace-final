@@ -1,0 +1,139 @@
+.riskDot {
+  background: var(--risk-color);
+}
+
+.riskBar {
+  width: var(--risk-width);
+  background: var(--risk-bar-color);
+}
+
+.riskScore {
+  color: var(--risk-text-color);
+}
+
+.riskBadge {
+  background: var(--risk-bg-color);
+  color: var(--risk-text-color);
+}
+
+.iconColor {
+  color: var(--icon-color);
+}
+
+/* Risk distribution row: dot and bar by level (avoids inline styles) */
+.distributionDotCritical { background: #DC2626; }
+.distributionDotHigh { background: #F59E0B; }
+.distributionDotMedium { background: #F97316; }
+.distributionDotLow { background: #22C55E; }
+
+.distributionBarInner {
+  height: 0.5rem;
+  border-radius: 9999px;
+  transition: width 0.2s ease;
+}
+/* Widths 0–100% for bar (avoids inline style for dynamic width) */
+.distributionBarPct0 { width: 0%; }
+.distributionBarPct1 { width: 1%; }
+.distributionBarPct2 { width: 2%; }
+.distributionBarPct3 { width: 3%; }
+.distributionBarPct4 { width: 4%; }
+.distributionBarPct5 { width: 5%; }
+.distributionBarPct6 { width: 6%; }
+.distributionBarPct7 { width: 7%; }
+.distributionBarPct8 { width: 8%; }
+.distributionBarPct9 { width: 9%; }
+.distributionBarPct10 { width: 10%; }
+.distributionBarPct11 { width: 11%; }
+.distributionBarPct12 { width: 12%; }
+.distributionBarPct13 { width: 13%; }
+.distributionBarPct14 { width: 14%; }
+.distributionBarPct15 { width: 15%; }
+.distributionBarPct16 { width: 16%; }
+.distributionBarPct17 { width: 17%; }
+.distributionBarPct18 { width: 18%; }
+.distributionBarPct19 { width: 19%; }
+.distributionBarPct20 { width: 20%; }
+.distributionBarPct21 { width: 21%; }
+.distributionBarPct22 { width: 22%; }
+.distributionBarPct23 { width: 23%; }
+.distributionBarPct24 { width: 24%; }
+.distributionBarPct25 { width: 25%; }
+.distributionBarPct26 { width: 26%; }
+.distributionBarPct27 { width: 27%; }
+.distributionBarPct28 { width: 28%; }
+.distributionBarPct29 { width: 29%; }
+.distributionBarPct30 { width: 30%; }
+.distributionBarPct31 { width: 31%; }
+.distributionBarPct32 { width: 32%; }
+.distributionBarPct33 { width: 33%; }
+.distributionBarPct34 { width: 34%; }
+.distributionBarPct35 { width: 35%; }
+.distributionBarPct36 { width: 36%; }
+.distributionBarPct37 { width: 37%; }
+.distributionBarPct38 { width: 38%; }
+.distributionBarPct39 { width: 39%; }
+.distributionBarPct40 { width: 40%; }
+.distributionBarPct41 { width: 41%; }
+.distributionBarPct42 { width: 42%; }
+.distributionBarPct43 { width: 43%; }
+.distributionBarPct44 { width: 44%; }
+.distributionBarPct45 { width: 45%; }
+.distributionBarPct46 { width: 46%; }
+.distributionBarPct47 { width: 47%; }
+.distributionBarPct48 { width: 48%; }
+.distributionBarPct49 { width: 49%; }
+.distributionBarPct50 { width: 50%; }
+.distributionBarPct51 { width: 51%; }
+.distributionBarPct52 { width: 52%; }
+.distributionBarPct53 { width: 53%; }
+.distributionBarPct54 { width: 54%; }
+.distributionBarPct55 { width: 55%; }
+.distributionBarPct56 { width: 56%; }
+.distributionBarPct57 { width: 57%; }
+.distributionBarPct58 { width: 58%; }
+.distributionBarPct59 { width: 59%; }
+.distributionBarPct60 { width: 60%; }
+.distributionBarPct61 { width: 61%; }
+.distributionBarPct62 { width: 62%; }
+.distributionBarPct63 { width: 63%; }
+.distributionBarPct64 { width: 64%; }
+.distributionBarPct65 { width: 65%; }
+.distributionBarPct66 { width: 66%; }
+.distributionBarPct67 { width: 67%; }
+.distributionBarPct68 { width: 68%; }
+.distributionBarPct69 { width: 69%; }
+.distributionBarPct70 { width: 70%; }
+.distributionBarPct71 { width: 71%; }
+.distributionBarPct72 { width: 72%; }
+.distributionBarPct73 { width: 73%; }
+.distributionBarPct74 { width: 74%; }
+.distributionBarPct75 { width: 75%; }
+.distributionBarPct76 { width: 76%; }
+.distributionBarPct77 { width: 77%; }
+.distributionBarPct78 { width: 78%; }
+.distributionBarPct79 { width: 79%; }
+.distributionBarPct80 { width: 80%; }
+.distributionBarPct81 { width: 81%; }
+.distributionBarPct82 { width: 82%; }
+.distributionBarPct83 { width: 83%; }
+.distributionBarPct84 { width: 84%; }
+.distributionBarPct85 { width: 85%; }
+.distributionBarPct86 { width: 86%; }
+.distributionBarPct87 { width: 87%; }
+.distributionBarPct88 { width: 88%; }
+.distributionBarPct89 { width: 89%; }
+.distributionBarPct90 { width: 90%; }
+.distributionBarPct91 { width: 91%; }
+.distributionBarPct92 { width: 92%; }
+.distributionBarPct93 { width: 93%; }
+.distributionBarPct94 { width: 94%; }
+.distributionBarPct95 { width: 95%; }
+.distributionBarPct96 { width: 96%; }
+.distributionBarPct97 { width: 97%; }
+.distributionBarPct98 { width: 98%; }
+.distributionBarPct99 { width: 99%; }
+.distributionBarPct100 { width: 100%; }
+.distributionBarCritical { background: #DC2626; }
+.distributionBarHigh { background: #F59E0B; }
+.distributionBarMedium { background: #F97316; }
+.distributionBarLow { background: #22C55E; }

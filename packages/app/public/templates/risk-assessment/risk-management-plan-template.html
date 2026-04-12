@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Chain Risk Management Plan Template</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 1in;
+        }
+        h1 {
+            color: #1E3B8A;
+            text-align: center;
+            border-bottom: 2px solid #1E3B8A;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2D7D7D;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 1.5em;
+        }
+        h3 {
+            color: #3B82F6;
+            margin-top: 1em;
+        }
+        .info-box {
+            background-color: #f0f7ff;
+            border-left: 4px solid #3B82F6;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .fill-in {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px dashed #ccc;
+            min-height: 40px;
+            margin: 10px 0;
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 0.8em;
+            text-align: center;
+            color: #666;
+        }
+        @media print {
+            body {
+                padding: 0.5in;
+            }
+            .info-box, .fill-in {
+                page-break-inside: avoid;
+            }
+            h2, h3 {
+                page-break-after: avoid;
+            }
+            table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+            .footer {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1E3B8A; padding-bottom: 20px;">
+        <h1 style="margin-bottom: 10px; color: #1E3B8A;">VendorSoluce</h1>
+        <p style="color: #666; font-size: 0.9em; margin: 0;">Supply Chain Risk Management Platform</p>
+        <p style="font-size: 0.75em; color: #999; margin-top: 5px;">Template Version: 1.0 | Last Updated: December 2025</p>
+    </div>
+    
+    <h1>Supply Chain Risk Management Plan</h1>
+    
+    <div class="info-box">
+        <p><strong>Purpose:</strong> This template provides a framework for developing a comprehensive Supply Chain Risk Management (SCRM) Plan in alignment with NIST SP 800-161 guidance.</p>
+        <p><strong>Instructions:</strong> Customize this template to your organization's specific needs, supply chain structure, and risk profile. Sections may be added, removed, or modified as appropriate.</p>
+    </div>
+
+    <div class="section">
+        <h2>1. DOCUMENT CONTROL</h2>
+        
+        <table>
+            <tr>
+                <td width="30%"><strong>Document Title:</strong></td>
+                <td>Supply Chain Risk Management Plan</td>
+            </tr>
+            <tr>
+                <td><strong>Version:</strong></td>
+                <td>1.0</td>
+            </tr>
+            <tr>
+                <td><strong>Date:</strong></td>
+                <td><em>To be completed by organization</em></td>
+            </tr>
+            <tr>
+                <td><strong>Owner:</strong></td>
+                <td><em>To be completed by organization</em></td>
+            </tr>
+            <tr>
+                <td><strong>Approvers:</strong></td>
+                <td><em>To be completed by organization</em></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>2. INTRODUCTION</h2>
+        
+        <h3>2.1 Purpose and Scope</h3>
+        <div class="fill-in">
+            <p>This Supply Chain Risk Management Plan establishes the framework for identifying, assessing, and mitigating risks associated with the organization's supply chain. The plan applies to all information and communications technology (ICT) systems, operational technology (OT) systems, products, and services procured or utilized by the organization. This includes software, hardware, cloud services, and third-party service providers that support critical business functions and information systems.</p>
+            <p>The scope encompasses all organizational units, business functions, and mission-critical systems. The plan addresses risks across the entire supply chain lifecycle, from supplier selection through product/service delivery, maintenance, and end-of-life disposal.</p>
+        </div>
+        
+        <h3>2.2 Regulatory and Compliance Requirements</h3>
+        <div class="fill-in">
+            <p>This plan addresses the following regulatory requirements and industry standards:</p>
+            <ul>
+                <li><strong>NIST SP 800-161 Rev. 1:</strong> Cyber Supply Chain Risk Management Practices for Systems and Organizations</li>
+                <li><strong>NIST Cybersecurity Framework:</strong> Supply chain risk management controls</li>
+                <li><strong>Executive Order 14028:</strong> Improving the Nation's Cybersecurity (for federal contractors)</li>
+                <li><strong>DFARS 252.204-7012:</strong> Safeguarding Covered Defense Information (if applicable)</li>
+                <li><strong>CMMC 2.0:</strong> Cybersecurity Maturity Model Certification requirements (if applicable)</li>
+                <li><strong>ISO/IEC 27036:</strong> Information security for supplier relationships</li>
+                <li><strong>ISO 28000:</strong> Security management systems for the supply chain</li>
+            </ul>
+            <p><em>Note: Organizations should customize this list based on their specific regulatory and contractual obligations.</em></p>
+        </div>
+        
+        <h3>2.3 Definitions</h3>
+        <div class="fill-in">
+            <p><strong>Supply Chain:</strong> The network of suppliers, vendors, contractors, and service providers that contribute to the development, delivery, and maintenance of products, services, and systems.</p>
+            <p><strong>Supply Chain Risk:</strong> The potential for an adverse event impacting the supply chain that could affect the confidentiality, integrity, or availability of information systems or organizational operations.</p>
+            <p><strong>Critical Supplier:</strong> A supplier whose products, services, or systems are essential to organizational operations or mission-critical functions.</p>
+            <p><strong>Software Bill of Materials (SBOM):</strong> A formal record containing the details and supply chain relationships of various components used in building software.</p>
+            <p><strong>Cyber Supply Chain Risk Management (C-SCRM):</strong> The process of identifying, assessing, and mitigating risks associated with the distributed and interconnected nature of IT/OT product and service supply chains.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. ORGANIZATIONAL CONTEXT</h2>
+        
+        <h3>3.1 Supply Chain Structure</h3>
+        <div class="fill-in">
+            <p>The organization's supply chain is structured across multiple tiers, with direct suppliers (Tier 1) providing products and services directly to the organization, and sub-suppliers (Tier 2+) supporting Tier 1 suppliers. Key supplier categories include:</p>
+            <ul>
+                <li><strong>Software Providers:</strong> Application software, operating systems, development tools, and software-as-a-service (SaaS) solutions</li>
+                <li><strong>Hardware Manufacturers:</strong> Servers, networking equipment, end-user devices, and embedded systems</li>
+                <li><strong>Cloud Service Providers:</strong> Infrastructure-as-a-Service (IaaS), Platform-as-a-Service (PaaS), and cloud-based applications</li>
+                <li><strong>Managed Service Providers:</strong> IT support, security services, and business process outsourcing</li>
+                <li><strong>Professional Services:</strong> Consulting, system integration, and development services</li>
+            </ul>
+            <p>Suppliers are categorized by criticality based on factors including: impact on mission-critical functions, access to sensitive data, integration depth with organizational systems, and business continuity dependencies.</p>
+        </div>
+        
+        <h3>3.2 Roles and Responsibilities</h3>
+        <div class="fill-in">
+            <p><strong>Chief Information Security Officer (CISO):</strong> Overall responsibility for SCRM program governance, policy approval, and risk acceptance decisions.</p>
+            <p><strong>SCRM Program Manager:</strong> Day-to-day management of SCRM activities, coordination of assessments, and program reporting.</p>
+            <p><strong>Procurement/Supply Chain Management:</strong> Integration of security requirements into procurement processes, supplier contract management, and supplier relationship management.</p>
+            <p><strong>IT Security Team:</strong> Technical security assessments, vulnerability analysis, SBOM review, and security control validation.</p>
+            <p><strong>Legal/Compliance:</strong> Contract review, regulatory compliance oversight, and risk acceptance documentation.</p>
+            <p><strong>Business Unit Owners:</strong> Identification of critical suppliers, risk tolerance definition, and business impact assessment.</p>
+            <p><em>Note: Organizations should customize roles and responsibilities based on their organizational structure and governance model.</em></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. RISK ASSESSMENT</h2>
+        
+        <h3>4.1 Risk Assessment Methodology</h3>
+        <div class="fill-in">
+            <p>The organization employs a risk-based methodology aligned with NIST SP 800-161 and ISO 31000 risk management principles. The assessment process includes:</p>
+            <ol>
+                <li><strong>Risk Identification:</strong> Systematic identification of supply chain risks through supplier assessments, threat intelligence, and vulnerability analysis</li>
+                <li><strong>Risk Analysis:</strong> Evaluation of identified risks considering likelihood of occurrence and potential impact on organizational objectives</li>
+                <li><strong>Risk Evaluation:</strong> Comparison of risk levels against organizational risk tolerance and prioritization for treatment</li>
+                <li><strong>Risk Treatment:</strong> Selection and implementation of appropriate risk mitigation strategies</li>
+            </ol>
+            <p>Risk levels are determined using a combination of qualitative and quantitative factors, including supplier security posture, component vulnerability status, business criticality, and threat intelligence. Risk acceptance decisions require approval from the CISO or designated risk authority based on documented risk tolerance criteria.</p>
+        </div>
+        
+        <h3>4.2 Risk Categories</h3>
+        <div class="fill-in">
+            <p>The following categories of supply chain risks are addressed by this plan:</p>
+            <ul>
+                <li><strong>Supplier Business Continuity:</strong> Risks related to supplier financial stability, operational disruptions, and service availability</li>
+                <li><strong>Component Integrity:</strong> Risks of counterfeit, tampered, or maliciously modified components entering the supply chain</li>
+                <li><strong>Information Security:</strong> Risks to confidentiality, integrity, and availability of information shared with or processed by suppliers</li>
+                <li><strong>Vulnerability Management:</strong> Risks from known and unknown vulnerabilities in supplier products and services</li>
+                <li><strong>Compliance and Regulatory:</strong> Risks of non-compliance with applicable regulations, standards, and contractual requirements</li>
+                <li><strong>Dependency and Concentration:</strong> Risks from over-reliance on single suppliers or geographic concentration</li>
+                <li><strong>Intellectual Property:</strong> Risks to intellectual property protection and unauthorized disclosure</li>
+            </ul>
+        </div>
+        
+        <h3>4.3 Current Risk Assessment</h3>
+        <div class="fill-in">
+            <p>The most recent comprehensive supply chain risk assessment was conducted on <em>Date to be populated</em> and evaluated <em>Number to be populated</em> suppliers across <em>Number to be populated</em> risk categories. Key findings include:</p>
+            <ul>
+                <li><strong>High-Risk Suppliers:</strong> <em>Number to be populated</em> suppliers identified with high-risk ratings requiring immediate attention</li>
+                <li><strong>Critical Vulnerabilities:</strong> <em>Number to be populated</em> critical vulnerabilities identified in supplier products or services</li>
+                <li><strong>Compliance Gaps:</strong> <em>Number to be populated</em> suppliers with identified compliance gaps requiring remediation</li>
+                <li><strong>Overall Risk Posture:</strong> <em>Risk level to be populated</em> - The organization's overall supply chain risk posture is <em>Description to be populated</em></li>
+            </ul>
+            <p>Detailed risk assessment results are maintained in the VendorSoluce risk management system and reviewed quarterly by the SCRM program manager and CISO.</p>
+        </div>
+        
+        <h3>4.4 Risk Prioritization</h3>
+        <table>
+            <tr>
+                <th>Risk ID</th>
+                <th>Risk Description</th>
+                <th>Category</th>
+                <th>Impact</th>
+                <th>Likelihood</th>
+                <th>Risk Level</th>
+                <th>Priority</th>
+            </tr>
+            <tr>
+                <td>SCRM-001</td>
+                <td>Example: Disruption of critical component delivery</td>
+                <td>Supplier Business Continuity</td>
+                <td>High</td>
+                <td>Medium</td>
+                <td>High</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>SCRM-002</td>
+                <td>Example: Introduction of counterfeit components</td>
+                <td>Component Integrity</td>
+                <td>High</td>
+                <td>Low</td>
+                <td>Medium</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>SCRM-003</td>
+                <td><em>Add additional risks as identified through ongoing assessment activities</em></td>
+                <td><em>To be determined</em></td>
+                <td><em>To be determined</em></td>
+                <td><em>To be determined</em></td>
+                <td><em>To be determined</em></td>
+                <td><em>To be determined</em></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>5. RISK MITIGATION STRATEGIES</h2>
+        
+        <h3>5.1 Risk Treatment Approach</h3>
+        <div class="fill-in">
+            <p>The organization employs a comprehensive risk treatment approach that includes the following strategies, applied based on risk level and business context:</p>
+            <ul>
+                <li><strong>Risk Avoidance:</strong> Eliminating high-risk suppliers or components when acceptable alternatives are available and the risk cannot be effectively mitigated</li>
+                <li><strong>Risk Mitigation:</strong> Implementing security controls, contractual requirements, and monitoring to reduce risk likelihood or impact to acceptable levels</li>
+                <li><strong>Risk Transfer:</strong> Transferring risk through insurance, contractual indemnification, or service level agreements with suppliers</li>
+                <li><strong>Risk Acceptance:</strong> Formally accepting residual risk when mitigation costs exceed potential impact, or when risk is within organizational tolerance levels</li>
+            </ul>
+            <p>Risk treatment decisions are documented and approved by the CISO or designated risk authority. All accepted risks are reviewed annually or when significant changes occur in the threat landscape or organizational risk tolerance.</p>
+        </div>
+        
+        <h3>5.2 Risk Mitigation Measures</h3>
+        <table>
+            <tr>
+                <th>Risk ID</th>
+                <th>Mitigation Measures</th>
+                <th>Responsible Party</th>
+                <th>Timeline</th>
+                <th>Resources Required</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>SCRM-001</td>
+                <td>Example: Identify and qualify alternate suppliers</td>
+                <td>Procurement Manager</td>
+                <td>Q3 2025</td>
+                <td>$25,000</td>
+                <td>In Progress</td>
+            </tr>
+            <tr>
+                <td>SCRM-002</td>
+                <td>Example: Implement component validation procedures</td>
+                <td>Quality Assurance</td>
+                <td>Q2 2025</td>
+                <td>$15,000</td>
+                <td>Planned</td>
+            </tr>
+            <tr>
+                <td><em>Add additional mitigation measures as risks are identified</em></td>
+                <td><em>To be determined</em></td>
+                <td><em>To be determined</em></td>
+                <td><em>To be determined</em></td>
+                <td><em>To be determined</em></td>
+                <td><em>To be determined</em></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>6. SUPPLY CHAIN CONTROLS</h2>
+        
+        <h3>6.1 Supplier Management Controls</h3>
+        <div class="fill-in">
+            <p>Supplier management controls include:</p>
+            <ul>
+                <li><strong>Supplier Selection:</strong> Security requirements integrated into procurement processes, mandatory security assessments for critical suppliers, and evaluation of supplier security certifications and compliance status</li>
+                <li><strong>Supplier Qualification:</strong> Pre-contract security assessments, reference checks, and validation of security capabilities before engagement</li>
+                <li><strong>Contractual Controls:</strong> Security clauses in all supplier contracts, right-to-audit provisions, data protection requirements, and incident notification obligations</li>
+                <li><strong>Ongoing Management:</strong> Regular security reassessments, performance monitoring, and relationship management with security-focused supplier engagement</li>
+            </ul>
+        </div>
+        
+        <h3>6.2 Component/Product Verification Controls</h3>
+        <div class="fill-in">
+            <p>Component and product verification controls include:</p>
+            <ul>
+                <li><strong>Authenticity Verification:</strong> Digital signatures, certificate validation, and chain of custody documentation for critical components</li>
+                <li><strong>Integrity Checks:</strong> Hash verification, checksum validation, and tamper-evident packaging inspection</li>
+                <li><strong>SBOM Requirements:</strong> Mandatory Software Bill of Materials (SBOM) for all software products, with validation of SBOM completeness and accuracy</li>
+                <li><strong>Source Verification:</strong> Validation of component sources, authorized distributor verification, and counterfeit detection procedures</li>
+            </ul>
+        </div>
+        
+        <h3>6.3 Information Protection Controls</h3>
+        <div class="fill-in">
+            <p>Information protection controls for supplier relationships include:</p>
+            <ul>
+                <li><strong>Data Classification:</strong> Classification of information shared with suppliers based on sensitivity and regulatory requirements</li>
+                <li><strong>Access Controls:</strong> Role-based access controls, least privilege principles, and regular access reviews for supplier access to organizational systems and data</li>
+                <li><strong>Encryption:</strong> Encryption requirements for data in transit and at rest when shared with or processed by suppliers</li>
+                <li><strong>Non-Disclosure Agreements:</strong> Mandatory NDAs with all suppliers handling sensitive information</li>
+                <li><strong>Data Residency:</strong> Geographic restrictions on data processing and storage where required by regulation or policy</li>
+            </ul>
+        </div>
+        
+        <h3>6.4 Vulnerability Management Controls</h3>
+        <div class="fill-in">
+            <p>Vulnerability management controls for the supply chain include:</p>
+            <ul>
+                <li><strong>Vulnerability Scanning:</strong> Automated scanning of supplier-provided software and components using SBOM data and vulnerability databases</li>
+                <li><strong>Threat Intelligence:</strong> Integration of threat intelligence feeds to identify supply chain vulnerabilities and emerging threats</li>
+                <li><strong>Patch Management:</strong> Requirements for timely security patch deployment by suppliers, with tracking and verification of patch application</li>
+                <li><strong>Vulnerability Disclosure:</strong> Processes for receiving and responding to vulnerability disclosures from suppliers and security researchers</li>
+                <li><strong>Remediation Tracking:</strong> Tracking and reporting of vulnerability remediation status with defined timelines based on severity</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>7. INCIDENT RESPONSE</h2>
+        
+        <h3>7.1 Supply Chain Incident Categories</h3>
+        <div class="fill-in">
+            <p>Supply chain incidents are categorized as follows:</p>
+            <ul>
+                <li><strong>Security Breaches:</strong> Unauthorized access, data breaches, or security compromises affecting supplier systems or shared data</li>
+                <li><strong>Component Compromise:</strong> Discovery of malicious, tampered, or counterfeit components in the supply chain</li>
+                <li><strong>Service Disruptions:</strong> Extended outages or service degradations affecting critical supplier services</li>
+                <li><strong>Vulnerability Exploitation:</strong> Active exploitation of vulnerabilities in supplier products or services</li>
+                <li><strong>Compliance Violations:</strong> Supplier non-compliance with contractual security requirements or regulatory obligations</li>
+                <li><strong>Supplier Business Failures:</strong> Supplier financial distress, bankruptcy, or operational shutdown affecting service delivery</li>
+            </ul>
+        </div>
+        
+        <h3>7.2 Detection and Notification</h3>
+        <div class="fill-in">
+            <p>Supply chain incident detection and notification processes include:</p>
+            <ul>
+                <li><strong>Monitoring Systems:</strong> Automated monitoring of supplier systems, security alerts, and threat intelligence feeds</li>
+                <li><strong>Supplier Notification Requirements:</strong> Contractual requirements for suppliers to notify the organization within defined timeframes (typically 24-72 hours) of security incidents</li>
+                <li><strong>Internal Detection:</strong> Security monitoring, vulnerability scanning, and anomaly detection that may indicate supply chain incidents</li>
+                <li><strong>Incident Reporting:</strong> Defined reporting channels and escalation procedures for supply chain incidents</li>
+            </ul>
+        </div>
+        
+        <h3>7.3 Response Procedures</h3>
+        <div class="fill-in">
+            <p>Supply chain incident response procedures include:</p>
+            <ul>
+                <li><strong>Immediate Containment:</strong> Rapid isolation of affected systems, components, or services to prevent further impact</li>
+                <li><strong>Assessment:</strong> Evaluation of incident scope, impact, and root cause with supplier collaboration</li>
+                <li><strong>Communication:</strong> Internal and external communication protocols, including customer notification if required</li>
+                <li><strong>Remediation:</strong> Coordination with suppliers to remediate vulnerabilities, remove compromised components, and restore secure operations</li>
+                <li><strong>Documentation:</strong> Comprehensive documentation of incidents, response actions, and lessons learned</li>
+            </ul>
+            <p>The SCRM program manager coordinates supply chain incident response in collaboration with the IT security team, legal, and business unit owners.</p>
+        </div>
+        
+        <h3>7.4 Recovery and Continuity</h3>
+        <div class="fill-in">
+            <p>Recovery and continuity measures for supply chain disruptions include:</p>
+            <ul>
+                <li><strong>Alternate Suppliers:</strong> Pre-identified alternate suppliers for critical products and services to enable rapid transition</li>
+                <li><strong>Business Continuity Plans:</strong> Integration of supply chain risks into organizational business continuity and disaster recovery plans</li>
+                <li><strong>Component Stockpiling:</strong> Strategic inventory of critical components where feasible to mitigate supply disruptions</li>
+                <li><strong>Service Level Agreements:</strong> Defined recovery time objectives (RTO) and recovery point objectives (RPO) in supplier contracts</li>
+                <li><strong>Post-Incident Review:</strong> Comprehensive review of incidents to identify improvements to prevention, detection, and response capabilities</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>8. MONITORING AND REVIEW</h2>
+        
+        <h3>8.1 Performance Metrics</h3>
+        <div class="fill-in">
+            <p>Key performance metrics for the SCRM program include:</p>
+            <ul>
+                <li><strong>Supplier Assessment Coverage:</strong> Percentage of critical suppliers assessed within defined timeframes</li>
+                <li><strong>Risk Reduction:</strong> Reduction in high-risk supplier count and overall supply chain risk score over time</li>
+                <li><strong>Vulnerability Remediation:</strong> Mean time to remediate critical vulnerabilities identified in supplier products</li>
+                <li><strong>SBOM Coverage:</strong> Percentage of software products with current, validated SBOMs</li>
+                <li><strong>Incident Response Time:</strong> Time to detect, assess, and respond to supply chain security incidents</li>
+                <li><strong>Compliance Status:</strong> Percentage of suppliers meeting contractual security requirements</li>
+            </ul>
+            <p>Metrics are tracked monthly and reported quarterly to executive leadership and the board of directors.</p>
+        </div>
+        
+        <h3>8.2 Compliance Monitoring</h3>
+        <div class="fill-in">
+            <p>Compliance monitoring processes include:</p>
+            <ul>
+                <li><strong>Regular Assessments:</strong> Scheduled reassessments of suppliers based on risk level and criticality</li>
+                <li><strong>Contract Compliance Reviews:</strong> Periodic review of supplier compliance with contractual security requirements</li>
+                <li><strong>Control Testing:</strong> Validation of supplier security controls through audits, testing, and evidence review</li>
+                <li><strong>Regulatory Compliance Tracking:</strong> Monitoring of compliance with applicable regulations and standards</li>
+                <li><strong>Remediation Tracking:</strong> Follow-up on identified compliance gaps until resolution</li>
+            </ul>
+        </div>
+        
+        <h3>8.3 Plan Review and Updates</h3>
+        <div class="fill-in">
+            <p>This Supply Chain Risk Management Plan is reviewed and updated:</p>
+            <ul>
+                <li><strong>Annual Review:</strong> Comprehensive review of the plan annually or when significant changes occur in organizational structure, risk profile, or regulatory requirements</li>
+                <li><strong>Triggered Updates:</strong> Updates following major supply chain incidents, significant changes in threat landscape, or new regulatory requirements</li>
+                <li><strong>Stakeholder Input:</strong> Input from all relevant stakeholders including IT security, procurement, legal, and business unit owners</li>
+                <li><strong>Approval Process:</strong> Updates require approval from the CISO and notification to executive leadership</li>
+            </ul>
+            <p>The current version of this plan is maintained in the VendorSoluce document repository and is accessible to all authorized personnel.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>9. APPENDICES</h2>
+        
+        <h3>9.1 NIST SP 800-161 Control Mapping</h3>
+        <div class="fill-in">
+            <p>This plan addresses the following NIST SP 800-161 control families:</p>
+            <ul>
+                <li><strong>Foundation (C-SCRM-1 through C-SCRM-3):</strong> SCRM program establishment, risk assessment processes, and SCRM plan development</li>
+                <li><strong>Supplier Management (C-SCRM-4 through C-SCRM-6):</strong> Supplier vetting, contract requirements, and ongoing monitoring</li>
+                <li><strong>Information Protection (C-SCRM-7 through C-SCRM-8):</strong> Data protection and intellectual property protection controls</li>
+                <li><strong>Component Authenticity (C-SCRM-9 through C-SCRM-10):</strong> Counterfeit prevention and component validation</li>
+                <li><strong>Vulnerability Management (C-SCRM-11 through C-SCRM-12):</strong> Vulnerability assessment and patch management</li>
+                <li><strong>Incident Response (C-SCRM-13 through C-SCRM-14):</strong> Supply chain incident handling and supplier notification</li>
+            </ul>
+            <p>A detailed control mapping matrix is maintained separately and available upon request.</p>
+        </div>
+        
+        <h3>9.2 Supporting Documents</h3>
+        <div class="fill-in">
+            <p>Related documents and procedures supporting this plan include:</p>
+            <ul>
+                <li>Information Security Policy</li>
+                <li>Procurement and Vendor Management Policy</li>
+                <li>Incident Response Plan</li>
+                <li>Business Continuity and Disaster Recovery Plan</li>
+                <li>Supplier Security Assessment Procedures</li>
+                <li>SBOM Management Procedures</li>
+                <li>Vulnerability Management Policy</li>
+                <li>Data Classification and Handling Procedures</li>
+            </ul>
+        </div>
+        
+        <h3>9.3 Contact Information</h3>
+        <div class="fill-in">
+            <p><strong>SCRM Program Manager:</strong> <em>To be completed by organization</em></p>
+            <p><strong>Chief Information Security Officer:</strong> <em>To be completed by organization</em></p>
+            <p><strong>IT Security Team:</strong> <em>To be completed by organization</em></p>
+            <p><strong>Procurement/Supply Chain Management:</strong> <em>To be completed by organization</em></p>
+            <p><strong>Legal/Compliance:</strong> <em>To be completed by organization</em></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>10. APPROVAL</h2>
+        
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Signature</th>
+                <th>Date</th>
+            </tr>
+            <tr>
+                <td><em>To be completed</em></td>
+                <td><em>To be completed</em></td>
+                <td><em>To be completed</em></td>
+                <td><em>To be completed</em></td>
+            </tr>
+            <tr>
+                <td><em>To be completed</em></td>
+                <td><em>To be completed</em></td>
+                <td><em>To be completed</em></td>
+                <td><em>To be completed</em></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section" style="margin-top: 50px; padding-top: 20px; border-top: 2px solid #eee;">
+        <div style="font-size: 0.85em; color: #666; margin: 20px 0; padding: 15px; background-color: #f9f9f9; border-left: 3px solid #e53e3e;">
+            <p><strong>Disclaimer:</strong> This template is provided for informational purposes only. Organizations should consult with legal, compliance, and security professionals to ensure all requirements are met for their specific regulatory and contractual obligations. VendorSoluce makes no warranties, express or implied, regarding the completeness, accuracy, or applicability of this template to any specific situation.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 VendorSoluce. All rights reserved.</p>
+        <p>Based on NIST SP 800-161 Rev. 1 - Cyber Supply Chain Risk Management Practices for Systems and Organizations</p>
+        <p>For questions or support, contact: <a href="mailto:support@vendorsoluce.com" style="color: #3B82F6;">support@vendorsoluce.com</a> | <a href="https://www.vendorsoluce.com" style="color: #3B82F6;">www.vendorsoluce.com</a></p>
+    </div>
+</body>
+</html>

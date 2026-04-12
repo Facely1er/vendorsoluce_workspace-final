@@ -1,0 +1,9 @@
+Name,Category,Data Types,Sector,Location,Contact,Notes,Service Type,Population Impacted,Inherent Risk,Residual Risk,Risk Level
+
+   ,critical,PII,Technology,United States,,blank name row should be skipped
+MalformedTier Co,strategic,PII;Customer,Finance,Germany,contact@malformed.com,invalid tier,SaaS,5000,65,40,high,malformed-001,,Billing,Finance,99,None,AWS,,Finance ops,GDPR,tier out of range - should clamp to 1
+,,,,,,,,,,,
+DuplicateName Corp,tactical,IP,Technology,France,dup@duplicate.com,first duplicate
+DuplicateName Corp,tactical,IP,Technology,France,dup@duplicate.com,second duplicate - both should import
+   ExtraSpaces Inc   ,critical,   PII   ;   Financial   ,  Technology  ,  United States  ,  spaces@test.com  ,extra spaces in all fields
+MissingColumns Co,strategic

@@ -1,0 +1,681 @@
+
+/* Image-in-card: crop to hide in-image titles (show content from ~28% down) */
+.vs-card-img-crop {
+  object-fit: cover;
+  object-position: center 28%;
+}
+
+/* VendorSoluce website: consistent header/footer layout — same header nav stacking and footer spacing on every page */
+nav.glass-nav-vs.fixed,
+nav.glass-nav-vs[class*="fixed"] {
+  z-index: 99999 !important;
+  isolation: isolate;
+  /* overflow-x-hidden makes overflow-y compute to auto (scrollport in the bar). Clip x only; keep y visible for dropdowns. */
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+#footer {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Nav — token-based for light/dark */
+.nav{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.nav-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: var(--s-6);
+  padding: var(--s-4) 0;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap: var(--s-3);
+  min-width: 220px;
+}
+.brand-mark{
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: var(--shadow);
+}
+.nav-links{ display:flex; gap: var(--s-5); flex-wrap:wrap; }
+.nav-links a{ color: var(--muted); font-weight: 600; font-size: .95rem; }
+.nav-links a:hover{ color: var(--text); }
+.nav-actions{ display:flex; gap: var(--s-3); align-items:center; }
+
+/* Buttons — token-based */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn.primary{
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--accent-ink);
+  box-shadow: var(--shadow);
+}
+.btn.primary:hover { box-shadow: var(--shadow-lg); }
+.btn.ghost{ background: transparent; }
+
+/* Hero */
+.hero{ padding: 0 0 var(--s-9); }
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: var(--s-7);
+  align-items:start;
+}
+.kicker{
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: var(--s-4);
+}
+.hero-card{
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  padding: var(--s-6);
+}
+.pills{ display:flex; flex-wrap:wrap; gap: var(--s-2); margin-top: var(--s-5); }
+.pill{
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* Layout blocks */
+.grid-3{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-5);
+  margin-top: var(--s-6);
+}
+.card{
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  padding: var(--s-6);
+  box-shadow: var(--shadow);
+}
+.card p { color: var(--muted); }
+
+/* FAQ */
+.faq{ display:grid; gap: var(--s-3); margin-top: var(--s-6); }
+.faq-item{ border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-2); overflow: hidden; }
+.faq-q{
+  width:100%;
+  text-align:left;
+  cursor:pointer;
+  border:0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 900;
+  padding: var(--s-5);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.faq-a{ display:none; padding: 0 var(--s-5) var(--s-5); color: var(--muted); }
+.faq-item[data-open="true"] .faq-a{ display:block; }
+
+/* Footer */
+.footer{
+  border-top: 1px solid var(--border);
+  padding: var(--s-8) 0;
+  background: var(--bg-2);
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: var(--s-6);
+}
+
+@media (max-width: 960px){
+  .hero-grid{ grid-template-columns: 1fr; }
+  .grid-3{ grid-template-columns: 1fr; }
+  .nav-links{ display:none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SEMANTIC UI COMPONENTS - Aligned with CyberCaution polishing
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Modern Card — token-based */
+.modern-card {
+  background-color: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+/* Navigation Link Styles - Polished hover and active states */
+/* Use minimal styles to avoid breaking Tailwind classes */
+.nav-link {
+  /* Let Tailwind handle display, padding, etc. */
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect ONLY for inactive links - only override color/background */
+.nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
+  color: #33691E !important;
+  background-color: rgba(51, 105, 30, 0.1) !important;
+}
+
+.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
+  color: #66BB6A !important;
+  background-color: rgba(102, 187, 106, 0.12) !important;
+}
+
+/* Active link styles - match index.html: subtle green tint, bold text */
+.nav-link.nav-link-active,
+.nav-link.bg-vendorsoluce-green,
+nav a[title].active,
+nav a[title][aria-current="page"] {
+  color: #33691E !important;
+  background: rgba(51, 105, 30, 0.08) !important;
+  font-weight: 700 !important;
+}
+
+.dark .nav-link.nav-link-active,
+.dark .nav-link.bg-vendorsoluce-green,
+html.dark nav a[title].active,
+html.dark nav a[title][aria-current="page"] {
+  color: #66BB6A !important;
+  background: rgba(102, 187, 106, 0.12) !important;
+}
+
+/* CRITICAL: Prevent ANY hover effects on active links */
+.nav-link.nav-link-active:hover,
+.nav-link.bg-vendorsoluce-green:hover,
+nav a[title].active:hover,
+nav a[title][aria-current="page"]:hover {
+  background: rgba(51, 105, 30, 0.08) !important;
+  color: #33691E !important;
+}
+
+.dark .nav-link.nav-link-active:hover,
+.dark .nav-link.bg-vendorsoluce-green:hover,
+html.dark nav a[title].active:hover,
+html.dark nav a[title][aria-current="page"]:hover {
+  background: rgba(102, 187, 106, 0.12) !important;
+  color: #66BB6A !important;
+}
+
+/* Mobile navigation link styles - same rules */
+.mobile-nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: inherit;
+  text-decoration: none;
+}
+
+.mobile-nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
+  color: #33691E !important;
+  background-color: rgba(51, 105, 30, 0.1) !important;
+}
+
+.dark .mobile-nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
+  color: #66BB6A !important;
+  background-color: rgba(102, 187, 106, 0.12) !important;
+}
+
+.mobile-nav-link.nav-link-active,
+.mobile-nav-link.bg-vendorsoluce-green {
+  color: #33691E !important;
+  background: rgba(51, 105, 30, 0.08) !important;
+  font-weight: 700 !important;
+}
+
+html.dark .mobile-nav-link.nav-link-active,
+html.dark .mobile-nav-link.bg-vendorsoluce-green {
+  color: #66BB6A !important;
+  background: rgba(102, 187, 106, 0.12) !important;
+}
+
+.mobile-nav-link.nav-link-active:hover,
+.mobile-nav-link.bg-vendorsoluce-green:hover {
+  background: rgba(51, 105, 30, 0.08) !important;
+  color: #33691E !important;
+}
+
+html.dark .mobile-nav-link.nav-link-active:hover,
+html.dark .mobile-nav-link.bg-vendorsoluce-green:hover {
+  background: rgba(102, 187, 106, 0.12) !important;
+  color: #66BB6A !important;
+}
+
+/* Ensure SVG icons inherit the text color */
+.nav-link svg,
+.mobile-nav-link svg {
+  color: currentColor;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   GLASS NAV — aligned with CyberCaution / CyberCorrect glass-nav pattern
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.glass-nav-vs {
+  background-color: rgba(255, 255, 255, 0.90);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  /* Inset line keeps total bar height aligned with h-16 / --nav-height (border-bottom added 65px vs 64px inner). */
+  border-bottom: none;
+  box-shadow:
+    inset 0 -1px 0 0 rgba(229, 231, 235, 0.6),
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+html.dark .glass-nav-vs {
+  background-color: rgba(17, 24, 39, 0.90);
+  box-shadow:
+    inset 0 -1px 0 0 rgba(55, 65, 81, 0.5),
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SECTION ALT — alternating section background, token-based
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.section-alt {
+  background-color: var(--bg-2, #f9fafb);
+}
+
+html.dark .section-alt {
+  background-color: var(--bg-2, #1f2937);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   ANIMATED GRID — vendor-brand green tinted grid (mirrors CyberCaution orange grid)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.vs-animated-grid {
+  background-image:
+    linear-gradient(rgba(51, 105, 30, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51, 105, 30, 0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: vsGridMove 24s linear infinite;
+}
+
+html.dark .vs-animated-grid {
+  background-image:
+    linear-gradient(rgba(102, 187, 106, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(102, 187, 106, 0.07) 1px, transparent 1px);
+}
+
+@keyframes vsGridMove {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   FLOATING VENDOR ICONS — supply-chain themed ambient animation
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@keyframes vsFloat {
+  0%,  100% { transform: translate(0, 0) rotate(0deg); }
+  25%        { transform: translate(16px, -16px) rotate(4deg); }
+  50%        { transform: translate(-10px, 12px) rotate(-3deg); }
+  75%        { transform: translate(8px, -8px) rotate(2deg); }
+}
+
+.vs-float { animation: vsFloat var(--vf-dur, 16s) ease-in-out infinite; }
+.vs-float-1 { left: 6%;  top: 15%; --vf-dur: 18s; animation-delay: -2s; }
+.vs-float-2 { left: 78%; top: 10%; --vf-dur: 20s; animation-delay: -6s; }
+.vs-float-3 { left: 52%; top: 68%; --vf-dur: 14s; animation-delay: -4s; }
+.vs-float-4 { left: 88%; top: 42%; --vf-dur: 22s; animation-delay: -10s; }
+.vs-float-5 { left: 18%; top: 75%; --vf-dur: 17s; animation-delay: -8s; }
+.vs-float-6 { left: 38%; top: 82%; --vf-dur: 19s; animation-delay: -14s; }
+.vs-float-7 { left: 62%; top: 25%; --vf-dur: 15s; animation-delay: -3s; }
+.vs-float-8 { left: 92%; top: 60%; --vf-dur: 21s; animation-delay: -11s; }
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HERO ANIMATED BACKGROUND — full viewport animated layer for VS hero
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.vs-hero-bg-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MODERN CARD — enhanced with VS brand hover border + lift
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.vs-card {
+  background-color: var(--card, #ffffff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.vs-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.09), 0 2px 6px rgba(0,0,0,0.05);
+  border-color: rgba(51, 105, 30, 0.3);
+  transform: translateY(-2px);
+}
+
+html.dark .vs-card {
+  background-color: var(--card, #1f2937);
+  border-color: var(--border, #374151);
+  box-shadow: none;
+}
+
+html.dark .vs-card:hover {
+  border-color: rgba(102, 187, 106, 0.35);
+  box-shadow: none;
+}
+
+/* Numbered step card — top accent bar */
+.vs-step-card {
+  border-top: 3px solid #33691E;
+}
+
+html.dark .vs-step-card {
+  border-top-color: #66BB6A;
+}
+
+/* Solution section — 3 step cards share row heights so screenshots align (subgrid md+) */
+#solution .vs-solution-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  #solution .vs-solution-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    /* header, description, fixed media band (18rem ≈ Tailwind h-72), CTA */
+    grid-template-rows: auto auto minmax(18rem, 18rem) auto;
+    align-items: stretch;
+    min-width: 0;
+  }
+
+  #solution .vs-solution-step {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 4;
+    min-height: 0;
+    min-width: 0;
+    height: auto;
+  }
+}
+
+/* Left-accent problem card */
+.vs-problem-card-red  { border-left: 4px solid #dc2626; }
+.vs-problem-card-amber { border-left: 4px solid #d97706; }
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   GRADIENT SECTION DIVIDER — matches CyberCaution .section-divider
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.vs-section-divider {
+  position: relative;
+  height: 1px;
+  margin: 0;
+}
+
+.vs-section-divider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border, #e5e7eb), transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   FOUC PREVENTION — prevent flash of unstyled content on theme switch
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.no-fouc {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.fouc-ready {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SCROLL ENTRY ANIMATIONS — mirror CyberCaution animation classes
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .vs-fade-in-up {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: vsFadeInUp 0.7s ease-out forwards;
+  }
+
+  .vs-fade-in {
+    opacity: 0;
+    animation: vsFadeIn 0.7s ease-out forwards;
+  }
+
+  .vs-slide-in-left {
+    opacity: 0;
+    transform: translateX(-24px);
+    animation: vsSlideInLeft 0.7s ease-out forwards;
+  }
+
+  .vs-slide-in-right {
+    opacity: 0;
+    transform: translateX(24px);
+    animation: vsSlideInRight 0.7s ease-out forwards;
+  }
+
+  .vs-scale-in {
+    opacity: 0;
+    transform: scale(0.93);
+    animation: vsScaleIn 0.5s ease-out forwards;
+  }
+
+  @keyframes vsFadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes vsFadeIn {
+    to { opacity: 1; }
+  }
+  @keyframes vsSlideInLeft {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes vsSlideInRight {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes vsScaleIn {
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Staggered delays for card grids */
+  .vs-delay-100 { animation-delay: 0.1s; }
+  .vs-delay-200 { animation-delay: 0.2s; }
+  .vs-delay-300 { animation-delay: 0.3s; }
+  .vs-delay-400 { animation-delay: 0.4s; }
+  .vs-delay-500 { animation-delay: 0.5s; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   PRIMARY CTA BUTTON — polished, matches CyberCaution/CyberCorrect pattern
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.vs-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #33691E, #66BB6A);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(51, 105, 30, 0.35);
+  border: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  letter-spacing: 0.01em;
+}
+
+.vs-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(51, 105, 30, 0.40);
+}
+
+.vs-btn-primary:active {
+  transform: translateY(0);
+}
+
+.vs-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  background: transparent;
+  color: #33691E;
+  border: 2px solid #33691E;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.vs-btn-outline:hover {
+  background-color: rgba(51, 105, 30, 0.08);
+  transform: translateY(-1px);
+}
+
+html.dark .vs-btn-outline {
+  color: #66BB6A;
+  border-color: #66BB6A;
+}
+
+html.dark .vs-btn-outline:hover {
+  background-color: rgba(102, 187, 106, 0.1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   KICKER / EYEBROW — section label badge above headings
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.vs-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(51, 105, 30, 0.25);
+  background: rgba(51, 105, 30, 0.07);
+  color: #33691E;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+html.dark .vs-kicker {
+  border-color: rgba(102, 187, 106, 0.3);
+  background: rgba(102, 187, 106, 0.1);
+  color: #66BB6A;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SELECTION COLOR — brand-tinted text selection
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+::selection {
+  background: rgba(51, 105, 30, 0.18);
+  color: inherit;
+}
+
+::-moz-selection {
+  background: rgba(51, 105, 30, 0.18);
+  color: inherit;
+}
+
+/* Nav dropdowns (#vendor-review-nav, etc.) are position:absolute below the h-16 row.
+   Inner wrappers must not clip them; horizontal overflow is contained by nav.overflow-x-hidden. */
+nav.glass-nav-vs > div.max-w-7xl {
+  overflow: visible !important;
+}
+nav.glass-nav-vs > div.max-w-7xl > div.flex.h-16 {
+  overflow: visible !important;
+}
+
+/* Breadcrumb row must stay below the fixed nav. layout-fixes previously used
+   margin-top: -nav-height, which pulled content under the bar (Features, Trust, Pricing, etc.). */
+main > nav[aria-label="Breadcrumb"][data-breadcrumb="true"] {
+  margin-top: 0 !important;
+}
+
+/* Vendor Review: avoid ghost hits when closed; click + hover open */
+#vendor-review-nav .vendor-review-dropdown {
+  pointer-events: none;
+}
+#vendor-review-nav:hover .vendor-review-dropdown,
+#vendor-review-nav.dropdown-open .vendor-review-dropdown {
+  pointer-events: auto;
+}
+
+/* Vendor Review nav: click toggles .dropdown-open (mirrors group-hover for touch) */
+#vendor-review-nav.dropdown-open .vendor-review-dropdown {
+  opacity: 1 !important;
+  visibility: visible !important;
+}

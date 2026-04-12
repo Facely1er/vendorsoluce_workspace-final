@@ -1,0 +1,12 @@
+# Edge Function configuration
+# See: https://supabase.com/docs/guides/functions/function-configuration
+
+# Allow guest checkout: create-checkout-session can be invoked without a valid JWT
+# so "Proceed to Payment" works from both (1) app /pricing and (2) website pricing.html
+# without redirecting to sign-in. Redeploy after changing: supabase functions deploy create-checkout-session
+[functions.create-checkout-session]
+verify_jwt = false
+
+# Contact form: public POST from static sites (CyberCaution, CyberCorrect, VendorSoluce, CyberSoluce, TechnoSoluce)
+[functions.contact-form]
+verify_jwt = false

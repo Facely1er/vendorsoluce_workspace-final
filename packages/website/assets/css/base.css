@@ -1,0 +1,33 @@
+/**
+ * Base styles — token-driven; works in light and dark.
+ */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+a:hover { opacity: 0.9; }
+p { margin: 0 0 var(--s-4); }
+h1, h2, h3 { margin: 0 0 var(--s-4); line-height: 1.25; font-weight: 600; }
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+.small { font-size: var(--text-sm); color: var(--muted); }
+.lead { font-size: var(--text-lg); color: var(--muted); max-width: 60ch; }
+.container { width: min(1120px, 92vw); margin: 0 auto; }
+.section { padding: var(--s-10) 0; }
+.sep { border: 0; border-top: 1px solid var(--border); margin: 0; }
+
+input, select, textarea { font: inherit; }
+
+/* Focus ring — consistent with app */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

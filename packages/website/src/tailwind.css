@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Consistent footer layout: reserve scrollbar space so footer width is identical across pages.
+   scrollbar-gutter is not supported in Safari/iOS; only apply where supported to avoid linter warning. */
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+@supports (scrollbar-gutter: stable) {
+  html {
+    scrollbar-gutter: stable;
+  }
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Footer grid: fixed layout to prevent shift across pages at same resolution.
+   Uses min-width 1024px so 5-column layout only when stable.
+   Explicit 5-column template with minmax prevents responsive collapse. */
+/* VendorSoluce footer: fixed 5-column grid to prevent layout shift across pages */
+.vs-footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .vs-footer-grid {
+    /* 5 columns: branding spans 2, solutions/resources/legal each 1 */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(120px, 1fr) minmax(120px, 1fr) minmax(120px, 1fr);
+    gap: 1.5rem;
+    column-gap: 2rem;
+  }
+  .vs-footer-grid > *:first-child {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .vs-footer-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+    gap: 1rem;
+    column-gap: 1.5rem;
+  }
+  .vs-footer-grid > *:first-child {
+    grid-column: span 2;
+  }
+}
+
+/* Brand logo: force 60px (3.75rem) in header/footer so size is reliable even if Tailwind arbitrary values are not applied */
+.vs-brand-logo {
+  height: 3.75rem !important;
+  width: 3.75rem !important;
+  max-height: 3.75rem !important;
+  max-width: 3.75rem !important;
+  object-fit: contain;
+}
+
+/* VendorSoluce custom styles */
+:root {
+  --vendorsoluce-green: #33691E;
+  --vendorsoluce-light-green: #66BB6A;
+  --vendorsoluce-dark-green: #2E5A1A;
+  --vendorsoluce-pale-green: #E8F5E8;
+}
+
+/* Dark mode footer - shared across all pages (class on html or .dark ancestor) */
+html.dark footer#footer,
+html.dark footer,
+.dark footer#footer,
+.dark footer {
+  background-color: rgb(17 24 39) !important; /* gray-900 */
+  color: rgb(255 255 255) !important;
+  border-top-color: rgb(31 41 55) !important; /* gray-800 */
+}
+html.dark footer .text-gray-500,
+html.dark footer .text-gray-600,
+.dark footer .text-gray-500,
+.dark footer .text-gray-600 {
+  color: rgb(209 213 219) !important; /* gray-300 */
+}
+html.dark footer .text-gray-400,
+.dark footer .text-gray-400 {
+  color: rgb(156 163 175) !important; /* gray-400 */
+}
+html.dark footer .border-gray-200\/50,
+html.dark footer .border-gray-700\/50,
+.dark footer .border-gray-200\/50,
+.dark footer .border-gray-700\/50 {
+  border-color: rgba(55, 65, 81, 0.5) !important; /* gray-700/50 */
+}
+html.dark footer.bg-gray-800,
+html.dark footer[class*="bg-gray-800"],
+html.dark footer.bg-gray-900,
+html.dark footer[class*="bg-gray-900"],
+html.dark footer {
+  border-top: 1px solid rgba(31, 41, 55, 0.03) !important;
+}
+html.dark footer > div > div:last-child,
+.dark footer > div > div:last-child {
+  border-top-color: rgba(55, 65, 81, 0.5) !important;
+}
+

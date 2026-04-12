@@ -1,0 +1,299 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors - Growth & Trust */
+  --vendorsoluce-green: #33691E;
+  --vendorsoluce-light-green: #66BB6A;
+  --vendorsoluce-pale-green: #E8F5E9;
+  --vendorsoluce-dark-green: #2E5A1A;
+  --neutral-gray: #6B7280;
+
+  /* Layout & polish (aligned with website tokens) */
+  --header-height: 64px;
+  --nav-height: var(--header-height);
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  /* Risk Communication Colors */
+  --risk-critical: #DC2626;
+  --risk-high: #EA580C;
+  --risk-medium: #F59E0B;
+  --risk-low: #16A34A;
+
+  /* Text Colors */
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --text-primary-dark: #F9FAFB;
+  --text-secondary-dark: #9CA3AF;
+}
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply antialiased text-gray-800 dark:text-gray-100;
+    overflow-x: hidden;
+    max-width: 100vw;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Accessibility enhancements */
+  .high-contrast {
+    --vendorsoluce-green: #000000;
+    --vendorsoluce-light-green: #333333;
+    --vendorsoluce-pale-green: #ffffff;
+    --neutral-gray: #000000;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+  }
+  
+  .high-contrast * {
+    border-color: #000000 !important;
+  }
+  
+  .font-size-small {
+    font-size: 0.875rem;
+  }
+  
+  .font-size-normal {
+    font-size: 1rem;
+  }
+  
+  .font-size-large {
+    font-size: 1.125rem;
+  }
+  
+  /* Focus indicators — :focus-visible only (keyboard), consistent with website */
+  *:focus-visible {
+    outline: 2px solid var(--vendorsoluce-green);
+    outline-offset: 2px;
+  }
+  .dark *:focus-visible {
+    outline-color: var(--vendorsoluce-light-green);
+  }
+  
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Brand Gradients */
+  .vendorsoluce-gradient {
+    @apply bg-gradient-to-r from-vendorsoluce-green to-vendorsoluce-light-green;
+  }
+  
+  .risk-heatmap-gradient {
+    @apply bg-gradient-to-r from-risk-low via-risk-medium to-risk-critical;
+  }
+  
+  .vendorsoluce-score-gradient {
+    @apply bg-gradient-to-r from-vendorsoluce-green to-vendorsoluce-light-green;
+  }
+  
+  /* Risk Level Indicators — light and dark */
+  .risk-critical {
+    @apply bg-red-100 border-red-200 text-red-800 dark:bg-red-900/30 dark:border-red-800 dark:text-red-200;
+  }
+  .risk-high {
+    @apply bg-orange-100 border-orange-200 text-orange-800 dark:bg-orange-900/30 dark:border-orange-800 dark:text-orange-200;
+  }
+  .risk-medium {
+    @apply bg-yellow-100 border-yellow-200 text-yellow-800 dark:bg-yellow-900/30 dark:border-yellow-800 dark:text-yellow-200;
+  }
+  .risk-low {
+    @apply bg-green-100 border-green-200 text-green-800 dark:bg-green-900/30 dark:border-green-800 dark:text-green-200;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  /* Animation delay utilities */
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animate-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .animate-delay-600 {
+    animation-delay: 600ms;
+  }
+
+  .animate-delay-700 {
+    animation-delay: 700ms;
+  }
+
+  .animate-delay-800 {
+    animation-delay: 800ms;
+  }
+
+  .animate-delay-900 {
+    animation-delay: 900ms;
+  }
+
+  .animate-delay-1100 {
+    animation-delay: 1100ms;
+  }
+
+  .animate-delay-1300 {
+    animation-delay: 1300ms;
+  }
+
+  /* Progress bar utility for dynamic width */
+  .progress-width {
+    width: var(--progress-width, 0%);
+  }
+
+  /* Progress bar using data attribute */
+  .progress-width[data-progress] {
+    width: attr(data-progress percentage);
+  }
+
+  /* Risk distribution progress bar widths */
+  .risk-bar-low {
+    width: 66%;
+  }
+
+  .risk-bar-medium {
+    width: 17%;
+  }
+
+  .risk-bar-high {
+    width: 17%;
+  }
+
+  /* Chart legend color indicator - uses CSS custom property from data attribute */
+  .chart-legend-color {
+    background-color: var(--legend-color, #6B7280);
+  }
+
+  /* Dynamic height for chart bars - uses CSS custom property from data attribute */
+  .chart-bar-height {
+    height: var(--bar-height, 0%);
+  }
+
+  /* Brand tagline — aligned with website styling */
+  .tagline-text {
+    letter-spacing: -0.02em;
+    margin-top: -3px;
+  }
+
+  /* Glass nav — same as packages/website/assets/css/components.css (canonical header) */
+  nav.glass-nav-vs.fixed,
+  nav.glass-nav-vs[class*='fixed'] {
+    z-index: 99999 !important;
+    isolation: isolate;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+  }
+
+  .glass-nav-vs {
+    background-color: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: none;
+    box-shadow:
+      inset 0 -1px 0 0 rgba(229, 231, 235, 0.6),
+      0 1px 3px rgba(0, 0, 0, 0.06),
+      0 1px 2px rgba(0, 0, 0, 0.04);
+    transition:
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  html.dark .glass-nav-vs {
+    background-color: rgba(17, 24, 39, 0.9);
+    box-shadow:
+      inset 0 -1px 0 0 rgba(55, 65, 81, 0.5),
+      0 1px 3px rgba(0, 0, 0, 0.3),
+      0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Same as website components.css: absolute nav menus must not be clipped by inner overflow-hidden */
+  nav.glass-nav-vs > div.max-w-7xl {
+    overflow: visible !important;
+  }
+  nav.glass-nav-vs > div.max-w-7xl > div.flex.h-16 {
+    overflow: visible !important;
+  }
+
+  /* Ensure nav controls stay interactive (mirrors website includes/header.html) */
+  nav.glass-nav-vs a[href],
+  nav.glass-nav-vs button {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  /* Navbar dropdown positioning — uses CSS custom properties set via ref (no inline styles) */
+  .navbar-dropdown-positioned {
+    position: fixed;
+    top: var(--navbar-dropdown-top);
+    left: var(--navbar-dropdown-left);
+  }
+
+  .progress-bar-fill {
+    width: var(--progress-width);
+  }
+}

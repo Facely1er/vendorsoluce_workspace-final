@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function() {
+        var theme = localStorage.getItem('theme');
+        if (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        else document.documentElement.classList.remove('dark');
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/vendorsoluce.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/vendorsoluce.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/vendorsoluce.png" />
+    <link rel="shortcut icon" type="image/png" href="/vendorsoluce.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <title>VendorSoluce&trade; - Supply Chain Risk Management | ERMITS</title>
+    <meta name="description" content="Supply chain risk management platform with tools aligned with NIST SP 800-161. Assess vendor security, analyze SBOMs, and support compliance with federal requirements." />
+    <meta name="keywords" content="supply chain security, NIST 800-161, vendor risk assessment, SBOM analysis, federal compliance, cybersecurity" />
+    <meta name="robots" content="index, follow" />
+    <meta name="application-name" content="VendorSoluce" />
+    <meta name="author" content="ERMITS" />
+    <meta name="creator" content="ERMITS" />
+    <meta name="publisher" content="ERMITS" />
+    <link rel="canonical" href="https://www.vendorsoluce.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ERMITS" />
+    <meta property="og:title" content="VendorSoluce&trade; - Supply Chain Risk Management | ERMITS" />
+    <meta property="og:description" content="Supply chain risk management platform with tools aligned with NIST SP 800-161. Assess vendor security, analyze SBOMs, and support compliance with federal requirements." />
+    <meta property="og:image" content="https://www.vendorsoluce.com/social-preview.svg" />
+    <meta property="og:url" content="https://www.vendorsoluce.com/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VendorSoluce&trade; - Supply Chain Risk Management | ERMITS" />
+    <meta name="twitter:description" content="Supply chain risk management platform with tools aligned with NIST SP 800-161. Assess vendor security, analyze SBOMs, and support compliance with federal requirements." />
+    <meta name="twitter:image" content="https://www.vendorsoluce.com/social-preview.svg" />
+    <meta name="twitter:url" content="https://www.vendorsoluce.com/" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "VendorSoluce",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Vendor risk intelligence workspace for third-party risk review, dependency visibility, and supply chain assurance.",
+        "url": "https://www.vendorsoluce.com/",
+        "publisher": {
+          "@type": "Organization",
+          "name": "ERMITS",
+          "url": "https://ermits.com/"
+        }
+      }
+    </script>
+    
+    <!-- Security Headers -->
+    <!-- Note: X-Frame-Options, X-Content-Type-Options, and other security headers are set via HTTP headers in vercel.json -->
+    <!-- Meta tags for these headers are not effective and should be set via server configuration -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    
+    <!-- Google Analytics 4 - ERMITS ecosystem attribution -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VEQXJHYNHG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VEQXJHYNHG', {
+        anonymize_ip: true,
+        cookie_flags: 'SameSite=None;Secure',
+        linker: { domains: ['cybercorrect.com','www.cybercorrect.com','workspace.cybercorrect.com','cybercaution.com','www.cybercaution.com','platform.cybercaution.com','toolkits.cybercaution.com','vendorsoluce.com','www.vendorsoluce.com','platform.vendorsoluce.com','portal.vendorsoluce.com','cybersoluce.com','lite.cybersoluce.com','technosoluce.com','app.technosoluce.com','medisoluce.com','www.medisoluce.com','ermits.com','www.ermits.com','socialcaution.com','www.socialcaution.com','pandagarde.com','www.pandagarde.com'] }
+      });
+    </script>
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://rsms.me" />
+    
+    <!-- DNS prefetch for API domains -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://rsms.me" />
+    <link rel="dns-prefetch" href="https://js.stripe.com" />
+    <link rel="dns-prefetch" href="https://dfklqsdfycwjlcasfciu.supabase.co" />
+    
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+source_key,target_key,edge_type,dependency_strength,operational_criticality,data_sensitivity_factor,substitution_penalty,tier_level,visibility_level
+okta,idam,supports,0.95,0.95,0.20,0.90,1,known
+payrollco,payroll,supports,0.90,0.90,0.85,0.70,1,known
+payrollco,aws,relies_on,0.80,0.75,0.50,0.65,2,partial
+payrollco,pa_payroll,processes,0.92,0.85,0.95,0.70,1,known

@@ -1,0 +1,40 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment variables
+# Note: .env.example is safe to commit (contains placeholders only)
+.env
+.env.local
+.env.*
+!.env.example
+
+# Build and dependency directories
+/build
+/.svelte-kit
+/.next
+
+# Netlify
+.netlify
+.vercel

@@ -1,0 +1,46 @@
+{
+	"folders": [
+		{
+			"path": "../cybercaution-ransomware-defense-platform"
+		},
+		{
+			"path": "../TechnoSoluce-byERMITS"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../CyberSoluce-AssetManager"
+		},
+		{
+			"path": "../../ermits-advisory.com"
+		},
+		{
+			"path": "../cybercorrect-complete-privacy"
+		},
+		{
+			"path": "../socialcaution2025"
+		},
+		{
+			"path": "../ermits-intranet"
+		},
+		{
+			"path": "../www.medisoluce.com-main"
+		},
+		{
+			"path": "../edusoluceportal-main-main"
+		},
+		{
+			"path": "../CyberCertitude-Level2-byERMITS-v1/CyberCertitude-Level2-byERMITS-v1"
+		},
+		{
+			"path": "../cybercertitude-landingpage"
+		},
+		{
+			"path": "../VendorTal-byERMITS/VendorTal-byERMITS"
+		}
+	],
+	"settings": {
+		"powershell.cwd": "cybercaution-ransomware-defense-platform"
+	}
+}

@@ -1,0 +1,43 @@
+{
+  "name": "vendorsoluce-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "VendorSoluce monorepo containing the marketing website and main application",
+  "workspaces": [
+    "packages/app",
+    "packages/dependency-graph",
+    "packages/shared",
+    "packages/vendor-risk-portal",
+    "packages/website"
+  ],
+  "scripts": {
+    "dev": "node ./scripts/run-turbo.mjs run dev",
+    "build": "node ./scripts/run-turbo.mjs run build",
+    "build:website": "node ./scripts/run-turbo.mjs run build --filter=./packages/website",
+    "build:app": "node ./scripts/run-turbo.mjs run build --filter=app",
+    "build:enterprise": "npm run build:enterprise -w app",
+    "build:enterprise-delivery": "node scripts/build-enterprise-delivery.mjs",
+    "build:portal": "node ./scripts/run-turbo.mjs run build --filter=vendor-risk-portal",
+    "type-check": "node ./scripts/run-turbo.mjs run type-check --filter=app --filter=vendor-risk-portal",
+    "lint": "node ./scripts/run-turbo.mjs run lint",
+    "test": "node ./scripts/run-turbo.mjs run test",
+    "test:coverage": "npm run test:coverage -w app",
+    "clean": "node ./scripts/run-turbo.mjs run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
+  },
+  "devDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.60.0",
+    "prettier": "^3.2.5",
+    "turbo": "^2.1.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "packageManager": "npm@10.0.0",
+  "dependencies": {
+    "picomatch": "^4.0.4",
+    "vite": "^7.3.2"
+  }
+}

@@ -1,0 +1,2929 @@
+<!DOCTYPE html>
+<!-- Part of packages/website static HTML. Deployed with the website (vendorsoluce-static); do not move to app. -->
+<html lang="en">
+<head>
+<script data-vs-theme-init>(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();</script>
+<base href="./"/>
+<meta charset="utf-8"/>
+  <meta name="robots" content="index, follow">
+
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vendor Threat Radar - VendorSoluce&trade; | ERMITS</title>
+<meta name="description" content="Browser-based Vendor Threat Radar for third-party risk signals and exportable reports in VendorSoluce&trade;.">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/css/tailwind.css" rel="stylesheet"/>
+<link href="../assets/css/components.css" rel="stylesheet"/>
+<link href="vendor-threat-radar.css" rel="stylesheet"/>
+<style>
+        /* Header: same stacking as other pages — prevent content showing through when scrolling */
+        nav.glass-nav-vs.fixed,
+        nav.glass-nav-vs[class*="fixed"] {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 99999 !important;
+            pointer-events: auto !important;
+            isolation: isolate;
+        }
+        :root {
+            --vendorsoluce-green: #2e7d32;
+            --vendorsoluce-light-green: #4caf50;
+            --vendorsoluce-dark-green: #1b5e20;
+            --vendorsoluce-pale-green: #e8f5e9;
+            --vendorsoluce-navy: #1a2e1a;
+            --vendorsoluce-teal: #009688;
+            --vendorsoluce-blue: #2196f3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f9fafb;
+            color: #1f2937;
+            line-height: 1.6;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        
+        html.dark body {
+            background: #111827;
+            color: #f3f4f6;
+        }
+
+        /* Welcome banner dark mode */
+        html.dark #welcomeBanner {
+            background: linear-gradient(135deg, #052e16 0%, #064e3b 100%) !important;
+            border-color: #166534 !important;
+        }
+        html.dark #welcomeBanner > div > div:nth-child(2) > div {
+            background: #0f172a !important;
+            border-color: #166534 !important;
+        }
+        html.dark #welcomeBanner p, html.dark #welcomeBanner span {
+            color: #d1fae5 !important;
+        }
+        html.dark #welcomeBanner strong {
+            color: #a7f3d0 !important;
+        }
+        html.dark #welcomeBanner .banner-title {
+            color: #bbf7d0 !important;
+        }
+
+        /* Welcome banner layout */
+        #welcomeBanner {
+            display: none;
+            margin-bottom: 1.5rem;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid #d1fae5;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .wb-body { padding: 1.25rem 1.5rem; }
+        .wb-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .wb-title-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .wb-icon {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.625rem;
+            background: #dcfce7;
+        }
+        .wb-title {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #14532d;
+        }
+        .wb-subtitle {
+            margin: 0;
+            font-size: 0.8125rem;
+            color: #166534;
+        }
+        .wb-close {
+            flex-shrink: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 0.375rem;
+            color: #6b7280;
+            line-height: 1;
+        }
+        .wb-close:hover { background: #d1fae5; }
+        .wb-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .wb-step {
+            background: #fff;
+            border: 1px solid #bbf7d0;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+        }
+        .wb-step-label {
+            margin: 0 0 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #15803d;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .wb-step-text {
+            margin: 0;
+            font-size: 0.8125rem;
+            color: #374151;
+        }
+        .wb-step-text strong { color: #111827; }
+        .wb-footer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .wb-guide-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #15803d;
+            text-decoration: none;
+        }
+        .wb-guide-link:hover { text-decoration: underline; }
+        .wb-privacy {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+        .wb-continue-app {
+            width: 100%;
+            flex-basis: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(21, 128, 61, 0.35);
+            background: rgba(255, 255, 255, 0.75);
+        }
+        .wb-continue-app-title {
+            margin: 0;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #14532d;
+        }
+        .wb-continue-app-hint {
+            margin: 0;
+            font-size: 0.75rem;
+            line-height: 1.45;
+            color: #374151;
+        }
+        .wb-continue-app-hint strong { color: #111827; }
+        .wb-continue-app-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .wb-continue-app-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #fff;
+            background: var(--vendorsoluce-green);
+            border: 1px solid var(--vendorsoluce-dark-green);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+        }
+        .wb-continue-app-btn:hover {
+            background: var(--vendorsoluce-dark-green);
+            color: #fff;
+        }
+        .wb-continue-app-secondary {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #15803d;
+            text-decoration: none;
+        }
+        .wb-continue-app-secondary:hover { text-decoration: underline; }
+        html.dark .wb-continue-app {
+            background: rgba(15, 23, 42, 0.6);
+            border-color: #166534;
+        }
+        html.dark .wb-continue-app-title { color: #bbf7d0; }
+        html.dark .wb-continue-app-hint { color: #d1fae5; }
+        html.dark .wb-continue-app-hint strong { color: #ecfdf5; }
+        .toolbar-continue-app {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-left: 0.25rem;
+            padding: 0.35rem 0.65rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--vendorsoluce-dark-green);
+            background: #ecfdf5;
+            border: 1px solid rgba(21, 128, 61, 0.35);
+            white-space: nowrap;
+        }
+        .toolbar-continue-app:hover {
+            background: #d1fae5;
+            color: #14532d;
+        }
+        html.dark .toolbar-continue-app {
+            background: #14532d;
+            color: #bbf7d0;
+            border-color: #166534;
+        }
+        html.dark .toolbar-continue-app:hover {
+            background: #166534;
+            color: #fff;
+        }
+        html.dark #welcomeBanner {
+            background: linear-gradient(135deg, #052e16 0%, #064e3b 100%);
+            border-color: #166534;
+        }
+        html.dark .wb-step { background: #0f172a; border-color: #166534; }
+        html.dark .wb-title { color: #bbf7d0; }
+        html.dark .wb-subtitle { color: #86efac; }
+        html.dark .wb-step-label { color: #4ade80; }
+        html.dark .wb-step-text { color: #d1fae5; }
+        html.dark .wb-step-text strong { color: #a7f3d0; }
+        html.dark .wb-guide-link { color: #4ade80; }
+        html.dark .wb-privacy { color: #6b7280; }
+        html.dark .wb-close { color: #9ca3af; }
+        html.dark .wb-close:hover { background: #166534; }
+        html.dark .wb-icon { background: #14532d; }
+        
+        /* Ensure root div background matches body */
+        #root {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #root > div {
+            transition: background-color 0.2s;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+        
+        html.dark #root > div {
+            background: #111827 !important;
+        }
+        
+        /* Ensure light mode root div background */
+        #root > div.bg-gray-50 {
+            background: #f9fafb;
+        }
+        
+        /* Ensure footer stays at bottom and nothing appears after it */
+        footer {
+            margin-top: auto;
+        }
+        
+        /* Do NOT hide body children here – that rule broke #root and caused modal/menu to appear visible. Rely on component-specific rules below. */
+        
+        /* Mobile menu panel: hidden by default, shown only when .mobile-menu-open is added by JS (does not depend on Tailwind) */
+        [data-mobile-menu] {
+            display: none !important;
+        }
+        [data-mobile-menu].mobile-menu-open {
+            display: block !important;
+        }
+        @media (min-width: 768px) {
+            [data-mobile-menu] {
+                display: none !important; /* never show on desktop */
+            }
+        }
+        
+        /* Container: match other pages (max-w-7xl + px-6 sm:px-8 lg:px-12) */
+        .radar-container {
+            max-width: 80rem; /* 1280px, same as max-w-7xl */
+            margin: 0 auto;
+            padding: 1.5rem; /* 24px, same as px-6 */
+            width: 100%;
+            min-width: 0;
+        }
+        /* Ensure main radar content is interactive (no overlay blocking clicks) */
+        #radar-main,
+        #radar-main .radar-container,
+        #radar-main .radar-header,
+        #radar-main .radar-mode-selector,
+        #radar-main .toolbar,
+        #radar-main .toolbar button,
+        #radar-main .toolbar select,
+        #radar-main .toolbar label {
+            pointer-events: auto !important;
+        }
+        @media (min-width: 640px) {
+            .radar-container { padding-left: 2rem; padding-right: 2rem; } /* sm:px-8 */
+        }
+        @media (min-width: 1024px) {
+            .radar-container { padding-left: 3rem; padding-right: 3rem; } /* lg:px-12 */
+        }
+        
+        /* Header */
+        .radar-header {
+            text-align: center;
+            padding: 16px 24px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--vendorsoluce-green);
+        }
+        
+        html.dark .radar-header {
+            background: #1f2937;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .radar-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--vendorsoluce-green);
+            margin-bottom: 6px;
+        }
+        
+        html.dark .radar-header h1 {
+            color: var(--vendorsoluce-light-green);
+        }
+        
+        .timestamp {
+            margin-top: 6px;
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+        
+        html.dark .timestamp {
+            color: #6b7280;
+        }
+        
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        html.dark .toolbar {
+            background: #1f2937;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .toolbar-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .csv-format-hint {
+            width: 100%;
+            margin: 2px 0 0 0;
+            font-size: 0.7rem;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        html.dark .csv-format-hint {
+            color: #9ca3af;
+        }
+
+        .csv-format-hint code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.68rem;
+            background: rgba(0,0,0,0.05);
+            padding: 1px 3px;
+            border-radius: 3px;
+        }
+
+        html.dark .csv-format-hint code {
+            background: rgba(255,255,255,0.07);
+        }
+        
+        /* Buttons */
+        button {
+            background: var(--vendorsoluce-green);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        
+        button:hover:not(:disabled) {
+            background: var(--vendorsoluce-dark-green);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(46, 125, 50, 0.2);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        button.secondary {
+            background: white;
+            color: var(--vendorsoluce-green);
+            border: 2px solid var(--vendorsoluce-green);
+        }
+        
+        html.dark button.secondary {
+            background: #374151;
+            color: var(--vendorsoluce-light-green);
+            border-color: var(--vendorsoluce-light-green);
+        }
+        
+        button.secondary:hover:not(:disabled) {
+            background: var(--vendorsoluce-pale-green);
+        }
+        
+        html.dark button.secondary:hover:not(:disabled) {
+            background: #4b5563;
+        }
+        
+        button.danger {
+            background: #ef4444;
+        }
+        
+        button.danger:hover:not(:disabled) {
+            background: #dc2626;
+        }
+        
+        select {
+            background: white;
+            color: #1f2937;
+            border: 2px solid #d1d5db;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        
+        html.dark select {
+            background: #374151;
+            color: #f3f4f6;
+            border-color: #4b5563;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--vendorsoluce-green);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        /* Alert Banner (compact: color already conveys severity) */
+        .alert-banner {
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid;
+        }
+        
+        .alert-banner .alert-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        .alert-banner .alert-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+        .alert-banner .alert-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .alert-banner .alert-content > div:last-child {
+            font-size: 0.8125rem;
+            opacity: 0.95;
+        }
+        
+        .alert-banner.critical {
+            background: #fef2f2;
+            border-color: #dc2626;
+            color: #991b1b;
+        }
+        
+        html.dark .alert-banner.critical {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+        
+        .alert-banner.warning {
+            background: #fffbeb;
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+        
+        html.dark .alert-banner.warning {
+            background: #78350f;
+            color: #fcd34d;
+        }
+        
+        .alert-banner.clear {
+            background: #f0fdf4;
+            border-color: var(--vendorsoluce-green);
+            color: #166534;
+        }
+        
+        html.dark .alert-banner.clear {
+            background: #14532d;
+            color: #86efac;
+        }
+        
+        .alert-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        /* Repeated alert strip below content (compact one-liner) */
+        .alert-banner-repeat {
+            padding: 8px 12px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            border-radius: 6px;
+            border-left: 4px solid;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8125rem;
+        }
+        .alert-banner-repeat .alert-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+        .alert-banner-repeat .alert-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+        .alert-banner-repeat .alert-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .alert-banner-repeat .alert-title {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+        .alert-banner-repeat .alert-content > div:last-child {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+        .alert-banner-repeat.critical { background: #fef2f2; border-color: #dc2626; color: #991b1b; }
+        .alert-banner-repeat.warning { background: #fffbeb; border-color: #f59e0b; color: #92400e; }
+        .alert-banner-repeat.clear { background: #f0fdf4; border-color: var(--vendorsoluce-green); color: #166534; }
+        html.dark .alert-banner-repeat.critical { background: #7f1d1d; color: #fca5a5; }
+        html.dark .alert-banner-repeat.warning { background: #78350f; color: #fcd34d; }
+        html.dark .alert-banner-repeat.clear { background: #14532d; color: #86efac; }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--vendorsoluce-green);
+            transition: all 0.2s;
+        }
+        
+        html.dark .stat-card {
+            background: #1f2937;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card.critical {
+            border-left-color: #dc2626;
+        }
+        
+        .stat-card.critical .stat-value {
+            color: #dc2626;
+        }
+        
+        html.dark .stat-card.critical .stat-value {
+            color: #fca5a5;
+        }
+        
+        .stat-card.warning {
+            border-left-color: #f59e0b;
+        }
+        
+        .stat-card.warning .stat-value {
+            color: #f59e0b;
+        }
+        
+        html.dark .stat-card.warning .stat-value {
+            color: #fcd34d;
+        }
+        
+        .stat-card.success {
+            border-left-color: var(--vendorsoluce-green);
+        }
+        
+        .stat-card.success .stat-value {
+            color: var(--vendorsoluce-green);
+        }
+        
+        html.dark .stat-card.success .stat-value {
+            color: var(--vendorsoluce-light-green);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        
+        html.dark .stat-label {
+            color: #9ca3af;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        html.dark .stat-value {
+            color: #f3f4f6;
+        }
+        
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+        
+        html.dark .card {
+            background: #1f2937;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            border-color: #374151;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        html.dark .card-header {
+            border-bottom-color: #374151;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        html.dark .card-title {
+            color: #f3f4f6;
+        }
+        
+        .card-title svg {
+            width: 24px;
+            height: 24px;
+            color: var(--vendorsoluce-green);
+        }
+        
+        html.dark .card-title svg {
+            color: var(--vendorsoluce-light-green);
+        }
+        
+        /* Sonar Radar */
+        .sonar-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0a1628;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        html.dark .sonar-container {
+            background: #0a0e1a;
+        }
+        
+        #sonarCanvas {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .radar-legend {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        html.dark .radar-legend {
+            background: rgba(31, 41, 55, 0.95);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            color: #1f2937;
+        }
+        
+        html.dark .legend-item {
+            color: #f3f4f6;
+        }
+        
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        /* Vendor List */
+        .vendor-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .vendor-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .vendor-list::-webkit-scrollbar-track {
+            background: #f3f4f6;
+            border-radius: 4px;
+        }
+        
+        html.dark .vendor-list::-webkit-scrollbar-track {
+            background: #374151;
+        }
+        
+        .vendor-list::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+        
+        html.dark .vendor-list::-webkit-scrollbar-thumb {
+            background: #4b5563;
+        }
+        
+        .vendor-item {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #e5e7eb;
+            background: #f9fafb;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        html.dark .vendor-item {
+            background: #374151;
+            border-color: #4b5563;
+        }
+        
+        .vendor-item:hover {
+            border-color: var(--vendorsoluce-green);
+            box-shadow: 0 2px 4px rgba(46, 125, 50, 0.1);
+        }
+        
+        .vendor-item.critical {
+            border-left: 4px solid #dc2626;
+        }
+        
+        .vendor-item.high {
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .vendor-item.medium {
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .vendor-item.low {
+            border-left: 4px solid var(--vendorsoluce-green);
+        }
+        
+        .vendor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .vendor-name {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1f2937;
+        }
+        
+        html.dark .vendor-name {
+            color: #f3f4f6;
+        }
+        
+        .vendor-badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .badge.critical {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+        
+        html.dark .badge.critical {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+        
+        .badge.high {
+            background: #fffbeb;
+            color: #92400e;
+        }
+        
+        html.dark .badge.high {
+            background: #78350f;
+            color: #fcd34d;
+        }
+        
+        .badge.medium {
+            background: #eff6ff;
+            color: #1e40af;
+        }
+        
+        html.dark .badge.medium {
+            background: #1e3a8a;
+            color: #93c5fd;
+        }
+        
+        .badge.low {
+            background: #f0fdf4;
+            color: #166534;
+        }
+        
+        html.dark .badge.low {
+            background: #14532d;
+            color: #86efac;
+        }
+        
+        .badge.secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        html.dark .badge.secondary {
+            background: #374151;
+            color: #d1d5db;
+        }
+        
+        .vendor-info {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        
+        html.dark .vendor-info {
+            color: #9ca3af;
+        }
+        
+        .vendor-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+        }
+        
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .report-section {
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+        .report-section .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        /* Guidance Section */
+        .guidance-section {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .guidance-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+        
+        html.dark .guidance-card {
+            background: #1f2937;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            border-color: #374151;
+        }
+        
+        .guidance-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--vendorsoluce-green);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        html.dark .guidance-title {
+            color: var(--vendorsoluce-light-green);
+        }
+        
+        .guidance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .guidance-item {
+            padding: 16px;
+            border-radius: 8px;
+            background: #f9fafb;
+            border-left: 3px solid var(--vendorsoluce-green);
+        }
+        
+        html.dark .guidance-item {
+            background: #374151;
+            border-left-color: var(--vendorsoluce-light-green);
+        }
+        
+        .guidance-item-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        html.dark .guidance-item-title {
+            color: #f3f4f6;
+        }
+        
+        .guidance-item-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        
+        html.dark .guidance-item-text {
+            color: #9ca3af;
+        }
+        
+        .guidance-icon {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .guidance-item-icon {
+            width: 18px;
+            height: 18px;
+        }
+        
+        @media (max-width: 768px) {
+            .guidance-grid {
+                grid-template-columns: 1fr; /* Stack on small screens */
+            }
+            
+            .guidance-card {
+                padding: 16px;
+            }
+        }
+        
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+        
+        html.dark .chart-card {
+            background: #1f2937;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            border-color: #374151;
+        }
+        
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
+        html.dark .chart-title {
+            color: #f3f4f6;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chart-card-legend-right .chart-container-with-legend {
+            height: 260px;
+            max-width: 100%;
+        }
+        
+        .chart-card-legend-right canvas {
+            max-height: 260px;
+        }
+        
+        /* Modal */
+        /* Modal: hidden by default; only .show makes it visible (does not depend on inline style or script order) */
+        .modal {
+            display: none !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal.show {
+            display: flex !important;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        html.dark .modal-content {
+            background: #1f2937;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--vendorsoluce-green);
+        }
+        
+        html.dark .modal-title {
+            color: var(--vendorsoluce-light-green);
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 4px;
+        }
+        
+        html.dark .close-btn {
+            color: #9ca3af;
+        }
+        
+        .close-btn:hover {
+            color: #1f2937;
+        }
+        
+        html.dark .close-btn:hover {
+            color: #f3f4f6;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+        }
+        
+        html.dark .form-label {
+            color: #d1d5db;
+        }
+        
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            background: white;
+            color: #1f2937;
+        }
+        
+        html.dark .form-input,
+        html.dark .form-select,
+        html.dark .form-textarea {
+            background: #374151;
+            color: #f3f4f6;
+            border-color: #4b5563;
+        }
+        
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--vendorsoluce-green);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            color: #374151;
+        }
+        
+        html.dark .checkbox-label {
+            color: #d1d5db;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+        
+        
+        /* Icons using SVG */
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .radar-header {
+                padding: 12px 16px;
+            }
+            
+            .radar-header h1 {
+                font-size: 1.25rem;
+                margin-bottom: 4px;
+            }
+            
+            .timestamp {
+                margin-top: 4px;
+                font-size: 0.6875rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+            
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .toolbar-group {
+                width: 100%;
+                justify-content: stretch;
+            }
+            
+            .toolbar-group button,
+            .toolbar-group select {
+                flex: 1;
+            }
+            
+            .sonar-container {
+                height: 400px;
+            }
+        }
+        
+        /* Utility classes for inline styles */
+        .stat-card-threats {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .stat-card-alerts {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .stat-label-white,
+        .stat-value-white {
+            color: white;
+        }
+        .legend-dot-critical {
+            background: #dc2626;
+        }
+        .legend-dot-high {
+            background: #f59e0b;
+        }
+        .legend-dot-medium {
+            background: #3b82f6;
+        }
+        .legend-dot-low {
+            background: #2e7d32;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #9ca3af;
+        }
+        
+        html.dark .empty-state {
+            color: #6b7280;
+        }
+        
+        .empty-state-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            opacity: 0.5;
+        }
+        
+        html.dark .empty-state-icon {
+            opacity: 0.4;
+        }
+        
+        .empty-state-text {
+            font-size: 0.875rem;
+            margin-top: 8px;
+            color: #9ca3af;
+        }
+        
+        html.dark .empty-state-text {
+            color: #6b7280;
+        }
+        .hidden-icon {
+            display: none;
+        }
+    </style>
+
+<!-- VSS static SEO: canonical + Open Graph + Twitter + JSON-LD (ERMITS baseline) -->
+<link rel="canonical" href="https://www.vendorsoluce.com/radar/vendor-threat-radar">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ERMITS">
+<meta property="og:title" content="Vendor Threat Radar - VendorSoluce&trade; | ERMITS">
+<meta property="og:description" content="Browser-based Vendor Threat Radar for third-party risk signals and exportable reports in VendorSoluce&trade;.">
+<meta property="og:image" content="https://www.vendorsoluce.com/social-preview.png">
+<meta property="og:url" content="https://www.vendorsoluce.com/radar/vendor-threat-radar">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vendor Threat Radar - VendorSoluce&trade; | ERMITS">
+<meta name="twitter:description" content="Browser-based Vendor Threat Radar for third-party risk signals and exportable reports in VendorSoluce&trade;.">
+<meta name="twitter:image" content="https://www.vendorsoluce.com/social-preview.png">
+<meta name="twitter:url" content="https://www.vendorsoluce.com/radar/vendor-threat-radar">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Vendor Threat Radar - VendorSoluce™ | ERMITS",
+  "url": "https://www.vendorsoluce.com/radar/vendor-threat-radar",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ERMITS",
+    "url": "https://ermits.com/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "VendorSoluce",
+    "url": "https://www.vendorsoluce.com/"
+  },
+  "mainEntity": {
+    "@type": "SoftwareApplication",
+    "name": "VendorSoluce",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "Vendor risk intelligence workspace for third-party risk review, dependency visibility, and supply chain assurance.",
+    "url": "https://www.vendorsoluce.com/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ERMITS",
+      "url": "https://ermits.com/"
+    }
+  }
+}
+</script>
+
+<!-- ERMITS global SEO bundle: merged into each page <head> by embed-header-footer.js (npm run build). Idempotent via meta name="ermits-seo-bundle". JSON-LD lives per-page (homepage SoftwareApplication; inner WebPage hybrid). -->
+<meta name="ermits-seo-bundle" content="1">
+<meta name="application-name" content="VendorSoluce">
+<meta name="author" content="ERMITS">
+<meta name="creator" content="ERMITS">
+<meta name="publisher" content="ERMITS">
+  <link href="../assets/css/shell.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Nav + nav styles live outside #root so position:fixed stays viewport-anchored (nested flex #root can break fixed in some browsers). -->
+<style>
+  .tagline-text { letter-spacing: -0.02em; margin-top: -3px; }
+/* Theme toggle: same icon size as user menu (w-5 h-5 = 1.25rem) */
+  nav [data-tour="theme-toggle"] button,
+  nav button[data-theme-toggle] {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    min-width: 2.25rem !important;
+    min-height: 2.25rem !important;
+    border-radius: 0.5rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+  nav [data-tour="theme-toggle"] button svg,
+  nav button[data-theme-toggle] svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    min-width: 1.25rem !important;
+    min-height: 1.25rem !important;
+    color: inherit !important;
+  }
+  /* User menu icon: same size as theme toggle for visual consistency */
+  nav [data-tour="user-menu"] a svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    min-width: 1.25rem !important;
+    min-height: 1.25rem !important;
+  }
+</style>
+<!-- CANONICAL HEADER — Nav below; mobile drawer fragment: includes/mobile-menu-panel.html (npm run sync:mobile-menu). JS: assets/js/navigation.js -->
+<style>
+  .tagline-text { letter-spacing: -0.02em; margin-top: -3px; }
+#root, #root > div { pointer-events: auto !important; }
+  /* Theme toggle: match homepage header (fixed shape, color, contrast) on all pages */
+  nav [data-tour="theme-toggle"] button,
+  nav button[data-theme-toggle] {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    min-width: 2.25rem !important;
+    min-height: 2.25rem !important;
+    border-radius: 0.5rem !important;
+    background-color: rgb(243 244 246) !important;
+    color: rgb(55 65 81) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    transition: all 0.2s ease !important;
+  }
+  html.dark nav [data-tour="theme-toggle"] button,
+  html.dark nav button[data-theme-toggle] {
+    background-color: rgb(55 65 81) !important;
+    color: rgb(250 204 21) !important;
+  }
+  nav [data-tour="theme-toggle"] button:hover,
+  nav button[data-theme-toggle]:hover {
+    background-color: rgb(229 231 235) !important;
+  }
+  html.dark nav [data-tour="theme-toggle"] button:hover,
+  html.dark nav button[data-theme-toggle]:hover {
+    background-color: rgb(75 85 99) !important;
+  }
+  /* Theme toggle icons: same size and color on all pages */
+  nav [data-tour="theme-toggle"] button svg,
+  nav button[data-theme-toggle] svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    color: inherit !important;
+  }
+  nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
+  nav button[data-theme-toggle] .lucide-sun.hidden-icon {
+    color: rgb(245 158 11) !important; /* amber-500 when visible */
+  }
+</style>
+<nav class="glass-nav-vs fixed top-0 left-0 right-0 z-[99999] w-full max-w-[100vw]" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 w-full min-w-0">
+    <div class="grid h-16 w-full min-w-0 grid-cols-[minmax(0,1fr)_auto] md:grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-3 lg:gap-x-4">
+      <!-- Brand: logo + two-line branding — same logo size and text classes as footer (canonical) -->
+      <div class="flex items-center flex-shrink-0 min-w-0 md:max-w-none max-w-[calc(100%-60px)] col-start-1 row-start-1" data-tour="main-nav">
+        <a class="flex items-center min-w-0 group" href="/index.html">
+          <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" width="60" height="60" class="vs-brand-logo h-[3.75rem] w-[3.75rem] max-h-[3.75rem] max-w-[3.75rem] flex-shrink-0 transition-transform group-hover:scale-105 object-contain" loading="eager">
+          <span class="ml-1.5 min-w-0">
+            <span class="block text-[1.5rem] sm:text-[1.625rem] md:text-[1.75rem] font-bold text-vendorsoluce-green dark:text-white leading-tight">VendorSoluce&trade;</span>
+            <span class="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">Supply Chain Risk Intelligence</span>
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop nav: centered in middle column (md+) -->
+      <div class="hidden md:flex justify-center items-center min-w-0 relative z-[61] col-start-2 row-start-1">
+        <div class="flex items-center justify-center gap-1 flex-wrap">
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Home" href="/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-3.5 h-3.5 flex-shrink-0">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="How It Works" href="/how-it-works.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help w-3.5 h-3.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          How It Works
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Features" href="/features.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3.5 h-3.5 flex-shrink-0"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>Features</span>
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Vendor Review" href="/vendor-review.html" data-page="vendor-review">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check w-3.5 h-3.5 flex-shrink-0"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+          Vendor Review
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Trust" href="/trust.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-3.5 h-3.5 flex-shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+          </svg>
+          Trust
+        </a>
+        <a class="nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200" title="Pricing" href="/pricing.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-3.5 h-3.5 flex-shrink-0">
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Pricing
+        </a>
+        </div>
+      </div>
+
+      
+      <div class="hidden md:flex items-center justify-end gap-2 flex-shrink-0 col-start-3 row-start-1">
+        <div data-tour="theme-toggle">
+          <button type="button" data-theme-toggle class="w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center flex-shrink-0" aria-label="Switch theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun w-5 h-5 text-amber-500 hidden-icon">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-5 h-5">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+            </svg>
+          </button>
+        </div>
+        <div data-tour="user-menu">
+          <a id="header-account-link-desktop" href="/account.html" data-nav="account" class="inline-flex w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 items-center justify-center flex-shrink-0" aria-label="User Account">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-5 h-5">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile: theme, menu; account inside drawer -->
+      <div class="flex items-center justify-end md:hidden flex-shrink-0 gap-1.5 col-start-2 row-start-1">
+        <div data-tour="theme-toggle">
+          <button type="button" data-theme-toggle class="w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center flex-shrink-0" aria-label="Switch theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun w-5 h-5 text-amber-500 hidden-icon"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-5 h-5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+          </button>
+        </div>
+        <button type="button" id="mobile-menu-hamburger-btn" data-mobile-menu-button="true" class="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none flex-shrink-0 w-9 h-9" aria-label="Open menu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+            <line x1="4" x2="20" y1="12" y2="12"></line>
+            <line x1="4" x2="20" y1="6" y2="6"></line>
+            <line x1="4" x2="20" y1="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Mobile menu and active nav: single source of truth in assets/js/navigation.js (injected by embed or loaded by page) -->
+
+<!-- Mobile Menu Panel (matches desktop nav order exactly) -->
+<div data-mobile-menu="true" class="md:hidden fixed left-0 right-0 z-50 hidden mobile-menu-position">
+  <div class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200/60 dark:border-gray-700/60 shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-3">
+      <div class="space-y-2">
+        <a href="/index.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home
+        </a>
+        <a href="/how-it-works.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help w-3.5 h-3.5 mr-2 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          How It Works
+        </a>
+        <a href="/features.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 mr-2">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+            <path d="M5 3v4"></path>
+            <path d="M19 17v4"></path>
+            <path d="M3 5h4"></path>
+            <path d="M17 19h4"></path>
+          </svg>
+          Features
+        </a>
+        <a href="/vendor-review.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center" data-page="vendor-review">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check w-3.5 h-3.5 mr-2 flex-shrink-0"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+          Vendor Review
+        </a>
+        <a href="/trust.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+          </svg>
+          Trust
+        </a>
+        <a href="/pricing.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Pricing
+        </a>
+        <a href="/faq.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle w-4 h-4 mr-2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+          FAQ
+        </a>
+        <div class="pt-2 border-t border-gray-200 dark:border-gray-700">
+          <a id="header-account-link" href="/account.html" class="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-4 h-4 mr-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Account
+          </a>
+        </div>
+      </div>
+      <div class="px-4 py-2 border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Legal</div>
+        <div class="space-y-1">
+          <a href="/legal/privacy-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Privacy Policy
+          </a>
+          <a href="/legal/cookie-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 15.5v.01"></path><path d="M12 12v.01"></path><path d="M11 17v.01"></path><path d="M7 14v.01"></path></svg>
+            Cookie Policy
+          </a>
+          <a href="/legal/terms.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+            Terms of Service
+          </a>
+          <a href="/legal/acceptable-use-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+            Acceptable Use Policy
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><script src="../assets/js/navigation.js"></script><script data-vs-theme-toggle src="../assets/js/theme.js"></script><main class="flex-auto min-w-0" id="radar-main" aria-label="Vendor Threat Radar content">
+<div class="radar-container">
+
+<!-- Welcome Banner (first-time users only) -->
+<div id="welcomeBanner" role="region" aria-label="Welcome to the Vendor Threat Radar">
+  <div class="wb-body">
+    <div class="wb-header">
+      <div class="wb-title-row">
+        <span class="wb-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><circle cx="12" cy="12" r="2"/></svg>
+        </span>
+        <div>
+          <p class="wb-title">Welcome to the Vendor Threat Radar</p>
+          <p class="wb-subtitle">Build your vendor risk portfolio in minutes — no account required.</p>
+        </div>
+      </div>
+      <button id="welcomeBannerClose" type="button" class="wb-close" aria-label="Dismiss welcome banner" title="Dismiss">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="wb-steps">
+      <div class="wb-step">
+        <p class="wb-step-label">1. Pick a mode</p>
+        <p class="wb-step-text"><strong>Baseline</strong> — auto-fills from service type.<br><strong>Real-data</strong> — enter actual vendors.<br><strong>Hybrid</strong> — mix both.</p>
+      </div>
+      <div class="wb-step">
+        <p class="wb-step-label">2. Add vendors</p>
+        <p class="wb-step-text">Click <strong>Add Vendor</strong> or <strong>Import CSV</strong>. Fill in upstream providers to unlock dependency intelligence and hotspot detection.</p>
+      </div>
+      <div class="wb-step">
+        <p class="wb-step-label">3. Get your report</p>
+        <p class="wb-step-text">Scroll to <strong>Portfolio C-SCRM report</strong> (all vendors), add your organisation name, and click <strong>Download portfolio as HTML</strong>.</p>
+      </div>
+    </div>
+
+    <div class="wb-footer">
+      <div class="wb-continue-app" role="region" aria-label="Continue in the VendorSoluce platform app">
+        <p class="wb-continue-app-title">Upgrade to the full platform</p>
+        <p class="wb-continue-app-hint">Export <strong>portfolio</strong> (JSON) from the toolbar below, then open the VendorSoluce app and use <strong>Import</strong> with that file—your vendor list transfers as-is.</p>
+        <div class="wb-continue-app-actions">
+          <a href="https://www.platform.vendorsoluce.com/vendor-risk-radar?from=website&amp;handoff=import" class="wb-continue-app-btn" target="_blank" rel="noopener noreferrer">Continue in VendorSoluce app</a>
+          <a href="https://www.platform.vendorsoluce.com/pricing?from=website" class="wb-continue-app-secondary" target="_blank" rel="noopener noreferrer">View plans</a>
+        </div>
+      </div>
+      <a href="../tutorial.html#step-radar" class="wb-guide-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        Full user guide
+      </a>
+      <span class="wb-privacy">Your data stays in your browser. Nothing is sent to a server.</span>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<div class="radar-header">
+<h1><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"/><circle cx="12" cy="12" r="2"/><path d="m13.41 10.59 5.66-5.66"/></svg> Vendor Threat Radar</h1>
+<div class="timestamp" id="timestamp"></div>
+<div class="radar-mode-selector" id="radarModeSelector" aria-label="Radar entry mode">
+<fieldset class="mode-fieldset">
+<legend class="mode-legend">How do you want to build your radar?</legend>
+<div class="mode-options">
+<label class="mode-option"><input type="radio" name="radarMode" value="baseline" id="radarModeBaseline" aria-describedby="modeHelper"/> <span>Start with baseline profile</span></label>
+<label class="mode-option"><input type="radio" name="radarMode" value="real" id="radarModeReal" aria-describedby="modeHelper"/> <span>Add real vendors</span></label>
+<label class="mode-option"><input type="radio" name="radarMode" value="hybrid" id="radarModeHybrid" aria-describedby="modeHelper"/> <span>Use mixed mode</span></label>
+</div>
+<p class="mode-helper" id="modeHelper">You can start with service categories and refine with actual vendors later.</p>
+</fieldset>
+</div>
+<!-- Alert Banner -->
+<div class="alert-banner clear" id="alertBanner">
+<div class="alert-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+<div class="alert-content">
+<div class="alert-title">System Status: All Clear</div>
+<div>No critical vendor risks detected</div>
+</div>
+</div>
+<!-- Toolbar -->
+<div class="toolbar">
+<div class="toolbar-group">
+<button onclick="openAddVendor()">
+<svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+Add Vendor
+</button>
+<button type="button" class="secondary" onclick="document.getElementById('csvImport').click()" title="Upload a .csv file—use Download template in the help panel for the right layout">
+<svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+Import CSV
+</button>
+<input accept=".csv" id="csvImport" onchange="importVendors(event)" type="file" class="csv-file-input-hidden" aria-label="Import CSV file"/>
+<details class="csv-format-hint csv-format-details">
+<summary class="csv-format-summary">Spreadsheet import help</summary>
+<div class="csv-format-panel">
+<p class="csv-format-lead"><strong>Easiest way:</strong> <button type="button" id="csvTemplateLink" class="csv-template-link" onclick="downloadVendorCsvTemplate(); return false;">Download the template</button>, fill one row per vendor, then choose <strong>Import CSV</strong>. Your first row can be plain-English headers—we recognize common names automatically.</p>
+<p class="csv-format-lead">What to put in each column (you can leave advanced fields blank):</p>
+<ul class="csv-format-checklist">
+<li><strong>Name</strong> — vendor or service name</li>
+<li><strong>Category</strong> — how important they are (for example strategic vs. commodity)</li>
+<li><strong>Data types</strong> — kinds of data they touch; use a semicolon between several values</li>
+<li><strong>Sector, location, contact, notes</strong> — optional context for your team</li>
+</ul>
+<p class="csv-format-muted">Risk scores and similar columns are optional—we calculate them when you run a scan if you leave them empty.</p>
+<details class="csv-format-advanced">
+<summary class="csv-format-advanced-summary">Exact column titles (for power users)</summary>
+<p class="csv-format-body csv-format-advanced-body">If you build the file yourself, these header names work in any order: <code>Name</code>, <code>Category</code>, <code>Data Types</code> (<code>;</code>-separated list), <code>Sector</code>, <code>Location</code>, <code>Contact</code>, <code>Notes</code>, <code>Service Type</code>, <code>Population Impacted</code>, <code>Inherent Risk</code>, <code>Residual Risk</code>, <code>Risk Level</code>. Service type, population, and risk fields stay optional.</p>
+</details>
+<p class="csv-format-body csv-format-json-note"><strong>Same list in the VendorSoluce app?</strong> Use <strong>Import portfolio</strong> and <strong>Export portfolio</strong> below to move the full vendor list as one portable file—no need to copy column names by hand. Or use <strong>Continue in app</strong> in the welcome banner or toolbar to open the platform with import guidance.</p>
+</div>
+</details>
+<button type="button" class="secondary" onclick="document.getElementById('portfolioJsonImport').click()" title="JSON from Vendor Risk Radar app or another export from this page">
+<svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+Import portfolio
+</button>
+<input accept=".json,application/json" class="csv-file-input-hidden" id="portfolioJsonImport" onchange="importRadarPortfolioJson(event)" type="file" aria-label="Import vendorsoluce radar portfolio JSON file"/>
+<button type="button" class="secondary" onclick="downloadRadarPortfolioJson()" title="Download JSON for the app or backup">
+<svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 12v8m0 0l-3-3m3 3l3-3M12 4v4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+Export portfolio
+</button>
+<a href="https://www.platform.vendorsoluce.com/vendor-risk-radar?from=website&amp;handoff=import" class="toolbar-continue-app" target="_blank" rel="noopener noreferrer" title="Open Vendor Risk Radar in the platform—import your portfolio JSON there">Continue in app →</a>
+</div>
+<div class="toolbar-group">
+<select aria-label="Filter vendors by risk level" id="riskFilter" onchange="filterVendors()" title="Filter vendors by risk level">
+<option value="all">All Risk Levels</option>
+<option value="critical">Critical</option>
+<option value="high">High</option>
+<option value="medium">Medium</option>
+<option value="low">Low</option>
+</select>
+<button class="secondary" onclick="scanVendors()">
+<svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+Refresh Scan
+</button>
+<button class="danger" onclick="clearAllVendors()">Clear All</button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="stats-grid">
+<div class="stat-card critical">
+<div class="stat-label">Critical Risk</div>
+<div class="stat-value" id="criticalCount">0</div>
+</div>
+<div class="stat-card warning">
+<div class="stat-label">High Risk</div>
+<div class="stat-value" id="highCount">0</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">Medium Risk</div>
+<div class="stat-value" id="mediumCount">0</div>
+</div>
+<div class="stat-card success">
+<div class="stat-label">Low Risk</div>
+<div class="stat-value" id="lowCount">0</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">Total Vendors</div>
+<div class="stat-value" id="totalCount">0</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">Avg Risk Score</div>
+<div class="stat-value" id="avgRisk">0</div>
+</div>
+<div class="stat-card stat-card-threats">
+<div class="stat-label stat-label-white">Active Threats</div>
+<div class="stat-value stat-value-white" id="activeThreats">0</div>
+</div>
+<div class="stat-card stat-card-alerts">
+<div class="stat-label stat-label-white">Predictive Alerts</div>
+<div class="stat-value stat-value-white" id="predictiveAlerts">0</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="content-grid">
+<!-- Sonar Radar -->
+<div class="card">
+<div class="card-header">
+<div class="card-title">
+<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<circle cx="12" cy="12" r="6"></circle>
+<circle cx="12" cy="12" r="2"></circle>
+</svg>
+Risk Radar
+</div>
+</div>
+<div class="sonar-container">
+<canvas id="sonarCanvas"></canvas>
+<div class="radar-legend">
+<div class="legend-item">
+<div class="legend-dot legend-dot-critical"></div>
+<span>Critical</span>
+</div>
+<div class="legend-item">
+<div class="legend-dot legend-dot-high"></div>
+<span>High</span>
+</div>
+<div class="legend-item">
+<div class="legend-dot legend-dot-medium"></div>
+<span>Medium</span>
+</div>
+<div class="legend-item">
+<div class="legend-dot legend-dot-low"></div>
+<span>Low</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Vendor List -->
+<div class="card">
+<div class="card-header">
+<div class="card-title">
+<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+Vendor Portfolio
+</div>
+</div>
+<div class="vendor-list" id="vendorList">
+<div class="empty-state">
+<svg fill="none" stroke="currentColor" class="empty-state-icon" viewBox="0 0 24 24">
+<path d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<p>No vendors added yet</p>
+<p class="empty-state-text">Click "Add Vendor" to get started</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Alert status repeated below (compact) -->
+<div class="alert-banner-repeat clear" id="alertBannerRepeat" aria-hidden="true">
+<div class="alert-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+<div class="alert-content"><div class="alert-title">System Status: All Clear</div><div>No critical vendor risks detected</div></div>
+</div>
+<!-- Analytics Charts -->
+<div class="charts-grid">
+<div class="chart-card">
+<div class="chart-title">Risk Distribution</div>
+<div class="chart-container">
+<canvas id="inherentChart"></canvas>
+</div>
+</div>
+<div class="chart-card">
+<div class="chart-title">Sector Distribution</div>
+<div class="chart-container">
+<canvas id="sectorChart"></canvas>
+</div>
+</div>
+<div class="chart-card">
+<div class="chart-title">Geographic Distribution</div>
+<div class="chart-container">
+<canvas id="geoChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+<!-- Dependency Intelligence -->
+<section id="dependency-intelligence" class="report-section" aria-labelledby="dependency-intelligence-heading">
+<div class="card">
+<div class="card-header">
+<div class="card-title" id="dependency-intelligence-heading">
+<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="icon icon--title"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+Dependency Intelligence
+</div>
+</div>
+<div class="card-content">
+<div class="dependency-kpi-row" id="dependencyKpiRow">
+<div class="dependency-kpi"><span class="dependency-kpi-num" id="kpiMappedDeps">0</span><span class="dependency-kpi-label">Vendors with mapped dependencies</span></div>
+<div class="dependency-kpi"><span class="dependency-kpi-num" id="kpiTier2">0</span><span class="dependency-kpi-label">Vendors with Tier-2 visibility</span></div>
+<div class="dependency-kpi"><span class="dependency-kpi-num" id="kpiCriticalOps">0</span><span class="dependency-kpi-label">Vendors supporting critical operations</span></div>
+<div class="dependency-kpi"><span class="dependency-kpi-num" id="kpiHotspots">0</span><span class="dependency-kpi-label">Shared dependency hotspots</span></div>
+</div>
+<div class="dependency-cascade-panel" id="dependencyCascadePanel">
+<label class="form-label">Cascade preview — select a vendor</label>
+<select class="form-select dependency-vendor-select" id="dependencyVendorSelect" aria-label="Select vendor for cascade preview">
+<option value="">— Select vendor —</option>
+</select>
+<div class="cascade-preview-box" id="cascadePreviewBox" aria-live="polite"></div>
+</div>
+<div class="dependency-hotspots-panel" id="dependencyHotspotsPanel">
+<h3 class="dependency-subheading">Shared dependency concentration</h3>
+<div id="dependencyHotspotsList"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Portfolio C-SCRM report (anchor id unchanged for deep links) -->
+<section id="vendor-inherent-risk-report" class="report-section" aria-labelledby="report-heading">
+<div class="card">
+<div class="card-header">
+<div class="card-title" id="report-heading">
+<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="icon icon--title"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+Portfolio C-SCRM report
+</div>
+<p class="report-section-subtitle">All vendors currently in your radar — one NIST-aligned export. This is not a single-vendor report.</p>
+<span class="report-premium-badge">NIST SP 800-161 Rev. 1 · portfolio</span>
+</div>
+<div class="card-content">
+<p class="report-description"><strong>Portfolio export</strong> — Downloads or prints one document for your <em>entire</em> vendor set: executive-style overview, full risk register, sector and geographic analysis, service types, population impact, dependency summary, and methodology appendix. Add vendors in the list above first.</p>
+<p class="report-description-secondary"><strong>Single vendor</strong> — For a read-out of <em>one</em> vendor only, use <strong>Details</strong> on that row. That opens an on-screen summary and is <em>not</em> the same as this portfolio document.</p>
+<div class="report-actions">
+<input type="text" id="reportClientName" placeholder="Organization name (optional, for cover)" maxlength="120" title="Shown as &quot;Prepared for&quot; on the report cover" />
+<button class="secondary" onclick="generateComprehensiveReport()" title="Saves one HTML file including every vendor in the radar">
+<svg class="icon icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+Download portfolio as HTML
+</button>
+<button class="primary" onclick="openReportForPDF()" title="Opens the full portfolio report in a new window — use Print → Save as PDF">
+<svg class="icon icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+Open portfolio for PDF
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Add/Edit Vendor Modal: hidden by default via .modal in CSS; .modal.show makes it visible -->
+<div class="modal" id="vendorModal">
+<div class="modal-content">
+<div class="modal-header">
+<h2 class="modal-title" id="modalTitle">Add Vendor</h2>
+<button type="button" class="close-btn" onclick="closeVendorModal()">&times;</button>
+</div>
+<form id="vendorForm">
+<div class="form-group">
+<label class="form-label">Vendor Name *</label>
+<input class="form-input" id="vendorName" required="" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label">Category *</label>
+<select class="form-select" id="vendorCategory" required="">
+<option value="critical">Critical</option>
+<option value="strategic">Strategic</option>
+<option value="tactical">Tactical</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">Data Types Processed</label>
+<div class="checkbox-group">
+<label class="checkbox-label"><input name="dataType" type="checkbox" value="PII"/> <span>PII</span></label>
+<label class="checkbox-label"><input name="dataType" type="checkbox" value="Financial"/> <span>Financial</span></label>
+<label class="checkbox-label"><input name="dataType" type="checkbox" value="Health"/> <span>Health Data</span></label>
+<label class="checkbox-label"><input name="dataType" type="checkbox" value="Credentials"/> <span>Credentials</span></label>
+<label class="checkbox-label"><input name="dataType" type="checkbox" value="IP"/> <span>Intellectual Property</span></label>
+<label class="checkbox-label"><input name="dataType" type="checkbox" value="Customer"/> <span>Customer Data</span></label>
+<label class="checkbox-label"><input name="dataType" type="checkbox" value="Employee"/> <span>Employee Data</span></label>
+<label class="checkbox-label"><input name="dataType" type="checkbox" value="Public"/> <span>Public Information</span></label>
+</div>
+</div>
+<div class="form-group">
+<label class="form-label">Sector</label>
+<select class="form-select" id="vendorSector">
+<option value="Technology">Technology</option>
+<option value="Finance">Finance</option>
+<option value="Healthcare">Healthcare</option>
+<option value="Critical Infrastructure">Critical Infrastructure</option>
+<option value="Defense">Defense</option>
+<option value="Energy">Energy</option>
+<option value="Retail">Retail</option>
+<option value="Manufacturing">Manufacturing</option>
+<option value="Education">Education</option>
+<option value="Government">Government</option>
+<option value="Other">Other</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">Location</label>
+<select class="form-select" id="vendorLocation">
+<option value="United States">United States</option>
+<option value="Canada">Canada</option>
+<option value="European Union">European Union</option>
+<option value="United Kingdom">United Kingdom</option>
+<option value="Australia">Australia</option>
+<option value="Japan">Japan</option>
+<option value="Singapore">Singapore</option>
+<option value="India">India</option>
+<option value="China">China</option>
+<option value="Russia">Russia</option>
+<option value="Other">Other</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">Service type <span class="form-label-hint">(what they provide)</span></label>
+<select class="form-select" id="vendorServiceType">
+<option value="">—</option>
+<option value="IAM / SSO">IAM / SSO</option>
+<option value="Payroll / HR">Payroll / HR</option>
+<option value="Payments / Billing">Payments / Billing</option>
+<option value="CRM">CRM</option>
+<option value="Cloud Hosting">Cloud Hosting</option>
+<option value="Customer Support">Customer Support</option>
+<option value="Collaboration">Collaboration</option>
+<option value="Email / Messaging">Email / Messaging</option>
+<option value="Security Monitoring">Security Monitoring</option>
+<option value="Analytics / Data Platform">Analytics / Data Platform</option>
+<option value="Cloud / Infrastructure">Cloud / Infrastructure</option>
+<option value="HR / Payroll">HR / Payroll</option>
+<option value="Collaboration / Comms">Collaboration / Comms</option>
+<option value="Security / IAM">Security / IAM</option>
+<option value="Data / Analytics">Data / Analytics</option>
+<option value="Legal / Compliance">Legal / Compliance</option>
+<option value="Software / SaaS">Software / SaaS</option>
+<option value="Other">Other</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">Population impacted <span class="form-label-hint">(employees/clients affected)</span></label>
+<select class="form-select" id="vendorPopulationImpacted">
+<option value="">—</option>
+<option value="None / minimal">None / minimal</option>
+<option value="Internal only (e.g. IT)">Internal only (e.g. IT)</option>
+<option value="Department / function">Department / function</option>
+<option value="All employees">All employees</option>
+<option value="Customer-facing">Customer-facing</option>
+<option value="All (employees + customers)">All (employees + customers)</option>
+</select>
+</div>
+<div class="form-group" id="formGroupOrgSize">
+<label class="form-label">Org size <span class="form-label-hint">(optional, for baseline)</span></label>
+<select class="form-select" id="vendorOrgSize">
+<option value="">—</option>
+<option value="Small (1-99)">Small (1-99)</option>
+<option value="Medium (100-999)">Medium (100-999)</option>
+<option value="Large (1000+)">Large (1000+)</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">Contact Email</label>
+<input class="form-input" id="vendorContact" type="email"/>
+</div>
+<div class="form-group">
+<label class="form-label">Notes</label>
+<textarea class="form-textarea" id="vendorNotes"></textarea>
+</div>
+<details class="dependency-fields-details" id="dependencyFieldsDetails">
+<summary class="form-label dependency-summary">Dependency &amp; cascade (optional)</summary>
+<div class="form-group">
+<label class="form-label">Dependent systems <span class="form-label-hint">(comma-separated)</span></label>
+<input class="form-input" id="vendorDependentSystems" type="text" placeholder="e.g. CRM, Payroll"/>
+</div>
+<div class="form-group">
+<label class="form-label">Business functions <span class="form-label-hint">(comma-separated)</span></label>
+<input class="form-input" id="vendorBusinessFunctions" type="text" placeholder="e.g. Payments, Auth"/>
+</div>
+<div class="form-group">
+<label class="form-label">Upstream providers <span class="form-label-hint">(comma-separated)</span></label>
+<input class="form-input" id="vendorUpstreamProviders" type="text" placeholder="e.g. AWS, CDN"/>
+</div>
+<div class="form-group">
+<label class="form-label">Sub-processors <span class="form-label-hint">(comma-separated)</span></label>
+<input class="form-input" id="vendorSubProcessors" type="text" placeholder="e.g. Stripe, Twilio"/>
+</div>
+<div class="form-group">
+<label class="form-label">Critical operations <span class="form-label-hint">(comma-separated)</span></label>
+<input class="form-input" id="vendorCriticalOperations" type="text" placeholder="e.g. Checkout, SSO"/>
+</div>
+<div class="form-group">
+<label class="form-label">Regulations <span class="form-label-hint">(comma-separated)</span></label>
+<input class="form-input" id="vendorRegulations" type="text" placeholder="e.g. GDPR, HIPAA, PCI-DSS"/>
+</div>
+<div class="form-group">
+<label class="form-label">Tier level <span class="form-label-hint">(1=Tier-1, 2=Tier-2, 3=Tier-3)</span></label>
+<input class="form-input" id="vendorTierLevel" type="number" min="1" max="9" placeholder="1"/>
+</div>
+<div class="form-group">
+<label class="form-label">Parent vendor IDs <span class="form-label-hint">(comma-separated)</span></label>
+<input class="form-input" id="vendorParentVendorIds" type="text" placeholder="IDs of parent vendors"/>
+</div>
+<div class="form-group">
+<label class="form-label">Dependency notes</label>
+<textarea class="form-textarea" id="vendorDependencyNotes" rows="2" placeholder="Optional notes on dependencies"></textarea>
+</div>
+</details>
+<div class="form-actions">
+<button class="secondary" onclick="closeVendorModal()" type="button">Cancel</button>
+<button type="submit">Save Vendor</button>
+</div>
+</form>
+</div>
+</div>
+
+<template id="portfolioReportTemplate">
+  <section aria-hidden="true" style="display:none">
+    <h1>Vendor Portfolio Inherent Risk</h1>
+    <div class="report-footer"><div id="reportId">Report ID:</div></div>
+    <div id="cover-risk-summary" class="cover-risk-summary">Cover risk summary</div>
+    <ol>
+      <li>Section 1  -  Executive Summary</li>
+      <li>Section 1b  -  Portfolio Risk Posture</li>
+      <li>Section 2  -  Vendor Risk Register</li>
+      <li>Section 5b  -  Dependency &amp; Cascade</li>
+      <li>Appendix  -  Methodology</li>
+    </ol>
+    <h2>Section 1  -  Executive Summary</h2>
+    <p><strong>Purpose &amp; Scope</strong></p>
+    <p>Portfolio Risk Overview</p>
+    <p>Risk Distribution Breakdown</p>
+    <h2>Section 1b  -  Portfolio Risk Posture</h2>
+    <p>1. Vendor Risk Distribution</p>
+    <p>2. Dependency Concentration</p>
+    <p>3. Operational Exposure</p>
+    <p>4. Data Exposure Overview</p>
+    <p>5. Supply Chain Visibility</p>
+    <p>6. Portfolio Risk Posture Statement</p>
+    <p>may influence</p>
+    <p>does not assess control effectiveness</p>
+    <h2>Section 2  -  Vendor Risk Register</h2>
+    <table><thead><tr><th>Source</th><th>Inherent</th><th>Residual</th></tr></thead></table>
+    <h2>Section 5b  -  Dependency</h2>
+    <p>with mapped dependencies</p>
+    <p>Shared dependency</p>
+    <h2>Section 5  -  Recommended</h2>
+    <h2>Appendix  -  Methodology</h2>
+    <p>Inherent Risk Methodology</p>
+    <p><strong>Inherent risk:</strong></p>
+    <p>NIST SP 800-161</p>
+    <!-- CANONICAL FOOTER TEMPLATE — Exact copy from index.html. Do not change; validate before propagating to other pages. -->
+<footer id="footer" class="bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white border-t border-gray-300 dark:border-gray-800 w-full flex-shrink-0">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-1.5 pb-0 w-full min-w-0">
+    <div class="vs-footer-grid grid grid-cols-1 md:grid-cols-5 gap-2 lg:gap-3 md:gap-x-4 w-full">
+
+      <!-- Company Info - CANONICAL FOOTER BRANDING: logo + three text lines (VendorSoluce&trade; / Supply Chain Risk Intelligence / by ERMITS). Do not change layout; this is the reference for all pages. -->
+      <div class="col-span-1 md:col-span-2 md:pr-4">
+        <div class="vs-footer-branding flex items-center mb-2">
+          <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" width="60" height="60" class="vs-brand-logo h-[3.75rem] w-[3.75rem] max-h-[3.75rem] max-w-[3.75rem] flex-shrink-0 transition-transform hover:scale-105 object-contain" loading="eager">
+          <span class="ml-1.5 min-w-0">
+            <span class="block text-[1.5rem] sm:text-[1.625rem] md:text-[1.75rem] font-bold text-vendorsoluce-green dark:text-white leading-tight">VendorSoluce&trade;</span>
+            <span class="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">Supply Chain Risk Intelligence</span>
+            <span class="block text-sm leading-tight text-gray-500 dark:text-gray-400 font-normal">by ERMITS</span>
+          </span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-snug">
+          Comprehensive supply chain risk management platform for modern organizations featuring assessments and automated compliance tools.
+        </p>
+      </div>
+
+      <!-- Solutions (platform/portal features) - absolute URLs so links work from vendorsoluce.com and from both www.platform.vendorsoluce.com and platform.vendorsoluce.com -->
+      <div class="md:pl-2">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Solutions</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="https://www.platform.vendorsoluce.com/supply-chain-assessment?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Supply Chain Assessment</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.platform.vendorsoluce.com/vendors?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+              <span>Vendor Dashboard</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.vendorsoluce.com/radar/vendor-threat-radar.html" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"></path><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Vendor Threat Radar</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.portal.vendorsoluce.com?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+              <span>Vendor Assurance Portal</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="md:pl-4">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Resources</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="/faq.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+              <span>FAQ</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/tutorial.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+              <span>Tutorial</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/best-practices.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
+              <span>Best Practices</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/download.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+              <span>Download</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/contact.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              <span>Contact</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="md:pl-2">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Legal</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="/legal/terms.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+              <span>Terms of Service</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/privacy-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>Privacy Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/cookie-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 15.5v.01"></path><path d="M12 12v.01"></path><path d="M11 17v.01"></path><path d="M7 14v.01"></path></svg>
+              <span>Cookie Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/acceptable-use-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+              <span>Acceptable Use Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Last row across all breakpoints: copyright left, badge right -->
+      <div class="col-span-full mt-1 pt-1 border-t border-gray-200/50 dark:border-gray-700/50 flex w-full flex-row flex-nowrap items-center justify-between gap-x-3 min-w-0 overflow-hidden">
+        <div class="min-w-0 flex-1 overflow-hidden">
+          <span class="text-xs text-gray-500 dark:text-gray-400 truncate block">&copy; 2026 ERMITS LLC. All rights reserved.</span>
+        </div>
+        <div class="flex flex-shrink-0 flex-nowrap items-center gap-x-4 ml-auto">
+          <div class="flex flex-shrink-0 items-center space-x-1.5 whitespace-nowrap px-2.5 py-1.5 rounded-lg bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 border border-vendorsoluce-green/30 dark:border-vendorsoluce-green/40">
+            <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" class="w-3.5 h-3.5 block opacity-100" loading="eager">
+            <span class="text-xs font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green">Local browser-based analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+  </section>
+</template>
+
+</main>
+<script>
+(function() {
+    function initMobileMenu() {
+        const menuButton = document.querySelector('[data-mobile-menu-button]');
+        if (!menuButton) return;
+
+        menuButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+            const mobileMenu = document.querySelector('[data-mobile-menu]');
+            
+            if (mobileMenu) {
+                if (isExpanded) {
+                    mobileMenu.classList.remove('mobile-menu-open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    menuButton.setAttribute('aria-label', 'Open menu');
+                } else {
+                    mobileMenu.classList.add('mobile-menu-open');
+                    menuButton.setAttribute('aria-expanded', 'true');
+                    menuButton.setAttribute('aria-label', 'Close menu');
+                }
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            const mobileMenu = document.querySelector('[data-mobile-menu]');
+            if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+                if (mobileMenu.classList.contains('mobile-menu-open')) {
+                    mobileMenu.classList.remove('mobile-menu-open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    menuButton.setAttribute('aria-label', 'Open menu');
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const mobileMenu = document.querySelector('[data-mobile-menu]');
+                if (mobileMenu && mobileMenu.classList.contains('mobile-menu-open')) {
+                    mobileMenu.classList.remove('mobile-menu-open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    menuButton.setAttribute('aria-label', 'Open menu');
+                }
+            }
+        });
+    }
+
+    function runMobileMenuInit() {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() { requestAnimationFrame(initMobileMenu); });
+        } else {
+            requestAnimationFrame(initMobileMenu);
+        }
+    }
+    runMobileMenuInit();
+    
+    function setActiveNavLink() {
+        const currentPath = window.location.pathname;
+        const currentFile = currentPath.split('/').pop() || 'index.html';
+        const normalizedCurrentFile = currentFile.split('?')[0].split('#')[0];
+        
+        const desktopNavMenu = document.querySelector('nav > div.hidden.md\\:flex.md\\:items-center');
+        const desktopNavLinks = desktopNavMenu ? desktopNavMenu.querySelectorAll('a[title][href]') : [];
+        const mobileNavLinks = document.querySelectorAll('[data-mobile-menu] a[href]');
+        const navLinks = [...desktopNavLinks, ...mobileNavLinks];
+        
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href || href.startsWith('http') || href.startsWith('#')) return;
+            if (link.closest('[data-tour="main-nav"]')) return;
+            if (link.getAttribute('title') === 'Vendor Radar' || link.querySelector('svg.lucide-radar') || link.textContent.trim().includes('Vendor Radar')) return;
+            const parentContainer = link.parentElement;
+            if (parentContainer && (parentContainer.querySelector('[data-tour="user-menu"]') || parentContainer.querySelector('[data-tour="theme-toggle"]'))) return;
+            
+            let linkFile = href.replace(/^\.\.?\//, '').split('/').pop() || '';
+            linkFile = linkFile.split('?')[0].split('#')[0];
+            const isCurrentPage = linkFile === normalizedCurrentFile || (normalizedCurrentFile === '' && linkFile === 'index.html') || (normalizedCurrentFile === 'index.html' && linkFile === 'index.html');
+            
+            if (isCurrentPage) {
+                link.classList.add('nav-link-active');
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.classList.remove('nav-link-active');
+                link.removeAttribute('aria-current');
+            }
+        });
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setActiveNavLink);
+    } else {
+        setActiveNavLink();
+    }
+})();
+</script>
+
+<!-- Mobile Menu Panel (matches index.html exactly) -->
+<div data-mobile-menu="true" class="md:hidden fixed left-0 right-0 z-50 mobile-menu-position" id="mobileMenuPanel">
+  <div class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200/60 dark:border-gray-700/60 shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-3">
+      <div class="space-y-2">
+        <a href="../index.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home
+        </a>
+        <a href="../how-it-works.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path>
+            <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"></path>
+            <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"></path>
+          </svg>
+          How It Works
+        </a>
+        <a href="../features.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 mr-2">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+            <path d="M5 3v4"></path>
+            <path d="M19 17v4"></path>
+            <path d="M3 5h4"></path>
+            <path d="M17 19h4"></path>
+          </svg>
+          Features
+        </a>
+        <a href="../trust.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+          </svg>
+          Trust
+        </a>
+        <a href="../pricing.html" class="mobile-nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-3.5 h-3.5 mr-2 flex-shrink-0">
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Pricing
+        </a>
+        <div class="pt-2 border-t border-gray-200 dark:border-gray-700">
+          <a href="vendor-threat-radar.html" class="block w-full px-4 py-2 rounded-lg text-sm font-semibold text-center text-white bg-vendorsoluce-green hover:bg-vendorsoluce-dark-green transition-colors">
+            Vendor Threat Radar
+          </a>
+        </div>
+      </div>
+      <div class="px-4 py-2 border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Legal</div>
+        <div class="space-y-1">
+          <a href="../legal/privacy-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Privacy Policy
+          </a>
+          <a href="../legal/cookie-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 15.5v.01"></path><path d="M12 12v.01"></path><path d="M11 17v.01"></path><path d="M7 14v.01"></path></svg>
+            Cookie Policy
+          </a>
+          <a href="../legal/terms.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+            Terms of Service
+          </a>
+          <a href="../legal/acceptable-use-policy.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+            Acceptable Use Policy
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('[data-tour="user-menu"]')) return;
+        var menuButton = e.target.closest('[data-mobile-menu-button]');
+        if (menuButton) {
+            e.preventDefault();
+            e.stopPropagation();
+            var mobileMenu = document.querySelector('[data-mobile-menu]');
+            if (!mobileMenu) return;
+            var isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+            if (isOpen) {
+                mobileMenu.classList.remove('mobile-menu-open');
+                menuButton.setAttribute('aria-expanded', 'false');
+                menuButton.setAttribute('aria-label', 'Open menu');
+                document.body.style.overflow = '';
+            } else {
+                mobileMenu.classList.add('mobile-menu-open');
+                menuButton.setAttribute('aria-expanded', 'true');
+                menuButton.setAttribute('aria-label', 'Close menu');
+                document.body.style.overflow = 'hidden';
+            }
+            return;
+        }
+        var mobileMenu = document.querySelector('[data-mobile-menu]');
+        var btn = document.querySelector('[data-mobile-menu-button]');
+        if (mobileMenu && btn && !mobileMenu.contains(e.target) && !btn.contains(e.target)) {
+            if (mobileMenu.classList.contains('mobile-menu-open')) {
+                mobileMenu.classList.remove('mobile-menu-open');
+                btn.setAttribute('aria-expanded', 'false');
+                btn.setAttribute('aria-label', 'Open menu');
+                document.body.style.overflow = '';
+            }
+        }
+    });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                var mobileMenu = document.querySelector('[data-mobile-menu]');
+                var menuButton = document.querySelector('[data-mobile-menu-button]');
+                if (mobileMenu && menuButton && mobileMenu.classList.contains('mobile-menu-open')) {
+                    mobileMenu.classList.remove('mobile-menu-open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    menuButton.setAttribute('aria-label', 'Open menu');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+        document.addEventListener('click', function(e) {
+            var link = e.target.closest('[data-mobile-menu] a[href]');
+            if (link && link.getAttribute('href') && !link.getAttribute('href').startsWith('#')) {
+                var mobileMenu = document.querySelector('[data-mobile-menu]');
+                var menuButton = document.querySelector('[data-mobile-menu-button]');
+                if (mobileMenu && menuButton) {
+                    mobileMenu.classList.remove('mobile-menu-open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    menuButton.setAttribute('aria-label', 'Open menu');
+                    document.body.style.overflow = '';
+                }
+            }
+        }, true);
+})();
+</script>
+
+<!-- Footer -->
+<style>
+/* Footer branding styles */
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.brand-name {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--vendorsoluce-green);
+  margin-bottom: 2px;
+}
+.dark .brand-name {
+  color: white;
+}
+.brand-tagline {
+  font-size: 13px;
+  color: #6B7280;
+  margin-bottom: 1px;
+}
+.dark .brand-tagline {
+  color: #94A3B8;
+}
+.brand-attribution {
+  font-size: 11px;
+  color: #6B7280;
+}
+.dark .brand-attribution {
+  color: #94A3B8;
+}
+
+/* Make footer borders extremely subtle - match background colors */
+footer.bg-white,
+footer[class*="bg-white"],
+footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.02) !important;
+}
+html.dark footer.bg-gray-800,
+html.dark footer[class*="bg-gray-800"],
+html.dark footer {
+  border-top: 1px solid rgba(31, 41, 55, 0.03) !important;
+}
+footer > div > div:last-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.02) !important;
+}
+html.dark footer > div > div:last-child {
+  border-top: 1px solid rgba(31, 41, 55, 0.03) !important;
+}
+</style>
+<!-- CANONICAL FOOTER TEMPLATE — Exact copy from index.html. Do not change; validate before propagating to other pages. -->
+<footer id="footer" class="bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white border-t border-gray-300 dark:border-gray-800 w-full flex-shrink-0">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-1.5 pb-0 w-full min-w-0">
+    <div class="vs-footer-grid grid grid-cols-1 md:grid-cols-5 gap-2 lg:gap-3 md:gap-x-4 w-full">
+
+      <!-- Company Info - CANONICAL FOOTER BRANDING: logo + three text lines (VendorSoluce&trade; / Supply Chain Risk Intelligence / by ERMITS). Do not change layout; this is the reference for all pages. -->
+      <div class="col-span-1 md:col-span-2 md:pr-4">
+        <div class="vs-footer-branding flex items-center mb-2">
+          <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" width="60" height="60" class="vs-brand-logo h-[3.75rem] w-[3.75rem] max-h-[3.75rem] max-w-[3.75rem] flex-shrink-0 transition-transform hover:scale-105 object-contain" loading="eager">
+          <span class="ml-1.5 min-w-0">
+            <span class="block text-[1.5rem] sm:text-[1.625rem] md:text-[1.75rem] font-bold text-vendorsoluce-green dark:text-white leading-tight">VendorSoluce&trade;</span>
+            <span class="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">Supply Chain Risk Intelligence</span>
+            <span class="block text-sm leading-tight text-gray-500 dark:text-gray-400 font-normal">by ERMITS</span>
+          </span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-snug">
+          Comprehensive supply chain risk management platform for modern organizations featuring assessments and automated compliance tools.
+        </p>
+      </div>
+
+      <!-- Solutions (platform/portal features) - absolute URLs so links work from vendorsoluce.com and from both www.platform.vendorsoluce.com and platform.vendorsoluce.com -->
+      <div class="md:pl-2">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Solutions</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="https://www.platform.vendorsoluce.com/supply-chain-assessment?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Supply Chain Assessment</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.platform.vendorsoluce.com/vendors?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+              <span>Vendor Dashboard</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.vendorsoluce.com/radar/vendor-threat-radar.html" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"></path><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Vendor Threat Radar</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.portal.vendorsoluce.com?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+              <span>Vendor Assurance Portal</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="md:pl-4">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Resources</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="/faq.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+              <span>FAQ</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/tutorial.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+              <span>Tutorial</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/best-practices.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
+              <span>Best Practices</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/download.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+              <span>Download</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/contact.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              <span>Contact</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="md:pl-2">
+        <h3 class="text-sm font-semibold mb-1 text-gray-900 dark:text-white">Legal</h3>
+        <ul class="space-y-0.5">
+          <li>
+            <a href="/legal/terms.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+              <span>Terms of Service</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/privacy-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>Privacy Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/cookie-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 15.5v.01"></path><path d="M12 12v.01"></path><path d="M11 17v.01"></path><path d="M7 14v.01"></path></svg>
+              <span>Cookie Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/legal/acceptable-use-policy.html" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+              <span>Acceptable Use Policy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Last row across all breakpoints: copyright left, badge right -->
+      <div class="col-span-full mt-1 pt-1 border-t border-gray-200/50 dark:border-gray-700/50 flex w-full flex-row flex-nowrap items-center justify-between gap-x-3 min-w-0 overflow-hidden">
+        <div class="min-w-0 flex-1 overflow-hidden">
+          <span class="text-xs text-gray-500 dark:text-gray-400 truncate block">&copy; 2026 ERMITS LLC. All rights reserved.</span>
+        </div>
+        <div class="flex flex-shrink-0 flex-nowrap items-center gap-x-4 ml-auto">
+          <div class="flex flex-shrink-0 items-center space-x-1.5 whitespace-nowrap px-2.5 py-1.5 rounded-lg bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 border border-vendorsoluce-green/30 dark:border-vendorsoluce-green/40">
+            <img src="/homepage_files/vendorsoluce.png" alt="VendorSoluce&trade; Logo" class="w-3.5 h-3.5 block opacity-100" loading="eager">
+            <span class="text-xs font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green">Local browser-based analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+  <script src="./radar-runtime.js"></script>
+  <script>
+    initRadarModeSelector();
+    window.openAddVendor = openAddVendor;
+    window.downloadVendorCsvTemplate = downloadVendorCsvTemplate;
+    window.importVendors = importVendors;
+  </script>
+  <script src="../includes/analytics.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+{
+  "assessment": {
+    "title": "Évaluation des Risques de la Chaîne d'Approvisionnement",
+    "subtitle": "Évaluation complète alignée NIST SP 800-161",
+    "view": "Voir l'Évaluation",
+    "current": "Évaluation Actuelle",
+    "complete": "Terminé",
+    "incomplete": "Incomplet",
+    "overallScore": "Score Global",
+    "score": "Score",
+    "backToStart": "Retour au Début de l'Évaluation",
+    "restartAssessment": "Redémarrer l'Évaluation",
+    "section": "Section",
+    "sectionProgress": "Progrès de la Section",
+    "previousSection": "Section Précédente",
+    "nextSection": "Section Suivante",
+    "viewResults": "Voir les Résultats",
+    "startScreen": {
+      "startAssessment": "Commencer l'Évaluation",
+      "nistAligned": "Aligné NIST",
+      "nistDescription": "Évaluation basée sur le cadre de gestion des risques de la chaîne d'approvisionnement NIST SP 800-161",
+      "comprehensive": "Complet",
+      "comprehensiveDescription": "24 questions à travers 6 domaines clés de sécurité de la chaîne d'approvisionnement",
+      "actionable": "Exploitable",
+      "actionableDescription": "Obtenez des recommandations personnalisées et un rapport de conformité détaillé",
+      "infoMessage": "Cette évaluation vous aidera à évaluer la posture de sécurité de la chaîne d'approvisionnement de votre organisation par rapport aux directives NIST SP 800-161. Vous recevrez un score détaillé et des recommandations exploitables pour améliorer votre posture de sécurité."
+    },
+    "onboarding": {
+      "nameYourAssessment": "Nommez Votre Évaluation",
+      "assessmentDescription": "Donnez à votre évaluation un nom descriptif pour vous aider à l'identifier plus tard. Ce nom apparaîtra dans votre liste d'évaluations et vos rapports.",
+      "assessmentNameLabel": "Nom de l'Évaluation",
+      "assessmentNamePlaceholder": "ex. Évaluation Chaîne d'Approvisionnement T3 2025",
+      "whatToExpect": "À quoi s'attendre :",
+      "expectation1": "24 questions à travers 6 domaines de sécurité de la chaîne d'approvisionnement alignés avec NIST SP 800-161",
+      "expectation2": "Environ 15-20 minutes pour terminer (varie selon la taille de l'organisation)",
+      "expectation3": "Votre progrès est automatiquement sauvegardé lorsque vous terminez chaque section",
+      "expectation4": "Résultats détaillés avec notation automatisée et recommandations exploitables",
+      "continueToAssessment": "Continuer vers l'Évaluation"
+    },
+    "progress": {
+      "progressLabel": "Progrès : {{answered}} / {{total}} questions",
+      "questionsAnswered": "{{count}} / {{total}}"
+    }
+  },
+  "supplyChain": {
+    "sections": {
+      "supplier": {
+        "title": "Gestion des Fournisseurs",
+        "description": "Évaluez les processus d'intégration, de surveillance et de gestion des fournisseurs",
+        "questions": {
+          "sr1": {
+            "question": "Avez-vous un processus formel d'intégration des fournisseurs ?",
+            "guidance": "Un processus d'intégration structuré assure que tous les fournisseurs respectent les exigences de sécurité minimales avant l'engagement"
+          },
+          "sr2": {
+            "question": "Les capacités de sécurité des fournisseurs sont-elles régulièrement examinées ?",
+            "guidance": "Les examens réguliers aident à s'assurer que les fournisseurs maintiennent une posture de sécurité adéquate tout au long de la relation"
+          },
+          "sr3": {
+            "question": "Maintenez-vous une liste de fournisseurs approuvés ?",
+            "guidance": "Une liste de fournisseurs approuvés aide à contrôler quels vendeurs peuvent accéder à vos systèmes et données"
+          },
+          "sr4": {
+            "question": "Les procédures de résiliation des fournisseurs sont-elles documentées ?",
+            "guidance": "Des procédures de résiliation claires assurent un départ sécurisé et la protection des actifs organisationnels"
+          }
+        }
+      },
+      "threat": {
+        "title": "Gestion des Menaces",
+        "description": "Évaluez les capacités de renseignement sur les menaces et de sensibilisation aux menaces de la chaîne d'approvisionnement",
+        "questions": {
+          "tm1": {
+            "question": "Avez-vous accès au renseignement sur les menaces ?",
+            "guidance": "Le renseignement actuel sur les menaces aide les organisations à comprendre et se préparer aux menaces de la chaîne d'approvisionnement"
+          },
+          "tm2": {
+            "question": "Les menaces de la chaîne d'approvisionnement sont-elles régulièrement évaluées ?",
+            "guidance": "Les évaluations régulières des menaces aident à identifier les risques émergents dans votre chaîne d'approvisionnement"
+          },
+          "tm3": {
+            "question": "Partagez-vous des informations sur les menaces avec les fournisseurs ?",
+            "guidance": "Partager des informations pertinentes sur les menaces aide les fournisseurs à mieux protéger votre organisation"
+          },
+          "tm4": {
+            "question": "Des activités de chasse aux menaces sont-elles menées ?",
+            "guidance": "La chasse proactive aux menaces aide à identifier les menaces avancées qui peuvent avoir contourné les défenses traditionnelles"
+          }
+        }
+      },
+      "vulnerability": {
+        "title": "Gestion des Vulnérabilités",
+        "description": "Évaluez les processus d'identification, de suivi et de remédiation des vulnérabilités",
+        "questions": {
+          "vm1": {
+            "question": "Avez-vous un programme de gestion des vulnérabilités ?",
+            "guidance": "Un programme complet de gestion des vulnérabilités est essentiel pour maintenir la sécurité dans la chaîne d'approvisionnement"
+          },
+          "vm2": {
+            "question": "Les vulnérabilités sont-elles suivies et priorisées ?",
+            "guidance": "Le suivi systématique et la priorisation assurent que les vulnérabilités critiques sont traitées rapidement"
+          },
+          "vm3": {
+            "question": "Exigez-vous la divulgation de vulnérabilités des fournisseurs ?",
+            "guidance": "Les fournisseurs doivent être tenus de divulguer les vulnérabilités connues dans leurs produits et services"
+          },
+          "vm4": {
+            "question": "Les processus de gestion des correctifs sont-ils documentés ?",
+            "guidance": "Des processus clairs de gestion des correctifs aident à assurer la remédiation rapide des vulnérabilités identifiées"
+          }
+        }
+      },
+      "information": {
+        "title": "Sécurité de l'Information",
+        "description": "Évaluez les contrôles et pratiques de sécurité de l'information dans votre chaîne d'approvisionnement",
+        "questions": {
+          "is1": {
+            "question": "Avez-vous des politiques de sécurité de l'information documentées ?",
+            "guidance": "Les organisations doivent maintenir des politiques de sécurité de l'information actuelles et documentées qui traitent des risques de la chaîne d'approvisionnement"
+          },
+          "is2": {
+            "question": "Les exigences de sécurité sont-elles incluses dans les contrats fournisseurs ?",
+            "guidance": "Tous les accords fournisseurs doivent inclure des exigences de sécurité spécifiques et des obligations de conformité"
+          },
+          "is3": {
+            "question": "Effectuez-vous des évaluations de sécurité régulières des fournisseurs ?",
+            "guidance": "Les évaluations de sécurité régulières aident à identifier et atténuer les risques évolutifs dans votre chaîne d'approvisionnement"
+          },
+          "is4": {
+            "question": "La classification et la manipulation des données sensibles sont-elles documentées ?",
+            "guidance": "Des procédures claires de classification et de manipulation des données assurent une protection appropriée tout au long de la chaîne d'approvisionnement"
+          }
+        }
+      },
+      "incident": {
+        "title": "Réponse aux Incidents",
+        "description": "Évaluez les capacités de réponse aux incidents et la coordination de la chaîne d'approvisionnement",
+        "questions": {
+          "ir1": {
+            "question": "Avez-vous un plan de réponse aux incidents ?",
+            "guidance": "Un plan complet de réponse aux incidents doit traiter les incidents de sécurité liés à la chaîne d'approvisionnement"
+          },
+          "ir2": {
+            "question": "Les fournisseurs sont-ils tenus de signaler les incidents de sécurité ?",
+            "guidance": "Les fournisseurs doivent être contractuellement obligés de signaler les incidents de sécurité qui peuvent affecter votre organisation"
+          },
+          "ir3": {
+            "question": "Effectuez-vous des exercices de réponse aux incidents ?",
+            "guidance": "Les exercices réguliers aident à s'assurer que votre équipe est préparée à répondre efficacement aux incidents de la chaîne d'approvisionnement"
+          },
+          "ir4": {
+            "question": "Les leçons apprises sont-elles documentées et partagées ?",
+            "guidance": "Documenter et partager les leçons apprises aide à améliorer les capacités futures de réponse aux incidents"
+          }
+        }
+      },
+      "lifecycle": {
+        "title": "Gestion du Cycle de Vie",
+        "description": "Évaluez la gestion de la sécurité du cycle de vie des produits et services",
+        "questions": {
+          "sl1": {
+            "question": "Les exigences de sécurité sont-elles définies pour l'ensemble du cycle de vie ?",
+            "guidance": "La sécurité doit être considérée tout au long du cycle de vie complet du produit ou service"
+          },
+          "sl2": {
+            "question": "Effectuez-vous des examens de sécurité aux jalons du cycle de vie ?",
+            "guidance": "Les examens de sécurité réguliers aux jalons clés aident à assurer le maintien de la posture de sécurité"
+          },
+          "sl3": {
+            "question": "Les procédures de fin de vie sont-elles documentées ?",
+            "guidance": "Des procédures claires de fin de vie assurent l'élimination ou le déclassement sécurisé des produits et services"
+          },
+          "sl4": {
+            "question": "Suivez-vous les dépendances des produits et services ?",
+            "guidance": "Comprendre les dépendances aide à identifier les points de défaillance uniques potentiels dans votre chaîne d'approvisionnement"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "yes": "Oui",
+    "no": "Non",
+    "partial": "Partiel"
+  },
+  "results": {
+    "title": "Résultats de l'Évaluation",
+    "overallScore": "Score Global",
+    "sectionScores": "Scores par Section",
+    "topGaps": "Principaux Écarts",
+    "topGapsDescription": "Questions répondant 'Non' ou 'Partiel' nécessitant une attention :",
+    "downloadJson": "Télécharger JSON",
+    "downloadPdf": "Télécharger Rapport PDF",
+    "restart": "Redémarrer l'Évaluation",
+    "noGaps": "Aucun écart identifié. Excellent travail !",
+    "completedAt": "Terminé le",
+    "reportTitle": "Rapport d'Évaluation des Risques de la Chaîne d'Approvisionnement",
+    "framework": "NIST SP 800-161 Gestion des Risques de la Chaîne d'Approvisionnement",
+    "executiveSummary": "Résumé Exécutif",
+    "recommendations": "Recommandations"
+  }
+}

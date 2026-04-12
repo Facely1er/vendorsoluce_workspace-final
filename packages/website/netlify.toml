@@ -1,0 +1,32 @@
+# VendorSoluce marketing website
+# In Netlify: set Base directory = EMPTY, Config file path = packages/website/netlify.toml
+# Build runs from repo root so npm ci uses the committed root lockfile, then builds the website workspace.
+# Apex → www: see packages/website/_redirects (https://vendorsoluce.com/* → www).
+
+[build]
+  command = "npm ci --include=dev --no-audit && npm run build:website"
+  publish = "packages/website"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.tailwindcss.com https://plausible.io https://www.googletagmanager.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://rsms.me https://fonts.googleapis.com; font-src 'self' https://rsms.me https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://plausible.io https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/homepage_files/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

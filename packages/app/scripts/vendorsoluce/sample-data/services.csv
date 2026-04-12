@@ -1,0 +1,4 @@
+service_name,external_key,criticality,business_owner
+Identity and Access,idam,0.95,IT
+Payroll Processing,payroll,0.90,HR
+Customer Support Portal,support_portal,0.88,Operations

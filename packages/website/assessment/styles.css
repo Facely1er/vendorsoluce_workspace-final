@@ -1,0 +1,44 @@
+:root {
+    --vendorsoluce-green: #33691E;
+    --vendorsoluce-light-green: #66BB6A;
+    --vendorsoluce-dark-green: #2E5A1A;
+    --vendorsoluce-pale-green: #E8F5E8;
+    --vendorsoluce-navy: #1e3a5f;
+    --vendorsoluce-blue: #3b82f6;
+}
+
+/* Custom styles for assessment module */
+.bg-vendorsoluce-green {
+    background-color: var(--vendorsoluce-green);
+}
+
+.hover\:bg-vendorsoluce-dark-green:hover {
+    background-color: var(--vendorsoluce-dark-green);
+}
+
+.text-vendorsoluce-green {
+    color: var(--vendorsoluce-green);
+}
+
+.bg-vendorsoluce-navy\/10 {
+    background-color: rgba(30, 58, 95, 0.1);
+}
+
+.bg-vendorsoluce-navy\/30 {
+    background-color: rgba(30, 58, 95, 0.3);
+}
+
+.text-vendorsoluce-navy {
+    color: var(--vendorsoluce-navy);
+}
+
+.text-vendorsoluce-blue {
+    color: var(--vendorsoluce-blue);
+}
+
+/* Smooth transitions */
+.transition-colors {
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}

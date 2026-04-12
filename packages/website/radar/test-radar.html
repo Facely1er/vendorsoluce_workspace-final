@@ -1,0 +1,428 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script data-vs-theme-init>(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Threat Radar - Test Suite | ERMITS</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: #f0f2f5; color: #1f2937; padding: 24px; }
+        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+        .subtitle { color: #6b7280; margin-bottom: 24px; }
+        .controls { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .controls button {
+            padding: 8px 18px; border: none; border-radius: 6px; font-weight: 600;
+            cursor: pointer; font-size: 0.875rem; transition: all 0.15s;
+        }
+        .btn-run { background: #2e7d32; color: white; }
+        .btn-run:hover { background: #1b5e20; }
+        .btn-reset { background: #ef4444; color: white; }
+        .btn-reset:hover { background: #dc2626; }
+        .summary {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;
+        }
+        .summary-card {
+            padding: 16px; border-radius: 8px; text-align: center;
+            background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .summary-card .num { font-size: 2rem; font-weight: 800; }
+        .summary-card .label { font-size: 0.75rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+        .summary-card.total .num { color: #2e7d32; }
+        .summary-card.pass .num { color: #16a34a; }
+        .summary-card.fail .num { color: #dc2626; }
+        .summary-card.skip .num { color: #d97706; }
+        .section { background: white; border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .section-title { font-weight: 700; font-size: 1rem; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb; }
+        .test-row {
+            display: flex; align-items: center; padding: 8px 12px; margin: 4px 0;
+            border-radius: 6px; font-size: 0.875rem; gap: 10px;
+        }
+        .test-row.pass { background: #f0fdf4; }
+        .test-row.fail { background: #fef2f2; }
+        .test-row.skip { background: #fffbeb; }
+        .test-row.running { background: #eff6ff; }
+        .badge {
+            display: inline-block; padding: 2px 8px; border-radius: 9999px;
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase; flex-shrink: 0;
+        }
+        .badge.pass { background: #dcfce7; color: #166534; }
+        .badge.fail { background: #fee2e2; color: #991b1b; }
+        .badge.skip { background: #fef3c7; color: #92400e; }
+        .badge.running { background: #dbeafe; color: #1e40af; }
+        .test-name { flex: 1; }
+        .test-detail { color: #6b7280; font-size: 0.8rem; margin-left: 4px; }
+        .progress-bar { height: 6px; background: #e5e7eb; border-radius: 3px; margin-bottom: 20px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #2e7d32; border-radius: 3px; transition: width 0.3s; }
+        #log { font-family: 'Fira Code', monospace; font-size: 0.75rem; background: #111827; color: #d1d5db; padding: 12px; border-radius: 6px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; }
+        @media (max-width: 640px) { .summary { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+
+<!-- ERMITS global SEO bundle: merged into each page <head> by embed-header-footer.js (npm run build). Idempotent via meta name="ermits-seo-bundle". -->
+<meta name="ermits-seo-bundle" content="1">
+<meta name="application-name" content="VendorSoluce">
+<meta name="author" content="ERMITS">
+<meta name="creator" content="ERMITS">
+<meta name="publisher" content="ERMITS">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "VendorSoluce",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Vendor risk intelligence workspace for third-party risk review, dependency visibility, and supply chain assurance.",
+  "url": "https://vendorsoluce.com/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ERMITS",
+    "url": "https://ermits.com/"
+  }
+}
+</script>
+
+
+<meta name="twitter:card" content="summary">
+  <link href="../assets/css/shell.css" rel="stylesheet"/>
+</head>
+<body>
+    <h1>Vendor Threat Radar - Test Suite</h1>
+    <p class="subtitle">Automated functional verification for vendor-threat-radar.html</p>
+
+    <div class="controls">
+        <button class="btn-run" onclick="runAllTests()">Run All Tests</button>
+        <button class="btn-reset" onclick="resetTests()">Reset</button>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+
+    <div class="summary">
+        <div class="summary-card total"><div class="num" id="totalCount">0</div><div class="label">Total</div></div>
+        <div class="summary-card pass"><div class="num" id="passCount">0</div><div class="label">Passed</div></div>
+        <div class="summary-card fail"><div class="num" id="failCount">0</div><div class="label">Failed</div></div>
+        <div class="summary-card skip"><div class="num" id="skipCount">0</div><div class="label">Skipped</div></div>
+    </div>
+
+    <div id="results"></div>
+
+    <div class="section" style="margin-top: 16px;">
+        <div class="section-title">Console Log</div>
+        <div id="log"></div>
+    </div>
+
+    <iframe id="radarFrame" src="vendor-threat-radar.html" style="display:none; width: 1280px; height: 900px; border: none;"></iframe>
+
+<script>
+const results = { pass: 0, fail: 0, skip: 0, total: 0 };
+const sections = {};
+let logEl, frame, frameDoc, frameWin;
+
+function log(msg) {
+    if (!logEl) logEl = document.getElementById('log');
+    const ts = new Date().toISOString().split('T')[1].split('.')[0];
+    logEl.textContent += `[${ts}] ${msg}\n`;
+    logEl.scrollTop = logEl.scrollHeight;
+}
+
+function addResult(section, name, status, detail) {
+    if (!sections[section]) {
+        sections[section] = [];
+        const el = document.createElement('div');
+        el.className = 'section';
+        el.innerHTML = `<div class="section-title">${section}</div><div id="section-${section.replace(/\s/g, '-')}"></div>`;
+        document.getElementById('results').appendChild(el);
+    }
+    sections[section].push({ name, status, detail });
+    results[status]++;
+    results.total++;
+
+    const container = document.getElementById(`section-${section.replace(/\s/g, '-')}`);
+    const row = document.createElement('div');
+    row.className = `test-row ${status}`;
+    row.innerHTML = `<span class="badge ${status}">${status}</span><span class="test-name">${name}</span>${detail ? `<span class="test-detail">${detail}</span>` : ''}`;
+    container.appendChild(row);
+
+    document.getElementById('totalCount').textContent = results.total;
+    document.getElementById('passCount').textContent = results.pass;
+    document.getElementById('failCount').textContent = results.fail;
+    document.getElementById('skipCount').textContent = results.skip;
+    const pct = Math.round((results.total / expectedTotal) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function assert(section, name, condition, detail) {
+    if (condition) {
+        addResult(section, name, 'pass', detail || '');
+        log(`PASS: ${name}`);
+    } else {
+        addResult(section, name, 'fail', detail || '');
+        log(`FAIL: ${name} — ${detail || ''}`);
+    }
+}
+
+function assertExists(section, name, selector, detail) {
+    const el = frameDoc.querySelector(selector);
+    assert(section, name, !!el, detail || (el ? 'Found' : `Selector "${selector}" not found`));
+    return el;
+}
+
+const expectedTotal = 45;
+
+function resetTests() {
+    results.pass = 0; results.fail = 0; results.skip = 0; results.total = 0;
+    Object.keys(sections).forEach(k => delete sections[k]);
+    document.getElementById('results').innerHTML = '';
+    document.getElementById('log').textContent = '';
+    document.getElementById('totalCount').textContent = '0';
+    document.getElementById('passCount').textContent = '0';
+    document.getElementById('failCount').textContent = '0';
+    document.getElementById('skipCount').textContent = '0';
+    document.getElementById('progressFill').style.width = '0%';
+}
+
+async function waitFor(condFn, timeout = 5000, interval = 100) {
+    const start = Date.now();
+    while (Date.now() - start < timeout) {
+        if (condFn()) return true;
+        await new Promise(r => setTimeout(r, interval));
+    }
+    return false;
+}
+
+async function runAllTests() {
+    resetTests();
+    frame = document.getElementById('radarFrame');
+    log('Waiting for radar page to load...');
+
+    await new Promise(resolve => {
+        if (frame.contentDocument && frame.contentDocument.readyState === 'complete') {
+            resolve();
+        } else {
+            frame.onload = resolve;
+        }
+    });
+
+    frameDoc = frame.contentDocument;
+    frameWin = frame.contentWindow;
+
+    await new Promise(r => setTimeout(r, 1500));
+    log('Radar page loaded. Running tests...\n');
+
+    testHTMLStructure();
+    testCSSAndStyles();
+    testDOMElements();
+    testNavigation();
+    testRadarContent();
+    testJavaScriptGlobals();
+    testRiskCalculation();
+    testVendorCRUD();
+    testUIUpdates();
+    testChartSetup();
+    testExportImport();
+    testDarkMode();
+
+    log(`\n========================================`);
+    log(`Tests complete: ${results.pass} passed, ${results.fail} failed, ${results.skip} skipped out of ${results.total}`);
+    log(`========================================`);
+}
+
+function testHTMLStructure() {
+    const S = 'HTML Structure';
+    assert(S, 'DOCTYPE is html', frameDoc.doctype && frameDoc.doctype.name === 'html');
+    assert(S, '<html lang="en"> present', frameDoc.documentElement.getAttribute('lang') === 'en');
+    assertExists(S, '<head> has <title>', 'head title');
+    assert(S, 'Title contains "Vendor"', (frameDoc.title || '').includes('Vendor'), frameDoc.title);
+    assertExists(S, '<body> exists', 'body');
+    assertExists(S, '<main> element exists', 'main');
+    assert(S, '<main> has id="radar-main"', frameDoc.querySelector('main')?.id === 'radar-main');
+}
+
+function testCSSAndStyles() {
+    const S = 'CSS & Styles';
+    const tailwind = frameDoc.querySelector('link[href*="tailwind"]');
+    assert(S, 'Tailwind CSS linked', !!tailwind, tailwind ? tailwind.href : 'Not found');
+    const chartJS = frameDoc.querySelector('script[src*="chart.js"]');
+    assert(S, 'Chart.js loaded', !!chartJS, chartJS ? chartJS.src : 'Not found');
+    const rootStyles = frameDoc.querySelector('style');
+    assert(S, 'Custom styles present', !!rootStyles);
+    const body = frameDoc.body;
+    const bg = frameWin.getComputedStyle(body).backgroundColor;
+    assert(S, 'Body has background color', bg && bg !== '', bg);
+}
+
+function testDOMElements() {
+    const S = 'DOM Elements';
+    assertExists(S, 'Radar container', '.radar-container');
+    assertExists(S, 'Radar header', '.radar-header');
+    assertExists(S, 'Radar header <h1>', '.radar-header h1');
+    assertExists(S, 'Alert banner', '#alertBanner');
+    assertExists(S, 'Toolbar', '.toolbar');
+    assertExists(S, 'Stats grid', '.stats-grid');
+    assertExists(S, 'Sonar canvas', '#sonarCanvas');
+    assertExists(S, 'Vendor list container', '#vendorList');
+    assertExists(S, 'Risk filter dropdown', '#riskFilter');
+    assertExists(S, 'Vendor modal', '#vendorModal');
+    assertExists(S, 'Vendor form', '#vendorForm');
+    assertExists(S, 'Timestamp element', '#timestamp');
+}
+
+function testNavigation() {
+    const S = 'Navigation';
+    assertExists(S, '<nav> element exists', 'nav');
+    assertExists(S, 'Nav has fixed positioning class', 'nav.fixed, nav[class*="fixed"]');
+    assertExists(S, 'Brand link to index', 'nav a[href*="index"]');
+    assertExists(S, 'Mobile menu button', '[data-mobile-menu-button]');
+    const mobileMenu = frameDoc.querySelector('[data-mobile-menu]');
+    assert(S, 'Mobile menu panel exists', !!mobileMenu);
+    if (mobileMenu) {
+        assert(S, 'Mobile menu is initially hidden', mobileMenu.classList.contains('hidden'));
+    }
+}
+
+function testRadarContent() {
+    const S = 'Radar Content';
+    const statCards = frameDoc.querySelectorAll('.stat-card');
+    assert(S, 'Stats grid has 8 cards', statCards.length === 8, `Found ${statCards.length}`);
+    assertExists(S, 'Critical count element', '#criticalCount');
+    assertExists(S, 'High count element', '#highCount');
+    assertExists(S, 'Total count element', '#totalCount');
+    assertExists(S, 'Avg risk element', '#avgRisk');
+    const charts = frameDoc.querySelectorAll('.chart-card');
+    assert(S, '3 chart cards present', charts.length === 3, `Found ${charts.length}`);
+    assertExists(S, 'Inherent risk chart canvas', '#inherentChart');
+    assertExists(S, 'Sector chart canvas', '#sectorChart');
+    assertExists(S, 'Geo chart canvas', '#geoChart');
+}
+
+function testJavaScriptGlobals() {
+    const S = 'JavaScript Globals';
+    assert(S, 'vendorData is defined', typeof frameWin.vendorData !== 'undefined');
+    assert(S, 'vendorData is an array', Array.isArray(frameWin.vendorData));
+    assert(S, 'vendorData has sample vendors', frameWin.vendorData && frameWin.vendorData.length >= 3, `Length: ${frameWin.vendorData?.length}`);
+    assert(S, 'openAddVendor is a function', typeof frameWin.openAddVendor === 'function');
+    assert(S, 'closeVendorModal is a function', typeof frameWin.closeVendorModal === 'function');
+    assert(S, 'scanVendors is a function', typeof frameWin.scanVendors === 'function');
+    assert(S, 'filterVendors is a function', typeof frameWin.filterVendors === 'function');
+    assert(S, 'exportVendors is a function', typeof frameWin.exportVendors === 'function');
+    assert(S, 'toggleDarkMode is a function', typeof frameWin.toggleDarkMode === 'function');
+    assert(S, 'generateComprehensiveReport is a function', typeof frameWin.generateComprehensiveReport === 'function');
+}
+
+function testRiskCalculation() {
+    const S = 'Risk Calculation';
+    if (!frameWin.vendorData || frameWin.vendorData.length === 0) {
+        addResult(S, 'Skipped - no vendor data', 'skip');
+        return;
+    }
+    const v = frameWin.vendorData[0];
+    assert(S, 'Vendor has inherentRisk', typeof v.inherentRisk === 'number', `Value: ${v.inherentRisk}`);
+    assert(S, 'Vendor has residualRisk', typeof v.residualRisk === 'number', `Value: ${v.residualRisk}`);
+    assert(S, 'Vendor has riskLevel', ['critical', 'high', 'medium', 'low'].includes(v.riskLevel), `Level: ${v.riskLevel}`);
+    assert(S, 'inherentRisk in range 0-200', v.inherentRisk >= 0 && v.inherentRisk <= 200, `Value: ${v.inherentRisk}`);
+    assert(S, 'residualRisk <= inherentRisk', v.residualRisk <= v.inherentRisk, `Residual: ${v.residualRisk}, Inherent: ${v.inherentRisk}`);
+    assert(S, 'Vendor has complianceGaps', Array.isArray(v.complianceGaps), `Type: ${typeof v.complianceGaps}`);
+    assert(S, 'Vendor has securityControls', Array.isArray(v.securityControls), `Type: ${typeof v.securityControls}`);
+}
+
+function testVendorCRUD() {
+    const S = 'Vendor CRUD';
+    const initialCount = frameWin.vendorData.length;
+
+    frameWin.openAddVendor();
+    const modal = frameDoc.getElementById('vendorModal');
+    assert(S, 'Modal opens on openAddVendor()', modal && modal.classList.contains('active'), modal ? `Classes: ${modal.className}` : 'Modal not found');
+
+    frameWin.closeVendorModal();
+    const modalAfter = frameDoc.getElementById('vendorModal');
+    assert(S, 'Modal closes on closeVendorModal()', modalAfter && !modalAfter.classList.contains('active'));
+
+    if (frameWin.vendorData.length > 0) {
+        const firstId = frameWin.vendorData[0].id;
+        frameWin.editVendor(firstId);
+        const modalTitle = frameDoc.getElementById('modalTitle');
+        assert(S, 'editVendor opens modal with "Edit" title', modalTitle && modalTitle.textContent.includes('Edit'), `Title: ${modalTitle?.textContent}`);
+        frameWin.closeVendorModal();
+    } else {
+        addResult(S, 'editVendor - skipped (no vendors)', 'skip');
+    }
+
+    assert(S, 'Vendor count unchanged after open/close', frameWin.vendorData.length === initialCount, `Before: ${initialCount}, After: ${frameWin.vendorData.length}`);
+}
+
+function testUIUpdates() {
+    const S = 'UI Updates';
+    const totalEl = frameDoc.getElementById('totalCount');
+    if (totalEl) {
+        const displayed = parseInt(totalEl.textContent);
+        assert(S, 'Total count matches vendorData.length', displayed === frameWin.vendorData.length, `Displayed: ${displayed}, Actual: ${frameWin.vendorData.length}`);
+    } else {
+        addResult(S, 'Total count element missing', 'fail');
+    }
+
+    const timestamp = frameDoc.getElementById('timestamp');
+    assert(S, 'Timestamp is populated', timestamp && timestamp.textContent.length > 0, `Content: "${timestamp?.textContent}"`);
+
+    const vendorList = frameDoc.getElementById('vendorList');
+    if (vendorList) {
+        const items = vendorList.querySelectorAll('.vendor-item');
+        assert(S, 'Vendor list renders items', items.length > 0 || frameWin.vendorData.length === 0, `Rendered: ${items.length}`);
+    }
+
+    const alertBanner = frameDoc.getElementById('alertBanner');
+    assert(S, 'Alert banner has content', alertBanner && alertBanner.textContent.trim().length > 0);
+}
+
+function testChartSetup() {
+    const S = 'Chart Setup';
+    const inherentCanvas = frameDoc.getElementById('inherentChart');
+    const sectorCanvas = frameDoc.getElementById('sectorChart');
+    const geoCanvas = frameDoc.getElementById('geoChart');
+
+    assert(S, 'Inherent chart canvas exists', !!inherentCanvas);
+    assert(S, 'Sector chart canvas exists', !!sectorCanvas);
+    assert(S, 'Geo chart canvas exists', !!geoCanvas);
+
+    const hasChartJS = typeof frameWin.Chart !== 'undefined';
+    assert(S, 'Chart.js library loaded', hasChartJS, hasChartJS ? `Version: ${frameWin.Chart?.version}` : 'Chart.js not available');
+}
+
+function testExportImport() {
+    const S = 'Export & Import';
+    assert(S, 'exportVendors is callable', typeof frameWin.exportVendors === 'function');
+    assert(S, 'importVendors is callable', typeof frameWin.importVendors === 'function');
+    const csvInput = frameDoc.getElementById('csvImport');
+    assert(S, 'CSV file input exists', !!csvInput);
+    assert(S, 'CSV input accepts .csv', csvInput && csvInput.getAttribute('accept') === '.csv');
+    assert(S, 'clearAllVendors is callable', typeof frameWin.clearAllVendors === 'function');
+    assert(S, 'generateComprehensiveReport is callable', typeof frameWin.generateComprehensiveReport === 'function');
+}
+
+function testDarkMode() {
+    const S = 'Dark Mode';
+    const html = frameDoc.documentElement;
+    const wasDark = html.classList.contains('dark');
+
+    if (typeof frameWin.toggleDarkMode === 'function') {
+        frameWin.toggleDarkMode();
+        const isNowDark = html.classList.contains('dark');
+        assert(S, 'toggleDarkMode toggles dark class', isNowDark !== wasDark, `Before: ${wasDark}, After: ${isNowDark}`);
+
+        frameWin.toggleDarkMode();
+        assert(S, 'Second toggle restores original', html.classList.contains('dark') === wasDark);
+    } else {
+        addResult(S, 'toggleDarkMode not available', 'skip');
+    }
+
+    const lightIcon = frameDoc.getElementById('lightIcon');
+    const darkIcon = frameDoc.getElementById('darkIcon');
+    assert(S, 'Light mode icon exists', !!lightIcon);
+    assert(S, 'Dark mode icon exists', !!darkIcon);
+}
+
+document.getElementById('radarFrame').addEventListener('load', function() {
+    log('Iframe loaded, ready to run tests.');
+});
+</script>
+</body>
+</html>

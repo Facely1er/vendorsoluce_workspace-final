@@ -1,0 +1,179 @@
+<!-- Analytics Configuration -->
+<!--
+  ACTIVE: Google Analytics 4 (GA4) is loaded via includes/analytics.js on VendorSoluce&trade; main and radar pages (STEEL out of scope).
+  Domain: www.vendorsoluce.com. Sign up at https://plausible.io to view stats.
+  To switch provider, edit includes/analytics.js or choose another option below and
+  include with <script src="includes/analytics.js"></script> (use a .js file, not this .html).
+-->
+
+<!-- ============================================ -->
+<!-- OPTION 1: Google Analytics 4 (GA4) -->
+<!-- ============================================ -->
+<!--
+  1. Sign up at https://analytics.google.com
+  2. Create a GA4 property
+  3. Get your Measurement ID (looks like G-XXXXXXXXXX)
+  4. Replace 'G-XXXXXXXXXX' below with your actual ID
+  5. Uncomment the code below
+-->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX', {
+    'anonymize_ip': true,
+    'cookie_flags': 'SameSite=None;Secure'
+  });
+</script>
+-->
+
+
+<!-- ============================================ -->
+<!-- OPTION 2: Plausible Analytics (Privacy-focused) -->
+<!-- ============================================ -->
+<!--
+  1. Sign up at https://plausible.io
+  2. Add your domain (www.vendorsoluce.com)
+  3. Replace 'www.vendorsoluce.com' below if needed
+  4. Uncomment the code below
+
+  Plausible is privacy-friendly, GDPR compliant, and doesn't require cookie consent.
+-->
+<!--
+<script defer data-domain="www.vendorsoluce.com" src="https://plausible.io/js/script.js"></script>
+-->
+
+
+<!-- ============================================ -->
+<!-- OPTION 3: Simple Analytics (Privacy-focused) -->
+<!-- ============================================ -->
+<!--
+  1. Sign up at https://simpleanalytics.com
+  2. Add your domain
+  3. Uncomment the code below
+-->
+<!--
+<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+-->
+
+
+<!-- ============================================ -->
+<!-- OPTION 4: Fathom Analytics (Privacy-focused) -->
+<!-- ============================================ -->
+<!--
+  1. Sign up at https://usefathom.com
+  2. Add your site
+  3. Get your Site ID
+  4. Replace 'ABCDEFGH' with your actual Site ID
+  5. Uncomment the code below
+-->
+<!--
+<script src="https://cdn.usefathom.com/script.js" data-site="ABCDEFGH" defer></script>
+-->
+
+
+<!-- ============================================ -->
+<!-- OPTION 5: Matomo (Self-hosted option) -->
+<!-- ============================================ -->
+<!--
+  1. Set up Matomo on your server or use Matomo Cloud
+  2. Get your tracking code from Matomo admin
+  3. Replace the URL and Site ID below
+  4. Uncomment the code below
+-->
+<!--
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="https://your-matomo-instance.com/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+-->
+
+
+<!-- ============================================ -->
+<!-- Custom Events Tracking (Optional) -->
+<!-- ============================================ -->
+<!--
+  Add this after your analytics provider is configured.
+  Tracks important user interactions.
+-->
+<!--
+<script>
+(function() {
+  // Track CTA button clicks
+  document.addEventListener('click', function(e) {
+    const target = e.target.closest('a, button');
+    if (!target) return;
+
+    // Track Vendor Radar button clicks
+    if (target.textContent.includes('Vendor Radar')) {
+      // For GA4:
+      // gtag('event', 'click_vendor_radar', { 'event_category': 'engagement' });
+
+      // For Plausible:
+      // plausible('Click: Vendor Radar');
+    }
+
+    // Track "Get Started" or "Sign In" clicks
+    if (target.href && target.href.includes('platform.vendorsoluce.com')) {
+      // For GA4:
+      // gtag('event', 'click_get_started', { 'event_category': 'conversion' });
+
+      // For Plausible:
+      // plausible('Click: Get Started');
+    }
+  });
+
+  // Track scroll depth
+  let maxScroll = 0;
+  window.addEventListener('scroll', function() {
+    const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    if (scrollPercent > maxScroll && scrollPercent % 25 === 0) {
+      maxScroll = scrollPercent;
+      // For GA4:
+      // gtag('event', 'scroll_depth', { 'value': scrollPercent });
+
+      // For Plausible:
+      // plausible('Scroll: ' + scrollPercent + '%');
+    }
+  });
+})();
+</script>
+-->
+
+
+<!-- ============================================ -->
+<!-- RECOMMENDATION for VendorSoluce&trade; -->
+<!-- ============================================ -->
+<!--
+  For a privacy-first platform like VendorSoluce&trade;, we recommend:
+
+  1. PLAUSIBLE ANALYTICS (Recommended)
+     - Privacy-friendly, no cookies needed
+     - GDPR/CCPA compliant out of the box
+     - Simple, lightweight script
+     - Aligns with VendorSoluce&trade;'s privacy-first values
+     - Cost: ~$9/month for 10k pageviews
+
+  2. FATHOM ANALYTICS (Alternative)
+     - Similar to Plausible
+     - Privacy-focused, no cookies
+     - Beautiful, simple interface
+     - Cost: ~$14/month
+
+  3. GOOGLE ANALYTICS 4 (If you need advanced features)
+     - Free
+     - More complex setup
+     - Requires cookie consent banner
+     - May conflict with privacy-first messaging
+-->

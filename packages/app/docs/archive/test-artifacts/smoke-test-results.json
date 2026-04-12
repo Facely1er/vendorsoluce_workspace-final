@@ -1,0 +1,269 @@
+{
+  "timestamp": "2025-11-08T15:20:55.772Z",
+  "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app",
+  "tests": [
+    {
+      "name": "Homepage",
+      "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app",
+      "expectedStatus": 200,
+      "status": "failed",
+      "duration": 333,
+      "error": "Expected status 200, got 401",
+      "response": {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-length": "14317",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Sat, 08 Nov 2025 15:20:56 GMT",
+          "server": "Vercel",
+          "set-cookie": "_vercel_sso_nonce=g4vOiom1RUndXy5k2r9I48k9; Max-Age=3600; Path=/; Secure; HttpOnly; SameSite=Lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-frame-options": "DENY",
+          "x-robots-tag": "noindex",
+          "x-vercel-id": "iad1::7ztd7-1762615256003-c69ca3a4ef42"
+        }
+      }
+    },
+    {
+      "name": "Sign In Page",
+      "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app/signin",
+      "expectedStatus": 200,
+      "status": "failed",
+      "duration": 113,
+      "error": "Expected status 200, got 401",
+      "response": {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-length": "14335",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Sat, 08 Nov 2025 15:20:56 GMT",
+          "server": "Vercel",
+          "set-cookie": "_vercel_sso_nonce=Mj5WzXLdNHZqdIj08SXnfiVm; Max-Age=3600; Path=/; Secure; HttpOnly; SameSite=Lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-frame-options": "DENY",
+          "x-robots-tag": "noindex",
+          "x-vercel-id": "iad1::nb2m9-1762615256156-75289bfff94d"
+        }
+      }
+    },
+    {
+      "name": "Pricing Page",
+      "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app/pricing",
+      "expectedStatus": 200,
+      "status": "failed",
+      "duration": 50,
+      "error": "Expected status 200, got 401",
+      "response": {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-length": "14338",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Sat, 08 Nov 2025 15:20:56 GMT",
+          "server": "Vercel",
+          "set-cookie": "_vercel_sso_nonce=321Chl51cZQtPUTEReZHgk2g; Max-Age=3600; Path=/; Secure; HttpOnly; SameSite=Lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-frame-options": "DENY",
+          "x-robots-tag": "noindex",
+          "x-vercel-id": "iad1::d8twb-1762615256234-de95870f819a"
+        }
+      }
+    },
+    {
+      "name": "About Page",
+      "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app/about",
+      "expectedStatus": 200,
+      "status": "failed",
+      "duration": 42,
+      "error": "Expected status 200, got 401",
+      "response": {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-length": "14332",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Sat, 08 Nov 2025 15:20:56 GMT",
+          "server": "Vercel",
+          "set-cookie": "_vercel_sso_nonce=PzL56mCyQGua3DgD1locgWNB; Max-Age=3600; Path=/; Secure; HttpOnly; SameSite=Lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-frame-options": "DENY",
+          "x-robots-tag": "noindex",
+          "x-vercel-id": "iad1::6zg6p-1762615256279-8bdc20b19b2a"
+        }
+      }
+    },
+    {
+      "name": "Contact Page",
+      "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app/contact",
+      "expectedStatus": 200,
+      "status": "failed",
+      "duration": 18,
+      "error": "Expected status 200, got 401",
+      "response": {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-length": "14338",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Sat, 08 Nov 2025 15:20:56 GMT",
+          "server": "Vercel",
+          "set-cookie": "_vercel_sso_nonce=bjTtozn57UeeSPWI0qiWgWrP; Max-Age=3600; Path=/; Secure; HttpOnly; SameSite=Lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-frame-options": "DENY",
+          "x-robots-tag": "noindex",
+          "x-vercel-id": "iad1::w9qf8-1762615256320-ab19eefbb2d3"
+        }
+      }
+    },
+    {
+      "name": "Dashboard",
+      "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app/dashboard",
+      "expectedStatus": [
+        200,
+        302,
+        401,
+        403
+      ],
+      "status": "failed",
+      "duration": 26,
+      "error": "Expected status 200,302,401,403, got 401",
+      "response": {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-length": "14344",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Sat, 08 Nov 2025 15:20:56 GMT",
+          "server": "Vercel",
+          "set-cookie": "_vercel_sso_nonce=QcsVZTEk6MhdhNT0Fx5XfXYN; Max-Age=3600; Path=/; Secure; HttpOnly; SameSite=Lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-frame-options": "DENY",
+          "x-robots-tag": "noindex",
+          "x-vercel-id": "iad1::6zg6p-1762615256342-ef96e7572bc9"
+        }
+      }
+    },
+    {
+      "name": "SBOM Analyzer",
+      "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app/sbom-analyzer",
+      "expectedStatus": [
+        200,
+        302
+      ],
+      "status": "failed",
+      "duration": 24,
+      "error": "Expected status 200,302, got 401",
+      "response": {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-length": "14356",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Sat, 08 Nov 2025 15:20:56 GMT",
+          "server": "Vercel",
+          "set-cookie": "_vercel_sso_nonce=N6QtmIwIjAQB02cZZUURYj03; Max-Age=3600; Path=/; Secure; HttpOnly; SameSite=Lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-frame-options": "DENY",
+          "x-robots-tag": "noindex",
+          "x-vercel-id": "iad1::cfb6v-1762615256369-248a5acb3e8c"
+        }
+      }
+    },
+    {
+      "name": "Supply Chain Assessment",
+      "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app/supply-chain-assessment",
+      "expectedStatus": [
+        200,
+        302
+      ],
+      "status": "failed",
+      "duration": 40,
+      "error": "Expected status 200,302, got 401",
+      "response": {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-length": "14386",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Sat, 08 Nov 2025 15:20:56 GMT",
+          "server": "Vercel",
+          "set-cookie": "_vercel_sso_nonce=KvHrWIZoSJqoje5Uni1LKMNc; Max-Age=3600; Path=/; Secure; HttpOnly; SameSite=Lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-frame-options": "DENY",
+          "x-robots-tag": "noindex",
+          "x-vercel-id": "iad1::pvpwb-1762615256389-eb4db4ef1a4a"
+        }
+      }
+    },
+    {
+      "name": "Vendor Risk Dashboard",
+      "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app/vendors",
+      "expectedStatus": [
+        200,
+        302
+      ],
+      "status": "failed",
+      "duration": 25,
+      "error": "Expected status 200,302, got 401",
+      "response": {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-length": "14338",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Sat, 08 Nov 2025 15:20:56 GMT",
+          "server": "Vercel",
+          "set-cookie": "_vercel_sso_nonce=6e8bpFcS5PUNZ7Klp4mF7YGi; Max-Age=3600; Path=/; Secure; HttpOnly; SameSite=Lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-frame-options": "DENY",
+          "x-robots-tag": "noindex",
+          "x-vercel-id": "iad1::f6pbf-1762615256434-17e380f9b21f"
+        }
+      }
+    },
+    {
+      "name": "API Documentation",
+      "url": "https://vendorsoluce-pdg22kipi-facelys-projects.vercel.app/api-docs",
+      "expectedStatus": [
+        200,
+        302
+      ],
+      "status": "failed",
+      "duration": 23,
+      "error": "Expected status 200,302, got 401",
+      "response": {
+        "status": 401,
+        "statusText": "Unauthorized",
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-length": "14341",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Sat, 08 Nov 2025 15:20:56 GMT",
+          "server": "Vercel",
+          "set-cookie": "_vercel_sso_nonce=CtnSlxBa5Jv0XYBoO0WKh4QO; Max-Age=3600; Path=/; Secure; HttpOnly; SameSite=Lax",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-frame-options": "DENY",
+          "x-robots-tag": "noindex",
+          "x-vercel-id": "iad1::b5lb7-1762615256458-6968be3de685"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total": 10,
+    "passed": 0,
+    "failed": 10,
+    "blocked": 0
+  }
+}

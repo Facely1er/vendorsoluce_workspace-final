@@ -1,0 +1,4 @@
+Name,Category,Data Types,Sector,Location,Contact,Notes,Service Type,Population Impacted,Inherent Risk,Residual Risk,Risk Level
+ExtendedCRM Corp,strategic,PII;Customer,Technology,United States,sales@extendedcrm.com,CRM platform with service type,SaaS,5000,72,45,high
+ExtendedEmail Ltd,tactical,PII;Customer;Employee,Technology,Canada,ops@extendedemail.com,Email delivery platform,PaaS,10000,55,30,medium
+ExtendedSSO Inc,critical,Credentials;PII,Technology,United States,security@extendedsso.com,Identity platform with populations,SaaS,25000,88,60,critical

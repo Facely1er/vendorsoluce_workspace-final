@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script data-vs-theme-init>(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSV Import Test Harness v3 | ERMITS</title>
+<style>
+  body { font-family: monospace; padding: 20px; background: #1e1e2e; color: #cdd6f4; margin: 0; }
+  h1 { color: #a6e3a1; font-size: 16px; margin-bottom: 8px; }
+  .btn { background: #313244; border: 1px solid #45475a; color: #cdd6f4; padding: 6px 12px; cursor: pointer; margin: 3px; border-radius: 4px; font-size: 12px; }
+  .btn.run { background: #a6e3a1; color: #1e1e2e; font-weight: bold; }
+  .result { background: #181825; border: 1px solid #45475a; padding: 10px; margin: 6px 0; border-radius: 4px; font-size: 11px; white-space: pre-wrap; max-height: 280px; overflow-y: auto; }
+  .pass { color: #a6e3a1; } .fail { color: #f38ba8; } .warn { color: #fab387; }
+  .layout { display: flex; gap: 12px; height: calc(100vh - 80px); }
+  .sidebar { width: 380px; flex-shrink: 0; overflow-y: auto; }
+  iframe { flex: 1; border: 2px solid #45475a; border-radius: 4px; }
+</style>
+
+<!-- ERMITS global SEO bundle: merged into each page <head> by embed-header-footer.js (npm run build). Idempotent via meta name="ermits-seo-bundle". -->
+<meta name="ermits-seo-bundle" content="1">
+<meta name="application-name" content="VendorSoluce">
+<meta name="author" content="ERMITS">
+<meta name="creator" content="ERMITS">
+<meta name="publisher" content="ERMITS">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "VendorSoluce",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Vendor risk intelligence workspace for third-party risk review, dependency visibility, and supply chain assurance.",
+  "url": "https://vendorsoluce.com/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ERMITS",
+    "url": "https://ermits.com/"
+  }
+}
+</script>
+
+
+<meta name="twitter:card" content="summary">
+  <link href="../../assets/css/shell.css" rel="stylesheet"/>
+</head>
+<body>
+<h1>CSV Import Test Harness v3 — Direct Function Injection</h1>
+<div class="layout">
+  <div class="sidebar">
+    <div style="margin-bottom:8px">
+      <button class="btn run" onclick="runTest('legacy')">A1: Legacy</button>
+      <button class="btn run" onclick="runTest('extended')">A2: Extended</button>
+      <button class="btn run" onclick="runTest('fulldep')">A3: Full Dep</button>
+      <button class="btn run" onclick="runTest('malformed')">A4: Malformed</button>
+      <button class="btn" onclick="runAll()">Run All</button>
+      <button class="btn" onclick="clearR()">Clear</button>
+    </div>
+    <div id="results"></div>
+  </div>
+  <iframe id="rf" src="/radar/vendor-threat-radar" onload="onLoad()"></iframe>
+</div>
+<script>
+const CSVS = {
+  legacy: `Name,Category,Data Types,Sector,Location,Contact,Notes
+LegacyAuth Co,critical,PII;Credentials,Technology,United States,security@legacyauth.com,Identity provider legacy format
+LegacyPayroll Ltd,strategic,PII;Financial;Employee,Finance,United Kingdom,hr@legacypayroll.com,Payroll processor legacy format
+LegacyStorage Inc,tactical,IP;Confidential,Technology,Germany,ops@legacystorage.com,Cloud storage legacy format`,
+
+  extended: `Name,Category,Data Types,Sector,Location,Contact,Notes,Service Type,Population Impacted,Inherent Risk,Residual Risk,Risk Level
+ExtendedCRM Corp,strategic,PII;Customer,Technology,United States,sales@extendedcrm.com,CRM platform,SaaS,5000,72,45,high
+ExtendedEmail Ltd,tactical,PII;Customer;Employee,Technology,Canada,ops@extendedemail.com,Email delivery,PaaS,10000,55,30,medium
+ExtendedSSO Inc,critical,Credentials;PII,Technology,United States,security@extendedsso.com,Identity platform,SaaS,25000,88,60,critical`,
+
+  fulldep: `Name,Category,Data Types,Sector,Location,Contact,Notes,Service Type,Population Impacted,Inherent Risk,Residual Risk,Risk Level,Vendor ID,Parent Vendor IDs,Dependent Systems,Business Functions,Tier Level,Sub-Processors,Upstream Providers,Downstream Dependencies,Critical Operations,Regulations,Dependency Notes
+DepVendor-Auth,critical,Credentials;PII,Technology,United States,sec@depauth.com,Full dep - Auth,SaaS,15000,90,65,critical,dep-auth-001,,HR Portal;Finance App;Dev Tools,Authentication;Access Control;SSO,1,Okta;PingIdentity,AWS;Azure AD,None,All employee logins;Finance approvals,GDPR;SOC 2;ISO 27001,Primary IdP
+DepVendor-Pay,critical,Financial;PII,Finance,United States,ops@deppay.com,Full dep - Payments,SaaS,8000,85,50,critical,dep-pay-001,dep-auth-001,Billing;E-commerce;Finance ERP,Checkout;Invoicing;Subscriptions,1,Stripe;Adyen,AWS;Banking Network,Accounting Software,Revenue processing;Customer billing,PCI-DSS;GDPR;SOX,Dep on dep-auth-001
+DepVendor-Infra,strategic,IP;Confidential,Technology,United States,infra@depinfra.com,Full dep - Cloud,IaaS,50000,78,40,high,dep-infra-001,,All Applications;Data Lake;CI/CD,Infrastructure;Hosting;Storage,1,Fastly;Cloudflare,AWS;Equinix,dep-auth-001;dep-pay-001,All production,SOC 2;FedRAMP;ISO 27001,Shared AWS upstream`,
+
+  malformed: `Name,Category,Data Types,Sector,Location,Contact,Notes,Service Type,Population Impacted,Inherent Risk,Residual Risk,Risk Level
+
+   ,critical,PII,Technology,United States,,blank name - skip
+MalformedTier Co,strategic,PII;Customer,Finance,Germany,contact@malformed.com,invalid tier,SaaS,5000,65,40,high,malformed-001,,Billing,Finance,99,None,AWS,,Finance ops,GDPR,bad tier 99
+,,,,,,,,,,,
+DuplicateName Corp,tactical,IP,Technology,France,dup@dup.com,first duplicate
+DuplicateName Corp,tactical,IP,Technology,France,dup@dup.com,second duplicate
+   ExtraSpaces Inc   ,critical,   PII   ;   Financial   ,  Technology  ,  United States  ,  sp@test.com  ,extra spaces
+MissingColumns Co,strategic`
+};
+
+let frameReady = false;
+function onLoad() {
+  frameReady = true;
+  log('sys','✅ Radar iframe loaded and ready','pass');
+}
+function rw() { return document.getElementById('rf').contentWindow; }
+function clearR() { document.getElementById('results').innerHTML = ''; }
+
+function log(id, text, cls='') {
+  let el = document.getElementById('r-'+id);
+  if (!el) {
+    const d = document.createElement('div');
+    d.className='result'; d.id='r-'+id;
+    document.getElementById('results').prepend(d);
+    el=d;
+  }
+  el.innerHTML += `<span class="${cls}">${text}\n</span>`;
+}
+
+async function injectCSV(csv, rwin) {
+  // Directly simulate what importVendors's FileReader.onload does
+  // by calling the radar's internal parse functions directly
+  const lines = csv.split('\n');
+  const imported = [];
+  
+  const generateId = rwin.generateId || (() => 'vendor-' + Date.now() + '-' + Math.random().toString(36).substr(2,9));
+  const parseListStr = rwin.parseListStr;
+  const ensureDependencyFields = rwin.ensureDependencyFields;
+  const ensureSourceModeFields = rwin.ensureSourceModeFields;
+  const calculateVendorRisk = rwin.calculateVendorRisk;
+
+  if (!parseListStr || !ensureDependencyFields) {
+    return { error: 'Required functions not globally exposed (parseListStr, ensureDependencyFields)' };
+  }
+
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    const values = lines[i].split(',').map(v => v.trim());
+    const hasExtendedColumns = values.length >= 12;
+    const vendor = {
+      id: generateId(),
+      name: values[0] || '',
+      category: values[1] || 'tactical',
+      dataTypes: values[2] ? values[2].split(';').map(d => d.trim()) : [],
+      sector: values[3] || 'Other',
+      location: values[4] || 'United States',
+      contact: values[5] || '',
+      notes: values[6] || '',
+      serviceType: hasExtendedColumns ? (values[7] || '') : '',
+      populationImpacted: hasExtendedColumns ? (values[8] || '') : ''
+    };
+    if (values.length >= 23) {
+      vendor.vendorId = values[12] || vendor.id;
+      vendor.parentVendorIds = parseListStr(values[13]);
+      vendor.dependentSystems = parseListStr(values[14]);
+      vendor.businessFunctions = parseListStr(values[15]);
+      const t = parseInt(values[16], 10);
+      vendor.tierLevel = (t >= 1 && t <= 9) ? t : 1;
+      vendor.subProcessors = parseListStr(values[17]);
+      vendor.upstreamProviders = parseListStr(values[18]);
+      vendor.downstreamDependencies = parseListStr(values[19]);
+      vendor.criticalOperations = parseListStr(values[20]);
+      vendor.regulations = parseListStr(values[21]);
+      vendor.dependencyNotes = values[22] || '';
+    }
+    const idxInherent = hasExtendedColumns ? 9 : 7;
+    const idxResidual = hasExtendedColumns ? 10 : 8;
+    const idxRiskLevel = hasExtendedColumns ? 11 : 9;
+    const csvInherent = parseFloat(values[idxInherent]);
+    const csvResidual = parseFloat(values[idxResidual]);
+    const csvRiskLevel = (values[idxRiskLevel] || '').toLowerCase();
+    const knownLevels = ['critical','high','medium','low'];
+    if (!isNaN(csvInherent) && !isNaN(csvResidual) && knownLevels.includes(csvRiskLevel)) {
+      const riskColorMap = {critical:'#f44336',high:'#ff9800',medium:'#ffeb3b',low:'#4caf50'};
+      vendor.inherentRisk = csvInherent;
+      vendor.residualRisk = csvResidual;
+      vendor.riskLevel = csvRiskLevel;
+      vendor.riskColor = riskColorMap[csvRiskLevel];
+      vendor._riskFromCSV = true;
+    }
+    if (vendor.name) {
+      const withDeps = ensureDependencyFields(vendor);
+      const withSrc = ensureSourceModeFields ? ensureSourceModeFields(withDeps) : withDeps;
+      imported.push(withSrc);
+    }
+  }
+
+  // Merge into vendorData
+  rwin.vendorData = [...(rwin.vendorData || []), ...imported];
+  rwin.vendorData = rwin.vendorData.map(v => {
+    if (v._riskFromCSV) { const {_riskFromCSV,...rest} = v; return ensureDependencyFields(rest); }
+    const n = ensureDependencyFields(v);
+    return calculateVendorRisk ? {...n,...calculateVendorRisk(n)} : n;
+  });
+  
+  try { rwin.localStorage.setItem('vendorData', JSON.stringify(rwin.vendorData)); } catch(e){}
+  if (rwin.updateAllDisplays) rwin.updateAllDisplays();
+
+  return { imported: imported.length, vendors: rwin.vendorData };
+}
+
+async function runTest(type) {
+  log(type, `\n══ TEST ${type.toUpperCase()} ══`, 'warn');
+  if (!frameReady) { await sleep(2500); }
+
+  const win = rw();
+  if (!win || !win.document || !win.parseListStr) {
+    log(type, '❌ Radar iframe not accessible or functions not exposed. Check CORS.', 'fail');
+    return;
+  }
+
+  const before = (win.vendorData||[]).length;
+  log(type, `Before: ${before} vendors`, '');
+
+  let result;
+  try {
+    result = await injectCSV(CSVS[type], win);
+    await sleep(400);
+  } catch(e) {
+    log(type, `❌ Exception during inject: ${e.message}`, 'fail');
+    return;
+  }
+
+  if (result.error) { log(type, `❌ ${result.error}`, 'fail'); return; }
+
+  const after = (win.vendorData||[]).length;
+  const imported = after - before;
+  log(type, `After: ${after} vendors (+${imported} imported)`, imported>0?'pass':'fail');
+
+  const names = (win.vendorData||[]).map(v => v.name);
+
+  if (type==='legacy') {
+    ['LegacyAuth Co','LegacyPayroll Ltd','LegacyStorage Inc'].forEach(n => {
+      const ok=names.includes(n); log(type,`  ${ok?'✅':'❌'} "${n}"`,ok?'pass':'fail');
+    });
+    const la = win.vendorData.find(v=>v.name==='LegacyAuth Co');
+    if (la) {
+      const calc = la.inherentRisk>0 && !la._riskFromCSV;
+      log(type,`  ${calc?'✅':'⚠️'} Risk auto-calc: inherent=${la.inherentRisk} level=${la.riskLevel}`,calc?'pass':'warn');
+    }
+  }
+
+  if (type==='extended') {
+    ['ExtendedCRM Corp','ExtendedEmail Ltd','ExtendedSSO Inc'].forEach(n => {
+      const ok=names.includes(n); log(type,`  ${ok?'✅':'❌'} "${n}"`,ok?'pass':'fail');
+    });
+    const sso = win.vendorData.find(v=>v.name==='ExtendedSSO Inc');
+    if (sso) {
+      log(type,`  ${sso.serviceType==='SaaS'?'✅':'❌'} serviceType="${sso.serviceType}"`,sso.serviceType==='SaaS'?'pass':'fail');
+      log(type,`  ${sso.populationImpacted==='25000'?'✅':'❌'} populationImpacted="${sso.populationImpacted}"`,sso.populationImpacted==='25000'?'pass':'fail');
+      log(type,`  ${sso.inherentRisk===88?'✅':'❌'} inherentRisk=${sso.inherentRisk}`,sso.inherentRisk===88?'pass':'fail');
+      log(type,`  ${sso.riskLevel==='critical'?'✅':'❌'} riskLevel="${sso.riskLevel}"`,sso.riskLevel==='critical'?'pass':'fail');
+    } else { log(type,'  ❌ ExtendedSSO Inc not found','fail'); }
+  }
+
+  if (type==='fulldep') {
+    ['DepVendor-Auth','DepVendor-Pay','DepVendor-Infra'].forEach(n => {
+      const ok=names.includes(n); log(type,`  ${ok?'✅':'❌'} "${n}"`,ok?'pass':'fail');
+    });
+    const auth = win.vendorData.find(v=>v.name==='DepVendor-Auth');
+    if (auth) {
+      const sys=Array.isArray(auth.dependentSystems)&&auth.dependentSystems.length>0;
+      const ups=Array.isArray(auth.upstreamProviders)&&auth.upstreamProviders.length>0;
+      const tier=auth.tierLevel===1;
+      const regs=Array.isArray(auth.regulations)&&auth.regulations.length>0;
+      const biz=Array.isArray(auth.businessFunctions)&&auth.businessFunctions.length>0;
+      log(type,`  ${sys?'✅':'❌'} dependentSystems: ${JSON.stringify(auth.dependentSystems)}`,sys?'pass':'fail');
+      log(type,`  ${ups?'✅':'❌'} upstreamProviders: ${JSON.stringify(auth.upstreamProviders)}`,ups?'pass':'fail');
+      log(type,`  ${tier?'✅':'❌'} tierLevel=${auth.tierLevel}`,tier?'pass':'fail');
+      log(type,`  ${regs?'✅':'❌'} regulations: ${JSON.stringify(auth.regulations)}`,regs?'pass':'fail');
+      log(type,`  ${biz?'✅':'❌'} businessFunctions: ${JSON.stringify(auth.businessFunctions)}`,biz?'pass':'fail');
+    } else { log(type,'  ❌ DepVendor-Auth not found','fail'); }
+
+    if (win.getSharedDependencyHotspots) {
+      const hs = win.getSharedDependencyHotspots(win.vendorData);
+      const aws = hs.find(h=>h.provider.toLowerCase().includes('aws'));
+      log(type,`  ${aws?'✅':'❌'} AWS hotspot: ${aws?aws.provider+' ('+aws.count+' vendors)':'not found'}`,aws?'pass':'fail');
+    } else { log(type,'  ⚠️ getSharedDependencyHotspots not exposed','warn'); }
+
+    // Check cascade preview for DepVendor-Auth
+    const authV = win.vendorData.find(v=>v.name==='DepVendor-Auth');
+    if (authV && win.getVendorKpiMetrics) {
+      const kpi = win.getVendorKpiMetrics(authV);
+      const hasKpi = kpi && (kpi.dependentSystems||[]).length > 0;
+      log(type,`  ${hasKpi?'✅':'⚠️'} Cascade KPI: dependentSystems=${JSON.stringify((kpi||{}).dependentSystems)}`,hasKpi?'pass':'warn');
+    }
+  }
+
+  if (type==='malformed') {
+    const blankSkipped = !names.some(n=>!n||n.trim()==='');
+    log(type,`  ${blankSkipped?'✅':'❌'} Blank/empty rows skipped`,blankSkipped?'pass':'fail');
+    const mt = win.vendorData.find(v=>v.name==='MalformedTier Co');
+    if (mt) {
+      const ok=mt.tierLevel>=1&&mt.tierLevel<=9;
+      log(type,`  ${ok?'✅':'❌'} Bad tier 99 → tierLevel=${mt.tierLevel} (clamped to 1)`,ok?'pass':'fail');
+    } else { log(type,'  ⚠️ MalformedTier Co not in list','warn'); }
+    const dups = names.filter(n=>n==='DuplicateName Corp');
+    log(type,`  ${dups.length>=2?'✅':'⚠️'} Duplicates: ${dups.length} (expected ≥2)`,dups.length>=2?'pass':'warn');
+    const xsp = win.vendorData.find(v=>v.name&&v.name.trim()==='ExtraSpaces Inc');
+    log(type,`  ${xsp?'✅':'❌'} ExtraSpaces Inc (trimmed)`,xsp?'pass':'fail');
+    const mc = win.vendorData.find(v=>v.name==='MissingColumns Co');
+    log(type,`  ${mc?'✅':'⚠️'} MissingColumns Co: ${mc?'imported':'skipped (too few cols)'}`,mc?'pass':'warn');
+    log(type,`  ✅ No crash reached verification`,'pass');
+  }
+
+  const el = document.getElementById('r-'+type);
+  if (el) {
+    const p=el.querySelectorAll('.pass').length, f=el.querySelectorAll('.fail').length;
+    log(type,`\n→ ${f===0?'✅ PASS':'❌ FAIL ('+f+' failures)'} | ${p} passed`,f===0?'pass':'fail');
+  }
+}
+
+async function runAll() {
+  clearR();
+  for (const t of ['legacy','extended','fulldep','malformed']) {
+    await runTest(t);
+    await sleep(600);
+  }
+}
+
+function sleep(ms) { return new Promise(r=>setTimeout(r,ms)); }
+</script>
+</body>
+</html>

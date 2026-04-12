@@ -1,0 +1,106 @@
+{
+  "products": [],
+  "prices": [],
+  "errors": [
+    {
+      "type": "product",
+      "productId": "prod_starter",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_starter_annual",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_professional",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_professional_annual",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_enterprise",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_enterprise_annual",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_federal",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_federal_annual",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_additional_users",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_additional_users_annual",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_additional_vendors",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_additional_vendors_annual",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_compliance_consulting",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_compliance_consulting_annual",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_white_label_branding",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_white_label_branding_annual",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_compliance_suite",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_compliance_suite_annual",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_enterprise_plus",
+      "error": "Product already exists."
+    },
+    {
+      "type": "product",
+      "productId": "prod_enterprise_plus_annual",
+      "error": "Product already exists."
+    }
+  ]
+}

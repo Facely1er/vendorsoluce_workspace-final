@@ -1,0 +1,4 @@
+Name,Category,Data Types,Sector,Location,Contact,Notes
+LegacyAuth Co,critical,PII;Credentials,Technology,United States,security@legacyauth.com,Identity provider legacy format
+LegacyPayroll Ltd,strategic,PII;Financial;Employee,Finance,United Kingdom,hr@legacypayroll.com,Payroll processor legacy format
+LegacyStorage Inc,tactical,IP;Confidential,Technology,Germany,ops@legacystorage.com,Cloud storage legacy format

@@ -1,0 +1,10 @@
+import { createRequire } from 'module';
+import { spawnSync } from 'child_process';
+import { dirname, join } from 'path';
+const require = createRequire(import.meta.url);
+const pkgPath = require.resolve('tailwindcss/package.json');
+const pkg = require(pkgPath);
+const bin = typeof pkg.bin === 'string' ? pkg.bin : (pkg.bin.tailwind || pkg.bin.tailwindcss || 'lib/cli.js');
+const cli = join(dirname(pkgPath), bin);
+const result = spawnSync(process.execPath, [cli, ...process.argv.slice(2)], { stdio: 'inherit', cwd: new URL('..', import.meta.url) });
+process.exit(result.status ?? 1);
