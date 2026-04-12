@@ -2,6 +2,9 @@
  * Canonical VendorSoluce color tokens — single source of truth for Tailwind.
  * All packages must import `sharedTheme` from `shared/tailwind-config`; do not
  * duplicate hex values in per-package tailwind.config.js files.
+ *
+ * Static radar (`packages/website/radar/vendor-threat-radar.html`) :root mirrors
+ * `vendorsoluceColors` here; update both when changing brand greens.
  */
 export const vendorsoluceColors = {
   'vendorsoluce-green': '#33691E',

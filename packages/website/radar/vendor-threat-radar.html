@@ -29,14 +29,16 @@
             pointer-events: auto !important;
             isolation: isolate;
         }
+        /* Canonical palette — packages/shared/tailwind-colors.js (vendorsoluceColors + neutral-gray) */
         :root {
-            --vendorsoluce-green: #2e7d32;
-            --vendorsoluce-light-green: #4caf50;
-            --vendorsoluce-dark-green: #1b5e20;
-            --vendorsoluce-pale-green: #e8f5e9;
-            --vendorsoluce-navy: #1a2e1a;
-            --vendorsoluce-teal: #009688;
-            --vendorsoluce-blue: #2196f3;
+            --vendorsoluce-green: #33691E;
+            --vendorsoluce-light-green: #66BB6A;
+            --vendorsoluce-dark-green: #2E5A1A;
+            --vendorsoluce-pale-green: #E8F5E9;
+            --vendorsoluce-navy: #1E3B8A;
+            --vendorsoluce-teal: #2D7D7D;
+            --vendorsoluce-blue: #3B82F6;
+            --neutral-gray: #6B7280;
         }
         
         * {
@@ -61,11 +63,11 @@
         /* Welcome banner dark mode */
         html.dark #welcomeBanner {
             background: linear-gradient(135deg, #052e16 0%, #064e3b 100%) !important;
-            border-color: #166534 !important;
+            border-color: var(--vendorsoluce-dark-green) !important;
         }
         html.dark #welcomeBanner > div > div:nth-child(2) > div {
             background: #0f172a !important;
-            border-color: #166534 !important;
+            border-color: var(--vendorsoluce-dark-green) !important;
         }
         html.dark #welcomeBanner p, html.dark #welcomeBanner span {
             color: #d1fae5 !important;
@@ -109,17 +111,21 @@
             height: 2.5rem;
             border-radius: 0.625rem;
             background: #dcfce7;
+            color: var(--vendorsoluce-green);
+        }
+        .wb-icon svg {
+            stroke: currentColor;
         }
         .wb-title {
             margin: 0;
             font-size: 1rem;
             font-weight: 700;
-            color: #14532d;
+            color: var(--vendorsoluce-dark-green);
         }
         .wb-subtitle {
             margin: 0;
             font-size: 0.8125rem;
-            color: #166534;
+            color: var(--vendorsoluce-dark-green);
         }
         .wb-close {
             flex-shrink: 0;
@@ -148,7 +154,7 @@
             margin: 0 0 0.25rem;
             font-size: 0.75rem;
             font-weight: 700;
-            color: #15803d;
+            color: var(--vendorsoluce-green);
             text-transform: uppercase;
             letter-spacing: 0.04em;
         }
@@ -170,7 +176,7 @@
             gap: 0.375rem;
             font-size: 0.8125rem;
             font-weight: 600;
-            color: #15803d;
+            color: var(--vendorsoluce-green);
             text-decoration: none;
         }
         .wb-guide-link:hover { text-decoration: underline; }
@@ -186,14 +192,14 @@
             gap: 0.5rem;
             padding: 0.75rem 1rem;
             border-radius: 0.5rem;
-            border: 1px solid rgba(21, 128, 61, 0.35);
+            border: 1px solid rgba(51, 105, 30, 0.35);
             background: rgba(255, 255, 255, 0.75);
         }
         .wb-continue-app-title {
             margin: 0;
             font-size: 0.8125rem;
             font-weight: 700;
-            color: #14532d;
+            color: var(--vendorsoluce-dark-green);
         }
         .wb-continue-app-hint {
             margin: 0;
@@ -230,13 +236,13 @@
         .wb-continue-app-secondary {
             font-size: 0.75rem;
             font-weight: 600;
-            color: #15803d;
+            color: var(--vendorsoluce-green);
             text-decoration: none;
         }
         .wb-continue-app-secondary:hover { text-decoration: underline; }
         html.dark .wb-continue-app {
             background: rgba(15, 23, 42, 0.6);
-            border-color: #166534;
+            border-color: var(--vendorsoluce-dark-green);
         }
         html.dark .wb-continue-app-title { color: #bbf7d0; }
         html.dark .wb-continue-app-hint { color: #d1fae5; }
@@ -253,27 +259,27 @@
             text-decoration: none;
             color: var(--vendorsoluce-dark-green);
             background: #ecfdf5;
-            border: 1px solid rgba(21, 128, 61, 0.35);
+            border: 1px solid rgba(51, 105, 30, 0.35);
             white-space: nowrap;
         }
         .toolbar-continue-app:hover {
             background: #d1fae5;
-            color: #14532d;
+            color: var(--vendorsoluce-dark-green);
         }
         html.dark .toolbar-continue-app {
-            background: #14532d;
+            background: var(--vendorsoluce-dark-green);
             color: #bbf7d0;
-            border-color: #166534;
+            border-color: var(--vendorsoluce-green);
         }
         html.dark .toolbar-continue-app:hover {
-            background: #166534;
+            background: var(--vendorsoluce-green);
             color: #fff;
         }
         html.dark #welcomeBanner {
             background: linear-gradient(135deg, #052e16 0%, #064e3b 100%);
-            border-color: #166534;
+            border-color: var(--vendorsoluce-dark-green);
         }
-        html.dark .wb-step { background: #0f172a; border-color: #166534; }
+        html.dark .wb-step { background: #0f172a; border-color: var(--vendorsoluce-dark-green); }
         html.dark .wb-title { color: #bbf7d0; }
         html.dark .wb-subtitle { color: #86efac; }
         html.dark .wb-step-label { color: #4ade80; }
@@ -282,8 +288,11 @@
         html.dark .wb-guide-link { color: #4ade80; }
         html.dark .wb-privacy { color: #6b7280; }
         html.dark .wb-close { color: #9ca3af; }
-        html.dark .wb-close:hover { background: #166534; }
-        html.dark .wb-icon { background: #14532d; }
+        html.dark .wb-close:hover { background: var(--vendorsoluce-green); }
+        html.dark .wb-icon {
+            background: var(--vendorsoluce-dark-green);
+            color: var(--vendorsoluce-light-green);
+        }
         
         /* Ensure root div background matches body */
         #root {
@@ -464,7 +473,7 @@
         button:hover:not(:disabled) {
             background: var(--vendorsoluce-dark-green);
             transform: translateY(-1px);
-            box-shadow: 0 4px 6px rgba(46, 125, 50, 0.2);
+            box-shadow: 0 4px 6px rgba(51, 105, 30, 0.2);
         }
         
         button:disabled {
@@ -520,7 +529,7 @@
         select:focus {
             outline: none;
             border-color: var(--vendorsoluce-green);
-            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+            box-shadow: 0 0 0 3px rgba(51, 105, 30, 0.1);
         }
         
         input[type="file"] {
@@ -582,11 +591,11 @@
         .alert-banner.clear {
             background: #f0fdf4;
             border-color: var(--vendorsoluce-green);
-            color: #166534;
+            color: var(--vendorsoluce-dark-green);
         }
         
         html.dark .alert-banner.clear {
-            background: #14532d;
+            background: var(--vendorsoluce-dark-green);
             color: #86efac;
         }
         
@@ -631,10 +640,10 @@
         }
         .alert-banner-repeat.critical { background: #fef2f2; border-color: #dc2626; color: #991b1b; }
         .alert-banner-repeat.warning { background: #fffbeb; border-color: #f59e0b; color: #92400e; }
-        .alert-banner-repeat.clear { background: #f0fdf4; border-color: var(--vendorsoluce-green); color: #166534; }
+        .alert-banner-repeat.clear { background: #f0fdf4; border-color: var(--vendorsoluce-green); color: var(--vendorsoluce-dark-green); }
         html.dark .alert-banner-repeat.critical { background: #7f1d1d; color: #fca5a5; }
         html.dark .alert-banner-repeat.warning { background: #78350f; color: #fcd34d; }
-        html.dark .alert-banner-repeat.clear { background: #14532d; color: #86efac; }
+        html.dark .alert-banner-repeat.clear { background: var(--vendorsoluce-dark-green); color: #86efac; }
         
         /* Stats Grid */
         .stats-grid {
@@ -891,7 +900,7 @@
         
         .vendor-item:hover {
             border-color: var(--vendorsoluce-green);
-            box-shadow: 0 2px 4px rgba(46, 125, 50, 0.1);
+            box-shadow: 0 2px 4px rgba(51, 105, 30, 0.1);
         }
         
         .vendor-item.critical {
@@ -973,11 +982,11 @@
         
         .badge.low {
             background: #f0fdf4;
-            color: #166534;
+            color: var(--vendorsoluce-dark-green);
         }
         
         html.dark .badge.low {
-            background: #14532d;
+            background: var(--vendorsoluce-dark-green);
             color: #86efac;
         }
         
@@ -1286,7 +1295,7 @@
         .form-textarea:focus {
             outline: none;
             border-color: var(--vendorsoluce-green);
-            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+            box-shadow: 0 0 0 3px rgba(51, 105, 30, 0.1);
         }
         
         .form-textarea {
@@ -1395,7 +1404,7 @@
             background: #3b82f6;
         }
         .legend-dot-low {
-            background: #2e7d32;
+            background: var(--vendorsoluce-green);
         }
         .empty-state {
             text-align: center;
@@ -1752,7 +1761,7 @@
     <div class="wb-header">
       <div class="wb-title-row">
         <span class="wb-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><circle cx="12" cy="12" r="2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><circle cx="12" cy="12" r="2"/></svg>
         </span>
         <div>
           <p class="wb-title">Welcome to the Vendor Threat Radar</p>
