@@ -1,5 +1,6 @@
 import { loadDocxParser, loadPdfRenderer } from '../../../shared/src/utils/lazyModules';
 import { downloadFromStorage, fileExists } from './supabaseStorage';
+import { pdf, pdfPriorityColor, pdfScoreColor } from './pdfHtmlPalette';
 
 const MAX_UPLOAD_FILE_SIZE = 20 * 1024 * 1024; // 20 MB
 
@@ -12,8 +13,8 @@ const TEMPLATES_BUCKET = 'templates';
 export const generatePdfFromHtml = async (htmlContent: string, filename: string) => {
   try {
     const { renderHtmlToPdf } = await loadPdfRenderer();
-    const pdf = await renderHtmlToPdf(htmlContent);
-    pdf.save(filename);
+    const pdfDoc = await renderHtmlToPdf(htmlContent);
+    pdfDoc.save(filename);
   } catch (error) {
     console.error('PDF generation failed:', error);
     throw new Error(`Failed to generate PDF: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -27,49 +28,42 @@ export const generateResultsPdf = async (
   completedDate: string,
   filename: string
 ) => {
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return '#16A34A';
-    if (score >= 60) return '#F59E0B';
-    if (score >= 40) return '#EA580C';
-    return '#DC2626';
-  };
-
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
-      <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1E3B8A; padding-bottom: 20px;">
-        <h1 style="color: #1E3B8A; margin: 0; font-size: 28px;">${title}</h1>
-        <p style="color: #666; margin: 10px 0 0 0; font-size: 16px;">Completed: ${completedDate}</p>
+      <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid ${pdf.navy}; padding-bottom: 20px;">
+        <h1 style="color: ${pdf.navy}; margin: 0; font-size: 28px;">${title}</h1>
+        <p style="color: ${pdf.mutedText}; margin: 10px 0 0 0; font-size: 16px;">Completed: ${completedDate}</p>
       </div>
       
-      <div style="text-align: center; margin-bottom: 40px; padding: 30px; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
-        <div style="font-size: 48px; font-weight: bold; color: ${getScoreColor(overallScore)}; margin-bottom: 10px;">${overallScore}%</div>
-        <div style="font-size: 18px; color: #374151;">Overall Compliance Score</div>
+      <div style="text-align: center; margin-bottom: 40px; padding: 30px; background-color: ${pdf.slate50}; border-radius: 8px; border: 1px solid ${pdf.slate200};">
+        <div style="font-size: 48px; font-weight: bold; color: ${pdfScoreColor(overallScore)}; margin-bottom: 10px;">${overallScore}%</div>
+        <div style="font-size: 18px; color: ${pdf.gray700};">Overall Compliance Score</div>
       </div>
       
-      <h2 style="color: #2D7D7D; margin-bottom: 20px; font-size: 22px;">Section Scores</h2>
+      <h2 style="color: ${pdf.teal}; margin-bottom: 20px; font-size: 22px;">Section Scores</h2>
       <div style="margin-bottom: 30px;">
         ${sectionScores.map(section => `
-          <div style="margin-bottom: 15px; padding: 15px; background-color: #f9fafb; border-radius: 6px; border-left: 4px solid ${getScoreColor(section.percentage)};">
+          <div style="margin-bottom: 15px; padding: 15px; background-color: ${pdf.gray50}; border-radius: 6px; border-left: 4px solid ${pdfScoreColor(section.percentage)};">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <span style="font-weight: 600; color: #374151;">${section.title}</span>
-              <span style="font-weight: 600; color: ${getScoreColor(section.percentage)};">${section.percentage}%</span>
+              <span style="font-weight: 600; color: ${pdf.gray700};">${section.title}</span>
+              <span style="font-weight: 600; color: ${pdfScoreColor(section.percentage)};">${section.percentage}%</span>
             </div>
-            <div style="width: 100%; height: 8px; background-color: #e5e7eb; border-radius: 4px; overflow: hidden;">
-              <div style="width: ${section.percentage}%; height: 100%; background-color: ${getScoreColor(section.percentage)}; border-radius: 4px;"></div>
+            <div style="width: 100%; height: 8px; background-color: ${pdf.gray200}; border-radius: 4px; overflow: hidden;">
+              <div style="width: ${section.percentage}%; height: 100%; background-color: ${pdfScoreColor(section.percentage)}; border-radius: 4px;"></div>
             </div>
           </div>
         `).join('')}
       </div>
       
-      <div style="margin-top: 40px; padding: 20px; background-color: #f0f7ff; border-radius: 8px; border: 1px solid #3B82F6;">
-        <h3 style="color: #1E3B8A; margin: 0 0 10px 0; font-size: 18px;">Assessment Summary</h3>
-        <p style="color: #374151; margin: 0; line-height: 1.6;">
+      <div style="margin-top: 40px; padding: 20px; background-color: ${pdf.blue50}; border-radius: 8px; border: 1px solid ${pdf.blue};">
+        <h3 style="color: ${pdf.navy}; margin: 0 0 10px 0; font-size: 18px;">Assessment Summary</h3>
+        <p style="color: ${pdf.gray700}; margin: 0; line-height: 1.6;">
           This assessment evaluates your organization's supply chain risk management practices based on NIST SP 800-161 guidelines. 
           Scores above 80% indicate strong compliance, while scores below 60% suggest areas requiring immediate attention.
         </p>
       </div>
       
-      <div style="margin-top: 30px; text-align: center; color: #6B7280; font-size: 12px; border-top: 1px solid #e5e7eb; padding-top: 20px;">
+      <div style="margin-top: 30px; text-align: center; color: ${pdf.neutralGray}; font-size: 12px; border-top: 1px solid ${pdf.gray200}; padding-top: 20px;">
         <p style="margin: 0;">Generated by VendorSoluce Supply Chain Risk Management Platform</p>
         <p style="margin: 5px 0 0 0;">© ${new Date().getFullYear()} VendorSoluce. All rights reserved.</p>
       </div>
@@ -96,13 +90,6 @@ export const generatePremiumReportPdf = async (
     criticalFindings?: string[];
   }
 ) => {
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return '#16A34A';
-    if (score >= 60) return '#F59E0B';
-    if (score >= 40) return '#EA580C';
-    return '#DC2626';
-  };
-
   const getScoreGrade = (score: number) => {
     if (score >= 90) return 'A';
     if (score >= 80) return 'B';
@@ -112,25 +99,25 @@ export const generatePremiumReportPdf = async (
   };
 
   const htmlContent = `
-    <div style="font-family: 'Arial', 'Helvetica', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%);">
+    <div style="font-family: 'Arial', 'Helvetica', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: linear-gradient(to bottom, ${pdf.slate50} 0%, ${pdf.white} 100%);">
       <!-- Premium Header with Logo -->
-      <div style="text-align: center; margin-bottom: 40px; padding: 30px; background: linear-gradient(135deg, #1E3B8A 0%, #2D7D7D 100%); color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <div style="text-align: center; margin-bottom: 40px; padding: 30px; background: linear-gradient(135deg, ${pdf.navy} 0%, ${pdf.teal} 100%); color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
         <div style="font-size: 32px; font-weight: bold; margin-bottom: 10px;">PREMIUM REPORT</div>
         <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 300;">${title}</h1>
         <p style="color: rgba(255,255,255,0.9); margin: 15px 0 0 0; font-size: 14px;">Completed: ${completedDate}</p>
       </div>
       
       <!-- Executive Summary Card -->
-      <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px; border-left: 5px solid ${getScoreColor(overallScore)};">
-        <h2 style="color: #1E3B8A; margin: 0 0 20px 0; font-size: 22px; font-weight: 600;">Executive Summary</h2>
+      <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px; border-left: 5px solid ${pdfScoreColor(overallScore)};">
+        <h2 style="color: ${pdf.navy}; margin: 0 0 20px 0; font-size: 22px; font-weight: 600;">Executive Summary</h2>
         <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 20px;">
           <div style="text-align: center; flex: 1;">
-            <div style="font-size: 64px; font-weight: bold; color: ${getScoreColor(overallScore)}; margin-bottom: 5px;">${overallScore}%</div>
-            <div style="font-size: 24px; color: ${getScoreColor(overallScore)}; font-weight: 600; margin-bottom: 5px;">Grade ${getScoreGrade(overallScore)}</div>
-            <div style="font-size: 14px; color: #6B7280;">Overall Compliance Score</div>
+            <div style="font-size: 64px; font-weight: bold; color: ${pdfScoreColor(overallScore)}; margin-bottom: 5px;">${overallScore}%</div>
+            <div style="font-size: 24px; color: ${pdfScoreColor(overallScore)}; font-weight: 600; margin-bottom: 5px;">Grade ${getScoreGrade(overallScore)}</div>
+            <div style="font-size: 14px; color: ${pdf.neutralGray};">Overall Compliance Score</div>
           </div>
-          <div style="flex: 1; padding-left: 20px; border-left: 2px solid #e5e7eb;">
-            <p style="color: #374151; line-height: 1.8; margin: 0; font-size: 14px;">
+          <div style="flex: 1; padding-left: 20px; border-left: 2px solid ${pdf.gray200};">
+            <p style="color: ${pdf.gray700}; line-height: 1.8; margin: 0; font-size: 14px;">
               ${overallScore >= 80 
                 ? 'Your organization demonstrates strong supply chain risk management practices aligned with NIST SP 800-161 guidelines. Continue monitoring and improvement efforts to maintain compliance.'
                 : overallScore >= 60
@@ -140,19 +127,19 @@ export const generatePremiumReportPdf = async (
           </div>
         </div>
         ${additionalData?.vendorCount ? `
-          <div style="margin-top: 20px; padding: 15px; background: #f0f7ff; border-radius: 8px;">
+          <div style="margin-top: 20px; padding: 15px; background: ${pdf.blue50}; border-radius: 8px;">
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center;">
               <div>
-                <div style="font-size: 24px; font-weight: bold; color: #1E3B8A;">${additionalData.vendorCount}</div>
-                <div style="font-size: 12px; color: #6B7280;">Vendors Assessed</div>
+                <div style="font-size: 24px; font-weight: bold; color: ${pdf.navy};">${additionalData.vendorCount}</div>
+                <div style="font-size: 12px; color: ${pdf.neutralGray};">Vendors Assessed</div>
               </div>
               <div>
-                <div style="font-size: 24px; font-weight: bold; color: #1E3B8A;">${sectionScores.length}</div>
-                <div style="font-size: 12px; color: #6B7280;">Assessment Domains</div>
+                <div style="font-size: 24px; font-weight: bold; color: ${pdf.navy};">${sectionScores.length}</div>
+                <div style="font-size: 12px; color: ${pdf.neutralGray};">Assessment Domains</div>
               </div>
               <div>
-                <div style="font-size: 24px; font-weight: bold; color: #1E3B8A;">${additionalData.criticalFindings?.length || 0}</div>
-                <div style="font-size: 12px; color: #6B7280;">Critical Findings</div>
+                <div style="font-size: 24px; font-weight: bold; color: ${pdf.navy};">${additionalData.criticalFindings?.length || 0}</div>
+                <div style="font-size: 12px; color: ${pdf.neutralGray};">Critical Findings</div>
               </div>
             </div>
           </div>
@@ -161,20 +148,20 @@ export const generatePremiumReportPdf = async (
       
       <!-- Detailed Section Scores -->
       <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px;">
-        <h2 style="color: #2D7D7D; margin: 0 0 25px 0; font-size: 22px; font-weight: 600;">Detailed Section Analysis</h2>
+        <h2 style="color: ${pdf.teal}; margin: 0 0 25px 0; font-size: 22px; font-weight: 600;">Detailed Section Analysis</h2>
         ${sectionScores.map(section => `
-          <div style="margin-bottom: 20px; padding: 20px; background: #f9fafb; border-radius: 8px; border-left: 4px solid ${getScoreColor(section.percentage)};">
+          <div style="margin-bottom: 20px; padding: 20px; background: ${pdf.gray50}; border-radius: 8px; border-left: 4px solid ${pdfScoreColor(section.percentage)};">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <span style="font-weight: 600; color: #374151; font-size: 16px;">${section.title}</span>
+              <span style="font-weight: 600; color: ${pdf.gray700}; font-size: 16px;">${section.title}</span>
               <div style="text-align: right;">
-                <span style="font-weight: 700; color: ${getScoreColor(section.percentage)}; font-size: 20px;">${section.percentage}%</span>
-                <div style="font-size: 11px; color: #6B7280; margin-top: 2px;">Grade ${getScoreGrade(section.percentage)}</div>
+                <span style="font-weight: 700; color: ${pdfScoreColor(section.percentage)}; font-size: 20px;">${section.percentage}%</span>
+                <div style="font-size: 11px; color: ${pdf.neutralGray}; margin-top: 2px;">Grade ${getScoreGrade(section.percentage)}</div>
               </div>
             </div>
-            <div style="width: 100%; height: 12px; background-color: #e5e7eb; border-radius: 6px; overflow: hidden; margin-bottom: 10px;">
-              <div style="width: ${section.percentage}%; height: 100%; background: linear-gradient(90deg, ${getScoreColor(section.percentage)} 0%, ${getScoreColor(section.percentage)}CC 100%); border-radius: 6px;"></div>
+            <div style="width: 100%; height: 12px; background-color: ${pdf.gray200}; border-radius: 6px; overflow: hidden; margin-bottom: 10px;">
+              <div style="width: ${section.percentage}%; height: 100%; background: linear-gradient(90deg, ${pdfScoreColor(section.percentage)} 0%, ${pdfScoreColor(section.percentage)}CC 100%); border-radius: 6px;"></div>
             </div>
-            <p style="color: #6B7280; margin: 0; font-size: 13px; line-height: 1.6;">
+            <p style="color: ${pdf.neutralGray}; margin: 0; font-size: 13px; line-height: 1.6;">
               ${section.percentage >= 80 
                 ? 'This section demonstrates strong compliance with recommended practices.'
                 : section.percentage >= 60
@@ -188,11 +175,11 @@ export const generatePremiumReportPdf = async (
       ${additionalData?.recommendations && additionalData.recommendations.length > 0 ? `
         <!-- Priority Recommendations -->
         <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px;">
-          <h2 style="color: #2D7D7D; margin: 0 0 25px 0; font-size: 22px; font-weight: 600;">Priority Recommendations</h2>
+          <h2 style="color: ${pdf.teal}; margin: 0 0 25px 0; font-size: 22px; font-weight: 600;">Priority Recommendations</h2>
           ${additionalData.recommendations.slice(0, 5).map((rec: any) => `
-            <div style="margin-bottom: 15px; padding: 15px; background: #fef3c7; border-radius: 8px; border-left: 4px solid #F59E0B;">
-              <div style="font-weight: 600; color: #374151; margin-bottom: 5px;">${rec.title || rec.category}</div>
-              <p style="color: #6B7280; margin: 0; font-size: 13px; line-height: 1.5;">${rec.description || rec.recommendation}</p>
+            <div style="margin-bottom: 15px; padding: 15px; background: ${pdf.amber100}; border-radius: 8px; border-left: 4px solid ${pdf.riskMedium};">
+              <div style="font-weight: 600; color: ${pdf.gray700}; margin-bottom: 5px;">${rec.title || rec.category}</div>
+              <p style="color: ${pdf.neutralGray}; margin: 0; font-size: 13px; line-height: 1.5;">${rec.description || rec.recommendation}</p>
             </div>
           `).join('')}
         </div>
@@ -200,18 +187,18 @@ export const generatePremiumReportPdf = async (
       
       ${additionalData?.criticalFindings && additionalData.criticalFindings.length > 0 ? `
         <!-- Critical Findings -->
-        <div style="background: #fef2f2; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px; border-left: 5px solid #DC2626;">
-          <h2 style="color: #DC2626; margin: 0 0 20px 0; font-size: 22px; font-weight: 600;">⚠️ Critical Findings</h2>
-          <ul style="margin: 0; padding-left: 20px; color: #374151; line-height: 1.8;">
+        <div style="background: ${pdf.red50}; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px; border-left: 5px solid ${pdf.riskCritical};">
+          <h2 style="color: ${pdf.riskCritical}; margin: 0 0 20px 0; font-size: 22px; font-weight: 600;">⚠️ Critical Findings</h2>
+          <ul style="margin: 0; padding-left: 20px; color: ${pdf.gray700}; line-height: 1.8;">
             ${additionalData.criticalFindings.map((finding: string) => `<li style="margin-bottom: 8px;">${finding}</li>`).join('')}
           </ul>
         </div>
       ` : ''}
       
       <!-- Next Steps -->
-      <div style="background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%); padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px;">
-        <h2 style="color: #1E3B8A; margin: 0 0 15px 0; font-size: 22px; font-weight: 600;">Recommended Next Steps</h2>
-        <ol style="margin: 0; padding-left: 20px; color: #374151; line-height: 2;">
+      <div style="background: linear-gradient(135deg, ${pdf.blue50} 0%, ${pdf.sky100} 100%); padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px;">
+        <h2 style="color: ${pdf.navy}; margin: 0 0 15px 0; font-size: 22px; font-weight: 600;">Recommended Next Steps</h2>
+        <ol style="margin: 0; padding-left: 20px; color: ${pdf.gray700}; line-height: 2;">
           <li>Review and prioritize recommendations based on business impact</li>
           <li>Assign ownership and establish timelines for implementation</li>
           <li>Schedule quarterly reassessments to track progress</li>
@@ -221,11 +208,11 @@ export const generatePremiumReportPdf = async (
       </div>
       
       <!-- Premium Footer -->
-      <div style="margin-top: 40px; text-align: center; color: #6B7280; font-size: 11px; border-top: 2px solid #e5e7eb; padding-top: 20px;">
-        <div style="font-weight: 600; color: #1E3B8A; margin-bottom: 5px;">PREMIUM REPORT</div>
+      <div style="margin-top: 40px; text-align: center; color: ${pdf.neutralGray}; font-size: 11px; border-top: 2px solid ${pdf.gray200}; padding-top: 20px;">
+        <div style="font-weight: 600; color: ${pdf.navy}; margin-bottom: 5px;">PREMIUM REPORT</div>
         <p style="margin: 5px 0;">Generated by VendorSoluce Supply Chain Risk Management Platform</p>
         <p style="margin: 5px 0;">© ${new Date().getFullYear()} VendorSoluce. All rights reserved.</p>
-        <p style="margin: 10px 0 0 0; font-size: 10px; color: #9CA3AF;">This premium report includes enhanced analytics, executive summaries, and detailed recommendations.</p>
+        <p style="margin: 10px 0 0 0; font-size: 10px; color: ${pdf.gray400};">This premium report includes enhanced analytics, executive summaries, and detailed recommendations.</p>
       </div>
     </div>
   `;
@@ -239,16 +226,6 @@ export const generateRecommendationsPdf = async (
   date: string,
   filename: string
 ) => {
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'critical': return '#DC2626';
-      case 'high': return '#EA580C';
-      case 'medium': return '#F59E0B';
-      case 'low': return '#16A34A';
-      default: return '#6B7280';
-    }
-  };
-
   const getPriorityIcon = (priority: string) => {
     switch (priority) {
       case 'critical': return '🔴';
@@ -261,63 +238,63 @@ export const generateRecommendationsPdf = async (
 
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
-      <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1E3B8A; padding-bottom: 20px;">
-        <h1 style="color: #1E3B8A; margin: 0; font-size: 28px;">${title}</h1>
-        <p style="color: #666; margin: 10px 0 0 0; font-size: 16px;">Generated: ${date}</p>
+      <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid ${pdf.navy}; padding-bottom: 20px;">
+        <h1 style="color: ${pdf.navy}; margin: 0; font-size: 28px;">${title}</h1>
+        <p style="color: ${pdf.mutedText}; margin: 10px 0 0 0; font-size: 16px;">Generated: ${date}</p>
       </div>
       
-      <div style="margin-bottom: 30px; padding: 20px; background-color: #f0f7ff; border-radius: 8px; border: 1px solid #3B82F6;">
-        <h2 style="color: #1E3B8A; margin: 0 0 10px 0; font-size: 20px;">Executive Summary</h2>
-        <p style="color: #374151; margin: 0; line-height: 1.6;">
+      <div style="margin-bottom: 30px; padding: 20px; background-color: ${pdf.blue50}; border-radius: 8px; border: 1px solid ${pdf.blue};">
+        <h2 style="color: ${pdf.navy}; margin: 0 0 10px 0; font-size: 20px;">Executive Summary</h2>
+        <p style="color: ${pdf.gray700}; margin: 0; line-height: 1.6;">
           This document contains ${recommendations.length} prioritized recommendations to improve your supply chain security posture. 
           Recommendations are based on NIST SP 800-161 guidelines and your assessment results.
         </p>
       </div>
       
-      <h2 style="color: #2D7D7D; margin-bottom: 20px; font-size: 22px;">Recommendations by Priority</h2>
+      <h2 style="color: ${pdf.teal}; margin-bottom: 20px; font-size: 22px;">Recommendations by Priority</h2>
       
       ${recommendations.map((rec) => `
-        <div style="margin-bottom: 25px; padding: 20px; background-color: #f9fafb; border-radius: 8px; border-left: 4px solid ${getPriorityColor(rec.priority)};">
+        <div style="margin-bottom: 25px; padding: 20px; background-color: ${pdf.gray50}; border-radius: 8px; border-left: 4px solid ${pdfPriorityColor(rec.priority)};">
           <div style="display: flex; align-items: center; margin-bottom: 15px;">
             <span style="font-size: 18px; margin-right: 8px;">${getPriorityIcon(rec.priority)}</span>
-            <h3 style="color: #374151; margin: 0; font-size: 18px; font-weight: 600;">${rec.title}</h3>
-            <span style="background-color: ${getPriorityColor(rec.priority)}; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: auto;">
+            <h3 style="color: ${pdf.gray700}; margin: 0; font-size: 18px; font-weight: 600;">${rec.title}</h3>
+            <span style="background-color: ${pdfPriorityColor(rec.priority)}; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: auto;">
               ${rec.priority.toUpperCase()}
             </span>
           </div>
           
-          <p style="color: #6B7280; margin: 0 0 15px 0; line-height: 1.6;">${rec.description}</p>
+          <p style="color: ${pdf.neutralGray}; margin: 0 0 15px 0; line-height: 1.6;">${rec.description}</p>
           
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; font-size: 14px;">
             <div>
-              <strong style="color: #374151;">Category:</strong> <span style="color: #6B7280;">${rec.category}</span>
+              <strong style="color: ${pdf.gray700};">Category:</strong> <span style="color: ${pdf.neutralGray};">${rec.category}</span>
             </div>
             <div>
-              <strong style="color: #374151;">Effort:</strong> <span style="color: #6B7280;">${rec.effort}</span>
+              <strong style="color: ${pdf.gray700};">Effort:</strong> <span style="color: ${pdf.neutralGray};">${rec.effort}</span>
             </div>
             <div>
-              <strong style="color: #374151;">Timeframe:</strong> <span style="color: #6B7280;">${rec.timeframe}</span>
+              <strong style="color: ${pdf.gray700};">Timeframe:</strong> <span style="color: ${pdf.neutralGray};">${rec.timeframe}</span>
             </div>
             <div>
-              <strong style="color: #374151;">Impact:</strong> <span style="color: #6B7280;">High</span>
+              <strong style="color: ${pdf.gray700};">Impact:</strong> <span style="color: ${pdf.neutralGray};">High</span>
             </div>
           </div>
           
           ${rec.steps && rec.steps.length > 0 ? `
             <div style="margin-top: 15px;">
-              <strong style="color: #374151; font-size: 14px;">Implementation Steps:</strong>
-              <ol style="margin: 8px 0 0 20px; padding: 0; color: #6B7280; font-size: 13px; line-height: 1.5;">
+              <strong style="color: ${pdf.gray700}; font-size: 14px;">Implementation Steps:</strong>
+              <ol style="margin: 8px 0 0 20px; padding: 0; color: ${pdf.neutralGray}; font-size: 13px; line-height: 1.5;">
                 ${rec.steps.slice(0, 3).map((step: string) => `<li style="margin-bottom: 4px;">${step}</li>`).join('')}
-                ${rec.steps.length > 3 ? `<li style="color: #9CA3AF; font-style: italic;">... and ${rec.steps.length - 3} more steps</li>` : ''}
+                ${rec.steps.length > 3 ? `<li style="color: ${pdf.gray400}; font-style: italic;">... and ${rec.steps.length - 3} more steps</li>` : ''}
               </ol>
             </div>
           ` : ''}
         </div>
       `).join('')}
       
-      <div style="margin-top: 40px; padding: 20px; background-color: #fef3c7; border-radius: 8px; border: 1px solid #F59E0B;">
-        <h3 style="color: #92400E; margin: 0 0 10px 0; font-size: 18px;">⚠️ Implementation Guidelines</h3>
-        <ul style="color: #78350F; margin: 0; padding-left: 20px; line-height: 1.6;">
+      <div style="margin-top: 40px; padding: 20px; background-color: ${pdf.amber100}; border-radius: 8px; border: 1px solid ${pdf.riskMedium};">
+        <h3 style="color: ${pdf.amber800}; margin: 0 0 10px 0; font-size: 18px;">⚠️ Implementation Guidelines</h3>
+        <ul style="color: ${pdf.amber900}; margin: 0; padding-left: 20px; line-height: 1.6;">
           <li>Address critical and high-priority recommendations first</li>
           <li>Assign clear ownership and timelines for each recommendation</li>
           <li>Track implementation progress regularly</li>
@@ -325,7 +302,7 @@ export const generateRecommendationsPdf = async (
         </ul>
       </div>
       
-      <div style="margin-top: 30px; text-align: center; color: #6B7280; font-size: 12px; border-top: 1px solid #e5e7eb; padding-top: 20px;">
+      <div style="margin-top: 30px; text-align: center; color: ${pdf.neutralGray}; font-size: 12px; border-top: 1px solid ${pdf.gray200}; padding-top: 20px;">
         <p style="margin: 0;">Generated by VendorSoluce Supply Chain Risk Management Platform</p>
         <p style="margin: 5px 0 0 0;">© ${new Date().getFullYear()} VendorSoluce. All rights reserved.</p>
       </div>
@@ -437,8 +414,8 @@ const generateMockTemplate = (filename: string) => {
           <title>VendorSoluce Template - ${filename}</title>
           <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
-            h1 { color: #1E3B8A; }
-            .content { border: 1px solid #ddd; padding: 20px; margin: 20px 0; }
+            h1 { color: ${pdf.navy}; }
+            .content { border: 1px solid ${pdf.borderLight}; padding: 20px; margin: 20px 0; }
           </style>
         </head>
         <body>
@@ -490,11 +467,11 @@ const generateMockHtmlContent = (filename: string): string => {
             font-family: Arial, sans-serif; 
             padding: 40px; 
             line-height: 1.6; 
-            color: #333;
+            color: ${pdf.bodyText};
           }
           h1 { 
-            color: #1E3B8A; 
-            border-bottom: 2px solid #1E3B8A;
+            color: ${pdf.navy}; 
+            border-bottom: 2px solid ${pdf.navy};
             padding-bottom: 10px;
             margin-bottom: 30px;
           }
@@ -503,18 +480,18 @@ const generateMockHtmlContent = (filename: string): string => {
             margin-bottom: 40px;
           }
           .content { 
-            border: 1px solid #ddd; 
+            border: 1px solid ${pdf.borderLight}; 
             padding: 30px; 
             margin: 20px 0; 
-            background-color: #f9f9f9;
+            background-color: ${pdf.tableHeaderBg};
             border-radius: 8px;
           }
           .footer {
             margin-top: 50px;
             text-align: center;
             font-size: 12px;
-            color: #666;
-            border-top: 1px solid #ddd;
+            color: ${pdf.mutedText};
+            border-top: 1px solid ${pdf.borderLight};
             padding-top: 20px;
           }
         </style>
@@ -612,13 +589,6 @@ export const generateComprehensiveAssessmentPdf = async (
   data: ComprehensiveAssessmentData,
   filename: string
 ) => {
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return '#16A34A';
-    if (score >= 60) return '#F59E0B';
-    if (score >= 40) return '#EA580C';
-    return '#DC2626';
-  };
-
   const getScoreLabel = (score: number) => {
     if (score >= 80) return 'Low Risk';
     if (score >= 60) return 'Moderate Risk';
@@ -640,7 +610,7 @@ export const generateComprehensiveAssessmentPdf = async (
   // Build questions HTML if available
   const questionsHtml = data.questions && data.questions.length > 0 ? `
     <div style="margin-top: 40px; page-break-before: always;">
-      <h2 style="color: #2D7D7D; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid #2D7D7D; padding-bottom: 10px;">
+      <h2 style="color: ${pdf.teal}; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid ${pdf.teal}; padding-bottom: 10px;">
         Detailed Assessment Responses
       </h2>
       ${data.questions.reduce((acc, question, index) => {
@@ -648,21 +618,21 @@ export const generateComprehensiveAssessmentPdf = async (
         const prevSection = index > 0 ? data.questions![index - 1].section : null;
         const sectionHeader = currentSection !== prevSection ? `
           <div style="margin-top: ${index > 0 ? '30px' : '0'}; margin-bottom: 15px;">
-            <h3 style="color: #1E3B8A; font-size: 18px; font-weight: 600; background-color: #f0f7ff; padding: 10px 15px; border-radius: 6px; border-left: 4px solid #1E3B8A;">
+            <h3 style="color: ${pdf.navy}; font-size: 18px; font-weight: 600; background-color: ${pdf.blue50}; padding: 10px 15px; border-radius: 6px; border-left: 4px solid ${pdf.navy};">
               ${currentSection}
             </h3>
           </div>
         ` : '';
         
         return acc + sectionHeader + `
-          <div style="margin-bottom: 20px; padding: 15px; background-color: #f9fafb; border-radius: 6px; border-left: 3px solid #3B82F6;">
+          <div style="margin-bottom: 20px; padding: 15px; background-color: ${pdf.gray50}; border-radius: 6px; border-left: 3px solid ${pdf.blue};">
             <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
               <div style="flex: 1;">
-                <div style="font-weight: 600; color: #374151; margin-bottom: 5px; font-size: 14px;">
+                <div style="font-weight: 600; color: ${pdf.gray700}; margin-bottom: 5px; font-size: 14px;">
                   ${question.id}: ${question.question}
                 </div>
                 ${question.guidance ? `
-                  <div style="font-size: 12px; color: #6B7280; font-style: italic; margin-top: 5px;">
+                  <div style="font-size: 12px; color: ${pdf.neutralGray}; font-style: italic; margin-top: 5px;">
                     Guidance: ${question.guidance}
                   </div>
                 ` : ''}
@@ -670,13 +640,13 @@ export const generateComprehensiveAssessmentPdf = async (
             </div>
             <div style="margin-top: 10px;">
               <div style="display: flex; align-items: center; gap: 10px;">
-                <strong style="color: #374151; font-size: 13px;">Response:</strong>
-                <span style="background-color: ${getScoreColor(typeof question.answer === 'number' ? question.answer : 0)}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                <strong style="color: ${pdf.gray700}; font-size: 13px;">Response:</strong>
+                <span style="background-color: ${pdfScoreColor(typeof question.answer === 'number' ? question.answer : 0)}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">
                   ${formatAnswer(question.answer, question.type)}
                 </span>
               </div>
               ${question.evidenceFiles && question.evidenceFiles.length > 0 ? `
-                <div style="margin-top: 8px; font-size: 12px; color: #6B7280;">
+                <div style="margin-top: 8px; font-size: 12px; color: ${pdf.neutralGray};">
                   <strong>Evidence Files:</strong> ${question.evidenceFiles.join(', ')}
                 </div>
               ` : ''}
@@ -690,15 +660,15 @@ export const generateComprehensiveAssessmentPdf = async (
   // Build Word documents content HTML if available
   const wordDocumentsHtml = data.wordDocuments && data.wordDocuments.length > 0 ? `
     <div style="margin-top: 40px; page-break-before: always;">
-      <h2 style="color: #2D7D7D; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid #2D7D7D; padding-bottom: 10px;">
+      <h2 style="color: ${pdf.teal}; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid ${pdf.teal}; padding-bottom: 10px;">
         Supporting Documentation
       </h2>
       ${data.wordDocuments.map((doc, index) => `
-        <div style="margin-bottom: 30px; padding: 20px; background-color: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb;">
-          <h3 style="color: #1E3B8A; margin: 0 0 15px 0; font-size: 16px; font-weight: 600;">
+        <div style="margin-bottom: 30px; padding: 20px; background-color: ${pdf.gray50}; border-radius: 8px; border: 1px solid ${pdf.gray200};">
+          <h3 style="color: ${pdf.navy}; margin: 0 0 15px 0; font-size: 16px; font-weight: 600;">
             Document ${index + 1}: ${doc.name}
           </h3>
-          <div style="background-color: white; padding: 15px; border-radius: 6px; border: 1px solid #e5e7eb; max-height: 400px; overflow-y: auto; font-size: 12px; line-height: 1.6; color: #374151; white-space: pre-wrap;">
+          <div style="background-color: white; padding: 15px; border-radius: 6px; border: 1px solid ${pdf.gray200}; max-height: 400px; overflow-y: auto; font-size: 12px; line-height: 1.6; color: ${pdf.gray700}; white-space: pre-wrap;">
             ${doc.content.substring(0, 5000)}${doc.content.length > 5000 ? '\n\n[... Content truncated for brevity ...]' : ''}
           </div>
         </div>
@@ -709,54 +679,54 @@ export const generateComprehensiveAssessmentPdf = async (
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
       <!-- Header -->
-      <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #1E3B8A; padding-bottom: 20px;">
-        <h1 style="color: #1E3B8A; margin: 0; font-size: 28px; font-weight: 700;">${data.assessmentName}</h1>
-        <p style="color: #666; margin: 10px 0 0 0; font-size: 16px;">${data.frameworkName}</p>
-        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Completed: ${data.completedDate}</p>
-        ${data.vendorName ? `<p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Vendor: ${data.vendorName}</p>` : ''}
-        ${data.organizationName ? `<p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Organization: ${data.organizationName}</p>` : ''}
+      <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid ${pdf.navy}; padding-bottom: 20px;">
+        <h1 style="color: ${pdf.navy}; margin: 0; font-size: 28px; font-weight: 700;">${data.assessmentName}</h1>
+        <p style="color: ${pdf.mutedText}; margin: 10px 0 0 0; font-size: 16px;">${data.frameworkName}</p>
+        <p style="color: ${pdf.mutedText}; margin: 5px 0 0 0; font-size: 14px;">Completed: ${data.completedDate}</p>
+        ${data.vendorName ? `<p style="color: ${pdf.mutedText}; margin: 5px 0 0 0; font-size: 14px;">Vendor: ${data.vendorName}</p>` : ''}
+        ${data.organizationName ? `<p style="color: ${pdf.mutedText}; margin: 5px 0 0 0; font-size: 14px;">Organization: ${data.organizationName}</p>` : ''}
       </div>
       
       <!-- Executive Summary -->
-      <div style="text-align: center; margin-bottom: 40px; padding: 30px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 8px; border: 1px solid #e2e8f0;">
-        <div style="font-size: 48px; font-weight: bold; color: ${getScoreColor(data.overallScore)}; margin-bottom: 10px;">${data.overallScore}%</div>
-        <div style="font-size: 18px; color: #374151; margin-bottom: 5px;">Overall Compliance Score</div>
-        <div style="font-size: 14px; color: ${getScoreColor(data.overallScore)}; font-weight: 600;">${getScoreLabel(data.overallScore)}</div>
+      <div style="text-align: center; margin-bottom: 40px; padding: 30px; background: linear-gradient(135deg, ${pdf.slate50} 0%, ${pdf.slate200} 100%); border-radius: 8px; border: 1px solid ${pdf.slate200};">
+        <div style="font-size: 48px; font-weight: bold; color: ${pdfScoreColor(data.overallScore)}; margin-bottom: 10px;">${data.overallScore}%</div>
+        <div style="font-size: 18px; color: ${pdf.gray700}; margin-bottom: 5px;">Overall Compliance Score</div>
+        <div style="font-size: 14px; color: ${pdfScoreColor(data.overallScore)}; font-weight: 600;">${getScoreLabel(data.overallScore)}</div>
       </div>
       
       <!-- Section Scores -->
-      <h2 style="color: #2D7D7D; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid #2D7D7D; padding-bottom: 10px;">Section Scores</h2>
+      <h2 style="color: ${pdf.teal}; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid ${pdf.teal}; padding-bottom: 10px;">Section Scores</h2>
       <div style="margin-bottom: 30px;">
         ${data.sectionScores.map(section => `
-          <div style="margin-bottom: 15px; padding: 15px; background-color: #f9fafb; border-radius: 6px; border-left: 4px solid ${getScoreColor(section.percentage)};">
+          <div style="margin-bottom: 15px; padding: 15px; background-color: ${pdf.gray50}; border-radius: 6px; border-left: 4px solid ${pdfScoreColor(section.percentage)};">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <span style="font-weight: 600; color: #374151; font-size: 14px;">${section.title}</span>
+              <span style="font-weight: 600; color: ${pdf.gray700}; font-size: 14px;">${section.title}</span>
               <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-weight: 600; color: ${getScoreColor(section.percentage)}; font-size: 14px;">${section.percentage}%</span>
-                ${section.completed ? '<span style="color: #16A34A; font-size: 12px;">✓</span>' : ''}
+                <span style="font-weight: 600; color: ${pdfScoreColor(section.percentage)}; font-size: 14px;">${section.percentage}%</span>
+                ${section.completed ? '<span style="color: ${pdf.riskLow}; font-size: 12px;">✓</span>' : ''}
               </div>
             </div>
-            <div style="width: 100%; height: 8px; background-color: #e5e7eb; border-radius: 4px; overflow: hidden;">
-              <div style="width: ${section.percentage}%; height: 100%; background-color: ${getScoreColor(section.percentage)}; border-radius: 4px; transition: width 0.3s;"></div>
+            <div style="width: 100%; height: 8px; background-color: ${pdf.gray200}; border-radius: 4px; overflow: hidden;">
+              <div style="width: ${section.percentage}%; height: 100%; background-color: ${pdfScoreColor(section.percentage)}; border-radius: 4px; transition: width 0.3s;"></div>
             </div>
           </div>
         `).join('')}
       </div>
 
       <!-- Key Findings -->
-      <div style="margin-top: 40px; padding: 20px; background-color: #f0f7ff; border-radius: 8px; border: 1px solid #3B82F6;">
-        <h3 style="color: #1E3B8A; margin: 0 0 15px 0; font-size: 18px;">Key Findings</h3>
+      <div style="margin-top: 40px; padding: 20px; background-color: ${pdf.blue50}; border-radius: 8px; border: 1px solid ${pdf.blue};">
+        <h3 style="color: ${pdf.navy}; margin: 0 0 15px 0; font-size: 18px;">Key Findings</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
           <div>
-            <strong style="color: #374151; font-size: 14px;">Strengths:</strong>
-            <ul style="margin: 8px 0 0 20px; padding: 0; color: #6B7280; font-size: 13px; line-height: 1.6;">
+            <strong style="color: ${pdf.gray700}; font-size: 14px;">Strengths:</strong>
+            <ul style="margin: 8px 0 0 20px; padding: 0; color: ${pdf.neutralGray}; font-size: 13px; line-height: 1.6;">
               ${data.sectionScores.filter(s => s.percentage >= 70).map(s => `<li>${s.title} (${s.percentage}%)</li>`).join('')}
               ${data.sectionScores.filter(s => s.percentage >= 70).length === 0 ? '<li>No significant strengths identified</li>' : ''}
             </ul>
           </div>
           <div>
-            <strong style="color: #374151; font-size: 14px;">Areas for Improvement:</strong>
-            <ul style="margin: 8px 0 0 20px; padding: 0; color: #6B7280; font-size: 13px; line-height: 1.6;">
+            <strong style="color: ${pdf.gray700}; font-size: 14px;">Areas for Improvement:</strong>
+            <ul style="margin: 8px 0 0 20px; padding: 0; color: ${pdf.neutralGray}; font-size: 13px; line-height: 1.6;">
               ${data.sectionScores.filter(s => s.percentage < 60).map(s => `<li>${s.title} (${s.percentage}%)</li>`).join('')}
               ${data.sectionScores.filter(s => s.percentage < 60).length === 0 ? '<li>No critical areas identified</li>' : ''}
             </ul>
@@ -768,9 +738,9 @@ export const generateComprehensiveAssessmentPdf = async (
       ${wordDocumentsHtml}
       
       <!-- Assessment Summary -->
-      <div style="margin-top: 40px; padding: 20px; background-color: #f0f7ff; border-radius: 8px; border: 1px solid #3B82F6;">
-        <h3 style="color: #1E3B8A; margin: 0 0 10px 0; font-size: 18px;">Assessment Summary</h3>
-        <p style="color: #374151; margin: 0; line-height: 1.6; font-size: 14px;">
+      <div style="margin-top: 40px; padding: 20px; background-color: ${pdf.blue50}; border-radius: 8px; border: 1px solid ${pdf.blue};">
+        <h3 style="color: ${pdf.navy}; margin: 0 0 10px 0; font-size: 18px;">Assessment Summary</h3>
+        <p style="color: ${pdf.gray700}; margin: 0; line-height: 1.6; font-size: 14px;">
           This comprehensive assessment evaluates your organization's supply chain risk management practices based on ${data.frameworkName} guidelines. 
           Scores above 80% indicate strong compliance, while scores below 60% suggest areas requiring immediate attention.
           ${data.questions && data.questions.length > 0 ? `This report includes detailed responses to ${data.questions.length} assessment questions.` : ''}
@@ -778,7 +748,7 @@ export const generateComprehensiveAssessmentPdf = async (
       </div>
       
       <!-- Footer -->
-      <div style="margin-top: 30px; text-align: center; color: #6B7280; font-size: 12px; border-top: 1px solid #e5e7eb; padding-top: 20px;">
+      <div style="margin-top: 30px; text-align: center; color: ${pdf.neutralGray}; font-size: 12px; border-top: 1px solid ${pdf.gray200}; padding-top: 20px;">
         <p style="margin: 0;">Generated by VendorSoluce Supply Chain Risk Management Platform</p>
         <p style="margin: 5px 0 0 0;">© ${new Date().getFullYear()} VendorSoluce. All rights reserved.</p>
         ${data.assessmentId ? `<p style="margin: 5px 0 0 0; font-size: 11px;">Assessment ID: ${data.assessmentId}</p>` : ''}

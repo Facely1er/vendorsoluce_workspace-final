@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { generatePdfFromHtml } from './generatePdf';
+import { pdf, pdfScoreColor } from './pdfHtmlPalette';
 
 export interface ImportResult {
   success: boolean;
@@ -183,20 +184,29 @@ export const exportVendors = async (vendors: any[], options: ExportOptions): Pro
 const exportVendorsToPdf = async (vendors: any[], options: ExportOptions, filename: string) => {
   const getRiskColor = (riskLevel: string) => {
     switch (riskLevel?.toLowerCase()) {
-      case 'low': return '#16A34A';
-      case 'medium': return '#F59E0B';
-      case 'high': return '#EA580C';
-      case 'critical': return '#DC2626';
-      default: return '#6B7280';
+      case 'low':
+        return pdf.riskLow;
+      case 'medium':
+        return pdf.riskMedium;
+      case 'high':
+        return pdf.riskHigh;
+      case 'critical':
+        return pdf.riskCritical;
+      default:
+        return pdf.neutralGray;
     }
   };
 
   const getComplianceColor = (status: string) => {
     switch (status?.toLowerCase()) {
-      case 'compliant': return '#16A34A';
-      case 'partial': return '#F59E0B';
-      case 'non-compliant': return '#DC2626';
-      default: return '#6B7280';
+      case 'compliant':
+        return pdf.riskLow;
+      case 'partial':
+        return pdf.riskMedium;
+      case 'non-compliant':
+        return pdf.riskCritical;
+      default:
+        return pdf.neutralGray;
     }
   };
 
@@ -206,29 +216,29 @@ const exportVendorsToPdf = async (vendors: any[], options: ExportOptions, filena
 
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
-      <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1E3B8A; padding-bottom: 20px;">
-        <h1 style="color: #1E3B8A; margin: 0; font-size: 28px;">Vendor Export Report</h1>
-        <p style="color: #666; margin: 10px 0 0 0; font-size: 16px;">Generated: ${dateStr}</p>
-        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Total Vendors: ${vendors.length}</p>
+      <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid ${pdf.navy}; padding-bottom: 20px;">
+        <h1 style="color: ${pdf.navy}; margin: 0; font-size: 28px;">Vendor Export Report</h1>
+        <p style="color: ${pdf.mutedText}; margin: 10px 0 0 0; font-size: 16px;">Generated: ${dateStr}</p>
+        <p style="color: ${pdf.mutedText}; margin: 5px 0 0 0; font-size: 14px;">Total Vendors: ${vendors.length}</p>
       </div>
       
       <div style="margin-bottom: 30px;">
-        <h2 style="color: #2D7D7D; margin-bottom: 20px; font-size: 22px;">Vendor List</h2>
+        <h2 style="color: ${pdf.teal}; margin-bottom: 20px; font-size: 22px;">Vendor List</h2>
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
           <thead>
-            <tr style="background-color: #f3f4f6; border-bottom: 2px solid #1E3B8A;">
-              <th style="padding: 12px; text-align: left; color: #374151; font-weight: 600;">Vendor Name</th>
-              <th style="padding: 12px; text-align: left; color: #374151; font-weight: 600;">Industry</th>
-              <th style="padding: 12px; text-align: center; color: #374151; font-weight: 600;">Risk Score</th>
-              <th style="padding: 12px; text-align: center; color: #374151; font-weight: 600;">Risk Level</th>
-              <th style="padding: 12px; text-align: center; color: #374151; font-weight: 600;">Compliance</th>
+            <tr style="background-color: ${pdf.gray100}; border-bottom: 2px solid ${pdf.navy};">
+              <th style="padding: 12px; text-align: left; color: ${pdf.gray700}; font-weight: 600;">Vendor Name</th>
+              <th style="padding: 12px; text-align: left; color: ${pdf.gray700}; font-weight: 600;">Industry</th>
+              <th style="padding: 12px; text-align: center; color: ${pdf.gray700}; font-weight: 600;">Risk Score</th>
+              <th style="padding: 12px; text-align: center; color: ${pdf.gray700}; font-weight: 600;">Risk Level</th>
+              <th style="padding: 12px; text-align: center; color: ${pdf.gray700}; font-weight: 600;">Compliance</th>
             </tr>
           </thead>
           <tbody>
             ${vendors.map((vendor, index) => `
-              <tr style="border-bottom: 1px solid #e5e7eb; ${index % 2 === 0 ? 'background-color: #f9fafb;' : ''}">
-                <td style="padding: 10px; color: #374151;">${vendor.name || 'N/A'}</td>
-                <td style="padding: 10px; color: #6B7280;">${vendor.industry || 'N/A'}</td>
+              <tr style="border-bottom: 1px solid ${pdf.gray200}; ${index % 2 === 0 ? 'background-color: ${pdf.gray50};' : ''}">
+                <td style="padding: 10px; color: ${pdf.gray700};">${vendor.name || 'N/A'}</td>
+                <td style="padding: 10px; color: ${pdf.neutralGray};">${vendor.industry || 'N/A'}</td>
                 <td style="padding: 10px; text-align: center; font-weight: 600; color: ${getRiskColor(vendor.risk_level)};">${vendor.risk_score || 0}</td>
                 <td style="padding: 10px; text-align: center;">
                   <span style="background-color: ${getRiskColor(vendor.risk_level)}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">
@@ -247,28 +257,28 @@ const exportVendorsToPdf = async (vendors: any[], options: ExportOptions, filena
       </div>
 
       ${vendors.length > 0 ? `
-        <div style="margin-top: 30px; padding: 20px; background-color: #f0f7ff; border-radius: 8px; border: 1px solid #3B82F6;">
-          <h3 style="color: #1E3B8A; margin: 0 0 15px 0; font-size: 18px;">Summary Statistics</h3>
+        <div style="margin-top: 30px; padding: 20px; background-color: ${pdf.blue50}; border-radius: 8px; border: 1px solid ${pdf.blue};">
+          <h3 style="color: ${pdf.navy}; margin: 0 0 15px 0; font-size: 18px;">Summary Statistics</h3>
           <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
             <div>
-              <strong style="color: #374151;">Total Vendors:</strong> 
-              <span style="color: #6B7280; margin-left: 8px;">${vendors.length}</span>
+              <strong style="color: ${pdf.gray700};">Total Vendors:</strong> 
+              <span style="color: ${pdf.neutralGray}; margin-left: 8px;">${vendors.length}</span>
             </div>
             <div>
-              <strong style="color: #374151;">Average Risk Score:</strong> 
-              <span style="color: #6B7280; margin-left: 8px;">
+              <strong style="color: ${pdf.gray700};">Average Risk Score:</strong> 
+              <span style="color: ${pdf.neutralGray}; margin-left: 8px;">
                 ${Math.round(vendors.reduce((sum, v) => sum + (v.risk_score || 0), 0) / vendors.length)}
               </span>
             </div>
             <div>
-              <strong style="color: #374151;">High Risk Vendors:</strong> 
-              <span style="color: #DC2626; margin-left: 8px;">
+              <strong style="color: ${pdf.gray700};">High Risk Vendors:</strong> 
+              <span style="color: ${pdf.riskCritical}; margin-left: 8px;">
                 ${vendors.filter(v => ['high', 'critical'].includes(v.risk_level?.toLowerCase())).length}
               </span>
             </div>
             <div>
-              <strong style="color: #374151;">Compliant Vendors:</strong> 
-              <span style="color: #16A34A; margin-left: 8px;">
+              <strong style="color: ${pdf.gray700};">Compliant Vendors:</strong> 
+              <span style="color: ${pdf.riskLow}; margin-left: 8px;">
                 ${vendors.filter(v => v.compliance_status?.toLowerCase() === 'compliant').length}
               </span>
             </div>
@@ -276,7 +286,7 @@ const exportVendorsToPdf = async (vendors: any[], options: ExportOptions, filena
         </div>
       ` : ''}
       
-      <div style="margin-top: 30px; text-align: center; color: #6B7280; font-size: 12px; border-top: 1px solid #e5e7eb; padding-top: 20px;">
+      <div style="margin-top: 30px; text-align: center; color: ${pdf.neutralGray}; font-size: 12px; border-top: 1px solid ${pdf.gray200}; padding-top: 20px;">
         <p style="margin: 0;">Generated by VendorSoluce Supply Chain Risk Management Platform</p>
         <p style="margin: 5px 0 0 0;">© ${new Date().getFullYear()} VendorSoluce. All rights reserved.</p>
       </div>
@@ -444,50 +454,43 @@ export const exportSBOMAnalyses = async (analyses: any[], options: ExportOptions
 };
 
 const exportSBOMAnalysesToPdf = async (analyses: any[], options: ExportOptions, filename: string) => {
-  const getRiskColor = (score: number) => {
-    if (score >= 80) return '#16A34A';
-    if (score >= 60) return '#F59E0B';
-    if (score >= 40) return '#EA580C';
-    return '#DC2626';
-  };
-
   const dateStr = options.dateFormat === 'local' 
     ? new Date().toLocaleDateString()
     : new Date().toISOString().split('T')[0];
 
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
-      <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1E3B8A; padding-bottom: 20px;">
-        <h1 style="color: #1E3B8A; margin: 0; font-size: 28px;">SBOM Analyses Export Report</h1>
-        <p style="color: #666; margin: 10px 0 0 0; font-size: 16px;">Generated: ${dateStr}</p>
-        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Total Analyses: ${analyses.length}</p>
+      <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid ${pdf.navy}; padding-bottom: 20px;">
+        <h1 style="color: ${pdf.navy}; margin: 0; font-size: 28px;">SBOM Analyses Export Report</h1>
+        <p style="color: ${pdf.mutedText}; margin: 10px 0 0 0; font-size: 16px;">Generated: ${dateStr}</p>
+        <p style="color: ${pdf.mutedText}; margin: 5px 0 0 0; font-size: 14px;">Total Analyses: ${analyses.length}</p>
       </div>
       
       <div style="margin-bottom: 30px;">
-        <h2 style="color: #2D7D7D; margin-bottom: 20px; font-size: 22px;">SBOM Analysis Results</h2>
+        <h2 style="color: ${pdf.teal}; margin-bottom: 20px; font-size: 22px;">SBOM Analysis Results</h2>
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
           <thead>
-            <tr style="background-color: #f3f4f6; border-bottom: 2px solid #1E3B8A;">
-              <th style="padding: 12px; text-align: left; color: #374151; font-weight: 600;">Filename</th>
-              <th style="padding: 12px; text-align: left; color: #374151; font-weight: 600;">File Type</th>
-              <th style="padding: 12px; text-align: center; color: #374151; font-weight: 600;">Components</th>
-              <th style="padding: 12px; text-align: center; color: #374151; font-weight: 600;">Vulnerabilities</th>
-              <th style="padding: 12px; text-align: center; color: #374151; font-weight: 600;">Risk Score</th>
+            <tr style="background-color: ${pdf.gray100}; border-bottom: 2px solid ${pdf.navy};">
+              <th style="padding: 12px; text-align: left; color: ${pdf.gray700}; font-weight: 600;">Filename</th>
+              <th style="padding: 12px; text-align: left; color: ${pdf.gray700}; font-weight: 600;">File Type</th>
+              <th style="padding: 12px; text-align: center; color: ${pdf.gray700}; font-weight: 600;">Components</th>
+              <th style="padding: 12px; text-align: center; color: ${pdf.gray700}; font-weight: 600;">Vulnerabilities</th>
+              <th style="padding: 12px; text-align: center; color: ${pdf.gray700}; font-weight: 600;">Risk Score</th>
             </tr>
           </thead>
           <tbody>
             ${analyses.map((analysis, index) => {
               const riskScore = analysis.risk_score || 0;
               return `
-                <tr style="border-bottom: 1px solid #e5e7eb; ${index % 2 === 0 ? 'background-color: #f9fafb;' : ''}">
-                  <td style="padding: 10px; color: #374151;">${analysis.filename || 'N/A'}</td>
-                  <td style="padding: 10px; color: #6B7280;">${analysis.file_type || 'N/A'}</td>
-                  <td style="padding: 10px; text-align: center; color: #374151;">${analysis.total_components || 0}</td>
-                  <td style="padding: 10px; text-align: center; color: ${riskScore >= 60 ? '#DC2626' : '#374151'}; font-weight: ${riskScore >= 60 ? '600' : 'normal'};">
+                <tr style="border-bottom: 1px solid ${pdf.gray200}; ${index % 2 === 0 ? 'background-color: ${pdf.gray50};' : ''}">
+                  <td style="padding: 10px; color: ${pdf.gray700};">${analysis.filename || 'N/A'}</td>
+                  <td style="padding: 10px; color: ${pdf.neutralGray};">${analysis.file_type || 'N/A'}</td>
+                  <td style="padding: 10px; text-align: center; color: ${pdf.gray700};">${analysis.total_components || 0}</td>
+                  <td style="padding: 10px; text-align: center; color: ${riskScore >= 60 ? '${pdf.riskCritical}' : '${pdf.gray700}'}; font-weight: ${riskScore >= 60 ? '600' : 'normal'};">
                     ${analysis.total_vulnerabilities || 0}
                   </td>
                   <td style="padding: 10px; text-align: center;">
-                    <span style="background-color: ${getRiskColor(riskScore)}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">
+                    <span style="background-color: ${pdfScoreColor(riskScore)}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">
                       ${riskScore}%
                     </span>
                   </td>
@@ -499,28 +502,28 @@ const exportSBOMAnalysesToPdf = async (analyses: any[], options: ExportOptions, 
       </div>
 
       ${analyses.length > 0 ? `
-        <div style="margin-top: 30px; padding: 20px; background-color: #f0f7ff; border-radius: 8px; border: 1px solid #3B82F6;">
-          <h3 style="color: #1E3B8A; margin: 0 0 15px 0; font-size: 18px;">Summary Statistics</h3>
+        <div style="margin-top: 30px; padding: 20px; background-color: ${pdf.blue50}; border-radius: 8px; border: 1px solid ${pdf.blue};">
+          <h3 style="color: ${pdf.navy}; margin: 0 0 15px 0; font-size: 18px;">Summary Statistics</h3>
           <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
             <div>
-              <strong style="color: #374151;">Total Analyses:</strong> 
-              <span style="color: #6B7280; margin-left: 8px;">${analyses.length}</span>
+              <strong style="color: ${pdf.gray700};">Total Analyses:</strong> 
+              <span style="color: ${pdf.neutralGray}; margin-left: 8px;">${analyses.length}</span>
             </div>
             <div>
-              <strong style="color: #374151;">Total Components:</strong> 
-              <span style="color: #6B7280; margin-left: 8px;">
+              <strong style="color: ${pdf.gray700};">Total Components:</strong> 
+              <span style="color: ${pdf.neutralGray}; margin-left: 8px;">
                 ${analyses.reduce((sum, a) => sum + (a.total_components || 0), 0)}
               </span>
             </div>
             <div>
-              <strong style="color: #374151;">Total Vulnerabilities:</strong> 
-              <span style="color: #DC2626; margin-left: 8px;">
+              <strong style="color: ${pdf.gray700};">Total Vulnerabilities:</strong> 
+              <span style="color: ${pdf.riskCritical}; margin-left: 8px;">
                 ${analyses.reduce((sum, a) => sum + (a.total_vulnerabilities || 0), 0)}
               </span>
             </div>
             <div>
-              <strong style="color: #374151;">Average Risk Score:</strong> 
-              <span style="color: #6B7280; margin-left: 8px;">
+              <strong style="color: ${pdf.gray700};">Average Risk Score:</strong> 
+              <span style="color: ${pdf.neutralGray}; margin-left: 8px;">
                 ${Math.round(analyses.reduce((sum, a) => sum + (a.risk_score || 0), 0) / analyses.length)}%
               </span>
             </div>
@@ -528,7 +531,7 @@ const exportSBOMAnalysesToPdf = async (analyses: any[], options: ExportOptions, 
         </div>
       ` : ''}
       
-      <div style="margin-top: 30px; text-align: center; color: #6B7280; font-size: 12px; border-top: 1px solid #e5e7eb; padding-top: 20px;">
+      <div style="margin-top: 30px; text-align: center; color: ${pdf.neutralGray}; font-size: 12px; border-top: 1px solid ${pdf.gray200}; padding-top: 20px;">
         <p style="margin: 0;">Generated by VendorSoluce Supply Chain Risk Management Platform</p>
         <p style="margin: 5px 0 0 0;">© ${new Date().getFullYear()} VendorSoluce. All rights reserved.</p>
       </div>
@@ -609,19 +612,16 @@ export const exportAssessments = async (assessments: any[], options: ExportOptio
 };
 
 const exportAssessmentsToPdf = async (assessments: any[], options: ExportOptions, filename: string) => {
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return '#16A34A';
-    if (score >= 60) return '#F59E0B';
-    if (score >= 40) return '#EA580C';
-    return '#DC2626';
-  };
-
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
-      case 'completed': return '#16A34A';
-      case 'in-progress': return '#F59E0B';
-      case 'pending': return '#6B7280';
-      default: return '#6B7280';
+      case 'completed':
+        return pdf.riskLow;
+      case 'in-progress':
+        return pdf.riskMedium;
+      case 'pending':
+        return pdf.neutralGray;
+      default:
+        return pdf.neutralGray;
     }
   };
 
@@ -631,21 +631,21 @@ const exportAssessmentsToPdf = async (assessments: any[], options: ExportOptions
 
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
-      <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1E3B8A; padding-bottom: 20px;">
-        <h1 style="color: #1E3B8A; margin: 0; font-size: 28px;">Assessment Export Report</h1>
-        <p style="color: #666; margin: 10px 0 0 0; font-size: 16px;">Generated: ${dateStr}</p>
-        <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Total Assessments: ${assessments.length}</p>
+      <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid ${pdf.navy}; padding-bottom: 20px;">
+        <h1 style="color: ${pdf.navy}; margin: 0; font-size: 28px;">Assessment Export Report</h1>
+        <p style="color: ${pdf.mutedText}; margin: 10px 0 0 0; font-size: 16px;">Generated: ${dateStr}</p>
+        <p style="color: ${pdf.mutedText}; margin: 5px 0 0 0; font-size: 14px;">Total Assessments: ${assessments.length}</p>
       </div>
       
       <div style="margin-bottom: 30px;">
-        <h2 style="color: #2D7D7D; margin-bottom: 20px; font-size: 22px;">Assessment Results</h2>
+        <h2 style="color: ${pdf.teal}; margin-bottom: 20px; font-size: 22px;">Assessment Results</h2>
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
           <thead>
-            <tr style="background-color: #f3f4f6; border-bottom: 2px solid #1E3B8A;">
-              <th style="padding: 12px; text-align: left; color: #374151; font-weight: 600;">Assessment Name</th>
-              <th style="padding: 12px; text-align: center; color: #374151; font-weight: 600;">Score</th>
-              <th style="padding: 12px; text-align: center; color: #374151; font-weight: 600;">Status</th>
-              <th style="padding: 12px; text-align: center; color: #374151; font-weight: 600;">Completed Date</th>
+            <tr style="background-color: ${pdf.gray100}; border-bottom: 2px solid ${pdf.navy};">
+              <th style="padding: 12px; text-align: left; color: ${pdf.gray700}; font-weight: 600;">Assessment Name</th>
+              <th style="padding: 12px; text-align: center; color: ${pdf.gray700}; font-weight: 600;">Score</th>
+              <th style="padding: 12px; text-align: center; color: ${pdf.gray700}; font-weight: 600;">Status</th>
+              <th style="padding: 12px; text-align: center; color: ${pdf.gray700}; font-weight: 600;">Completed Date</th>
             </tr>
           </thead>
           <tbody>
@@ -657,10 +657,10 @@ const exportAssessmentsToPdf = async (assessments: any[], options: ExportOptions
                   : new Date(assessment.completed_at).toISOString().split('T')[0])
                 : 'Not completed';
               return `
-                <tr style="border-bottom: 1px solid #e5e7eb; ${index % 2 === 0 ? 'background-color: #f9fafb;' : ''}">
-                  <td style="padding: 10px; color: #374151;">${assessment.assessment_name || 'N/A'}</td>
+                <tr style="border-bottom: 1px solid ${pdf.gray200}; ${index % 2 === 0 ? 'background-color: ${pdf.gray50};' : ''}">
+                  <td style="padding: 10px; color: ${pdf.gray700};">${assessment.assessment_name || 'N/A'}</td>
                   <td style="padding: 10px; text-align: center;">
-                    <span style="background-color: ${getScoreColor(score)}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">
+                    <span style="background-color: ${pdfScoreColor(score)}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">
                       ${score}%
                     </span>
                   </td>
@@ -669,7 +669,7 @@ const exportAssessmentsToPdf = async (assessments: any[], options: ExportOptions
                       ${assessment.status || 'Pending'}
                     </span>
                   </td>
-                  <td style="padding: 10px; text-align: center; color: #6B7280; font-size: 12px;">${completedDate}</td>
+                  <td style="padding: 10px; text-align: center; color: ${pdf.neutralGray}; font-size: 12px;">${completedDate}</td>
                 </tr>
               `;
             }).join('')}
@@ -678,28 +678,28 @@ const exportAssessmentsToPdf = async (assessments: any[], options: ExportOptions
       </div>
 
       ${assessments.length > 0 ? `
-        <div style="margin-top: 30px; padding: 20px; background-color: #f0f7ff; border-radius: 8px; border: 1px solid #3B82F6;">
-          <h3 style="color: #1E3B8A; margin: 0 0 15px 0; font-size: 18px;">Summary Statistics</h3>
+        <div style="margin-top: 30px; padding: 20px; background-color: ${pdf.blue50}; border-radius: 8px; border: 1px solid ${pdf.blue};">
+          <h3 style="color: ${pdf.navy}; margin: 0 0 15px 0; font-size: 18px;">Summary Statistics</h3>
           <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
             <div>
-              <strong style="color: #374151;">Total Assessments:</strong> 
-              <span style="color: #6B7280; margin-left: 8px;">${assessments.length}</span>
+              <strong style="color: ${pdf.gray700};">Total Assessments:</strong> 
+              <span style="color: ${pdf.neutralGray}; margin-left: 8px;">${assessments.length}</span>
             </div>
             <div>
-              <strong style="color: #374151;">Average Score:</strong> 
-              <span style="color: #6B7280; margin-left: 8px;">
+              <strong style="color: ${pdf.gray700};">Average Score:</strong> 
+              <span style="color: ${pdf.neutralGray}; margin-left: 8px;">
                 ${Math.round(assessments.reduce((sum, a) => sum + (a.overall_score || 0), 0) / assessments.length)}%
               </span>
             </div>
             <div>
-              <strong style="color: #374151;">Completed:</strong> 
-              <span style="color: #16A34A; margin-left: 8px;">
+              <strong style="color: ${pdf.gray700};">Completed:</strong> 
+              <span style="color: ${pdf.riskLow}; margin-left: 8px;">
                 ${assessments.filter(a => a.status?.toLowerCase() === 'completed').length}
               </span>
             </div>
             <div>
-              <strong style="color: #374151;">In Progress:</strong> 
-              <span style="color: #F59E0B; margin-left: 8px;">
+              <strong style="color: ${pdf.gray700};">In Progress:</strong> 
+              <span style="color: ${pdf.riskMedium}; margin-left: 8px;">
                 ${assessments.filter(a => a.status?.toLowerCase() === 'in-progress').length}
               </span>
             </div>
@@ -707,7 +707,7 @@ const exportAssessmentsToPdf = async (assessments: any[], options: ExportOptions
         </div>
       ` : ''}
       
-      <div style="margin-top: 30px; text-align: center; color: #6B7280; font-size: 12px; border-top: 1px solid #e5e7eb; padding-top: 20px;">
+      <div style="margin-top: 30px; text-align: center; color: ${pdf.neutralGray}; font-size: 12px; border-top: 1px solid ${pdf.gray200}; padding-top: 20px;">
         <p style="margin: 0;">Generated by VendorSoluce Supply Chain Risk Management Platform</p>
         <p style="margin: 5px 0 0 0;">© ${new Date().getFullYear()} VendorSoluce. All rights reserved.</p>
       </div>

@@ -21,13 +21,13 @@
     "build:portal": "node ./scripts/run-turbo.mjs run build --filter=vendor-risk-portal",
     "type-check": "node ./scripts/run-turbo.mjs run type-check --filter=app --filter=vendor-risk-portal",
     "lint": "node ./scripts/run-turbo.mjs run lint",
+    "verify:ui-tokens": "npm run verify:ui-tokens -w shared",
     "test": "node ./scripts/run-turbo.mjs run test",
     "test:coverage": "npm run test:coverage -w app",
     "clean": "node ./scripts/run-turbo.mjs run clean && rm -rf node_modules",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
   },
   "devDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.60.0",
     "prettier": "^3.2.5",
     "turbo": "^2.1.3"
   },

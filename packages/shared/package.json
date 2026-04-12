@@ -13,7 +13,8 @@
     "./domain/vendorsoluce": "./src/domain/vendorsoluce.ts"
   },
   "scripts": {
-    "verify:runtime-dedup": "node scripts/verify-runtime-dedup.mjs"
+    "verify:runtime-dedup": "node scripts/verify-runtime-dedup.mjs",
+    "verify:ui-tokens": "node scripts/verify-ui-tokens.mjs"
   },
   "dependencies": {
     "@ermits/dependency-graph": "file:../dependency-graph"
