@@ -75,6 +75,15 @@ export const websiteTokensCssContract = {
     '--risk-high': '#ea580c',
     '--risk-medium': '#f59e0b',
     '--risk-low': '#16a34a',
+    /** Secondary headings / UI chrome (gray-700 light) */
+    '--text-secondary': '#374151',
+    /** Emerald success chip (badges, premium label) */
+    '--success-fg': '#065f46',
+    '--success-bg': '#d1fae5',
+    /** Amber callouts (estimated / heuristic) */
+    '--warn-fg': '#92400e',
+    '--warn-bg': '#fffbeb',
+    '--warn-border': '#fde68a',
   },
   '.dark': {
     '--bg': '#111827',
@@ -94,6 +103,12 @@ export const websiteTokensCssContract = {
     '--risk-high': '#ea580c',
     '--risk-medium': '#f59e0b',
     '--risk-low': '#16a34a',
+    '--text-secondary': '#e5e7eb',
+    '--success-fg': '#065f46',
+    '--success-bg': '#d1fae5',
+    '--warn-fg': '#fcd34d',
+    '--warn-bg': 'rgba(245, 158, 11, 0.12)',
+    '--warn-border': 'rgba(245, 158, 11, 0.35)',
   },
 };
 

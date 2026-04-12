@@ -28,6 +28,13 @@
   --risk-medium: #f59e0b;
   --risk-low: #16a34a;
 
+  --text-secondary: #374151;
+  --success-fg: #065f46;
+  --success-bg: #d1fae5;
+  --warn-fg: #92400e;
+  --warn-bg: #fffbeb;
+  --warn-border: #fde68a;
+
   /* Layout & polish */
   --radius: 0.5rem;
   --radius-lg: 0.75rem;
@@ -76,6 +83,13 @@ html.dark {
   --risk-high: #ea580c;
   --risk-medium: #f59e0b;
   --risk-low: #16a34a;
+
+  --text-secondary: #e5e7eb;
+  --success-fg: #065f46;
+  --success-bg: #d1fae5;
+  --warn-fg: #fcd34d;
+  --warn-bg: rgba(245, 158, 11, 0.12);
+  --warn-border: rgba(245, 158, 11, 0.35);
 
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.25), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
