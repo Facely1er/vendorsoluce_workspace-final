@@ -52,3 +52,48 @@ export const surfaceColors = {
   chartDefault: '#8884d8',
 };
 
+/**
+ * Expected semantic variables in `packages/website/assets/css/tokens.css`
+ * (verified by `scripts/verify-website-tokens-css.mjs`).
+ */
+export const websiteTokensCssContract = {
+  ':root': {
+    '--bg': '#ffffff',
+    '--bg-2': '#f9fafb',
+    '--card': '#ffffff',
+    '--border': '#e5e7eb',
+    '--text': '#111827',
+    '--muted': '#6b7280',
+    '--accent': '#33691e',
+    '--accent-2': '#66bb6a',
+    '--accent-ink': '#ffffff',
+    '--accent-rgb': '51 105 30',
+    '--accent-2-rgb': '102 187 106',
+    '--vendorsoluce-dark-green': '#2e5a1a',
+    '--vendorsoluce-pale-green': '#e8f5e9',
+    '--risk-critical': '#dc2626',
+    '--risk-high': '#ea580c',
+    '--risk-medium': '#f59e0b',
+    '--risk-low': '#16a34a',
+  },
+  '.dark': {
+    '--bg': '#111827',
+    '--bg-2': '#1f2937',
+    '--card': '#1f2937',
+    '--border': '#374151',
+    '--text': '#f9fafb',
+    '--muted': '#9ca3af',
+    '--accent': '#66bb6a',
+    '--accent-2': '#81c784',
+    '--accent-ink': '#111827',
+    '--accent-rgb': '102 187 106',
+    '--accent-2-rgb': '129 199 132',
+    '--vendorsoluce-dark-green': '#2e5a1a',
+    '--vendorsoluce-pale-green': 'rgba(102, 187, 106, 0.12)',
+    '--risk-critical': '#dc2626',
+    '--risk-high': '#ea580c',
+    '--risk-medium': '#f59e0b',
+    '--risk-low': '#16a34a',
+  },
+};
+

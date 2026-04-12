@@ -1,14 +1,13 @@
 /**
- * VendorSoluce product overrides — accent already in tokens; keep for any extra aliases.
+ * VendorSoluce product — aliases so legacy `var(--vendorsoluce-*)` in HTML matches theme tokens.
+ * Canonical palette: tokens.css (verified vs packages/shared/tailwind-colors.js).
  */
 :root {
   --vendorsoluce-green: var(--accent);
   --vendorsoluce-light-green: var(--accent-2);
-  --vendorsoluce-dark-green: #2a5618;
-  --vendorsoluce-pale-green: #e8f5e9;
 }
-.dark, html.dark {
+.dark,
+html.dark {
   --vendorsoluce-green: var(--accent);
   --vendorsoluce-light-green: var(--accent-2);
-  --vendorsoluce-pale-green: rgba(102, 187, 106, 0.12);
 }

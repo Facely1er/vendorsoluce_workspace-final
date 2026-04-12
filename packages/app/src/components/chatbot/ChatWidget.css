@@ -1,5 +1,6 @@
 /* ChatWidget.css */
-.chat-widget {
+.chat-widget,
+.chat-widget-fab {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -158,7 +159,8 @@
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .chat-widget * {
+  .chat-widget *,
+  .chat-widget-fab {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

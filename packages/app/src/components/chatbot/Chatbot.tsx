@@ -308,7 +308,7 @@ const Chatbot: React.FC<ChatbotProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <Bot className="h-5 w-5 mr-2" />
-              <CardTitle className="text-lg">VendorSoluce Assistant</CardTitle>
+              <CardTitle className="text-lg">In-app help</CardTitle>
             </div>
             <div className="flex items-center space-x-2">
               <Button

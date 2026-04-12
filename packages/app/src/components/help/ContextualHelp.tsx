@@ -175,7 +175,7 @@ const ContextualHelp: React.FC<ContextualHelpProps> = ({
                   onClick={handleOpenChatbot}
                 >
                   <MessageSquare className="h-3 w-3 mr-1" />
-                  Ask Assistant
+                  Get help
                 </Button>
               </div>
 

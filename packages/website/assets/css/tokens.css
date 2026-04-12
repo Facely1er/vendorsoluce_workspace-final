@@ -1,6 +1,7 @@
 /**
- * VendorSoluce design tokens — single source for website (account, legal, etc.)
- * Light theme by default; .dark on <html> for dark mode. Aligned with app/portal.
+ * VendorSoluce design tokens — single source for website (account, legal, marketing).
+ * Light theme by default; .dark on <html> for dark mode. Values are enforced against
+ * `packages/shared/tailwind-colors.js` (`websiteTokensCssContract`) via verify:ui.
  */
 :root {
   /* Surfaces */
@@ -11,10 +12,21 @@
   --text: #111827;
   --muted: #6b7280;
 
-  /* Brand — VendorSoluce green */
+  /* Brand — VendorSoluce green (matches tailwind-colors vendorsoluceColors) */
   --accent: #33691e;
   --accent-2: #66bb6a;
   --accent-ink: #ffffff;
+  /** For rgb(... / alpha) and rgba-style tints without duplicating hex */
+  --accent-rgb: 51 105 30;
+  --accent-2-rgb: 102 187 106;
+  --vendorsoluce-dark-green: #2e5a1a;
+  --vendorsoluce-pale-green: #e8f5e9;
+
+  /* Risk (aligned with vendorsoluceColors risk-*) */
+  --risk-critical: #dc2626;
+  --risk-high: #ea580c;
+  --risk-medium: #f59e0b;
+  --risk-low: #16a34a;
 
   /* Layout & polish */
   --radius: 0.5rem;
@@ -55,6 +67,15 @@ html.dark {
   --accent: #66bb6a;
   --accent-2: #81c784;
   --accent-ink: #111827;
+  --accent-rgb: 102 187 106;
+  --accent-2-rgb: 129 199 132;
+  --vendorsoluce-dark-green: #2e5a1a;
+  --vendorsoluce-pale-green: rgba(102, 187, 106, 0.12);
+
+  --risk-critical: #dc2626;
+  --risk-high: #ea580c;
+  --risk-medium: #f59e0b;
+  --risk-low: #16a34a;
 
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.25), 0 4px 6px -2px rgba(0, 0, 0, 0.2);

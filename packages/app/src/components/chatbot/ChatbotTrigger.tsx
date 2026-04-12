@@ -34,7 +34,7 @@ const ChatbotTrigger: React.FC<ChatbotTriggerProps> = ({
         size={size}
       >
         <MessageCircle className="h-5 w-5 mr-2" />
-        {children || 'Ask Assistant'}
+        {children || 'Get help'}
       </Button>
     );
   }
@@ -48,7 +48,7 @@ const ChatbotTrigger: React.FC<ChatbotTriggerProps> = ({
         className={`hover:bg-vendorsoluce-green/10 hover:text-vendorsoluce-green ${className}`}
       >
         <Bot className="h-4 w-4 mr-2" />
-        {children || 'Assistant'}
+        {children || 'Help'}
       </Button>
     );
   }

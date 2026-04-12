@@ -35,8 +35,8 @@ const HelpButton: React.FC = () => {
   const helpOptions = [
     {
       id: 'chatbot',
-      title: 'Ask Assistant',
-      description: 'Get instant help with AI',
+      title: 'In-app help',
+      description: 'Guidance and shortcuts inside the app',
       icon: MessageSquare,
       action: () => {
         openChatbot('general');
@@ -136,7 +136,7 @@ const HelpButton: React.FC = () => {
                   className="text-xs"
                 >
                   <MessageSquare className="h-3 w-3 mr-1" />
-                  Start Chat
+                  Open help
                 </Button>
                 <Button
                   variant="outline"

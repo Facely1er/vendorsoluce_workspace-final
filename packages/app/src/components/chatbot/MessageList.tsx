@@ -104,10 +104,10 @@ const MessageList: React.FC<MessageListProps> = ({
             <Bot className="h-8 w-8 text-vendorsoluce-green" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            Welcome to VendorSoluce Assistant!
+            In-app help
           </h3>
           <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-            I'm here to help you with supply chain risk management, vendor assessments, and SBOM analysis.
+            Short answers and shortcuts for supply chain risk, vendor assessments, and SBOM analysis.
           </p>
           <div className="space-y-2">
             <p className="text-xs text-gray-500 dark:text-gray-400">Try asking:</p>

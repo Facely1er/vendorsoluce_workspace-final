@@ -97,34 +97,33 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
   if (!actualIsOpen) {
     return (
       <button
+        type="button"
         onClick={handleToggle}
-        className="fixed bottom-6 right-6 z-50 bg-vendorsoluce-green hover:bg-vendorsoluce-green/90 text-white rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-105 group"
-        aria-label="Open chat support"
+        className="chat-widget-fab fixed bottom-5 right-5 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-gray-200/90 bg-white/90 text-gray-600 shadow-sm backdrop-blur-sm transition-colors hover:border-gray-300 hover:bg-gray-50/95 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vendorsoluce-green dark:border-gray-700 dark:bg-gray-900/90 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:bg-gray-800 dark:hover:text-white motion-safe:transition-[colors,box-shadow]"
+        aria-label="Open in-app help"
+        title="In-app help"
       >
-        <MessageCircle className="h-4 w-4" />
-        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full h-3 w-3 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-          !
-        </span>
+        <MessageCircle className="h-[18px] w-[18px] shrink-0" aria-hidden />
       </button>
     );
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
-      isMinimized ? 'h-16 w-80' : 'h-[600px] w-96'
-    }`}>
+    <div
+      className={`chat-widget fixed bottom-5 right-5 z-50 rounded-lg border border-gray-200 bg-white shadow-lg transition-all duration-300 dark:border-gray-700 dark:bg-gray-800 ${
+        isMinimized ? 'h-16 w-80' : 'h-[600px] w-96'
+      }`}
+    >
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-t-lg">
+      <div className="flex items-center justify-between rounded-t-lg border-b border-gray-200 bg-gray-50/90 p-4 dark:border-gray-700 dark:bg-gray-900/80">
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-vendorsoluce-green rounded-full flex items-center justify-center">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-vendorsoluce-green/90">
             <Bot className="h-4 w-4 text-white" />
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-              VendorSoluce Assistant
-            </h3>
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">In-app help</h3>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              {isTyping ? 'Typing...' : 'Online'}
+              {isTyping ? 'Preparing a reply…' : 'Guidance and shortcuts'}
             </p>
           </div>
         </div>
@@ -132,7 +131,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
           <button
             onClick={handleMinimize}
             className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors"
-            aria-label={isMinimized ? 'Maximize chat' : 'Minimize chat'}
+            aria-label={isMinimized ? 'Expand help panel' : 'Minimize help panel'}
           >
             {isMinimized ? (
               <Maximize2 className="h-4 w-4 text-gray-500" />
@@ -143,7 +142,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
           <button
             onClick={handleToggle}
             className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors"
-            aria-label="Close chat"
+            aria-label="Close in-app help"
           >
             <X className="h-4 w-4 text-gray-500" />
           </button>
@@ -184,7 +183,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
             <ChatInput 
               onSendMessage={handleSendMessage}
               disabled={isLoading || isTyping}
-              placeholder="Ask me anything about VendorSoluce..."
+              placeholder="Ask for guidance about VendorSoluce…"
             />
           </div>
         </>

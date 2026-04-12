@@ -193,7 +193,7 @@ const GetStartedWidget: React.FC<GetStartedWidgetProps> = ({
               className="flex items-center"
             >
               <HelpCircle className="h-4 w-4 mr-2" />
-              Ask Assistant
+              Get help
             </Button>
             <Button 
               variant="outline" 

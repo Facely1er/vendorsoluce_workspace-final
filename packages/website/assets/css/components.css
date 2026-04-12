@@ -194,13 +194,13 @@ nav.glass-nav-vs[class*="fixed"] {
 
 /* Hover effect ONLY for inactive links - only override color/background */
 .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
-  color: #33691E !important;
-  background-color: rgba(51, 105, 30, 0.1) !important;
+  color: var(--accent) !important;
+  background-color: rgb(var(--accent-rgb) / 0.1) !important;
 }
 
 .dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
-  color: #66BB6A !important;
-  background-color: rgba(102, 187, 106, 0.12) !important;
+  color: var(--accent-2) !important;
+  background-color: rgb(var(--accent-2-rgb) / 0.12) !important;
 }
 
 /* Active link styles - match index.html: subtle green tint, bold text */
@@ -208,8 +208,8 @@ nav.glass-nav-vs[class*="fixed"] {
 .nav-link.bg-vendorsoluce-green,
 nav a[title].active,
 nav a[title][aria-current="page"] {
-  color: #33691E !important;
-  background: rgba(51, 105, 30, 0.08) !important;
+  color: var(--accent) !important;
+  background: rgb(var(--accent-rgb) / 0.08) !important;
   font-weight: 700 !important;
 }
 
@@ -217,8 +217,8 @@ nav a[title][aria-current="page"] {
 .dark .nav-link.bg-vendorsoluce-green,
 html.dark nav a[title].active,
 html.dark nav a[title][aria-current="page"] {
-  color: #66BB6A !important;
-  background: rgba(102, 187, 106, 0.12) !important;
+  color: var(--accent-2) !important;
+  background: rgb(var(--accent-2-rgb) / 0.12) !important;
 }
 
 /* CRITICAL: Prevent ANY hover effects on active links */
@@ -226,16 +226,16 @@ html.dark nav a[title][aria-current="page"] {
 .nav-link.bg-vendorsoluce-green:hover,
 nav a[title].active:hover,
 nav a[title][aria-current="page"]:hover {
-  background: rgba(51, 105, 30, 0.08) !important;
-  color: #33691E !important;
+  background: rgb(var(--accent-rgb) / 0.08) !important;
+  color: var(--accent) !important;
 }
 
 .dark .nav-link.nav-link-active:hover,
 .dark .nav-link.bg-vendorsoluce-green:hover,
 html.dark nav a[title].active:hover,
 html.dark nav a[title][aria-current="page"]:hover {
-  background: rgba(102, 187, 106, 0.12) !important;
-  color: #66BB6A !important;
+  background: rgb(var(--accent-2-rgb) / 0.12) !important;
+  color: var(--accent-2) !important;
 }
 
 /* Mobile navigation link styles - same rules */
@@ -254,38 +254,38 @@ html.dark nav a[title][aria-current="page"]:hover {
 }
 
 .mobile-nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
-  color: #33691E !important;
-  background-color: rgba(51, 105, 30, 0.1) !important;
+  color: var(--accent) !important;
+  background-color: rgb(var(--accent-rgb) / 0.1) !important;
 }
 
 .dark .mobile-nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
-  color: #66BB6A !important;
-  background-color: rgba(102, 187, 106, 0.12) !important;
+  color: var(--accent-2) !important;
+  background-color: rgb(var(--accent-2-rgb) / 0.12) !important;
 }
 
 .mobile-nav-link.nav-link-active,
 .mobile-nav-link.bg-vendorsoluce-green {
-  color: #33691E !important;
-  background: rgba(51, 105, 30, 0.08) !important;
+  color: var(--accent) !important;
+  background: rgb(var(--accent-rgb) / 0.08) !important;
   font-weight: 700 !important;
 }
 
 html.dark .mobile-nav-link.nav-link-active,
 html.dark .mobile-nav-link.bg-vendorsoluce-green {
-  color: #66BB6A !important;
-  background: rgba(102, 187, 106, 0.12) !important;
+  color: var(--accent-2) !important;
+  background: rgb(var(--accent-2-rgb) / 0.12) !important;
 }
 
 .mobile-nav-link.nav-link-active:hover,
 .mobile-nav-link.bg-vendorsoluce-green:hover {
-  background: rgba(51, 105, 30, 0.08) !important;
-  color: #33691E !important;
+  background: rgb(var(--accent-rgb) / 0.08) !important;
+  color: var(--accent) !important;
 }
 
 html.dark .mobile-nav-link.nav-link-active:hover,
 html.dark .mobile-nav-link.bg-vendorsoluce-green:hover {
-  background: rgba(102, 187, 106, 0.12) !important;
-  color: #66BB6A !important;
+  background: rgb(var(--accent-2-rgb) / 0.12) !important;
+  color: var(--accent-2) !important;
 }
 
 /* Ensure SVG icons inherit the text color */
@@ -337,16 +337,16 @@ html.dark .section-alt {
 
 .vs-animated-grid {
   background-image:
-    linear-gradient(rgba(51, 105, 30, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(51, 105, 30, 0.08) 1px, transparent 1px);
+    linear-gradient(rgb(var(--accent-rgb) / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--accent-rgb) / 0.08) 1px, transparent 1px);
   background-size: 60px 60px;
   animation: vsGridMove 24s linear infinite;
 }
 
 html.dark .vs-animated-grid {
   background-image:
-    linear-gradient(rgba(102, 187, 106, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(102, 187, 106, 0.07) 1px, transparent 1px);
+    linear-gradient(rgb(var(--accent-2-rgb) / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--accent-2-rgb) / 0.07) 1px, transparent 1px);
 }
 
 @keyframes vsGridMove {
@@ -402,7 +402,7 @@ html.dark .vs-animated-grid {
 
 .vs-card:hover {
   box-shadow: 0 8px 24px rgba(0,0,0,0.09), 0 2px 6px rgba(0,0,0,0.05);
-  border-color: rgba(51, 105, 30, 0.3);
+  border-color: rgb(var(--accent-rgb) / 0.3);
   transform: translateY(-2px);
 }
 
@@ -413,17 +413,17 @@ html.dark .vs-card {
 }
 
 html.dark .vs-card:hover {
-  border-color: rgba(102, 187, 106, 0.35);
+  border-color: rgb(var(--accent-2-rgb) / 0.35);
   box-shadow: none;
 }
 
 /* Numbered step card — top accent bar */
 .vs-step-card {
-  border-top: 3px solid #33691E;
+  border-top: 3px solid var(--accent);
 }
 
 html.dark .vs-step-card {
-  border-top-color: #66BB6A;
+  border-top-color: var(--accent-2);
 }
 
 /* Solution section — 3 step cards share row heights so screenshots align (subgrid md+) */
@@ -455,8 +455,8 @@ html.dark .vs-step-card {
 }
 
 /* Left-accent problem card */
-.vs-problem-card-red  { border-left: 4px solid #dc2626; }
-.vs-problem-card-amber { border-left: 4px solid #d97706; }
+.vs-problem-card-red  { border-left: 4px solid var(--risk-critical); }
+.vs-problem-card-amber { border-left: 4px solid var(--risk-high); }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    GRADIENT SECTION DIVIDER — matches CyberCaution .section-divider
@@ -564,9 +564,9 @@ html.dark .vs-step-card {
   border-radius: 0.5rem;
   font-weight: 700;
   font-size: 1rem;
-  background: linear-gradient(135deg, #33691E, #66BB6A);
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(51, 105, 30, 0.35);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--accent-ink);
+  box-shadow: 0 4px 14px rgb(var(--accent-rgb) / 0.35);
   border: none;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   letter-spacing: 0.01em;
@@ -574,7 +574,7 @@ html.dark .vs-step-card {
 
 .vs-btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(51, 105, 30, 0.40);
+  box-shadow: 0 8px 24px rgb(var(--accent-rgb) / 0.4);
 }
 
 .vs-btn-primary:active {
@@ -591,23 +591,23 @@ html.dark .vs-step-card {
   font-weight: 600;
   font-size: 1rem;
   background: transparent;
-  color: #33691E;
-  border: 2px solid #33691E;
+  color: var(--accent);
+  border: 2px solid var(--accent);
   transition: background-color 0.15s ease, transform 0.15s ease;
 }
 
 .vs-btn-outline:hover {
-  background-color: rgba(51, 105, 30, 0.08);
+  background-color: rgb(var(--accent-rgb) / 0.08);
   transform: translateY(-1px);
 }
 
 html.dark .vs-btn-outline {
-  color: #66BB6A;
-  border-color: #66BB6A;
+  color: var(--accent-2);
+  border-color: var(--accent-2);
 }
 
 html.dark .vs-btn-outline:hover {
-  background-color: rgba(102, 187, 106, 0.1);
+  background-color: rgb(var(--accent-2-rgb) / 0.1);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -620,9 +620,9 @@ html.dark .vs-btn-outline:hover {
   gap: 0.4rem;
   padding: 0.3rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid rgba(51, 105, 30, 0.25);
-  background: rgba(51, 105, 30, 0.07);
-  color: #33691E;
+  border: 1px solid rgb(var(--accent-rgb) / 0.25);
+  background: rgb(var(--accent-rgb) / 0.07);
+  color: var(--accent);
   font-weight: 700;
   font-size: 0.78rem;
   letter-spacing: 0.06em;
@@ -631,9 +631,9 @@ html.dark .vs-btn-outline:hover {
 }
 
 html.dark .vs-kicker {
-  border-color: rgba(102, 187, 106, 0.3);
-  background: rgba(102, 187, 106, 0.1);
-  color: #66BB6A;
+  border-color: rgb(var(--accent-2-rgb) / 0.3);
+  background: rgb(var(--accent-2-rgb) / 0.1);
+  color: var(--accent-2);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -641,12 +641,12 @@ html.dark .vs-kicker {
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 ::selection {
-  background: rgba(51, 105, 30, 0.18);
+  background: rgb(var(--accent-rgb) / 0.18);
   color: inherit;
 }
 
 ::-moz-selection {
-  background: rgba(51, 105, 30, 0.18);
+  background: rgb(var(--accent-rgb) / 0.18);
   color: inherit;
 }
 
