@@ -41,11 +41,6 @@ export const useVendorRequirements = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load requirements on mount and when user changes
-  useEffect(() => {
-    void loadRequirements();
-  }, [userId, loadRequirements]);
-
   /**
    * Load all vendor requirements for the current user
    */
@@ -68,6 +63,11 @@ export const useVendorRequirements = () => {
       setLoading(false);
     }
   }, [useLocal, userId]);
+
+  // Load requirements on mount and when user changes
+  useEffect(() => {
+    void loadRequirements();
+  }, [userId, loadRequirements]);
 
   /**
    * Generate requirements for a single vendor

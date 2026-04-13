@@ -15,7 +15,7 @@ interface ErrorBoundaryState {
 interface ErrorBoundaryProps {
   children: React.ReactNode;
   /** Optional custom fallback UI shown when an error is caught. */
-  fallback?: React.ReactNode;
+  fallback?: React.ReactNode | ((props: ErrorFallbackProps) => React.ReactNode);
   onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
 }
 
@@ -65,7 +65,16 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
   render() {
     if (this.state.hasError) {
-      if (this.props.fallback) return this.props.fallback;
+      if (this.props.fallback) {
+        return typeof this.props.fallback === 'function'
+          ? this.props.fallback({
+              error: this.state.error!,
+              errorInfo: this.state.errorInfo!,
+              eventId: this.state.eventId,
+              resetError: this.resetError,
+            })
+          : this.props.fallback;
+      }
       return (
         <DefaultErrorFallback
           error={this.state.error!}
