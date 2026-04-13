@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import Card, { CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import VendorRiskTable from '../../components/vendor/VendorRiskTable';
-import { VendorRisk } from '../types';
+import { VendorRisk } from '../../types';
 import Button from '../../components/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { useVendors } from '../../hooks/useVendors';
@@ -263,7 +263,7 @@ const VendorRiskDashboard: React.FC = () => {
   }
   
   return (
-    <WorkspacePageShell title={t('vendorRisk.title')} description={t('vendorRisk.description')} actions={[{ label: isRefreshing ? 'Refreshing…' : 'Refresh', onClick: handleRefresh, variant: 'outline' }, { label: 'Add vendor', onClick: () => setShowAddModal(true), variant: 'primary' }]} stats={[{ label: 'Total vendors', value: vendorRiskData.length, hint: 'Tracked in the active portfolio' }, { label: 'High risk', value: riskCounts.high, hint: 'Critical or high vendors' }, { label: 'Assessments', value: assessments.length, hint: 'Completed or in progress' }, { label: 'Threat signals', value: threatLoading ? '…' : (((threatStats as any)?.criticalAlerts ?? (threatStats as any)?.highSeverityCount ?? '—')), hint: 'Current threat feed pressure' }]}>
+    <WorkspacePageShell title={t('vendorRisk.title')} description={t('vendorRisk.description')} actions={[{ label: isRefreshing ? 'Refreshing…' : 'Refresh', onClick: handleRefresh, variant: 'outline' }, { label: 'Add vendor', onClick: () => setShowAddModal(true), variant: 'primary' }]} stats={[{ label: 'Total vendors', value: vendorRiskData.length, hint: 'Tracked in the active portfolio' }, { label: 'High risk', value: riskCounts.high, hint: 'Critical or high vendors' }, { label: 'Assessments', value: assessments.length, hint: 'Completed or in progress' }, { label: 'Threat signals', value: threatLoading ? '…' : (threatStats.threatsToday ?? '—'), hint: 'Current threat feed pressure' }]}>
       {/* Action Cascade Banner */}
       <div id="action-cascade" className="relative overflow-hidden rounded-2xl mb-8 bg-gradient-to-br from-vendorsoluce-navy via-vendorsoluce-teal to-vendorsoluce-green p-px shadow-lg">
         <div className="relative rounded-[calc(1rem-1px)] bg-gradient-to-br from-vendorsoluce-navy/95 to-vendorsoluce-teal/90 px-6 py-8 sm:px-10 sm:py-10">
@@ -311,11 +311,7 @@ const VendorRiskDashboard: React.FC = () => {
             ].map(({ id, label, icon: Icon }) => {
               const isSelected = activeView === id;
               const panelId: string = `${id}-panel`;
-              const ariaProps: React.AriaAttributes = {
-                'aria-selected': isSelected,
-                'aria-controls': panelId,
-                id: `${id}-tab`,
-              };
+              const tabId = `${id}-tab`;
               return (
               <button
                 key={id}
@@ -326,7 +322,9 @@ const VendorRiskDashboard: React.FC = () => {
                     : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                 }`}
                 role="tab"
-                {...ariaProps}
+                id={tabId}
+                aria-selected={isSelected}
+                aria-controls={panelId}
               >
                 <Icon className="h-4 w-4 mr-2" />
                 <span className="hidden sm:inline">{label}</span>
@@ -346,7 +344,6 @@ const VendorRiskDashboard: React.FC = () => {
             <GetStartedWidget 
               vendorCount={vendors.length}
               assessmentCount={assessments.length}
-              sbomCount={analyses.length}
             />
 
             {/* Enhanced Dashboard Widget */}
@@ -460,10 +457,10 @@ const VendorRiskDashboard: React.FC = () => {
                 <PortalStatusWidget 
                   assessments={assessments.map(a => ({
                     id: a.id,
-                    vendorName: a.vendor_name || 'Unknown',
-                    status: a.status as 'pending' | 'in_progress' | 'completed' | 'overdue',
-                    dueDate: a.due_date,
-                    framework: a.framework
+                    vendorName: a.assessment_name || 'Supply chain assessment',
+                    status: (a.status === 'pending' || a.status === 'in_progress' || a.status === 'completed' || a.status === 'overdue')
+                      ? a.status
+                      : 'pending',
                   }))}
                 />
                 <UnifiedQuickActions
