@@ -2,6 +2,14 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { supabase, isSupabaseEnabled } from '../lib/supabase';
 import type { Database } from '../lib/database.types';
+import {
+  createLocalVendorAssessment,
+  deleteLocalVendorAssessment,
+  getLocalAssessmentFrameworks,
+  listLocalVendorAssessments,
+  updateLocalVendorAssessment,
+} from '../services/local/vendorAssessmentsLocalStore';
+import { useVendorPortfolio } from '../pages/tools/VendorRiskRadar/hooks/useVendorPortfolio';
 
 type VendorAssessment = Database['public']['Tables']['vs_vendor_assessments']['Row'];
 type VendorAssessmentInsert = Database['public']['Tables']['vs_vendor_assessments']['Insert'];
@@ -26,20 +34,35 @@ export interface VendorAssessmentWithDetails extends VendorAssessment {
 
 export const useVendorAssessments = () => {
   const { user } = useAuth();
+  const { vendors } = useVendorPortfolio();
   const [assessments, setAssessments] = useState<VendorAssessmentWithDetails[]>([]);
   const [frameworks, setFrameworks] = useState<AssessmentFramework[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const useLocal = !user || !isSupabaseEnabled();
 
   const fetchAssessments = useCallback(async () => {
-    if (!user) {
-      setAssessments([]);
-      setLoading(false);
-      return;
-    }
-
-    if (!isSupabaseEnabled()) {
-      setAssessments([]);
+    if (useLocal) {
+      const local = listLocalVendorAssessments();
+      const mapped: VendorAssessmentWithDetails[] = local.map((a) => ({
+        ...(a as VendorAssessment),
+        vendor: {
+          id: a.vendor_id || '',
+          name: vendors.find((v) => v.id === a.vendor_id)?.name || 'Unknown Vendor',
+          contact_email: null,
+        },
+        framework: {
+          id: a.framework_id || 'local-nist-800-161',
+          name:
+            frameworks.find((f) => f.id === a.framework_id)?.name ||
+            'NIST SP 800-161 (Supply Chain)',
+          description: null,
+          framework_type: 'nist',
+          question_count: null,
+          estimated_time: null,
+        },
+      }));
+      setAssessments(mapped);
       setError(null);
       setLoading(false);
       return;
@@ -68,11 +91,11 @@ export const useVendorAssessments = () => {
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  }, [useLocal, user, vendors, frameworks]);
 
   const fetchFrameworks = useCallback(async () => {
-    if (!isSupabaseEnabled()) {
-      setFrameworks([]);
+    if (useLocal) {
+      setFrameworks(getLocalAssessmentFrameworks());
       return;
     }
     try {
@@ -90,11 +113,13 @@ export const useVendorAssessments = () => {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch frameworks');
     }
-  }, []);
+  }, [useLocal]);
 
   const createAssessment = async (assessmentData: Omit<VendorAssessmentInsert, 'user_id'>) => {
-    if (!user) {
-      throw new Error('User not authenticated');
+    if (useLocal) {
+      const created = createLocalVendorAssessment({ ...assessmentData, status: 'pending' });
+      await fetchAssessments();
+      return created as unknown as VendorAssessmentWithDetails;
     }
 
     try {
@@ -127,6 +152,11 @@ export const useVendorAssessments = () => {
   };
 
   const updateAssessment = async (id: string, updates: VendorAssessmentUpdate) => {
+    if (useLocal) {
+      const updated = updateLocalVendorAssessment(id, updates);
+      await fetchAssessments();
+      return updated as unknown as VendorAssessmentWithDetails;
+    }
     try {
       const { data, error } = await supabase
         .from('vs_vendor_assessments')
@@ -153,6 +183,11 @@ export const useVendorAssessments = () => {
   };
 
   const deleteAssessment = async (id: string) => {
+    if (useLocal) {
+      deleteLocalVendorAssessment(id);
+      await fetchAssessments();
+      return;
+    }
     try {
       const { error } = await supabase
         .from('vs_vendor_assessments')
@@ -172,6 +207,14 @@ export const useVendorAssessments = () => {
   };
 
   const sendAssessment = async (id: string) => {
+    if (useLocal) {
+      const updated = updateLocalVendorAssessment(id, {
+        status: 'sent',
+        sent_at: new Date().toISOString(),
+      });
+      await fetchAssessments();
+      return updated as unknown as VendorAssessmentWithDetails;
+    }
     try {
       const { data, error } = await supabase
         .from('vs_vendor_assessments')
@@ -201,6 +244,16 @@ export const useVendorAssessments = () => {
   };
 
   const completeAssessment = async (id: string, overallScore: number, sectionScores: Record<string, number>) => {
+    if (useLocal) {
+      const updated = updateLocalVendorAssessment(id, {
+        status: 'completed',
+        overall_score: overallScore,
+        section_scores: sectionScores,
+        completed_at: new Date().toISOString(),
+      });
+      await fetchAssessments();
+      return updated as unknown as VendorAssessmentWithDetails;
+    }
     try {
       const { data, error } = await supabase
         .from('vs_vendor_assessments')

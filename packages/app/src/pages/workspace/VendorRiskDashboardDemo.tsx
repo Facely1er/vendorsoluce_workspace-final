@@ -71,15 +71,15 @@ const VendorRiskDashboardDemo: React.FC = () => {
   const demoVendorIds = DEMO_VENDORS.map((v) => v.id);
 
   const handleCreateWorkflow = () => {
-    navigate('/signin');
+    navigate('/vendor-activity-catalog');
   };
 
   const handleManageAutomation = () => {
-    navigate('/signin');
+    navigate('/vendor-activity-catalog');
   };
 
   const handleExportAnalyticsDemo = () => {
-    navigate('/signin');
+    navigate('/vendor-risk-reports');
   };
 
   return (
@@ -94,12 +94,12 @@ const VendorRiskDashboardDemo: React.FC = () => {
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/trial" className="text-sm text-yellow-700 dark:text-yellow-400 hover:underline font-medium">
+            <Link to="/vendor-risk-radar" className="text-sm text-yellow-700 dark:text-yellow-400 hover:underline font-medium">
               Try with your data →
             </Link>
-            <Link to="/signin">
+            <Link to="/vendors">
               <Button variant="outline" size="sm" className="border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-300 hover:bg-yellow-100 dark:hover:bg-yellow-900/30">
-                Sign In
+                Open workspace
               </Button>
             </Link>
             <Link to="/checkout?plan=professional">
@@ -242,8 +242,8 @@ const VendorRiskDashboardDemo: React.FC = () => {
               </div>
               <div className="space-y-6 lg:col-span-5 min-w-0">
                 <UnifiedQuickActions
-                  onAddVendor={() => navigate('/signin')}
-                  onCreateAssessment={() => navigate('/signin')}
+                  onAddVendor={() => navigate('/vendors')}
+                  onCreateAssessment={() => navigate('/vendor-assessments')}
                 />
                 <Card>
                   <CardHeader>
@@ -280,13 +280,13 @@ const VendorRiskDashboardDemo: React.FC = () => {
             <div className="bg-gradient-to-r from-vendorsoluce-navy to-vendorsoluce-teal text-white rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <p className="font-semibold text-lg">Ready to manage your vendor risk?</p>
-                <p className="text-white/90 text-sm mt-1">Sign in or start a free trial to add vendors, run assessments, and generate reports.</p>
+                <p className="text-white/90 text-sm mt-1">Use offline mode to add vendors, run assessments, and generate reports in this browser.</p>
               </div>
               <div className="flex flex-wrap gap-3">
-                <Link to="/signin">
+                <Link to="/vendors">
                   <Button variant="secondary" size="lg" className="bg-white text-vendorsoluce-navy hover:bg-gray-100">
                     <User className="h-5 w-5 mr-2" />
-                    Sign In
+                    Open workspace
                   </Button>
                 </Link>
                 <Link to="/checkout?plan=professional">
@@ -357,7 +357,7 @@ const VendorRiskDashboardDemo: React.FC = () => {
                       Demo feed uses sample indicators. Sign in to connect live sources and scope alerts to your portfolio.
                     </p>
                   </div>
-                  <Button variant="outline" size="sm" type="button" onClick={() => navigate('/signin')} aria-label="Refresh threat data">
+                  <Button variant="outline" size="sm" type="button" onClick={() => navigate('/vendor-risk-radar')} aria-label="Refresh threat data">
                     <RefreshCw className="h-4 w-4 mr-2" />
                     Refresh
                   </Button>

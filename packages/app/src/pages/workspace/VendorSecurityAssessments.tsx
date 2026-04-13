@@ -120,16 +120,29 @@ const VendorSecurityAssessments: React.FC = () => {
     sendImmediately?: boolean;
     stage2Controls?: ControlRequirement[];
   }) => {
-    if (!user) {
-      addNotification({
-        title: 'Error',
-        message: 'You must be logged in to create assessments',
-        type: 'error',
-      });
-      return;
-    }
-
     try {
+      if (!user) {
+        // Offline mode: create a local assessment record (no portal send).
+        await _createAssessment({
+          vendor_id: assessmentData.vendorId,
+          framework_id: assessmentData.frameworkId,
+          due_date: assessmentData.dueDate,
+          instructions: assessmentData.instructions ?? null,
+          contact_email: assessmentData.contactEmail ?? null,
+          assessment_name: null,
+          status: 'pending',
+        });
+        await refetch();
+        setShowCreateModal(false);
+        addNotification({
+          title: 'Assessment Created (Offline)',
+          message: 'Assessment saved in this browser. Sign in to send via VendorSoluce Portal.',
+          type: 'success',
+          duration: 5000,
+        });
+        return;
+      }
+
       // Use the new assessment service for portal integration
       const result = await createAssessmentWithPortal(
         {
@@ -176,16 +189,20 @@ const VendorSecurityAssessments: React.FC = () => {
   };
 
   const handleSendAssessment = async (assessmentId: string) => {
-    if (!user) {
-      addNotification({
-        title: 'Error',
-        message: 'You must be logged in to send assessments',
-        type: 'error',
-      });
-      return;
-    }
-
     try {
+      if (!user) {
+        // Offline mode: mark as sent locally without portal integration.
+        await _sendAssessment(assessmentId);
+        await refetch();
+        addNotification({
+          title: 'Marked as sent (Offline)',
+          message: 'This updates local status only. Sign in to send via VendorSoluce Portal.',
+          type: 'success',
+          duration: 5000,
+        });
+        return;
+      }
+
       const result = await sendExistingAssessmentToPortal(
         assessmentId,
         user.id,

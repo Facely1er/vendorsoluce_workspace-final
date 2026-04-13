@@ -79,11 +79,11 @@ const HeroSection: React.FC = () => {
                   <Button
                     variant="secondary"
                     size="lg"
-                    onClick={() => navigate('/signin?redirect=/dashboard')}
+                    onClick={() => navigate('/vendors')}
                     className="bg-white text-vendorsoluce-green hover:bg-gray-100 hover:scale-105 transition-all duration-300 hover:shadow-lg flex items-center justify-center w-full sm:w-auto"
                   >
                     <User className="h-5 w-5 mr-2" />
-                    Get Started Free
+                    Open workspace
                   </Button>
                   <Button
                     variant="outline"

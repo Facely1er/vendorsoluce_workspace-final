@@ -35,6 +35,7 @@ export function getWorkspaceSections(t: TFunction): NavSection[] {
       label: t('navigation.riskAndReporting', 'Risk & reporting'),
       items: [
         { label: t('navigation.vendorRiskRadar', 'Risk radar'), href: '/vendor-risk-radar' },
+        { label: t('navigation.vendorRiskReports', 'Risk reports'), href: '/vendor-risk-reports' },
         { label: t('navigation.viraIntake', 'VIRA intake'), href: '/tools/vendor-risk-calculator' },
         { label: t('navigation.viraReports', 'VIRA reports'), href: '/vira-reports' },
         { label: t('navigation.complianceRoadmap', 'Compliance roadmap'), href: WR.COMPLIANCE_ROADMAP },

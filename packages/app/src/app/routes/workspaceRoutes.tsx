@@ -1,7 +1,6 @@
 import React from 'react';
-import { WR } from 'shared/constants/routes';
+import { MR, WR } from 'shared/constants/routes';
 import { Navigate, Route } from 'react-router-dom';
-import ProtectedRoute from '../../components/auth/ProtectedRoute';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
 
 const OnboardingPage = lazyWithRetry(() => import('../../pages/workspace/OnboardingPage'));
@@ -24,137 +23,76 @@ const VendorIntelligencePortfolioPage = lazyWithRetry(() => import('../../pages/
 const VendorIntelligenceImportPage = lazyWithRetry(() => import('../../pages/workspace/vendorsoluce/VendorIntelligenceImportPage'));
 const VendorIntelligenceDetailPage = lazyWithRetry(() => import('../../pages/workspace/vendorsoluce/VendorIntelligenceDetailPage'));
 const ComplianceRoadmapPage = lazyWithRetry(() => import('../../pages/workspace/ComplianceRoadmapPage'));
+const VendorActivityCatalogPage = lazyWithRetry(() => import('../../pages/programs/VendorActivityCatalogPage'));
 
 export const workspaceRoutes = (
   <>
     <Route
       path={WR.PLATFORM_SETUP}
-      element={
-        <ProtectedRoute>
-          <PlatformSetupPage />
-        </ProtectedRoute>
-      }
+      element={<PlatformSetupPage />}
     />
     <Route
       path={WR.ONBOARDING}
-      element={
-        <ProtectedRoute>
-          <OnboardingPage />
-        </ProtectedRoute>
-      }
+      element={<OnboardingPage />}
     />
     <Route
       path={WR.PROFILE}
-      element={
-        <ProtectedRoute>
-          <ProfilePage />
-        </ProtectedRoute>
-      }
+      element={<ProfilePage />}
     />
     <Route
       path={WR.BILLING}
-      element={
-        <ProtectedRoute>
-          <BillingPage />
-        </ProtectedRoute>
-      }
+      element={<BillingPage />}
     />
     <Route
       path={WR.ACCOUNT}
-      element={
-        <ProtectedRoute>
-          <AccountPage />
-        </ProtectedRoute>
-      }
+      element={<AccountPage />}
     />
     <Route
       path={WR.USER_DASHBOARD}
-      element={
-        <ProtectedRoute>
-          <UserDashboard />
-        </ProtectedRoute>
-      }
+      element={<UserDashboard />}
     />
     <Route
       path={WR.USER_ACTIVITY}
-      element={
-        <ProtectedRoute>
-          <UserActivity />
-        </ProtectedRoute>
-      }
+      element={<UserActivity />}
     />
     <Route
       path={WR.NOTIFICATIONS}
-      element={
-        <ProtectedRoute>
-          <UserNotifications />
-        </ProtectedRoute>
-      }
+      element={<UserNotifications />}
     />
     <Route
       path={WR.ASSET_MANAGEMENT}
-      element={
-        <ProtectedRoute>
-          <AssetManagementPage />
-        </ProtectedRoute>
-      }
+      element={<AssetManagementPage />}
     />
     <Route path={WR.ASSETS_ALIAS} element={<Navigate to={WR.ASSET_MANAGEMENT} replace />} />
     <Route
       path={WR.TEAM_COLLABORATE}
-      element={
-        <ProtectedRoute>
-          <CollaborativeAssessmentPage />
-        </ProtectedRoute>
-      }
+      element={<CollaborativeAssessmentPage />}
     />
     <Route
       path={WR.TEAM_RACI}
-      element={
-        <ProtectedRoute>
-          <TeamRaciPage />
-        </ProtectedRoute>
-      }
+      element={<TeamRaciPage />}
     />
     <Route
       path={WR.TEAM_STAKEHOLDERS}
-      element={
-        <ProtectedRoute>
-          <StakeholderManagementPage />
-        </ProtectedRoute>
-      }
+      element={<StakeholderManagementPage />}
     />
     <Route
       path={WR.VENDOR_INTELLIGENCE}
-      element={
-        <ProtectedRoute>
-          <VendorIntelligencePortfolioPage />
-        </ProtectedRoute>
-      }
+      element={<VendorIntelligencePortfolioPage />}
     />
     <Route
       path={WR.VENDOR_GRAPH_IMPORT}
-      element={
-        <ProtectedRoute>
-          <VendorIntelligenceImportPage />
-        </ProtectedRoute>
-      }
+      element={<VendorIntelligenceImportPage />}
     />
     <Route
       path={WR.VENDOR_INTELLIGENCE_DETAIL}
-      element={
-        <ProtectedRoute>
-          <VendorIntelligenceDetailPage />
-        </ProtectedRoute>
-      }
+      element={<VendorIntelligenceDetailPage />}
     />
     <Route
       path={WR.COMPLIANCE_ROADMAP}
-      element={
-        <ProtectedRoute>
-          <ComplianceRoadmapPage />
-        </ProtectedRoute>
-      }
+      element={<ComplianceRoadmapPage />}
     />
+    <Route path={MR.VENDOR_ACTIVITY_CATALOG} element={<VendorActivityCatalogPage />} />
+    {/* Program routes ungated in publicRoutes.tsx (external gate happens before workspace access). */}
   </>
 );

@@ -10,8 +10,11 @@ import {
   Home,
   Search,
 } from 'lucide-react';
+import { differenceInDays, parseISO } from 'date-fns';
 import ThemeToggle from './ThemeToggle';
 import UserMenu from './UserMenu';
+import QuickCreateMenu from './QuickCreateMenu';
+import NotificationsBell from './NotificationsBell';
 import CommandPalette from '../common/CommandPalette';
 import { useTranslation } from 'react-i18next';
 import { config } from '../../utils/config';
@@ -21,10 +24,12 @@ import {
 } from '../../navigation/supplyChainSolutionsNav';
 import { SHELL_CLASSES } from '../../layout/shell';
 import { MR, WR, isWorkspaceAppPath } from 'shared/constants/routes';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const { profile } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   /** Center nav region (workspace search / marketing links); kept for stable refs and any future focus/outside logic. */
@@ -73,6 +78,65 @@ const Navbar: React.FC = () => {
 
   const workspaceSections = useMemo(() => getWorkspaceSections(t), [t]);
   const workspaceChrome = isWorkspaceAppPath(location.pathname);
+  const portalUrl =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Vite env typing varies across workspaces
+    ((import.meta as any)?.env?.VITE_PORTAL_URL as string | undefined) || 'https://www.portal.vendorsoluce.com';
+
+  const trialChip = useMemo(() => {
+    const p = profile as unknown as {
+      subscription_status?: string;
+      trial_ends_at?: string;
+      plan?: string;
+    } | null;
+
+    const status = p?.subscription_status;
+    const plan = p?.plan;
+    const trialEndsAt = p?.trial_ends_at;
+
+    if (!status) return null;
+    if (status === 'active' && plan === 'starter') return null;
+    if (status === 'active') return null;
+
+    if (status === 'past_due') {
+      return {
+        text: 'Payment due',
+        classes:
+          'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
+      };
+    }
+
+    if (status === 'trialing') {
+      let daysLeft: number | null = null;
+      if (trialEndsAt) {
+        try {
+          daysLeft = differenceInDays(parseISO(trialEndsAt), new Date());
+        } catch {
+          daysLeft = null;
+        }
+      }
+
+      if (typeof daysLeft === 'number' && daysLeft <= 0) {
+        return {
+          text: 'Trial expired',
+          classes:
+            'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
+        };
+      }
+
+      const label =
+        typeof daysLeft === 'number'
+          ? `Trial · ${daysLeft} days left`
+          : 'Trial';
+
+      return {
+        text: label,
+        classes:
+          'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
+      };
+    }
+
+    return null;
+  }, [profile]);
 
   const isActiveLink = (href: string): boolean => {
     if (href === '#') return false;
@@ -134,14 +198,14 @@ const Navbar: React.FC = () => {
               </Link>
             )}
           </div>
-          
-          {/* Center: marketing links — workspace uses sidebar for nav; header only Search + License */}
-          <div
-            ref={navCenterRef}
-            className="hidden md:flex md:flex-1 md:min-w-0 md:items-center md:justify-center md:gap-2 md:px-2"
-          >
-            {workspaceChrome ? (
-              <>
+
+          {workspaceChrome ? (
+            <>
+              <div className="flex-1 min-w-0" />
+
+              {/* Desktop: workspace actions (search + portal + quick create + notifications + trial + user) */}
+              <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+                <div ref={navCenterRef} className="flex items-center gap-2 min-w-0">
                 <button
                   type="button"
                   onClick={() => setIsCommandPaletteOpen(true)}
@@ -155,75 +219,104 @@ const Navbar: React.FC = () => {
                     Ctrl+K
                   </kbd>
                 </button>
-                {isLicenseMode() && (
-                  <Link
-                    to="/billing"
-                    className={getActiveLinkClasses(isActiveLink('/billing'))}
-                    title="License"
-                  >
-                    <Shield size={16} className="flex-shrink-0" />
-                    <span className="ml-1 text-sm">License</span>
-                  </Link>
-                )}
-              </>
-            ) : (
-              <>
-                <Link
-                  to={MR.HOME}
-                  className={getActiveLinkClasses(isActiveLink(MR.HOME))}
-                  title={t('navigation.home')}
-                >
-                  <Home size={16} className="flex-shrink-0" />
-                  <span className="ml-1 text-sm">{t('navigation.home')}</span>
-                </Link>
-                <Link
-                  to={MR.PRICING}
-                  className={getActiveLinkClasses(isActiveLink(MR.PRICING))}
-                >
-                  {t('navigation.pricing')}
-                </Link>
-                <Link
-                  to={MR.HOW_IT_WORKS}
-                  className={getActiveLinkClasses(isActiveLink(MR.HOW_IT_WORKS))}
-                >
-                  {t('navigation.howItWorks')}
-                </Link>
-                <Link
-                  to={MR.CONTACT}
-                  className={getActiveLinkClasses(isActiveLink(MR.CONTACT))}
-                >
-                  {t('navigation.contact')}
-                </Link>
-                <Link
-                  to={WR.VENDOR_INTELLIGENCE}
-                  className={getActiveLinkClasses(isWorkspacePortfolioNavActive())}
-                  title={t('navigation.vendorRiskDashboard')}
-                >
-                  <BarChart3 size={16} className="flex-shrink-0" />
-                  <span className="ml-1 text-sm">{t('navigation.vendorRisk')}</span>
-                </Link>
+
                 <a
-                  href={config.app.websiteUrl}
-                  className="px-2 py-1.5 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 inline-flex items-center gap-1 max-w-[11rem]"
+                  href={portalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title={t('navigation.corporateWebsite', 'Corporate website')}
+                  className="hidden sm:flex items-center text-xs text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-100"
+                  title="Vendor portal"
                 >
-                  <span className="truncate">{t('navigation.corporateWebsite', 'Corporate website')}</span>
-                  <ExternalLink size={14} className="opacity-60 shrink-0" aria-hidden />
+                  Vendor portal ↗
                 </a>
+
+                <QuickCreateMenu />
+                <NotificationsBell />
+
+                {trialChip && (
+                  <Link
+                    to={MR.PRICING}
+                    className={`hidden md:inline-flex text-xs font-medium px-2 py-0.5 rounded-full ${trialChip.classes}`}
+                    title="Plan status"
+                  >
+                    {trialChip.text}
+                  </Link>
+                )}
+
+                <div data-tour="theme-toggle" className="flex items-center">
+                  <ThemeToggle />
+                </div>
+                <div data-tour="user-menu">
+                  <UserMenu />
+                </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            /* Desktop: marketing links — workspace uses sidebar for nav; header only Search + License */
+            <div
+              ref={navCenterRef}
+              className="hidden md:flex md:flex-1 md:min-w-0 md:items-center md:justify-center md:gap-2 md:px-2"
+            >
+              <Link
+                to={MR.HOME}
+                className={getActiveLinkClasses(isActiveLink(MR.HOME))}
+                title={t('navigation.home')}
+              >
+                <Home size={16} className="flex-shrink-0" />
+                <span className="ml-1 text-sm">{t('navigation.home')}</span>
+              </Link>
+              <Link
+                to={MR.PRICING}
+                className={getActiveLinkClasses(isActiveLink(MR.PRICING))}
+              >
+                {t('navigation.pricing')}
+              </Link>
+              <Link
+                to={MR.HOW_IT_WORKS}
+                className={getActiveLinkClasses(isActiveLink(MR.HOW_IT_WORKS))}
+              >
+                {t('navigation.howItWorks')}
+              </Link>
+              <Link
+                to={MR.CONTACT}
+                className={getActiveLinkClasses(isActiveLink(MR.CONTACT))}
+              >
+                {t('navigation.contact')}
+              </Link>
+              <Link
+                to={WR.VENDOR_INTELLIGENCE}
+                className={getActiveLinkClasses(isWorkspacePortfolioNavActive())}
+                title={t('navigation.vendorRiskDashboard')}
+              >
+                <BarChart3 size={16} className="flex-shrink-0" />
+                <span className="ml-1 text-sm">{t('navigation.vendorRisk')}</span>
+              </Link>
+              <a
+                href={config.app.websiteUrl}
+                className="px-2 py-1.5 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 inline-flex items-center gap-1 max-w-[11rem]"
+                target="_blank"
+                rel="noopener noreferrer"
+                title={t('navigation.corporateWebsite', 'Corporate website')}
+              >
+                <span className="truncate">{t('navigation.corporateWebsite', 'Corporate website')}</span>
+                <ExternalLink size={14} className="opacity-60 shrink-0" aria-hidden />
+              </a>
+            </div>
+          )}
+
+          {/* Desktop: Theme + User (marketing + workspace) */}
+          <div className="hidden md:flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+            {!workspaceChrome && (
+              <>
+                <div data-tour="theme-toggle" className="flex items-center">
+                  <ThemeToggle />
+                </div>
+                <div data-tour="user-menu">
+                  <UserMenu />
+                </div>
               </>
             )}
-          </div>
-
-          {/* Right: Theme + User */}
-          <div className="hidden md:flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
-            <div data-tour="theme-toggle" className="flex items-center">
-              <ThemeToggle />
-            </div>
-            <div data-tour="user-menu">
-              <UserMenu />
-            </div>
           </div>
           
           {/* Mobile: theme + menu */}
@@ -231,6 +324,14 @@ const Navbar: React.FC = () => {
             <div data-tour="theme-toggle" className="flex items-center flex-shrink-0">
               <ThemeToggle />
             </div>
+            {workspaceChrome && (
+              <>
+                <NotificationsBell />
+                <div data-tour="user-menu" className="flex items-center">
+                  <UserMenu />
+                </div>
+              </>
+            )}
             <button
               type="button"
               onClick={toggleMenu}
@@ -442,11 +543,13 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile User Menu Section */}
-          <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex items-center px-3">
-              <UserMenu />
+          {!workspaceChrome && (
+            <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex items-center px-3">
+                <UserMenu />
+              </div>
             </div>
-          </div>
+          )}
         </div>,
         document.body
       )}

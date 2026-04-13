@@ -13,6 +13,15 @@ import {
   createVendorRequirementsBulk,
   type CreateRequirementInput
 } from '../services/requirementService';
+import {
+  listLocalVendorRequirements,
+  upsertLocalVendorRequirementsBulk,
+  updateLocalVendorRequirement,
+  deleteLocalVendorRequirement,
+  getLocalVendorRequirementByVendorId,
+  type CreateRequirementInput as LocalCreateRequirementInput,
+  type UpdateRequirementInput as LocalUpdateRequirementInput,
+} from '../services/local/vendorRequirementsLocalStore';
 import { getRequirementsForTier, getRiskTierFromScore } from '../utils/requirementMapping';
 import type { VendorRequirement, ControlRequirement, RequirementGap } from '../types/requirements';
 import { logger } from '../utils/logger';
@@ -26,31 +35,31 @@ export interface GenerateRequirementInput {
 
 export const useVendorRequirements = () => {
   const { user } = useAuth();
+  const userId = user?.id;
+  const useLocal = !userId;
   const [requirements, setRequirements] = useState<VendorRequirement[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Load requirements on mount and when user changes
   useEffect(() => {
-    if (user) {
-      loadRequirements();
-    } else {
-      setRequirements([]);
-    }
-  }, [user]);
+    void loadRequirements();
+  }, [userId, loadRequirements]);
 
   /**
    * Load all vendor requirements for the current user
    */
   const loadRequirements = useCallback(async () => {
-    if (!user) return;
-
     setLoading(true);
     setError(null);
 
     try {
-      const data = await getVendorRequirements(user.id);
-      setRequirements(data);
+      if (useLocal) {
+        setRequirements(listLocalVendorRequirements());
+      } else {
+        const data = await getVendorRequirements(userId);
+        setRequirements(data);
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load requirements';
       setError(errorMessage);
@@ -58,7 +67,7 @@ export const useVendorRequirements = () => {
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  }, [useLocal, userId]);
 
   /**
    * Generate requirements for a single vendor
@@ -97,10 +106,6 @@ export const useVendorRequirements = () => {
    */
   const saveRequirement = useCallback(
     async (requirement: VendorRequirement): Promise<VendorRequirement> => {
-      if (!user) {
-        throw new Error('User must be authenticated to save requirements');
-      }
-
       setLoading(true);
       setError(null);
 
@@ -114,9 +119,17 @@ export const useVendorRequirements = () => {
           gaps: requirement.gaps
         };
 
-        const saved = await createVendorRequirement(input, user.id);
-        setRequirements(prev => [...prev, saved]);
-        return saved;
+        if (useLocal) {
+          const savedLocal = upsertLocalVendorRequirementsBulk([
+            input as unknown as LocalCreateRequirementInput,
+          ])[0];
+          setRequirements(listLocalVendorRequirements());
+          return savedLocal;
+        } else {
+          const saved = await createVendorRequirement(input, userId);
+          setRequirements(prev => [...prev, saved]);
+          return saved;
+        }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to save requirement';
         setError(errorMessage);
@@ -126,7 +139,7 @@ export const useVendorRequirements = () => {
         setLoading(false);
       }
     },
-    [user]
+    [useLocal, userId]
   );
 
   /**
@@ -134,10 +147,6 @@ export const useVendorRequirements = () => {
    */
   const saveRequirements = useCallback(
     async (requirementsToSave: VendorRequirement[]): Promise<VendorRequirement[]> => {
-      if (!user) {
-        throw new Error('User must be authenticated to save requirements');
-      }
-
       if (requirementsToSave.length === 0) {
         return [];
       }
@@ -155,9 +164,17 @@ export const useVendorRequirements = () => {
           gaps: req.gaps
         }));
 
-        const saved = await createVendorRequirementsBulk(inputs, user.id);
-        setRequirements(prev => [...prev, ...saved]);
-        return saved;
+        if (useLocal) {
+          const savedLocal = upsertLocalVendorRequirementsBulk(
+            inputs as unknown as LocalCreateRequirementInput[]
+          );
+          setRequirements(listLocalVendorRequirements());
+          return savedLocal;
+        } else {
+          const saved = await createVendorRequirementsBulk(inputs, userId);
+          setRequirements(prev => [...prev, ...saved]);
+          return saved;
+        }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to save requirements';
         setError(errorMessage);
@@ -167,7 +184,7 @@ export const useVendorRequirements = () => {
         setLoading(false);
       }
     },
-    [user]
+    [useLocal, userId]
   );
 
   /**
@@ -182,19 +199,24 @@ export const useVendorRequirements = () => {
         status?: 'pending' | 'in_progress' | 'completed';
       }
     ): Promise<VendorRequirement> => {
-      if (!user) {
-        throw new Error('User must be authenticated to update requirements');
-      }
-
       setLoading(true);
       setError(null);
 
       try {
-        const updated = await updateVendorRequirement(requirementId, updates, user.id);
-        setRequirements(prev =>
-          prev.map(req => (req.id === requirementId ? updated : req))
-        );
-        return updated;
+        if (useLocal) {
+          const updatedLocal = updateLocalVendorRequirement(
+            requirementId,
+            updates as LocalUpdateRequirementInput
+          );
+          setRequirements(listLocalVendorRequirements());
+          return updatedLocal;
+        } else {
+          const updated = await updateVendorRequirement(requirementId, updates, userId);
+          setRequirements(prev =>
+            prev.map(req => (req.id === requirementId ? updated : req))
+          );
+          return updated;
+        }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to update requirement';
         setError(errorMessage);
@@ -204,7 +226,7 @@ export const useVendorRequirements = () => {
         setLoading(false);
       }
     },
-    [user]
+    [useLocal, userId]
   );
 
   /**
@@ -212,16 +234,17 @@ export const useVendorRequirements = () => {
    */
   const deleteRequirement = useCallback(
     async (requirementId: string): Promise<void> => {
-      if (!user) {
-        throw new Error('User must be authenticated to delete requirements');
-      }
-
       setLoading(true);
       setError(null);
 
       try {
-        await deleteVendorRequirement(requirementId, user.id);
-        setRequirements(prev => prev.filter(req => req.id !== requirementId));
+        if (useLocal) {
+          deleteLocalVendorRequirement(requirementId);
+          setRequirements(listLocalVendorRequirements());
+        } else {
+          await deleteVendorRequirement(requirementId, userId);
+          setRequirements(prev => prev.filter(req => req.id !== requirementId));
+        }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to delete requirement';
         setError(errorMessage);
@@ -231,7 +254,7 @@ export const useVendorRequirements = () => {
         setLoading(false);
       }
     },
-    [user]
+    [useLocal, userId]
   );
 
   /**
@@ -239,16 +262,15 @@ export const useVendorRequirements = () => {
    */
   const getRequirementByVendorId = useCallback(
     async (vendorId: string): Promise<VendorRequirement | null> => {
-      if (!user) return null;
-
       try {
-        return await getVendorRequirementByVendorId(vendorId, user.id);
+        if (useLocal) return getLocalVendorRequirementByVendorId(vendorId);
+        return await getVendorRequirementByVendorId(vendorId, userId);
       } catch (err) {
         logger.error('Failed to get vendor requirement:', err);
         return null;
       }
     },
-    [user]
+    [useLocal, userId]
   );
 
   /**

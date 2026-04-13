@@ -20,6 +20,7 @@
     "DEMO": "/demo",
     "TRIAL": "/trial",
     "VENDOR_RISK_RADAR": "/vendor-risk-radar",
+    "VENDOR_RISK_REPORTS": "/vendor-risk-reports",
     "NIST_CHECKLIST": "/tools/nist-checklist",
     "VENDOR_RISK_CALCULATOR": "/tools/vendor-risk-calculator",
     "VENDOR_PRIVACY_ASSESSMENT": "/tools/vendor-privacy-assessment",

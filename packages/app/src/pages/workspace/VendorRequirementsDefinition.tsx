@@ -18,7 +18,6 @@ import WorkspacePageShell from '../../components/vendorsoluce-intelligence/Works
 import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { Badge } from '../../components/ui/Badge';
-import JourneyProgress from '../../components/journey/JourneyProgress';
 import VendorRequirementsList from '../../components/vendor-requirements/VendorRequirementsList';
 import RequirementSummary from '../../components/vendor-requirements/RequirementSummary';
 import { useVendorRequirements } from '../../hooks/useVendorRequirements';
@@ -198,31 +197,35 @@ const VendorRequirementsDefinition: React.FC = () => {
   }
 
   return (
-    <WorkspacePageShell title="Vendor requirements definition" description="Stage 2 of 3 — Convert risk-tiered vendors into explicit control expectations so the next assessment stage starts with defined evidence targets." actions={[{ label: 'Continue to Stage 3', onClick: handleContinueToStage3, variant: 'primary' }]}><WorkspacePageBody>
-      {/* Journey Progress */}
-      <JourneyProgress 
-        currentStage={2} 
-        stage1Complete={vendors.length > 0}
-        showNavigation={true}
-      />
+    <WorkspacePageShell
+      title="Vendor requirements"
+      description="Define control expectations per vendor (risk-tiered) and track coverage gaps. This work runs in parallel with intake and assessments."
+      actions={[{ label: 'Open assessments', onClick: handleContinueToStage3, variant: 'primary' }]}
+    >
+      <WorkspacePageBody>
       
-      <PanelCard title="Stage objective" description="Use the stage framing below to keep requirement generation and gap review grounded in the same operating model."><div className="rounded-2xl border border-emerald-200/70 bg-emerald-50/70 p-4 dark:border-emerald-900/40 dark:bg-emerald-950/30">
+      <PanelCard
+        title="Objective"
+        description="Generate and review requirements per vendor based on risk tier. Use the list below to validate coverage and focus evidence requests on the highest gaps."
+      >
+        <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50/70 p-4 dark:border-emerald-900/40 dark:bg-emerald-950/30">
         <div className="flex items-center gap-2 mb-2">
           <span className="text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green uppercase tracking-wide">
-            Stage 2 of 3
+            Requirements workbench
           </span>
           <span className="text-xs text-gray-500 dark:text-gray-400">•</span>
           <span className="text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green">
-            Understand Your Gaps
+            Gap-aware expectations
           </span>
         </div>
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-          Outcome: "I know exactly what controls I need from each vendor"
+          Outcome: clear expectations per vendor
         </h2>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Based on your vendor risk analysis from Stage 1, we've automatically generated vendor-specific security requirements using NIST SP 800-161.
+          Requirements are mapped from NIST SP 800-161 using each vendor's current risk tier. Use the gaps view to prioritize evidence collection.
         </p>
-      </div></PanelCard>
+      </div>
+      </PanelCard>
 
       {/* Requirements by Risk Tier */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -331,62 +334,8 @@ const VendorRequirementsDefinition: React.FC = () => {
         </Card>
       )}
 
-      {/* Continue to Stage 3 */}
-      {requirements.length > 0 && (
-        <Card className="mt-6 border-l-4 border-l-vendorsoluce-green">
-          <CardContent className="p-6">
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle className="w-5 h-5 text-vendorsoluce-green" />
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    Stage 2 Complete: You Understand Your Gaps
-                  </h3>
-                </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  You've defined requirements for {requirements.length} vendor(s) with {stats.totalGaps} gap(s) to address. Continue to Stage 3 to collect evidence from vendors.
-                </p>
-              </div>
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={handleContinueToStage3}
-                className="flex items-center gap-2 whitespace-nowrap"
-              >
-                Continue to Stage 3: Collect Evidence
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Cross-Project Links */}
-      <Card className="mt-6">
-        <CardContent className="p-4">
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
-            <span className="text-gray-500 dark:text-gray-400">Also try:</span>
-            <Link to="/vendor-risk-radar" className="text-vendorsoluce-green hover:text-vendorsoluce-dark-green font-medium flex items-center gap-1">
-              <ArrowRight className="w-3 h-3 rotate-180" />
-              Back to Stage 1
-            </Link>
-            <Link to="/supply-chain-assessment" className="text-vendorsoluce-green hover:text-vendorsoluce-dark-green font-medium flex items-center gap-1">
-              <Shield className="w-3 h-3" />
-              Foundation Track
-            </Link>
-            <a 
-              href="https://www.vendorsoluce.com/how-it-works.html" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-vendorsoluce-green hover:text-vendorsoluce-dark-green font-medium flex items-center gap-1"
-            >
-              <ExternalLink className="w-3 h-3" />
-              Learn More
-            </a>
-          </div>
-        </CardContent>
-      </Card>
-    </WorkspacePageBody></WorkspacePageShell>
+    </WorkspacePageBody>
+    </WorkspacePageShell>
   );
 };
 

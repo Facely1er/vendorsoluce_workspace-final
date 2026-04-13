@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import {
   BarChart3,
   FileCheck,
-  Users,
   ClipboardList,
   Radar,
   Calculator,
@@ -23,13 +22,14 @@ import {
   CalendarDays,
   Settings,
   Upload,
-  Rocket,
   Building2,
   UserPlus,
   ListChecks,
+  Users,
 } from 'lucide-react';
 import { getWorkspaceSections } from '../../navigation/supplyChainSolutionsNav';
 import { MR, WR } from 'shared/constants/routes';
+import { useAuth } from '../../context/AuthContext';
 
 /** Map well-known hrefs to an icon for richer sidebar rendering. */
 const HREF_ICON: Record<string, React.ReactNode> = {
@@ -38,11 +38,15 @@ const HREF_ICON: Record<string, React.ReactNode> = {
   [WR.ONBOARDING]: <ClipboardList className="h-4 w-4 flex-shrink-0" />,
   [WR.VENDOR_GRAPH_IMPORT]: <Upload className="h-4 w-4 flex-shrink-0" />,
   [MR.VENDOR_ONBOARDING]: <UserPlus className="h-4 w-4 flex-shrink-0" />,
+  [WR.TEAM_COLLABORATE]: <Users className="h-4 w-4 flex-shrink-0" />,
+  [WR.TEAM_RACI]: <ListChecks className="h-4 w-4 flex-shrink-0" />,
+  [WR.TEAM_STAKEHOLDERS]: <Building2 className="h-4 w-4 flex-shrink-0" />,
   '/supply-chain-assessment': <FileCheck className="h-4 w-4 flex-shrink-0" />,
   '/vendors': <Users className="h-4 w-4 flex-shrink-0" />,
   '/vendor-requirements': <ListChecks className="h-4 w-4 flex-shrink-0" />,
   '/vendor-assessments': <FileSearch className="h-4 w-4 flex-shrink-0" />,
   '/vendor-risk-radar': <Radar className="h-4 w-4 flex-shrink-0" />,
+  '/vendor-risk-reports': <FileText className="h-4 w-4 flex-shrink-0" />,
   '/vira-reports': <FileText className="h-4 w-4 flex-shrink-0" />,
   '/tools/vendor-risk-calculator': <Calculator className="h-4 w-4 flex-shrink-0" />,
   '/tools/nist-checklist': <Shield className="h-4 w-4 flex-shrink-0" />,
@@ -54,13 +58,11 @@ const HREF_ICON: Record<string, React.ReactNode> = {
 };
 
 const SECTION_ICON: Record<string, React.ReactNode> = {
-  setup: <Rocket className="h-3.5 w-3.5" />,
-  intake: <Upload className="h-3.5 w-3.5" />,
-  scope: <Building2 className="h-3.5 w-3.5" />,
+  vendors: <Building2 className="h-3.5 w-3.5" />,
   assessments: <BarChart3 className="h-3.5 w-3.5" />,
-  measure: <Radar className="h-3.5 w-3.5" />,
+  risk: <Radar className="h-3.5 w-3.5" />,
   programs: <ListTree className="h-3.5 w-3.5" />,
-  planning: <CalendarDays className="h-3.5 w-3.5" />,
+  team: <Users className="h-3.5 w-3.5" />,
 };
 
 export interface WorkspaceSidebarProps {
@@ -77,7 +79,9 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
 }) => {
   const { t } = useTranslation();
   const location = useLocation();
+  const { profile } = useAuth();
   const sections = getWorkspaceSections(t);
+  const showOnboarding = profile?.onboarding_completed === false;
 
   /** Track which sections are collapsed; all open by default. */
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
@@ -88,6 +92,9 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
   const isRouteActive = (href: string) => {
     const p = location.pathname;
     if (p === href) return true;
+    // Treat the vendor portfolio as exact-match only (avoid highlighting both
+    // `/workspace/vendors` and nested tools like `/workspace/vendors/import`).
+    if (href === WR.VENDOR_INTELLIGENCE) return false;
     if (href !== '/' && p.startsWith(`${href}/`)) return true;
     return false;
   };
@@ -215,6 +222,27 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
               );
             })}
           </nav>
+
+          <div className="px-2 pb-3 pt-1 space-y-1">
+            <Link
+              to={WR.PLATFORM_SETUP}
+              className="flex items-center justify-center rounded-lg h-10 w-10 mx-auto text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              title={t('navigation.platformSetup', 'Platform setup')}
+              aria-label={t('navigation.platformSetup', 'Platform setup')}
+            >
+              {HREF_ICON[WR.PLATFORM_SETUP]}
+            </Link>
+            {showOnboarding ? (
+              <Link
+                to={WR.ONBOARDING}
+                className="flex items-center justify-center rounded-lg h-10 w-10 mx-auto text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                title={t('navigation.workspaceOnboarding', 'Workspace onboarding')}
+                aria-label={t('navigation.workspaceOnboarding', 'Workspace onboarding')}
+              >
+                {HREF_ICON[WR.ONBOARDING]}
+              </Link>
+            ) : null}
+          </div>
         </>
       ) : (
         <>
@@ -275,6 +303,27 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
               </div>
             ))}
           </nav>
+
+          <div className="px-2 pb-3 pt-1 space-y-0.5">
+            <Link
+              to={WR.PLATFORM_SETUP}
+              className={iconRailLinkClass(isRouteActive(WR.PLATFORM_SETUP))}
+              title={t('navigation.platformSetup', 'Platform setup')}
+              aria-label={t('navigation.platformSetup', 'Platform setup')}
+            >
+              {HREF_ICON[WR.PLATFORM_SETUP]}
+            </Link>
+            {showOnboarding ? (
+              <Link
+                to={WR.ONBOARDING}
+                className={iconRailLinkClass(isRouteActive(WR.ONBOARDING))}
+                title={t('navigation.workspaceOnboarding', 'Workspace onboarding')}
+                aria-label={t('navigation.workspaceOnboarding', 'Workspace onboarding')}
+              >
+                {HREF_ICON[WR.ONBOARDING]}
+              </Link>
+            ) : null}
+          </div>
         </>
       )}
     </aside>

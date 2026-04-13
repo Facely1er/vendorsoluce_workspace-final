@@ -1,49 +1,25 @@
 import React from 'react';
 import { AR, MR } from 'shared/constants/routes';
 import { Navigate, Route } from 'react-router-dom';
-import ProtectedRoute from '../../components/auth/ProtectedRoute';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
+import { config } from '../../utils/config';
 
 const ResetPasswordPage = lazyWithRetry(() => import('../../pages/auth/ResetPasswordPage'));
-const Pricing = lazyWithRetry(() =>
-  import.meta.env.VITE_LICENSE_MODE === 'true'
-    ? import('../../pages/public/ContactSalesPage')
-    : import('../../pages/public/Pricing')
-);
-const Checkout = lazyWithRetry(() =>
-  import.meta.env.VITE_LICENSE_MODE === 'true'
-    ? import('../../pages/public/ContactSalesPage')
-    : import('../../pages/public/Checkout')
-);
-const Contact = lazyWithRetry(() => import('../../pages/public/Contact'));
-const Privacy = lazyWithRetry(() => import('../../pages/legal/Privacy'));
-const AcceptableUsePolicy = lazyWithRetry(() => import('../../pages/legal/AcceptableUsePolicy'));
-const CookiePolicy = lazyWithRetry(() => import('../../pages/legal/CookiePolicy'));
-const MasterPrivacyPolicy = lazyWithRetry(() => import('../../pages/legal/MasterPrivacyPolicy'));
-const MasterTermsOfService = lazyWithRetry(() => import('../../pages/legal/MasterTermsOfService'));
-const Templates = lazyWithRetry(() => import('../../pages/public/Templates'));
-const DownloadsPage = lazyWithRetry(() => import('../../pages/public/DownloadsPage'));
-const HowItWorks = lazyWithRetry(() => import('../../pages/public/HowItWorks'));
-const APIDocumentation = lazyWithRetry(() => import('../../pages/public/APIDocumentation'));
-const IntegrationGuides = lazyWithRetry(() => import('../../pages/public/IntegrationGuides'));
-const HostingOptionsPage = lazyWithRetry(() => import('../../pages/public/HostingOptionsPage'));
-const NISTChecklist = lazyWithRetry(() => import('../../pages/tools/NISTChecklist'));
-const VendorRiskRadar = lazyWithRetry(() => import('../../pages/tools/VendorRiskRadar'));
-const VendorRiskCalculator = lazyWithRetry(() => import('../../pages/tools/VendorRiskCalculator'));
-const DemoPage = lazyWithRetry(() => import('../../pages/public/DemoPage'));
-const TrialPage = lazyWithRetry(() => import('../../pages/public/TrialPage'));
-const VendorSecurityAssessments = lazyWithRetry(() => import('../../pages/workspace/VendorSecurityAssessments'));
-const VendorManagementPage = lazyWithRetry(() => import('../../pages/workspace/VendorManagementPage'));
-const VendorRequirementsDefinition = lazyWithRetry(() => import('../../pages/workspace/VendorRequirementsDefinition'));
-const TemplatePreviewPage = lazyWithRetry(() => import('../../pages/public/TemplatePreviewPage'));
-const DashboardDemoPage = lazyWithRetry(() => import('../../pages/public/DashboardDemoPage'));
-const VendorPrivacyAssessment = lazyWithRetry(() => import('../../pages/tools/VendorPrivacyAssessment'));
-const DpiaGenerator = lazyWithRetry(() => import('../../pages/tools/DpiaGenerator'));
-const DataInventory = lazyWithRetry(() => import('../../pages/tools/DataInventory'));
 const VendorActivityCatalogPage = lazyWithRetry(() => import('../../pages/programs/VendorActivityCatalogPage'));
 const NistImplementationWorkflowPage = lazyWithRetry(() => import('../../pages/programs/NistImplementationWorkflowPage'));
 const ViraDueDiligenceWorkflowPage = lazyWithRetry(() => import('../../pages/programs/ViraDueDiligenceWorkflowPage'));
 const ViraReportsPage = lazyWithRetry(() => import('../../pages/programs/ViraReportsPage'));
+const NISTChecklist = lazyWithRetry(() => import('../../pages/tools/NISTChecklist'));
+const VendorRiskRadar = lazyWithRetry(() => import('../../pages/tools/VendorRiskRadar'));
+const VendorRiskReports = lazyWithRetry(() => import('../../pages/tools/VendorRiskReports'));
+const VendorRiskCalculator = lazyWithRetry(() => import('../../pages/tools/VendorRiskCalculator'));
+const VendorSecurityAssessments = lazyWithRetry(() => import('../../pages/workspace/VendorSecurityAssessments'));
+const VendorManagementPage = lazyWithRetry(() => import('../../pages/workspace/VendorManagementPage'));
+const VendorRequirementsDefinition = lazyWithRetry(() => import('../../pages/workspace/VendorRequirementsDefinition'));
+const DashboardDemoPage = lazyWithRetry(() => import('../../pages/public/DashboardDemoPage'));
+const VendorPrivacyAssessment = lazyWithRetry(() => import('../../pages/tools/VendorPrivacyAssessment'));
+const DpiaGenerator = lazyWithRetry(() => import('../../pages/tools/DpiaGenerator'));
+const DataInventory = lazyWithRetry(() => import('../../pages/tools/DataInventory'));
 const SupplyChainAssessment = lazyWithRetry(() => import('../../pages/assessments/SupplyChainAssessment'));
 const SupplyChainResults = lazyWithRetry(() => import('../../pages/assessments/SupplyChainResults'));
 const SupplyChainRecommendations = lazyWithRetry(() => import('../../pages/assessments/SupplyChainRecommendations'));
@@ -54,6 +30,15 @@ const MarketingAdminPage = lazyWithRetry(() => import('../../pages/admin/Marketi
 const CreateCampaignPage = lazyWithRetry(() => import('../../pages/admin/CreateCampaignPage'));
 const ConditionalDashboard = lazyWithRetry(() => import('../../components/dashboard/ConditionalDashboard'));
 const ConditionalVendorDashboard = lazyWithRetry(() => import('../../components/dashboard/ConditionalVendorDashboard'));
+
+function WebsiteRedirect({ to }: { to: string }) {
+  React.useEffect(() => {
+    const base = String(config.app.websiteUrl || '').replace(/\/$/, '');
+    const dest = `${base}${to.startsWith('/') ? to : `/${to}`}`;
+    window.location.replace(dest);
+  }, [to]);
+  return null;
+}
 
 export function VendorAssessmentPortalRedirect() {
   const id = window.location.pathname.split('/').pop();
@@ -69,31 +54,33 @@ export const publicRoutes = (
     <Route path={MR.HOME} element={<ConditionalDashboard />} />
       <Route path={MR.DASHBOARD} element={<ConditionalDashboard />} />
       <Route path={AR.RESET_PASSWORD} element={<ResetPasswordPage />} />
-      <Route path="/careers" element={<Navigate to={MR.CONTACT} replace />} />
-      <Route path={MR.PRICING} element={<Pricing />} />
-      <Route path={MR.CHECKOUT} element={<Checkout />} />
-      <Route path={MR.CONTACT} element={<Contact />} />
-      <Route path={MR.PRIVACY} element={<Privacy />} />
-      <Route path={MR.ACCEPTABLE_USE_POLICY} element={<AcceptableUsePolicy />} />
-      <Route path={MR.COOKIE_POLICY} element={<CookiePolicy />} />
-      <Route path={MR.MASTER_PRIVACY_POLICY} element={<MasterPrivacyPolicy />} />
-      <Route path={MR.MASTER_TERMS_OF_SERVICE} element={<MasterTermsOfService />} />
-      <Route path={MR.DOWNLOAD} element={<DownloadsPage />} />
-      <Route path={MR.TEMPLATES} element={<Templates />} />
-      <Route path={MR.TEMPLATE_PREVIEW} element={<TemplatePreviewPage />} />
-      <Route path={MR.HOW_IT_WORKS} element={<HowItWorks />} />
-      <Route path="/tutorial" element={<Navigate to={MR.HOW_IT_WORKS} replace />} />
-      <Route path="/toolkit" element={<Navigate to={MR.HOME} replace />} />
+      {/* Option A: marketing + legal live on the website deployment (www.vendorsoluce.com). */}
+      <Route path="/careers" element={<WebsiteRedirect to={MR.CONTACT} />} />
+      <Route path={MR.PRICING} element={<WebsiteRedirect to={MR.PRICING} />} />
+      <Route path={MR.CHECKOUT} element={<WebsiteRedirect to={MR.CHECKOUT} />} />
+      <Route path={MR.CONTACT} element={<WebsiteRedirect to={MR.CONTACT} />} />
+      <Route path={MR.PRIVACY} element={<WebsiteRedirect to={MR.PRIVACY} />} />
+      <Route path={MR.ACCEPTABLE_USE_POLICY} element={<WebsiteRedirect to={MR.ACCEPTABLE_USE_POLICY} />} />
+      <Route path={MR.COOKIE_POLICY} element={<WebsiteRedirect to={MR.COOKIE_POLICY} />} />
+      <Route path={MR.MASTER_PRIVACY_POLICY} element={<WebsiteRedirect to={MR.MASTER_PRIVACY_POLICY} />} />
+      <Route path={MR.MASTER_TERMS_OF_SERVICE} element={<WebsiteRedirect to={MR.MASTER_TERMS_OF_SERVICE} />} />
+      <Route path={MR.DOWNLOAD} element={<WebsiteRedirect to={MR.DOWNLOAD} />} />
+      <Route path={MR.TEMPLATES} element={<WebsiteRedirect to={MR.TEMPLATES} />} />
+      <Route path={MR.TEMPLATE_PREVIEW} element={<WebsiteRedirect to={MR.TEMPLATE_PREVIEW} />} />
+      <Route path={MR.HOW_IT_WORKS} element={<WebsiteRedirect to={MR.HOW_IT_WORKS} />} />
+      <Route path="/tutorial" element={<WebsiteRedirect to={MR.HOW_IT_WORKS} />} />
+      <Route path="/toolkit" element={<WebsiteRedirect to={MR.HOME} />} />
       <Route path={MR.VENDOR_ACTIVITY_CATALOG} element={<VendorActivityCatalogPage />} />
       <Route path={MR.PROGRAM_NIST_IMPLEMENTATION} element={<NistImplementationWorkflowPage />} />
       <Route path={MR.PROGRAM_VIRA_DUE_DILIGENCE} element={<ViraDueDiligenceWorkflowPage />} />
       <Route path={MR.VIRA_REPORTS} element={<ViraReportsPage />} />
-      <Route path={MR.API_DOCS} element={<APIDocumentation />} />
-      <Route path={MR.INTEGRATION_GUIDES} element={<IntegrationGuides />} />
-      <Route path={MR.HOSTING_OPTIONS} element={<HostingOptionsPage />} />
-      <Route path={MR.DEMO} element={<DemoPage />} />
-      <Route path={MR.TRIAL} element={<TrialPage />} />
+      <Route path={MR.API_DOCS} element={<WebsiteRedirect to={MR.API_DOCS} />} />
+      <Route path={MR.INTEGRATION_GUIDES} element={<WebsiteRedirect to={MR.INTEGRATION_GUIDES} />} />
+      <Route path={MR.HOSTING_OPTIONS} element={<WebsiteRedirect to={MR.HOSTING_OPTIONS} />} />
+      <Route path={MR.DEMO} element={<WebsiteRedirect to={MR.DEMO} />} />
+      <Route path={MR.TRIAL} element={<WebsiteRedirect to={MR.TRIAL} />} />
       <Route path={MR.VENDOR_RISK_RADAR} element={<VendorRiskRadar />} />
+      <Route path={MR.VENDOR_RISK_REPORTS} element={<VendorRiskReports />} />
       <Route path="/vendors/radar" element={<Navigate to={MR.VENDOR_RISK_RADAR} replace />} />
       <Route path="/tools/vendor-risk-radar" element={<Navigate to={MR.VENDOR_RISK_RADAR} replace />} />
       <Route path={MR.NIST_CHECKLIST} element={<NISTChecklist />} />
@@ -116,15 +103,15 @@ export const publicRoutes = (
       <Route path={MR.VENDOR_ONBOARDING} element={<VendorOnboardingPage />} />
       <Route
         path={MR.ADMIN_VENDORS}
-        element={<ProtectedRoute><VendorManagementPage /></ProtectedRoute>}
+        element={<VendorManagementPage />}
       />
       <Route
         path={MR.ADMIN_MARKETING}
-        element={<ProtectedRoute><MarketingAdminPage /></ProtectedRoute>}
+        element={<MarketingAdminPage />}
       />
       <Route
         path={MR.ADMIN_MARKETING_NEW_CAMPAIGN}
-        element={<ProtectedRoute><CreateCampaignPage /></ProtectedRoute>}
+        element={<CreateCampaignPage />}
       />
       <Route path={MR.DASHBOARD_DEMO} element={<DashboardDemoPage />} />
       <Route path={MR.VENDOR_ASSESSMENTS} element={<VendorSecurityAssessments />} />

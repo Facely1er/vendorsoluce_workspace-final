@@ -10,6 +10,7 @@ import { useAuth } from '../context/AuthContext';
 import { SBOMIntegrationService, AnalyzeSBOMRequest, AnalysisResult } from '../services/sbomIntegrationService';
 import { supabase } from '../lib/supabase';
 import { logger } from '../utils/logger';
+import { saveLocalSbomAnalysis } from '../services/local/sbomAnalysisLocalStore';
 
 interface UseSBOMAnalysisOptions {
   vendorId?: string;
@@ -20,6 +21,7 @@ interface UseSBOMAnalysisOptions {
 
 export function useSBOMAnalysis(options?: UseSBOMAnalysisOptions) {
   const { user } = useAuth();
+  const userId = user?.id;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<{
@@ -53,6 +55,8 @@ export function useSBOMAnalysis(options?: UseSBOMAnalysisOptions) {
           sbomService.setAuthToken(session.access_token);
         }
         sbomService.setCurrentUserId(user.id);
+      } else if (isMounted) {
+        sbomService.setCurrentUserId('anon');
       }
     };
 
@@ -70,9 +74,7 @@ export function useSBOMAnalysis(options?: UseSBOMAnalysisOptions) {
     file: File,
     analysisOptions?: AnalyzeSBOMRequest['options']
   ) => {
-    if (!user) {
-      throw new Error('User must be authenticated to analyze SBOM files');
-    }
+    // Offline/anonymous mode: allow analysis if the API is reachable and store results locally.
 
     setLoading(true);
     setError(null);
@@ -88,7 +90,7 @@ export function useSBOMAnalysis(options?: UseSBOMAnalysisOptions) {
           vendorId: options?.vendorId,
           assessmentId: options?.assessmentId
         },
-        user.id
+        userId ?? 'anon'
       );
 
       setCurrentJobId(jobId);
@@ -114,6 +116,16 @@ export function useSBOMAnalysis(options?: UseSBOMAnalysisOptions) {
         options.onComplete(result);
       }
 
+      try {
+        saveLocalSbomAnalysis(result, {
+          vendorId: options?.vendorId,
+          assessmentId: options?.assessmentId,
+          userId,
+        });
+      } catch {
+        // ignore localStorage errors
+      }
+
       return result;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Analysis failed';
@@ -128,16 +140,12 @@ export function useSBOMAnalysis(options?: UseSBOMAnalysisOptions) {
       setLoading(false);
       setCurrentJobId(null);
     }
-  }, [user, options, sbomService]);
+  }, [userId, options, sbomService]);
 
   /**
    * Get analysis result by ID
    */
   const getAnalysisResult = useCallback(async (analysisId: string): Promise<AnalysisResult> => {
-    if (!user) {
-      throw new Error('User must be authenticated');
-    }
-
     setLoading(true);
     setError(null);
 
@@ -151,7 +159,7 @@ export function useSBOMAnalysis(options?: UseSBOMAnalysisOptions) {
     } finally {
       setLoading(false);
     }
-  }, [user, sbomService]);
+  }, [sbomService]);
 
   /**
    * Get analysis history
@@ -163,15 +171,11 @@ export function useSBOMAnalysis(options?: UseSBOMAnalysisOptions) {
       offset?: number;
     }
   ) => {
-    if (!user) {
-      throw new Error('User must be authenticated');
-    }
-
     setLoading(true);
     setError(null);
 
     try {
-      const history = await sbomService.getAnalysisHistory(user.id, historyOptions);
+      const history = await sbomService.getAnalysisHistory(userId ?? 'anon', historyOptions);
       return history;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to get analysis history';
@@ -180,16 +184,12 @@ export function useSBOMAnalysis(options?: UseSBOMAnalysisOptions) {
     } finally {
       setLoading(false);
     }
-  }, [user, sbomService]);
+  }, [userId, sbomService]);
 
   /**
    * Delete analysis
    */
   const deleteAnalysis = useCallback(async (analysisId: string): Promise<void> => {
-    if (!user) {
-      throw new Error('User must be authenticated');
-    }
-
     setLoading(true);
     setError(null);
 
@@ -202,7 +202,7 @@ export function useSBOMAnalysis(options?: UseSBOMAnalysisOptions) {
     } finally {
       setLoading(false);
     }
-  }, [user, sbomService]);
+  }, [sbomService]);
 
   /**
    * Check service health
