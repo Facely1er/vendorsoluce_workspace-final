@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, CheckCircle, AlertCircle, HelpCircle, Download } from 'lucide-react';
+import { CheckCircle, AlertCircle, HelpCircle, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import { Button } from '../../components/ui/Button';
 import { useTranslation } from 'react-i18next';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 interface ChecklistItem {
   id: string;
@@ -91,22 +92,18 @@ const NISTChecklist: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <Link to="/" className="inline-flex items-center text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-navy dark:hover:text-vendorsoluce-blue transition-colors mb-4">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          {t('navigation.home')}
-        </Link>
-        <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">{t('quickTools.nistChecklist.title')}</h1>
-        <p className="text-gray-600 dark:text-gray-300 mb-2">{t('quickTools.nistChecklist.description')}</p>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+    <WorkspacePageShell
+      title={t('quickTools.nistChecklist.title')}
+      description={t('quickTools.nistChecklist.description')}
+      descriptionExtra={
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           {t('quickTools.nistChecklist.workflowTeaser')}{' '}
           <Link to="/program/nist-implementation" className="text-vendorsoluce-green dark:text-vendorsoluce-light-green font-medium hover:underline">
             {t('navigation.nistImplementationWorkflow')}
           </Link>
         </p>
-      </div>
-      
+      }
+    >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <Card>
@@ -291,7 +288,7 @@ const NISTChecklist: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </WorkspacePageShell>
   );
 };
 

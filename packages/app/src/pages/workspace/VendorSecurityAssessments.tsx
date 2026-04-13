@@ -2,10 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import WorkspacePageShell, {
-  WORKSPACE_PAGE_SHELL_INNER_CLASS,
-  WORKSPACE_PAGE_SHELL_OUTER_CLASS,
-} from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { Badge } from '../../components/ui/Badge';
@@ -251,28 +248,24 @@ const VendorSecurityAssessments: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={WORKSPACE_PAGE_SHELL_OUTER_CLASS}>
-        <div className={WORKSPACE_PAGE_SHELL_INNER_CLASS}>
-          <div className="flex h-64 items-center justify-center">
-            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-vendorsoluce-green" />
-          </div>
+      <WorkspacePageShell title="Security Assessments">
+        <div className="flex h-64 items-center justify-center">
+          <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-vendorsoluce-green" />
         </div>
-      </div>
+      </WorkspacePageShell>
     );
   }
 
   if (assessmentsError) {
     return (
-      <div className={WORKSPACE_PAGE_SHELL_OUTER_CLASS}>
-        <div className={WORKSPACE_PAGE_SHELL_INNER_CLASS}>
-          <div className="text-center">
-            <p className="mb-4 text-red-600 dark:text-red-400">Error loading assessments: {assessmentsError}</p>
-            <Button onClick={() => window.location.reload()} variant="outline">
-              Retry
-            </Button>
-          </div>
+      <WorkspacePageShell title="Security Assessments">
+        <div className="text-center">
+          <p className="mb-4 text-red-600 dark:text-red-400">Error loading assessments: {assessmentsError}</p>
+          <Button onClick={() => window.location.reload()} variant="outline">
+            Retry
+          </Button>
         </div>
-      </div>
+      </WorkspacePageShell>
     );
   }
 

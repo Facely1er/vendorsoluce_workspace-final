@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, FileSearch, Users, AlertTriangle, ArrowRight, ExternalLink } from 'lucide-react';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 /**
  * Vendor Privacy Assessment hub for VendorSoluce.
@@ -51,21 +52,11 @@ const steps = [
 
 export default function VendorPrivacyAssessment() {
   return (
-    <div className="container mx-auto px-4 py-10 max-w-4xl">
-      <div className="mb-10">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="p-2 rounded-xl bg-blue-500/10">
-            <ShieldCheck className="w-7 h-7 text-blue-600 dark:text-blue-400" />
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight">Vendor Privacy Assessment</h1>
-        </div>
-        <p className="text-muted-foreground max-w-2xl leading-relaxed">
-          Assess a vendor's data privacy posture: processor obligations, sub-processor chain, cross-border
-          transfers, and GDPR Article 28 compliance. Follow the steps below in order.
-        </p>
-      </div>
-
-      <div className="space-y-4">
+    <WorkspacePageShell
+      title="Vendor Privacy Assessment"
+      description="Assess a vendor's data privacy posture: processor obligations, sub-processor chain, cross-border transfers, and GDPR Article 28 compliance. Follow the steps below in order."
+    >
+      <div className="max-w-4xl space-y-4">
         {steps.map(({ step, icon: Icon, title, description, href, cta, internal: _internal }) => (
           <div
             key={step}
@@ -89,24 +80,24 @@ export default function VendorPrivacyAssessment() {
             </div>
           </div>
         ))}
-      </div>
 
-      <div className="mt-10 rounded-2xl border border-border bg-muted/40 p-6">
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          <strong className="text-foreground">Need full GDPR compliance tooling?</strong>{' '}
-          VendorSoluce focuses on vendor risk. For complete privacy program management — consent
-          records, DSR tracking, breach notification — use{' '}
-          <a
-            href="https://cybercorrect.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary underline underline-offset-2 hover:opacity-80 inline-flex items-center gap-1"
-          >
-            CyberCorrect <ExternalLink className="w-3 h-3" />
-          </a>
-          .
-        </p>
+        <div className="rounded-2xl border border-border bg-muted/40 p-6">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            <strong className="text-foreground">Need full GDPR compliance tooling?</strong>{' '}
+            VendorSoluce focuses on vendor risk. For complete privacy program management — consent
+            records, DSR tracking, breach notification — use{' '}
+            <a
+              href="https://cybercorrect.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline underline-offset-2 hover:opacity-80 inline-flex items-center gap-1"
+            >
+              CyberCorrect <ExternalLink className="w-3 h-3" />
+            </a>
+            .
+          </p>
+        </div>
       </div>
-    </div>
+    </WorkspacePageShell>
   );
 }

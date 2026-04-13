@@ -1,10 +1,7 @@
-// Create Campaign Page
-// Page for creating new marketing campaigns
-// File: src/pages/CreateCampaignPage.tsx
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CampaignForm } from '../../components/marketing/CampaignForm';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 const CreateCampaignPage: React.FC = () => {
   const navigate = useNavigate();
@@ -18,22 +15,16 @@ const CreateCampaignPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          Create Marketing Campaign
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          Set up a new automated email campaign
-        </p>
-      </div>
-
+    <WorkspacePageShell
+      title="Create Marketing Campaign"
+      description="Set up a new automated email campaign"
+      actions={[{ label: 'Back to campaigns', to: '/admin/marketing', variant: 'outline' }]}
+    >
       <div className="max-w-2xl">
         <CampaignForm onSave={handleSave} onCancel={handleCancel} />
       </div>
-    </div>
+    </WorkspacePageShell>
   );
 };
 
 export default CreateCampaignPage;
-

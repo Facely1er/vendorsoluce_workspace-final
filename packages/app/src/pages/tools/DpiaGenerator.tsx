@@ -1,6 +1,7 @@
 import React from 'react';
-import { FileText, ExternalLink, ArrowRight, Info } from 'lucide-react';
+import { ExternalLink, ArrowRight, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 /**
  * DPIA Generator entry point for VendorSoluce.
@@ -38,31 +39,21 @@ const useCases = [
 
 export default function DpiaGenerator() {
   return (
-    <div className="container mx-auto px-4 py-10 max-w-3xl">
-      <div className="mb-10">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="p-2 rounded-xl bg-purple-500/10">
-            <FileText className="w-7 h-7 text-purple-600 dark:text-purple-400" />
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight">DPIA Generator</h1>
+    <WorkspacePageShell
+      title="DPIA Generator"
+      description="A Data Protection Impact Assessment (DPIA) is required under GDPR Article 35 for high-risk processing activities. Select the scenario that matches your situation."
+      descriptionExtra={
+        <div className="flex items-start gap-3 rounded-xl border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/30 p-3">
+          <Info className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-blue-800 dark:text-blue-300">
+            VendorSoluce scopes DPIAs to{' '}
+            <strong>vendor processor relationships</strong>. For organisation-wide DPIAs covering all
+            processing activities, use CyberCorrect.
+          </p>
         </div>
-        <p className="text-muted-foreground max-w-xl leading-relaxed">
-          A Data Protection Impact Assessment (DPIA) is required under GDPR Article 35 for high-risk
-          processing activities. Select the scenario that matches your situation.
-        </p>
-      </div>
-
-      {/* Info banner */}
-      <div className="flex items-start gap-3 rounded-xl border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/30 p-4 mb-8">
-        <Info className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-        <p className="text-sm text-blue-800 dark:text-blue-300">
-          VendorSoluce scopes DPIAs to{' '}
-          <strong>vendor processor relationships</strong>. For organisation-wide DPIAs covering all
-          processing activities, use CyberCorrect.
-        </p>
-      </div>
-
-      <div className="space-y-4">
+      }
+    >
+      <div className="max-w-3xl space-y-4">
         {useCases.map(({ title, description, action, href, internal }) => (
           <div
             key={title}
@@ -90,6 +81,6 @@ export default function DpiaGenerator() {
           </div>
         ))}
       </div>
-    </div>
+    </WorkspacePageShell>
   );
 }
