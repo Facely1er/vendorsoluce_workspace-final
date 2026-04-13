@@ -8,7 +8,7 @@ const PlatformSetupPage: React.FC = () => {
   return (
     <WorkspacePageShell
       title="Platform setup"
-      description="Configure your supply chain risk environment with vendor data, requirements, and assessment context so risk scoring and reporting are immediately operational."
+      description="Set up your vendor portfolio, requirements, and assessment defaults."
       stats={[
         { label: 'Setup path', value: 'Guided', hint: 'Step-by-step configuration' },
         { label: 'Scope', value: 'Workspace-wide', hint: 'Applies across vendor operations' },

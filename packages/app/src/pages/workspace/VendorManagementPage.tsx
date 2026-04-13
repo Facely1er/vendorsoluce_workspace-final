@@ -81,12 +81,12 @@ const VendorManagementPage: React.FC = () => {
 
   if (selectedVendor) return <VendorVerification vendorId={selectedVendor.id} onVendorVerified={handleVendorVerified} />;
 
-  if (loading) return <WorkspacePageShell title="Vendor management" description="Review vendor intake, status, and verification decisions from one operational view."><PanelCard title="Loading vendor inventory"><div className="flex min-h-[240px] items-center justify-center"><div className="flex flex-col items-center gap-3 text-sm text-gray-500 dark:text-gray-400"><RefreshCw className="h-5 w-5 animate-spin" /><span>Loading vendor records…</span></div></div></PanelCard></WorkspacePageShell>;
+  if (loading) return <WorkspacePageShell title="Vendor management" description="Review vendor intake, status, and verification decisions."><PanelCard title="Loading vendor inventory"><div className="flex min-h-[240px] items-center justify-center"><div className="flex flex-col items-center gap-3 text-sm text-gray-500 dark:text-gray-400"><RefreshCw className="h-5 w-5 animate-spin" /><span>Loading vendor records…</span></div></div></PanelCard></WorkspacePageShell>;
 
   return (
     <WorkspacePageShell
       title="Vendor management"
-      description="Operate your vendor portfolio with a cleaner review surface for search, verification status, and risk context."
+      description="Review vendor intake, verification status, and risk context."
       actions={[{ label: 'Refresh', onClick: loadVendors, variant: 'outline' }, { label: 'Add vendor', onClick: () => logger.log('Add vendor action'), variant: 'primary' }]}
       stats={stats ? [{ label: 'Total vendors', value: stats.total, hint: 'Tracked in the workspace portfolio' }, { label: 'Pending review', value: stats.pending, hint: 'Awaiting verification or decision' }, { label: 'Approved', value: stats.approved, hint: 'Active and accepted' }, { label: 'Average risk score', value: stats.averageRiskScore, hint: 'Current portfolio baseline' }] : []}
     >

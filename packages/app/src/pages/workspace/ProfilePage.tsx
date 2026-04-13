@@ -60,7 +60,7 @@ const ProfilePage: React.FC = () => {
   return (
     <WorkspacePageShell
       title="Profile"
-      description="Manage your identity, role, company details, and presentation settings from one consistent profile workspace."
+      description="Manage your identity and profile settings."
       actions={[{ label: isEditing ? 'Cancel edits' : 'Edit profile', onClick: () => (isEditing ? handleCancel() : setIsEditing(true)), variant: 'outline' }]}
       stats={[
         { label: 'Profile mode', value: isEditing ? 'Editing' : 'Viewing', hint: 'Current page state' },

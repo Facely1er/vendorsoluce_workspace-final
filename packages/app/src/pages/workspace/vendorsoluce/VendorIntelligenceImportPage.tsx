@@ -53,7 +53,7 @@ const VendorIntelligenceImportPage: React.FC = () => {
   return (
     <WorkspacePageShell
       title="Dependency graph import"
-      description="Import the canonical four-file dependency bundle — vendors, services, processing, and edges — then recompute graph metrics in one controlled operation."
+      description="Import dependency CSVs and recompute graph metrics."
       actions={[{ label: busy ? 'Importing…' : 'Run import', onClick: handleImport, variant: 'primary' }]}
       stats={[
         { label: 'Input set', value: '4 CSV files', hint: 'Required for graph build' },

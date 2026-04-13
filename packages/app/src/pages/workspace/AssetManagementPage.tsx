@@ -281,7 +281,7 @@ const AssetManagementPage: React.FC = () => {
   return (
     <WorkspacePageShell
       title="Asset management"
-      description="Inventory, criticality, and vendor relationships in one place."
+      description="Manage the systems and data assets that define your vendor risk scope."
       headerActionsSlot={
         <>
           <Button variant="outline" size="sm" onClick={loadAssets}>

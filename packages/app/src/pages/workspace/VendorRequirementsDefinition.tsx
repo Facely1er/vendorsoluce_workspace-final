@@ -199,7 +199,7 @@ const VendorRequirementsDefinition: React.FC = () => {
   return (
     <WorkspacePageShell
       title="Vendor requirements"
-      description="Define control expectations per vendor (risk-tiered) and track coverage gaps. This work runs in parallel with intake and assessments."
+      description="Define vendor requirements and track coverage gaps."
       actions={[{ label: 'Open assessments', onClick: handleContinueToStage3, variant: 'primary' }]}
     >
       <WorkspacePageBody>

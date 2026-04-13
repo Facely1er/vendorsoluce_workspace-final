@@ -187,7 +187,7 @@ const ComplianceRoadmapPage: React.FC = () => {
       title={t('workspace.roadmapPage.title', 'Roadmap & compliance calendar')}
       description={t(
         'workspace.roadmapPage.description',
-        'Phase-aligned program roadmap plus a shared calendar for renewals, intake checkpoints, and audit milestones. Entries below are stored in this browser until connected to team tasks.'
+        'Plan and track compliance milestones, renewals, and program deadlines.'
       )}
       stats={[
         {

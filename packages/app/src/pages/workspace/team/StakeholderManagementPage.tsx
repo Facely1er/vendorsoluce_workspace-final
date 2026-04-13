@@ -116,7 +116,7 @@ export default function StakeholderManagementPage() {
   return (
     <WorkspacePageShell
       title="Stakeholder management"
-      description="Manage access, review role coverage, and keep vendor-risk governance structured across security, procurement, legal, and executive participants."
+      description="Manage workspace access and stakeholder roles."
       actions={[{ label: showAddForm ? 'Close add member' : 'Add member', onClick: () => setShowAddForm((v) => !v), variant: showAddForm ? 'outline' : 'primary' }]}
       stats={[
         { label: 'Total members', value: stats.total, hint: 'Current team roster' },

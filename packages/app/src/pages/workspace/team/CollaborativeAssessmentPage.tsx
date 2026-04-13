@@ -15,7 +15,7 @@ export default function CollaborativeAssessmentPage() {
   return (
     <WorkspacePageShell
       title="Collaborative assessment"
-      description="Launch a structured team session for vendor review so procurement, security, legal, and business owners work from the same operating context."
+      description="Run a shared vendor review session with your stakeholders."
       actions={[{ label: "Back to dashboard", to: WR.VENDOR_INTELLIGENCE, variant: "outline" }]}
       stats={[
         { label: "Session model", value: "Multi-stakeholder", hint: "Security, procurement, legal, and business owners" },

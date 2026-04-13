@@ -107,7 +107,7 @@ const AccountPage: React.FC = () => {
   return (
     <WorkspacePageShell
       title="Account settings"
-      description="Manage appearance, language, notifications, privacy, account security, and export controls from one consistent settings surface."
+      description="Manage preferences, security, and privacy settings."
       stats={[
         { label: 'Theme', value: theme === 'light' ? 'Light' : 'Dark', hint: 'Current UI mode' },
         { label: 'Language', value: currentLanguage.toUpperCase(), hint: 'Active locale' },

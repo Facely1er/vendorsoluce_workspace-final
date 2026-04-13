@@ -169,7 +169,7 @@ const UserActivity: React.FC = () => {
   ];
 
   return (
-    <WorkspacePageShell title="Activity history" description="Operational actions, assessments, and workflow events. Sample timeline for UX; connect your activity stream to replace illustrative entries." actions={[{ label: 'Export activity log', onClick: () => {}, variant: 'outline' }]} stats={[{ label: 'Total activities', value: activities.length, hint: 'Across current log view' }, { label: 'Filtered', value: filteredActivities.length, hint: 'Current search/filter result' }]}>{/* Filters */}
+    <WorkspacePageShell title="Activity history" description="Review workspace activity across vendors and assessments." actions={[{ label: 'Export activity log', onClick: () => {}, variant: 'outline' }]} stats={[{ label: 'Total activities', value: activities.length, hint: 'Across current log view' }, { label: 'Filtered', value: filteredActivities.length, hint: 'Current search/filter result' }]}>{/* Filters */}
       <Card className="mb-6">
         <CardContent className="p-4">
           <div className="flex flex-col md:flex-row gap-4">

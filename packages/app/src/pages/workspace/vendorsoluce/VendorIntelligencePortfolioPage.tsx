@@ -32,7 +32,7 @@ const VendorIntelligencePortfolioPage: React.FC = () => {
   return (
     <WorkspacePageShell
       title="Vendor portfolio intelligence"
-      description="Dependency graph plus integrated risk: see how vendors connect (services, processing, edges), then scan the ranking table for final, propagation, and systemic scores. Critical paths and outage/breach scenarios live on each vendor page."
+      description="Review vendor dependency links and integrated risk scores."
       actions={[
         {
           label: 'Refresh intelligence',

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { Plus, RefreshCw, AlertCircle, ArrowRight, X, Info, Check } from 'lucide-react';
+import { Plus, RefreshCw, AlertCircle, ArrowRight, X, Info, Radar } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Card, CardContent } from '../../components/ui/Card';
 import { useVendorPortfolio } from './VendorRiskRadar/hooks/useVendorPortfolio';
@@ -12,12 +12,10 @@ import StatsOverview from './VendorRiskRadar/components/StatsOverview';
 import RadarVisualization from './VendorRiskRadar/components/RadarVisualization';
 import VendorInherentRiskReport from './VendorRiskRadar/components/VendorInherentRiskReport';
 import type { VendorRadar, VendorBase } from '../../types/vendorRadar';
-import { config } from '../../utils/config';
 import WorkspacePage from '../../components/workspace/WorkspacePage';
 import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 import WorkspaceEmptyState from '../../components/common/WorkspaceEmptyState';
 import { WR } from 'shared/constants/routes';
-import { Radar } from 'lucide-react';
 
 const RADAR_IMPORT_HANDOFF_TS_KEY = 'vs_radar_import_handoff_ts';
 const RADAR_IMPORT_HANDOFF_MAX_AGE_MS = 15_000;
@@ -25,7 +23,7 @@ const RADAR_IMPORT_HANDOFF_MAX_AGE_MS = 15_000;
 const VendorRiskRadar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [_searchParams, setSearchParams] = useSearchParams();
   const importHandoffHandledRef = useRef(false);
   const [showWebsiteImportHandoff, setShowWebsiteImportHandoff] = useState(false);
   const {
@@ -166,6 +164,7 @@ const VendorRiskRadar: React.FC = () => {
             primaryAction={{ label: 'Add vendors', href: WR.VENDOR_GRAPH_IMPORT }}
           />
         ) : (
+          <>
         {/* Related flows: keep the radar focused; link out to reports + intake + assessments. */}
         <div className="mb-6">
           <div className="border-b border-gray-200 dark:border-gray-700">
@@ -307,7 +306,7 @@ const VendorRiskRadar: React.FC = () => {
             />
             <div className="flex items-center gap-2 ml-auto">
               <div className="flex items-center gap-1">
-                <Info className="h-3.5 w-3.5 text-gray-400 shrink-0" aria-hidden title="Filter vendors" />
+                <Info className="h-3.5 w-3.5 text-gray-400 shrink-0" aria-hidden />
                 <select 
                   value={filters.category}
                   onChange={(e) => setFilters({ ...filters, category: e.target.value })}
@@ -322,7 +321,7 @@ const VendorRiskRadar: React.FC = () => {
                 </select>
               </div>
               <div className="flex items-center gap-1">
-                <Info className="h-3.5 w-3.5 text-gray-400 shrink-0" aria-hidden title="Filter by risk" />
+                <Info className="h-3.5 w-3.5 text-gray-400 shrink-0" aria-hidden />
                 <select 
                   value={filters.riskLevel}
                   onChange={(e) => setFilters({ ...filters, riskLevel: e.target.value })}
@@ -497,6 +496,8 @@ const VendorRiskRadar: React.FC = () => {
             onClose={() => setShowReport(false)}
           />
         )}
+        </div>
+          </>
         )}
       </WorkspacePageBody>
     </WorkspacePage>

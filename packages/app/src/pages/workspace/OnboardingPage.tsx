@@ -11,7 +11,7 @@ const OnboardingPage: React.FC = () => {
   };
 
   return (
-    <WorkspacePageShell title="Onboarding" description="Start the workspace with a guided onboarding sequence and a consistent, polished setup experience.">
+    <WorkspacePageShell title="Onboarding" description="Complete your workspace setup to activate risk scoring and reporting.">
       {showWelcome ? <WelcomeScreen onComplete={handleOnboardingComplete} /> : null}
     </WorkspacePageShell>
   );

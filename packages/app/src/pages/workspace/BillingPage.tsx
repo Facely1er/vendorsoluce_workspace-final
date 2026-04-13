@@ -21,7 +21,7 @@ const BillingPage: React.FC = () => {
 
   if (loading) {
     return (
-      <WorkspacePageShell title="Billing & subscription" description="Manage subscription details, feature usage, refunds, and invoices from a single operational billing view.">
+      <WorkspacePageShell title="Billing & subscription" description="Manage billing, invoices, and subscription details.">
         <LoadingBlock label="Loading subscription and billing controls…" />
       </WorkspacePageShell>
     );
@@ -30,7 +30,7 @@ const BillingPage: React.FC = () => {
   return (
     <WorkspacePageShell
       title="Billing & subscription"
-      description="Manage your subscription, billing details, refunds, and operational usage from one structured view."
+      description="Manage billing, invoices, and subscription usage."
       stats={[
         { label: 'Plan', value: product.name, hint: 'Current subscription tier' },
         { label: 'Billing ops', value: 'Centralized', hint: 'Invoices + refunds + usage' },

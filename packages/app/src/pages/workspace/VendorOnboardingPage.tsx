@@ -62,7 +62,7 @@ const VendorOnboardingPage: React.FC = () => {
       mode="guide"
       eyebrow="Vendor programs"
       title="Vendor onboarding playbook"
-      description="This page explains where onboarding sits in the execution chain and how it relates to SIPOC activities. Use Start onboarding only when you are ready to run the intake wizard (execution)."
+      description="Run the intake wizard and follow the recommended onboarding flow."
       actions={[
         { label: 'Start onboarding', onClick: () => setCurrentStep('wizard'), variant: 'primary' },
         { label: 'Get help', onClick: () => openChatbot('vendor-onboarding'), variant: 'outline' },
