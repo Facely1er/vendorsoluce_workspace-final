@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
+import { Card, CardHeader, CardTitle, CardContent } from 'shared/components/ui/Card';
+import { Button } from 'shared/components/ui/Button';
 import { 
   Upload, 
   CheckCircle, 
@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { uploadAssessmentEvidence } from '../../utils/supabaseStorage';
 import { logger } from '../../utils/logger';
-import JourneyProgress from '../../components/journey/JourneyProgress';
+import JourneyProgress from 'shared/components/journey/JourneyProgress';
 import { isSupabaseEnabled } from '../../lib/supabase';
 import {
   fetchPortalAssessmentBundle,

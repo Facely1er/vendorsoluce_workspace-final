@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { PR } from 'shared/constants/routes';
-import { lazyWithRetry } from '../utils/lazyWithRetry';
+import { lazyWithRetry } from 'shared/utils/lazyWithRetry';
 
 const VendorAssessmentPortal = lazyWithRetry(() => import('../pages/portal/VendorAssessmentPortal'));
 const PortalHome = lazyWithRetry(() => import('../pages/portal/PortalHome'));

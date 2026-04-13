@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import { ThemeProvider } from '../context/ThemeContext';
-import { I18nProvider } from '../context/I18nContext';
-import ErrorBoundary from '../components/common/ErrorBoundary';
+import { ThemeProvider } from 'shared/context/ThemeContext';
+import { I18nProvider } from 'shared/context/I18nContext';
+import ErrorBoundary from 'shared/components/common/ErrorBoundary';
 
 interface PortalProvidersProps {
   children: ReactNode;

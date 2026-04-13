@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "node ./scripts/run-vite.mjs",
     "build": "npm run verify:ui && npm run verify:integration && node ./scripts/run-vite.mjs build",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "node ./scripts/run-vite.mjs preview",
     "type-check": "node ../../node_modules/typescript/bin/tsc --noEmit",
     "clean": "rm -rf dist node_modules",
@@ -34,10 +35,17 @@
     "@ermits/dependency-graph": "file:../dependency-graph"
   },
   "devDependencies": {
+    "@eslint/js": "^9.35.0",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.21",
+    "eslint": "^9.35.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.4.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.18",
     "typescript": "^5.9.3",

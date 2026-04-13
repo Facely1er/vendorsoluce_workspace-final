@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/react';
-import PortalNav from '../components/portal/PortalNav';
-import PortalFooter from '../components/portal/PortalFooter';
+import PortalNav from 'shared/components/portal/PortalNav';
+import PortalFooter from 'shared/components/portal/PortalFooter';
 import { SHELL_CLASSES } from '../shell';
 
 const vercelAnalyticsFlag = import.meta.env.VITE_VERCEL_ANALYTICS;
