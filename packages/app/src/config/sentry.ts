@@ -29,7 +29,7 @@ export const sentryConfig: Record<string, SentryConfig> = {
     beforeSend: (event: SentryEvent) => {
       // In development, log all events to console
       if (import.meta.env.DEV) {
-        console.log('Sentry Event:', event);
+        // [removed console.log]
       }
       return event;
     },
@@ -80,7 +80,7 @@ export const initializeSentry = () => {
     // Sentry.init(config);
     
     if (import.meta.env.DEV) {
-      console.log('Sentry would be initialized with config:', config);
+      // [removed console.log]
     }
   }
 };

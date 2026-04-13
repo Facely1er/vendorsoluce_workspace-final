@@ -170,34 +170,34 @@ export function validateEnvironment(): ValidationResult {
  * Print validation results to console
  */
 export function printValidationResults(result: ValidationResult): void {
-  console.log('\n🔍 Environment Configuration Validation\n');
-  console.log('━'.repeat(60));
+  // [removed console.log]
+  // [removed console.log]
 
   if (result.valid) {
-    console.log('✅ All required environment variables are properly configured');
+    // [removed console.log]
   } else {
-    console.log('❌ Environment validation failed\n');
+    // [removed console.log]
   }
 
   // Print errors
   if (result.errors.length > 0) {
-    console.log('\n🚨 ERRORS (must be fixed):');
-    result.errors.forEach(error => console.log(`   ${error}`));
+    // [removed console.log]
+    // errors forEach removed (console.log purged)
   }
 
   // Print warnings
   if (result.warnings.length > 0) {
-    console.log('\n⚠️  WARNINGS (optional, but recommended):');
-    result.warnings.forEach(warning => console.log(`   ${warning}`));
+    // [removed console.log]
+    // warnings forEach removed (console.log purged)
   }
 
   // Print summary
-  console.log('\n📊 Summary:');
-  console.log(`   Required variables: ${ENVIRONMENT_VARIABLES.filter(v => v.required).length - result.missingRequired.length}/${ENVIRONMENT_VARIABLES.filter(v => v.required).length} configured`);
-  console.log(`   Optional variables: ${ENVIRONMENT_VARIABLES.filter(v => !v.required).length - result.missingOptional.length}/${ENVIRONMENT_VARIABLES.filter(v => !v.required).length} configured`);
+  // [removed console.log]
+  // [removed console.log]
+  // [removed console.log]
   
-  console.log('━'.repeat(60));
-  console.log('\n💡 Tip: Create a .env.local file from .env.example template\n');
+  // [removed console.log]
+  // [removed console.log]
 }
 
 /**
