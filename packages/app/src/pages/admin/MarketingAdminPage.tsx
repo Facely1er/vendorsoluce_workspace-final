@@ -1,7 +1,3 @@
-// Marketing Admin Page
-// Admin interface for managing marketing campaigns and workflows
-// File: src/pages/MarketingAdminPage.tsx
-
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
@@ -25,6 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/Ta
 import { MarketingAutomationService, MarketingCampaign, MarketingWorkflow, EmailSend } from '../../services/marketingAutomationService';
 import { supabase } from '../../lib/supabase';
 import { logger } from '../../utils/monitoring';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 const MarketingAdminPage: React.FC = () => {
   const { t: _t } = useTranslation();
@@ -159,28 +156,23 @@ const MarketingAdminPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <WorkspacePageShell title="Marketing Automation" description="Manage campaigns, workflows, and email analytics">
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading marketing data...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-vendorsoluce-green mx-auto" />
+            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading marketing data…</p>
           </div>
         </div>
-      </div>
+      </WorkspacePageShell>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          Marketing Automation
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          Manage campaigns, workflows, and email analytics
-        </p>
-      </div>
-
+    <WorkspacePageShell
+      title="Marketing Automation"
+      description="Manage campaigns, workflows, and email analytics"
+      actions={[{ label: 'New Campaign', to: '/admin/marketing/campaigns/new', variant: 'primary' }]}
+    >
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="campaigns">Campaigns</TabsTrigger>
@@ -494,7 +486,7 @@ const MarketingAdminPage: React.FC = () => {
           )}
         </TabsContent>
       </Tabs>
-    </div>
+    </WorkspacePageShell>
   );
 };
 

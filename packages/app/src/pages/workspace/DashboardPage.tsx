@@ -13,7 +13,6 @@ import { TrialCountdownBanner } from '../../components/onboarding/TrialCountdown
 import { TrialConversionPrompt } from '../../components/onboarding/TrialConversionPrompt';
 import { OnboardingChecklist } from '../../components/onboarding/OnboardingChecklist';
 import WorkspacePage from '../../components/workspace/WorkspacePage';
-import { WORKSPACE_PAGE_SHELL_INNER_CLASS, WORKSPACE_PAGE_SHELL_OUTER_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkspaceSection from '../../components/workspace/WorkspaceSection';
 
 const DashboardPage: React.FC = () => {
@@ -52,11 +51,9 @@ const DashboardPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className={WORKSPACE_PAGE_SHELL_OUTER_CLASS}>
-        <div className={WORKSPACE_PAGE_SHELL_INNER_CLASS}>
-          <LoadingSkeleton variant="dashboard" />
-        </div>
-      </div>
+      <WorkspacePage title={`Welcome back, ${currentUserName}`}>
+        <LoadingSkeleton variant="dashboard" />
+      </WorkspacePage>
     );
   }
 

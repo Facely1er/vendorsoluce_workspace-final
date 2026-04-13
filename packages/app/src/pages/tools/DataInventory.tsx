@@ -1,6 +1,7 @@
 import React from 'react';
 import { Database, ShieldCheck, ArrowRight, ExternalLink, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 /**
  * Data Inventory entry point for VendorSoluce.
@@ -41,21 +42,11 @@ const sections = [
 
 export default function DataInventory() {
   return (
-    <div className="container mx-auto px-4 py-10 max-w-3xl">
-      <div className="mb-10">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="p-2 rounded-xl bg-emerald-500/10">
-            <Database className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight">Data Inventory</h1>
-        </div>
-        <p className="text-muted-foreground max-w-xl leading-relaxed">
-          Track the personal data that flows through your vendor ecosystem — what is shared, with
-          whom, where it is stored, and under what legal basis.
-        </p>
-      </div>
-
-      <div className="space-y-4">
+    <WorkspacePageShell
+      title="Data Inventory"
+      description="Track the personal data that flows through your vendor ecosystem — what is shared, with whom, where it is stored, and under what legal basis."
+    >
+      <div className="max-w-3xl space-y-4">
         {sections.map(({ icon: Icon, title, description, href, cta, internal }) => (
           <div
             key={title}
@@ -88,6 +79,6 @@ export default function DataInventory() {
           </div>
         ))}
       </div>
-    </div>
+    </WorkspacePageShell>
   );
 }

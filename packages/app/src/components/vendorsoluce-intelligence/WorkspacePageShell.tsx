@@ -82,14 +82,14 @@ export const WorkspacePageShell: React.FC<WorkspacePageShellProps> = ({
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl space-y-3">
               {mode === 'guide' ? (
-                <div className="inline-flex max-w-full items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-700 dark:border-slate-600 dark:bg-slate-900/70 dark:text-slate-200">
-                  <BookOpen className="h-4 w-4 shrink-0 text-slate-600 dark:text-slate-300" aria-hidden />
-                  Guidance — playbook & workflow context
+                <div className="inline-flex max-w-full items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300">
+                  <BookOpen className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                  Playbook
                 </div>
               ) : mode === 'execute' ? (
-                <div className="inline-flex max-w-full items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-900 dark:border-emerald-800/80 dark:bg-emerald-950/50 dark:text-emerald-100">
-                  <Zap className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden />
-                  Execution — complete tasks in this workspace
+                <div className="inline-flex max-w-full items-center gap-2 rounded-md border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700 dark:border-emerald-800/70 dark:bg-emerald-950/40 dark:text-emerald-300">
+                  <Zap className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                  Execute
                 </div>
               ) : null}
               {eyebrow ? <div className={WORKSPACE_PAGE_SHELL_EYEBROW_CLASS}>{eyebrow}</div> : null}

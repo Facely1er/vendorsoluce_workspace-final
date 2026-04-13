@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { generateRecommendationsPdf } from '../../utils/generatePdf';
 import WorkspaceSection from '../../components/workspace/WorkspaceSection';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import { useSupplyChainAssessments } from '../../hooks/useSupplyChainAssessments';
 import { logger } from '../../utils/logger';
 import { SectionScore } from '../../stores/assessmentStore';
@@ -19,8 +20,7 @@ import {
   Target,
   Calendar,
   Users,
-  TrendingUp,
-  Shield
+  TrendingUp
 } from 'lucide-react';
 
 interface RecommendationItem {
@@ -395,146 +395,95 @@ const SupplyChainRecommendations = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4 py-8">
-          {/* Loading skeleton */}
-          <div className="space-y-6">
-            <div className="animate-pulse">
-              <div className="h-8 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mb-4"></div>
-              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-2/3 mb-8"></div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                    <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
-                    <div className="h-8 bg-gray-300 dark:bg-gray-700 rounded w-3/4"></div>
-                  </div>
+      <WorkspacePageShell title={t('supplyChainRecommendations.title')} description={t('supplyChainRecommendations.subtitle')}>
+        <div className="space-y-6">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-4" />
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mb-8" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="animate-pulse bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2" />
+                <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
+              </div>
+            ))}
+          </div>
+          <div className="space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="animate-pulse bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4" />
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full" />
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
                 </div>
-              ))}
-            </div>
-            <div className="space-y-4">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="animate-pulse bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                  <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mb-4"></div>
-                  <div className="space-y-2">
-                    <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-full"></div>
-                    <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-3/4"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </WorkspacePageShell>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center py-12">
-            <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{t('supplyChainRecommendations.errors.loadingError')}</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="inline-flex items-center px-4 py-2 bg-vendortal-navy text-white rounded-md hover:bg-vendortal-navy/90 transition-colors"
-            >
-              <TrendingUp className="h-4 w-4 mr-2" />
-              {t('supplyChainRecommendations.actions.retry')}
-            </button>
-          </div>
+      <WorkspacePageShell title={t('supplyChainRecommendations.title')} description={t('supplyChainRecommendations.subtitle')}>
+        <div className="text-center py-12">
+          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{t('supplyChainRecommendations.errors.loadingError')}</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="inline-flex items-center px-4 py-2 bg-vendortal-navy text-white rounded-md hover:bg-vendortal-navy/90 transition-colors"
+          >
+            <TrendingUp className="h-4 w-4 mr-2" />
+            {t('supplyChainRecommendations.actions.retry')}
+          </button>
         </div>
-      </div>
+      </WorkspacePageShell>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 max-w-7xl">
-        {/* Header - Optimized */}
-        <div className="mb-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-5">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => navigate('/supply-chain-results')}
-                className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-vendortal-navy focus:ring-offset-2 rounded-md p-1"
-                aria-label={t('supplyChainRecommendations.navigation.backToResults')}
-              >
-                <ArrowLeft className="h-4 w-4 mr-1" />
-                {t('supplyChainRecommendations.navigation.backToResults')}
-              </button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className="inline-flex items-center px-3 py-1.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-vendortal-navy focus:ring-offset-2"
-              >
-                <Filter className="h-4 w-4 mr-1.5" />
-                {t('supplyChainRecommendations.actions.filters')}
-              </button>
-              <button
-                onClick={handleExport}
-                disabled={isExporting || filteredRecommendations.length === 0}
-                className="inline-flex items-center px-3 py-1.5 text-sm bg-vendortal-navy text-white rounded-md hover:bg-vendortal-navy/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-vendortal-navy focus:ring-offset-2"
-              >
-                <Download className={`h-4 w-4 mr-1.5 ${isExporting ? 'animate-spin' : ''}`} />
-                {isExporting ? t('supplyChainRecommendations.actions.exporting') : t('supplyChainRecommendations.actions.exportPdf')}
-              </button>
-            </div>
-          </div>
-
-          <div className="mb-5">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-1.5 flex items-center gap-2">
-              <Shield className="h-6 w-6 sm:h-7 sm:w-7 text-vendortal-navy flex-shrink-0" />
-              <span>{t('supplyChainRecommendations.title')}</span>
-            </h1>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
-              {t('supplyChainRecommendations.subtitle')}
-            </p>
-          </div>
-
-          {/* Statistics Cards - More compact */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
-              <div className="flex items-center justify-between">
-                <div className="min-w-0">
-                  <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 truncate">{t('supplyChainRecommendations.stats.totalRecommendations')}</p>
-                  <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{stats.total}</p>
-                </div>
-                <FileText className="h-6 w-6 sm:h-7 sm:w-7 text-blue-500 flex-shrink-0 ml-2" />
-              </div>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
-              <div className="flex items-center justify-between">
-                <div className="min-w-0">
-                  <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 truncate">{t('supplyChainRecommendations.stats.criticalPriority')}</p>
-                  <p className="text-xl sm:text-2xl font-bold text-red-600 dark:text-red-400">{stats.critical}</p>
-                </div>
-                <AlertCircle className="h-6 w-6 sm:h-7 sm:w-7 text-red-500 flex-shrink-0 ml-2" />
-              </div>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
-              <div className="flex items-center justify-between">
-                <div className="min-w-0">
-                  <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 truncate">{t('supplyChainRecommendations.stats.inProgress')}</p>
-                  <p className="text-xl sm:text-2xl font-bold text-yellow-600 dark:text-yellow-400">{stats.inProgress}</p>
-                </div>
-                <Clock className="h-6 w-6 sm:h-7 sm:w-7 text-yellow-500 flex-shrink-0 ml-2" />
-              </div>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
-              <div className="flex items-center justify-between">
-                <div className="min-w-0">
-                  <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 truncate">{t('supplyChainRecommendations.stats.completed')}</p>
-                  <p className="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400">{stats.completed}</p>
-                </div>
-                <CheckCircle className="h-6 w-6 sm:h-7 sm:w-7 text-green-500 flex-shrink-0 ml-2" />
-              </div>
-            </div>
-          </div>
+    <WorkspacePageShell
+      title={t('supplyChainRecommendations.title')}
+      description={t('supplyChainRecommendations.subtitle')}
+      descriptionExtra={
+        <button
+          onClick={() => navigate('/supply-chain-results')}
+          className="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors rounded focus:outline-none focus:ring-2 focus:ring-vendortal-navy focus:ring-offset-2"
+          aria-label={t('supplyChainRecommendations.navigation.backToResults')}
+        >
+          <ArrowLeft className="h-4 w-4 mr-1" />
+          {t('supplyChainRecommendations.navigation.backToResults')}
+        </button>
+      }
+      stats={[
+        { label: t('supplyChainRecommendations.stats.totalRecommendations'), value: stats.total },
+        { label: t('supplyChainRecommendations.stats.criticalPriority'), value: stats.critical },
+        { label: t('supplyChainRecommendations.stats.inProgress'), value: stats.inProgress },
+        { label: t('supplyChainRecommendations.stats.completed'), value: stats.completed },
+      ]}
+      headerActionsSlot={
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="inline-flex items-center px-3 py-1.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+          >
+            <Filter className="h-4 w-4 mr-1.5" />
+            {t('supplyChainRecommendations.actions.filters')}
+          </button>
+          <button
+            onClick={handleExport}
+            disabled={isExporting || filteredRecommendations.length === 0}
+            className="inline-flex items-center px-3 py-1.5 text-sm bg-vendortal-navy text-white rounded-md hover:bg-vendortal-navy/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            <Download className={`h-4 w-4 mr-1.5 ${isExporting ? 'animate-spin' : ''}`} />
+            {isExporting ? t('supplyChainRecommendations.actions.exporting') : t('supplyChainRecommendations.actions.exportPdf')}
+          </button>
+        </div>
+      }
+    >
 
           {/* Search and Filters - Optimized */}
           <div className="space-y-3 mb-6">
@@ -640,7 +589,6 @@ const SupplyChainRecommendations = () => {
               </div>
             )}
           </div>
-        </div>
 
         <WorkspaceSection title="Recommendations backlog" description="This is the action layer connected to your assessment results.">
         {/* Recommendations List - Optimized spacing */}
@@ -764,8 +712,7 @@ const SupplyChainRecommendations = () => {
           </div>
         )}
         </WorkspaceSection>
-      </div>
-    </div>
+    </WorkspacePageShell>
   );
 };
 
