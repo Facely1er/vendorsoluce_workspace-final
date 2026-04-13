@@ -25,146 +25,54 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const commands: CommandItem[] = useMemo(() => {
+  const commandGroups = useMemo(() => {
     return [
-    {
-      id: 'workspace-portfolio',
-      label: t('navigation.dashboard') || 'Dashboard',
-      description: 'Vendor intelligence portfolio (workspace)',
-      path: WR.VENDOR_INTELLIGENCE,
-      icon: <BarChart3 className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'user-dashboard',
-      label: 'User dashboard',
-      description: 'Workspace overview and quick actions',
-      path: WR.USER_DASHBOARD,
-      icon: <BarChart3 className="h-4 w-4 opacity-90" />,
-      category: 'navigation',
-    },
-    {
-      id: 'activity-history',
-      label: 'Activity history',
-      description: 'Operational log and timeline',
-      path: WR.USER_ACTIVITY,
-      icon: <Clock className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'notifications',
-      label: 'Notifications',
-      description: 'Workspace notifications',
-      path: WR.NOTIFICATIONS,
-      icon: <Bell className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'roadmap-calendar',
-      label: t('navigation.roadmapCalendar', 'Roadmap & calendar'),
-      description: 'Program phases, milestones, and compliance calendar',
-      path: WR.COMPLIANCE_ROADMAP,
-      icon: <CalendarDays className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'vira-reports',
-      label: t('navigation.viraReports', 'VIRA Reports'),
-      description: 'Portfolio inherent-risk reports',
-      path: MR.VIRA_REPORTS,
-      icon: <FileText className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'vendor-assessments',
-      label: t('navigation.vendorAssessments', 'Vendor Security Assessments'),
-      description: 'Stage 3 evidence and questionnaires',
-      path: MR.VENDOR_ASSESSMENTS,
-      icon: <Shield className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'nist-program',
-      label: t('navigation.nistImplementationWorkflow', 'NIST implementation workflow'),
-      description: 'Guided NIST SP 800-161 supply chain program',
-      path: '/program/nist-implementation',
-      icon: <ListTree className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'vira-program',
-      label: t('navigation.viraDueDiligenceWorkflow', 'VIRA due diligence workflow'),
-      description: 'Guided vendor due diligence and radar alignment',
-      path: '/program/vira-due-diligence',
-      icon: <ListTree className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'vendors',
-      label: t('navigation.vendorRiskAndManagement') || 'Vendor Risk & Management',
-      description: 'Vendor risk radar and management dashboard',
-      path: '/vendors',
-      icon: <Users className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'assessment',
-      label: t('navigation.assessment') || 'Supply Chain Assessment',
-      description: 'Start a new assessment',
-      path: '/supply-chain-assessment',
-      icon: <Shield className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'downloads',
-      label: t('footer.links.resources.downloads') || 'Downloads',
-      description: 'Templates, API docs, SDKs',
-      path: '/download',
-      icon: <FileText className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'hosting-options',
-      label: 'Hosting Options',
-      description: 'Cloud, on-premise, air-gapped, hybrid deployment guides',
-      path: '/hosting-options',
-      icon: <FileText className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'tutorial',
-      label: t('footer.links.resources.tutorial') || 'Tutorial',
-      description: 'How the platform works',
-      path: '/tutorial',
-      icon: <FileText className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'vendor-risk-radar',
-      label: t('navigation.vendorRiskRadar', 'Vendor Risk Radar'),
-      description: 'Portfolio radar and inherent risk',
-      path: '/vendor-risk-radar',
-      icon: <Radar className="h-4 w-4" />,
-      category: 'navigation',
-    },
-    {
-      id: 'risk-calculator',
-      label: t('navigation.riskCalculator', 'Risk calculator'),
-      description: 'Automated vendor risk scoring',
-      path: '/tools/vendor-risk-calculator',
-      icon: <Calculator className="h-4 w-4" />,
-      category: 'tool',
-    },
-    {
-      id: 'nist-checklist',
-      label: t('navigation.nistChecklist', 'NIST checklist'),
-      description: 'Quick NIST SP 800-161 check',
-      path: '/tools/nist-checklist',
-      icon: <Shield className="h-4 w-4" />,
-      category: 'tool',
-    },
-  ];
+      {
+        group: 'Navigate',
+        items: [
+          { label: 'Vendor portfolio', href: WR.VENDORS_INTELLIGENCE, icon: <Users className="h-4 w-4" /> },
+          { label: 'Assessments', href: MR.VENDOR_ASSESSMENTS, icon: <Shield className="h-4 w-4" /> },
+          { label: 'Risk radar', href: MR.VENDOR_RISK_RADAR, icon: <Radar className="h-4 w-4" /> },
+          { label: 'VIRA reports', href: MR.VIRA_REPORTS, icon: <FileText className="h-4 w-4" /> },
+          { label: 'Compliance roadmap', href: WR.COMPLIANCE_ROADMAP, icon: <CalendarDays className="h-4 w-4" /> },
+          { label: 'Activity catalog', href: MR.VENDOR_ACTIVITY_CATALOG, icon: <ListTree className="h-4 w-4" /> },
+        ],
+      },
+      {
+        group: 'Create',
+        items: [
+          { label: 'Add vendor', href: WR.VENDOR_GRAPH_IMPORT, icon: <Users className="h-4 w-4" /> },
+          { label: 'Start assessment', href: MR.SUPPLY_CHAIN_ASSESSMENT, icon: <Shield className="h-4 w-4" /> },
+          { label: 'New VIRA report', href: MR.VIRA_REPORTS, icon: <FileText className="h-4 w-4" /> },
+        ],
+      },
+      {
+        group: 'Settings',
+        items: [
+          { label: 'Platform setup', href: WR.PLATFORM_SETUP, icon: <BarChart3 className="h-4 w-4" /> },
+          { label: 'Billing', href: WR.BILLING, icon: <BarChart3 className="h-4 w-4 opacity-90" /> },
+          { label: 'Profile', href: WR.PROFILE, icon: <BarChart3 className="h-4 w-4 opacity-90" /> },
+        ],
+      },
+    ];
   }, [t]);
+
+  const commands: CommandItem[] = useMemo(() => {
+    const out: CommandItem[] = [];
+    for (const group of commandGroups) {
+      for (const item of group.items) {
+        out.push({
+          id: `${group.group}-${item.label}`.toLowerCase().replace(/\s+/g, '-'),
+          label: item.label,
+          description: group.group,
+          path: item.href,
+          icon: item.icon,
+          category: group.group === 'Navigate' ? 'navigation' : group.group === 'Create' ? 'action' : 'navigation',
+        });
+      }
+    }
+    return out;
+  }, [commandGroups]);
 
   const filteredCommands = commands.filter(cmd =>
     cmd.label.toLowerCase().includes(searchQuery.toLowerCase()) ||

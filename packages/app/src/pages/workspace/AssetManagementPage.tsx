@@ -16,6 +16,7 @@ import { Asset, AssetWithVendors } from '../types';
 import { assetService } from '../../services/assetService';
 import { useAuth } from '../../context/AuthContext';
 import AssetVendorRelationshipManager from '../../components/asset/AssetVendorRelationshipManager';
+import LoadingSkeleton from '../../components/common/LoadingSkeleton';
 
 const AssetManagementPage: React.FC = () => {
   const { user } = useAuth();
@@ -246,12 +247,7 @@ const AssetManagementPage: React.FC = () => {
         title="Asset management"
         description="Loading your asset inventory…"
       >
-        <div className="flex min-h-[40vh] items-center justify-center">
-          <div className="text-center">
-            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-vendorsoluce-navy" />
-            <p className="text-sm text-gray-600 dark:text-gray-300">Loading assets…</p>
-          </div>
-        </div>
+        <LoadingSkeleton variant="table" />
       </WorkspacePageShell>
     );
   }

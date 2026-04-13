@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface LoadingSkeletonProps {
-  variant?: 'card' | 'table' | 'text' | 'dashboard' | 'list';
+  variant?: 'card' | 'table' | 'text' | 'dashboard' | 'list' | 'form';
   count?: number;
   className?: string;
 }
@@ -28,18 +28,28 @@ const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
       case 'table':
         return (
           <div className={`bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden ${className}`}>
-            <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-              <div className={`h-6 ${baseClasses} w-1/4`} />
+            <div className="flex items-center justify-between px-6 py-3 border-b border-gray-200 dark:border-gray-700">
+              <div className={`h-4 w-[120px] ${baseClasses}`} />
+              <div className="flex gap-3">
+                <div className={`h-4 w-[80px] ${baseClasses}`} />
+                <div className={`h-4 w-[80px] ${baseClasses}`} />
+                <div className={`h-4 w-[80px] ${baseClasses}`} />
+              </div>
             </div>
-            <div className="divide-y divide-gray-200 dark:divide-gray-700">
+            <div className="bg-gray-200/60 dark:bg-gray-700/60">
               {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="p-4 flex items-center space-x-4">
-                  <div className={`h-10 w-10 ${baseClasses} rounded-full`} />
-                  <div className="flex-1">
-                    <div className={`h-4 ${baseClasses} mb-2 w-1/3`} />
-                    <div className={`h-3 ${baseClasses} w-1/2`} />
+                <div
+                  key={i}
+                  className={`flex h-11 items-center justify-between bg-white px-6 dark:bg-gray-800 ${
+                    i === 0 ? '' : 'mt-px'
+                  }`}
+                >
+                  <div className={`h-4 w-[200px] ${baseClasses}`} />
+                  <div className="flex gap-3">
+                    <div className={`h-4 w-[60px] ${baseClasses}`} />
+                    <div className={`h-4 w-[60px] ${baseClasses}`} />
+                    <div className={`h-4 w-[60px] ${baseClasses}`} />
                   </div>
-                  <div className={`h-8 w-20 ${baseClasses}`} />
                 </div>
               ))}
             </div>
@@ -112,6 +122,19 @@ const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
                 <div className={`h-8 w-20 ${baseClasses}`} />
               </div>
             ))}
+          </div>
+        );
+
+      case 'form':
+        return (
+          <div className={`space-y-6 ${className}`}>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="space-y-2">
+                <div className={`h-4 w-[100px] ${baseClasses}`} />
+                <div className={`h-10 w-full ${baseClasses}`} />
+              </div>
+            ))}
+            <div className={`h-10 w-[120px] ${baseClasses}`} />
           </div>
         );
 

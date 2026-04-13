@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import NotificationManager from '../components/common/NotificationManager';
@@ -8,6 +8,7 @@ import { MainWrapper } from '../components/layout/MainWrapper';
 import DemoModeBanner from '../components/common/DemoModeBanner';
 import TrialModeBanner from '../components/common/TrialModeBanner';
 import ChatWidget from '../components/chatbot/ChatWidget';
+import CommandPalette from '../components/common/CommandPalette';
 import AppTour from '../components/onboarding/AppTour';
 import { useAuth } from '../context/AuthContext';
 
@@ -29,6 +30,7 @@ export default function AppChrome({ children }: AppChromeProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const tourTimerRef = useRef<number | null>(null);
+  const [commandOpen, setCommandOpen] = useState(false);
 
   useEffect(() => {
     if (!isTourRunning) return;
@@ -65,6 +67,17 @@ export default function AppChrome({ children }: AppChromeProps) {
     };
   }, [isLoading, isAuthenticated, profile?.tour_completed, location.pathname, startTour]);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setCommandOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col max-w-[100vw] min-w-0 overflow-x-hidden">
       <NotificationManager />
@@ -73,6 +86,7 @@ export default function AppChrome({ children }: AppChromeProps) {
       <Navbar />
       <MainWrapper>{children}</MainWrapper>
       <ChatWidget />
+      <CommandPalette isOpen={commandOpen} onClose={() => setCommandOpen(false)} />
       <AppTour
         isRunning={isTourRunning}
         onComplete={() => {
