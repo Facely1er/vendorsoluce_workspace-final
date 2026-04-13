@@ -88,15 +88,6 @@ const TrialPage: React.FC = () => {
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Capture lead (summary only, no raw vendor data)
-    const summary = {
-      email,
-      vendorCount: vendors.length,
-      criticalCount: vendors.filter(v => v.riskLevel === 'critical').length,
-      highCount: vendors.filter(v => v.riskLevel === 'high').length,
-      avgScore: Math.round(vendors.reduce((sum, v) => sum + v.riskScore, 0) / vendors.length),
-    };
-    
     // In production, send to API
     // [removed console.log]
     
