@@ -3,11 +3,11 @@ import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import ErrorBoundary from '../../components/common/ErrorBoundary';
 
-vi.mock('../../utils/sentry', () => ({
+vi.mock('shared/utils/sentry', () => ({
   reportError: vi.fn(),
 }));
 
-vi.mock('../../utils/logger', () => ({
+vi.mock('shared/utils/logger', () => ({
   logger: {
     log: vi.fn(),
     info: vi.fn(),
@@ -59,7 +59,7 @@ describe('ErrorBoundary Integration', () => {
   });
 
   it('reports error to Sentry', async () => {
-    const { reportError } = await import('../../utils/sentry');
+    const { reportError } = await import('shared/utils/sentry');
 
     render(
       <ErrorBoundary>
@@ -123,7 +123,7 @@ describe('ErrorBoundary Integration', () => {
   });
 
   it('accepts custom fallback component', () => {
-    const CustomFallback = ({ error, resetError }: any) => (
+    const CustomFallback = ({ error, resetError }: { error: Error; resetError: () => void }) => (
       <div>
         <span data-testid="custom-error">Custom: {error.message}</span>
         <button onClick={resetError}>Reset</button>

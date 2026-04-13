@@ -48,7 +48,7 @@ describe('DashboardPage', () => {
 
     mockUseSupplyChainAssessments.mockReturnValue({
       assessments: [
-        { id: '1', assessment_name: 'Assessment 1' },
+        { id: '1', assessment_name: 'Assessment 1', status: 'completed' },
       ],
       loading: false,
       error: null,

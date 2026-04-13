@@ -376,7 +376,7 @@ const VendorSecurityAssessments: React.FC = () => {
           className="flex shrink-0 items-center self-start sm:self-center"
         >
           <Plus className="mr-2 h-5 w-5" />
-          {t('vendorAssessments.buttons.newAssessment')}
+          New assessment
         </Button>
       </div></PanelCard>
 
