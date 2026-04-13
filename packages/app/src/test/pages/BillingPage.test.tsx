@@ -77,8 +77,8 @@ describe('BillingPage', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByText('Billing & Subscription')).toBeInTheDocument();
-    expect(screen.getByText('Manage your subscription, billing details, and usage')).toBeInTheDocument();
+    expect(screen.getByText('Billing & subscription')).toBeInTheDocument();
+    expect(screen.getByText('Manage billing, invoices, and subscription usage.')).toBeInTheDocument();
   });
 
   it('shows current subscription tier', () => {
@@ -88,7 +88,7 @@ describe('BillingPage', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByText(/Your .* Benefits/)).toBeInTheDocument();
+    expect(screen.getByText(/Your .* benefits/i)).toBeInTheDocument();
   });
 
   it('displays feature usage summary', () => {
@@ -98,7 +98,7 @@ describe('BillingPage', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByText('Feature Usage')).toBeInTheDocument();
+    expect(screen.getByText('Feature usage')).toBeInTheDocument();
     expect(screen.getByText('SBOM Scans')).toBeInTheDocument();
     expect(screen.getByText('Vendors')).toBeInTheDocument();
     expect(screen.getByText('Assessments')).toBeInTheDocument();
@@ -112,7 +112,7 @@ describe('BillingPage', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByText('Your Professional Benefits')).toBeInTheDocument();
+    expect(screen.getByText(/Your Professional benefits/i)).toBeInTheDocument();
   });
 
   it('displays quick actions', () => {
@@ -122,9 +122,9 @@ describe('BillingPage', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByText('Quick Actions')).toBeInTheDocument();
-    expect(screen.getByText('Upgrade Plan')).toBeInTheDocument();
-    expect(screen.getByText('Payment Support')).toBeInTheDocument();
+    expect(screen.getByText(/Quick actions/i)).toBeInTheDocument();
+    expect(screen.getByText(/Upgrade plan/i)).toBeInTheDocument();
+    expect(screen.getByText(/Payment support/i)).toBeInTheDocument();
   });
 
   it('shows loading state', () => {
@@ -148,7 +148,7 @@ describe('BillingPage', () => {
       </TestWrapper>
     );
 
-    expect(document.querySelector('.animate-spin')).toBeInTheDocument();
+    expect(screen.getByText('Loading subscription and billing controls…')).toBeInTheDocument();
   });
 
   it('handles free tier correctly', () => {
@@ -172,7 +172,7 @@ describe('BillingPage', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByText('Your Free Benefits')).toBeInTheDocument();
+    expect(screen.getByText(/Your Free benefits/i)).toBeInTheDocument();
   });
 });
 

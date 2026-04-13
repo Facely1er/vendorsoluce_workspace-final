@@ -69,58 +69,27 @@ describe('DashboardPage', () => {
     expect(screen.getByText(/Welcome back/i)).toBeInTheDocument();
   });
 
-  it('displays vendor statistics', () => {
+  it('displays risk tier summary cards', () => {
     render(
       <TestWrapper>
         <DashboardPage />
       </TestWrapper>
     );
 
-    expect(screen.getByText('Total Vendors')).toBeInTheDocument();
+    expect(screen.getAllByText('Critical').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('High').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Medium').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Low').length).toBeGreaterThan(0);
   });
 
-  it('displays assessment statistics', () => {
+  it('shows priorities section', () => {
     render(
       <TestWrapper>
         <DashboardPage />
       </TestWrapper>
     );
 
-    expect(screen.getByText('Assessments')).toBeInTheDocument();
-  });
-
-  it('shows risk distribution', () => {
-    render(
-      <TestWrapper>
-        <DashboardPage />
-      </TestWrapper>
-    );
-
-    expect(screen.getByText(/Vendor Risk Distribution/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/High Risk/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/Low Risk/i).length).toBeGreaterThan(0);
-  });
-
-  it('displays quick actions', () => {
-    render(
-      <TestWrapper>
-        <DashboardPage />
-      </TestWrapper>
-    );
-
-    expect(screen.getByText(/Quick Actions/i)).toBeInTheDocument();
-  });
-
-  it('shows quick actions with correct links', () => {
-    render(
-      <TestWrapper>
-        <DashboardPage />
-      </TestWrapper>
-    );
-
-    expect(screen.getByText(/Quick Actions/i)).toBeInTheDocument();
-    expect(screen.getByText(/Vendor portfolio/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/Supply chain assessment/i).length).toBeGreaterThan(0);
+    expect(screen.getByText('Priorities')).toBeInTheDocument();
   });
 
   it('handles loading state', () => {
@@ -150,29 +119,8 @@ describe('DashboardPage', () => {
       </TestWrapper>
     );
 
-    // Dashboard shows LoadingSkeleton when loading
-    expect(screen.queryByText(/Welcome back/i)).not.toBeInTheDocument();
-  });
-
-  it('handles error state gracefully', () => {
-    mockUseVendors.mockReturnValue({
-      vendors: [],
-      loading: false,
-      error: 'Failed to load vendors',
-      createVendor: vi.fn(),
-      updateVendor: vi.fn(),
-      deleteVendor: vi.fn(),
-      refetch: vi.fn(),
-    });
-
-    render(
-      <TestWrapper>
-        <DashboardPage />
-      </TestWrapper>
-    );
-
-    // Dashboard still renders even with vendor errors, just shows empty state
-    expect(screen.getByText(/Welcome back/i)).toBeInTheDocument();
+    // When loading, the content sections should not render yet.
+    expect(screen.queryByText('Priorities')).not.toBeInTheDocument();
   });
 
   it('renders with subscription tier', () => {

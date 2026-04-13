@@ -3,11 +3,11 @@ import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import ErrorBoundary from '../../components/common/ErrorBoundary';
 
-vi.mock('shared/utils/sentry', () => ({
+vi.mock('../../utils/sentry', () => ({
   reportError: vi.fn(),
 }));
 
-vi.mock('shared/utils/logger', () => ({
+vi.mock('../../utils/logger', () => ({
   logger: {
     log: vi.fn(),
     info: vi.fn(),
@@ -59,7 +59,7 @@ describe('ErrorBoundary Integration', () => {
   });
 
   it('reports error to Sentry', async () => {
-    const { reportError } = await import('shared/utils/sentry');
+    const { reportError } = await import('../../utils/sentry');
 
     render(
       <ErrorBoundary>

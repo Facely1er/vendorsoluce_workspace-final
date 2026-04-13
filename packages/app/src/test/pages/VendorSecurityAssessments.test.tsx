@@ -96,8 +96,8 @@ describe('VendorSecurityAssessments', () => {
       expect(screen.getByText('Vendor Security Assessments')).toBeInTheDocument();
     });
     
-    // Check for main heading
-    expect(screen.getByText(/Send CMMC and NIST Privacy Framework assessments/i)).toBeInTheDocument();
+    // Check for page description
+    expect(screen.getByText(/Send, track, and review security assessments/i)).toBeInTheDocument();
   });
 
   test('shows create assessment button', () => {
