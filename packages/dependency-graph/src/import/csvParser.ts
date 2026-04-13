@@ -24,10 +24,8 @@ export function parseCsv(text: string): string[][] {
       continue;
     }
 
-    if ((ch === '
-' || ch === '') && !inQuotes) {
-      if (ch === '' && next === '
-') i += 1;
+    if ((ch === '\n' || ch === '\r') && !inQuotes) {
+      if (ch === '\r' && next === '\n') i += 1;
       row.push(cell.trim());
       if (row.some((v) => v.length > 0)) rows.push(row);
       row = [];

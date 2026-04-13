@@ -335,10 +335,14 @@ const ComplianceRoadmapPage: React.FC = () => {
           >
             <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end">
               <div className="min-w-0 flex-1">
-                <label className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-400">
+                <label
+                  htmlFor="roadmap-milestone-title"
+                  className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-400"
+                >
                   {t('workspace.roadmapPage.labelTitle', 'Title')}
                 </label>
                 <input
+                  id="roadmap-milestone-title"
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -347,10 +351,14 @@ const ComplianceRoadmapPage: React.FC = () => {
                 />
               </div>
               <div className="w-full sm:w-40">
-                <label className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-400">
+                <label
+                  htmlFor="roadmap-milestone-date"
+                  className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-400"
+                >
                   {t('workspace.roadmapPage.labelDate', 'Date')}
                 </label>
                 <input
+                  id="roadmap-milestone-date"
                   type="date"
                   value={dateStr}
                   onChange={(e) => setDateStr(e.target.value)}
