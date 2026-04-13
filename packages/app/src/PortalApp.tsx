@@ -26,7 +26,7 @@ const enableVercelAnalytics =
 import { lazyWithRetry } from './utils/lazyWithRetry';
 import { SHELL_CLASSES } from './layout/shell';
 
-const VendorAssessmentPortal = lazyWithRetry(() => import('./pages/legacy/VendorAssessmentPortal'));
+const VendorAssessmentPortal = lazyWithRetry(() => import('./pages/portal/VendorAssessmentPortal'));
 
 // Portal public pages
 const PortalHome = lazyWithRetry(() => import('./pages/portal/PortalHome'));
