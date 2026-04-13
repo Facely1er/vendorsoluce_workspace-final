@@ -108,19 +108,19 @@ export const useVendorAssessments = () => {
   ];
 
   const createAssessment = async (assessmentData: any) => {
-    console.log('Mock: Creating assessment', assessmentData);
+    // [removed console.log]
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     return { id: 'new-assessment-id', ...assessmentData };
   };
 
   const sendAssessment = async (id: string) => {
-    console.log('Mock: Sending assessment', id);
+    // [removed console.log]
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
 
   const deleteAssessment = async (id: string) => {
-    console.log('Mock: Deleting assessment', id);
+    // [removed console.log]
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
 

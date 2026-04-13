@@ -68,18 +68,18 @@ export const useVendors = () => {
   ];
 
   const createVendor = async (vendorData: any) => {
-    console.log('Mock: Creating vendor', vendorData);
+    // [removed console.log]
     await new Promise(resolve => setTimeout(resolve, 1000));
     return { id: 'new-vendor-id', ...vendorData };
   };
 
   const updateVendor = async (id: string, vendorData: any) => {
-    console.log('Mock: Updating vendor', id, vendorData);
+    // [removed console.log]
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
 
   const deleteVendor = async (id: string) => {
-    console.log('Mock: Deleting vendor', id);
+    // [removed console.log]
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
 

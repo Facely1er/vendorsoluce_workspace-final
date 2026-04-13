@@ -21,6 +21,7 @@ window.VENDORSOLUCE_ROUTE_MANIFEST = {
     "DEMO": "/demo",
     "TRIAL": "/trial",
     "VENDOR_RISK_RADAR": "/vendor-risk-radar",
+    "VENDOR_RISK_REPORTS": "/vendor-risk-reports",
     "NIST_CHECKLIST": "/tools/nist-checklist",
     "VENDOR_RISK_CALCULATOR": "/tools/vendor-risk-calculator",
     "VENDOR_PRIVACY_ASSESSMENT": "/tools/vendor-privacy-assessment",
@@ -59,9 +60,14 @@ window.VENDORSOLUCE_ROUTE_MANIFEST = {
     "TEAM_COLLABORATE": "/team/collaborate",
     "TEAM_RACI": "/team/raci",
     "TEAM_STAKEHOLDERS": "/team/stakeholders",
+    "VENDORS": "/vendors",
+    "VENDORS_WORKFLOWS": "/vendors/workflows",
+    "VENDORS_INTELLIGENCE": "/vendors/intelligence",
+    "VENDORS_ANALYTICS": "/vendors/analytics",
     "VENDOR_INTELLIGENCE": "/workspace/vendors",
     "VENDOR_GRAPH_IMPORT": "/workspace/vendors/import",
-    "VENDOR_INTELLIGENCE_DETAIL": "/workspace/vendors/:vendorId"
+    "VENDOR_INTELLIGENCE_DETAIL": "/workspace/vendors/:vendorId",
+    "COMPLIANCE_ROADMAP": "/workspace/roadmap"
   },
   "auth": {
     "SIGNIN": "/signin",

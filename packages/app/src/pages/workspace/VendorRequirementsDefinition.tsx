@@ -309,7 +309,7 @@ const VendorRequirementsDefinition: React.FC = () => {
               requirements={requirements}
               onRequirementUpdate={(vendorId, updatedRequirements) => {
                 // Handle requirement updates if needed
-                console.log('Update requirements for vendor:', vendorId, updatedRequirements);
+                // [removed console.log]
               }}
               showGapAnalysis={true}
               showRequirementDetails={true}

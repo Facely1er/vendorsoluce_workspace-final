@@ -98,7 +98,7 @@ const TrialPage: React.FC = () => {
     };
     
     // In production, send to API
-    console.log('Lead captured:', summary);
+    // [removed console.log]
     
     setEmailSubmitted(true);
     setShowEmailModal(false);
