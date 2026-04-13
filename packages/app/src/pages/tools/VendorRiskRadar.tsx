@@ -15,6 +15,9 @@ import type { VendorRadar, VendorBase } from '../../types/vendorRadar';
 import { config } from '../../utils/config';
 import WorkspacePage from '../../components/workspace/WorkspacePage';
 import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
+import WorkspaceEmptyState from '../../components/common/WorkspaceEmptyState';
+import { WR } from 'shared/constants/routes';
+import { Radar } from 'lucide-react';
 
 const RADAR_IMPORT_HANDOFF_TS_KEY = 'vs_radar_import_handoff_ts';
 const RADAR_IMPORT_HANDOFF_MAX_AGE_MS = 15_000;
@@ -155,6 +158,14 @@ const VendorRiskRadar: React.FC = () => {
       subtitle="Portfolio visibility, inherent risk signals, and import-to-report continuity in one workspace surface."
     >
       <WorkspacePageBody>
+        {!loading && vendors.length === 0 ? (
+          <WorkspaceEmptyState
+            icon={<Radar className="h-6 w-6" />}
+            title="Risk radar needs vendor data"
+            description="Add vendors to your portfolio first — the radar scores and visualizes them automatically."
+            primaryAction={{ label: 'Add vendors', href: WR.VENDOR_GRAPH_IMPORT }}
+          />
+        ) : (
         {/* Related flows: keep the radar focused; link out to reports + intake + assessments. */}
         <div className="mb-6">
           <div className="border-b border-gray-200 dark:border-gray-700">
@@ -485,6 +496,7 @@ const VendorRiskRadar: React.FC = () => {
             stats={stats}
             onClose={() => setShowReport(false)}
           />
+        )}
         )}
       </WorkspacePageBody>
     </WorkspacePage>

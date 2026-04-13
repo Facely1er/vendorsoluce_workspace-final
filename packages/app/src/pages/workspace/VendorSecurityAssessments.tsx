@@ -32,6 +32,9 @@ import CreateAssessmentModal from '../../components/vendor-assessments/CreateAss
 import AssessmentProgressTracker from '../../components/vendor-assessments/AssessmentProgressTracker';
 import JourneyProgress from '../../components/journey/JourneyProgress';
 import { logger } from '../../utils/logger';
+import LoadingSkeleton from '../../components/common/LoadingSkeleton';
+import WorkspaceEmptyState from '../../components/common/WorkspaceEmptyState';
+import { MR } from 'shared/constants/routes';
 import { 
   createAssessmentWithPortal, 
   sendExistingAssessmentToPortal,
@@ -266,9 +269,7 @@ const VendorSecurityAssessments: React.FC = () => {
   if (loading) {
     return (
       <WorkspacePageShell title="Security Assessments">
-        <div className="flex h-64 items-center justify-center">
-          <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-vendorsoluce-green" />
-        </div>
+        <LoadingSkeleton variant="table" />
       </WorkspacePageShell>
     );
   }
@@ -297,7 +298,18 @@ const VendorSecurityAssessments: React.FC = () => {
   };
 
   return (
-    <WorkspacePageShell title={t('vendorAssessments.title')} description="Stage 3 of 3 — Collect evidence, orchestrate portal-based questionnaires, and turn requirements into reviewable proof of vendor compliance." actions={[{ label: t('vendorAssessments.buttons.newAssessment'), onClick: () => setShowCreateModal(true), variant: 'primary' }]} stats={[{ label: 'Assessments', value: assessments.length, hint: 'Tracked across portal and workspace' }, { label: 'Vendors', value: vendors.length, hint: 'Available for evidence collection' }, { label: 'Requirements ready', value: vendorRequirements.length, hint: 'Imported from stage 2' }, { label: 'Frameworks', value: frameworks.length, hint: 'Templates available for launch' }]}><WorkspacePageBody>
+    <WorkspacePageShell
+      title={t('vendorAssessments.title')}
+      description="Send, track, and review security assessments across your vendor portfolio."
+      actions={[{ label: t('vendorAssessments.buttons.newAssessment'), onClick: () => setShowCreateModal(true), variant: 'primary' }]}
+      stats={[
+        { label: 'Assessments', value: assessments.length, hint: 'Tracked across portal and workspace' },
+        { label: 'Vendors', value: vendors.length, hint: 'Available for evidence collection' },
+        { label: 'Requirements ready', value: vendorRequirements.length, hint: 'Imported from stage 2' },
+        { label: 'Frameworks', value: frameworks.length, hint: 'Templates available for launch' },
+      ]}
+    >
+      <WorkspacePageBody>
       {/* Journey Progress */}
       <JourneyProgress 
         currentStage={3} 
@@ -525,23 +537,22 @@ const VendorSecurityAssessments: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {filteredAssessments.length === 0 ? (
+          {assessments.length === 0 ? (
+            <WorkspaceEmptyState
+              icon={<FileCheck className="h-6 w-6" />}
+              title="No assessments started"
+              description="Send your first security assessment to a vendor to begin collecting evidence."
+              primaryAction={{ label: 'Start an assessment', href: MR.SUPPLY_CHAIN_ASSESSMENT }}
+            />
+          ) : filteredAssessments.length === 0 ? (
             <div className="text-center py-12">
               <Shield className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                 {t('vendorAssessments.emptyState.title')}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                {searchTerm || statusFilter !== 'all' 
-                  ? t('vendorAssessments.emptyState.noMatches')
-                  : t('vendorAssessments.emptyState.noAssessments')}
+                {t('vendorAssessments.emptyState.noMatches')}
               </p>
-              {!searchTerm && statusFilter === 'all' && (
-                <Button variant="primary" onClick={() => setShowCreateModal(true)}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  {t('vendorAssessments.buttons.createFirstAssessment')}
-                </Button>
-              )}
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -713,7 +724,8 @@ const VendorSecurityAssessments: React.FC = () => {
           onSuccess={handleCreateSuccess}
         />
       )}
-    </WorkspacePageBody></WorkspacePageShell>
+      </WorkspacePageBody>
+    </WorkspacePageShell>
   );
 };
 

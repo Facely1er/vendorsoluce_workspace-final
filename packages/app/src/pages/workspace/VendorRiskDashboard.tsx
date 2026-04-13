@@ -26,7 +26,8 @@ import PortalStatusWidget from '../../components/dashboard/PortalStatusWidget';
 import UnifiedQuickActions from '../../components/dashboard/UnifiedQuickActions';
 import { Skeleton } from '../../components/ui/Skeleton';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
-import { MR } from 'shared/constants/routes';
+import WorkspaceEmptyState from '../../components/common/WorkspaceEmptyState';
+import { MR, WR } from 'shared/constants/routes';
 const VendorRiskDashboard: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -559,22 +560,13 @@ const VendorRiskDashboard: React.FC = () => {
                   }}
                 />
               ) : (
-                <div className="p-12 text-center bg-gray-50 dark:bg-gray-800/30">
-                  <div className="max-w-sm mx-auto">
-                    <div className="mb-4">
-                      <BarChart3 className="h-12 w-12 text-gray-400 mx-auto" />
-                    </div>
-                    <p className="text-gray-500 dark:text-gray-400 mb-4">No vendors added yet. Start by adding your first vendor.</p>
-                    <Button 
-                      variant="primary" 
-                      onClick={() => setShowAddModal(true)}
-                      className="w-full sm:w-auto"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add First Vendor
-                    </Button>
-                  </div>
-                </div>
+                <WorkspaceEmptyState
+                  icon={<Users className="h-6 w-6" />}
+                  title="No vendors yet"
+                  description="Add your first vendor to start building your risk portfolio."
+                  primaryAction={{ label: 'Add vendor', href: WR.VENDOR_GRAPH_IMPORT }}
+                  secondaryAction={{ label: 'Learn about vendor onboarding', href: MR.VENDOR_ONBOARDING }}
+                />
               )}
             </Card>
             
