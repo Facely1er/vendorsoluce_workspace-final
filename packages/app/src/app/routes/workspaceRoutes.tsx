@@ -43,6 +43,7 @@ const CollaborativeAssessmentPage = lazyWithRetry(() => import('../../pages/work
 const VendorIntelligencePortfolioPage = lazyWithRetry(() => import('../../pages/workspace/vendorsoluce/VendorIntelligencePortfolioPage'));
 const VendorIntelligenceImportPage = lazyWithRetry(() => import('../../pages/workspace/vendorsoluce/VendorIntelligenceImportPage'));
 const VendorIntelligenceDetailPage = lazyWithRetry(() => import('../../pages/workspace/vendorsoluce/VendorIntelligenceDetailPage'));
+const VendorPortfolioPage = lazyWithRetry(() => import('../../pages/workspace/vendorsoluce/VendorPortfolioPage'));
 const ComplianceRoadmapPage = lazyWithRetry(() => import('../../pages/workspace/ComplianceRoadmapPage'));
 const VendorActivityCatalogPage = lazyWithRetry(() => import('../../pages/programs/VendorActivityCatalogPage'));
 
@@ -108,6 +109,10 @@ export const workspaceRoutes = (
     <Route
       path={WR.VENDOR_INTELLIGENCE_DETAIL}
       element={<RouteWrapper><VendorIntelligenceDetailPage /></RouteWrapper>}
+    />
+    <Route
+      path={WR.VENDOR_PORTFOLIO}
+      element={<RouteWrapper><VendorPortfolioPage /></RouteWrapper>}
     />
     <Route
       path={WR.COMPLIANCE_ROADMAP}

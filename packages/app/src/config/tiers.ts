@@ -8,7 +8,7 @@
  * - Custom integration: tiers extend to SOW-specific SLAs and environments.
  */
 
-export type TierKey = 'free' | 'starter' | 'professional' | 'enterprise' | 'federal';
+export type TierKey = 'free' | 'starter' | 'professional' | 'enterprise' | 'federal' | 'assessor';
 
 export interface TierLimits {
   vendors: number;
@@ -159,6 +159,28 @@ export const PRODUCTS: Record<TierKey, TierProduct> = {
       priority_support: true,
     },
   },
+  assessor: {
+    name: 'Assessor',
+    description: 'Third-party assessor access for managing client vendor portfolios',
+    features: [
+      'All Enterprise features',
+      'Client portfolio management',
+      'Multi-org vendor portfolio',
+      'Attestation token issuance',
+      'Cross-org reporting',
+    ],
+    limits: {
+      vendors: -1,
+      sbom_scans: -1,
+      assessments: -1,
+      users: -1,
+      api_calls: -1,
+      data_export: true,
+      custom_branding: true,
+      sso: true,
+      priority_support: true,
+    },
+  },
 };
 
 export const FEATURE_FLAGS: Record<TierKey, string[]> = {
@@ -213,6 +235,17 @@ export const FEATURE_FLAGS: Record<TierKey, string[]> = {
     'nist_800_161_extended',
     'enhanced_audit_logging',
   ],
+  assessor: [
+    'all_features',
+    'sso_saml',
+    'multi_tenant',
+    'custom_integrations',
+    'dedicated_support',
+    'sla_guarantees',
+    'professional_services',
+    'vendor_portfolio_management',
+    'attestation_issuance',
+  ],
 };
 
 export function canAccessFeature(userTier: TierKey, feature: string): boolean {
@@ -234,4 +267,8 @@ export function getUsageLimit(
   const limit = PRODUCTS[userTier].limits[resource];
   if (typeof limit === 'number') return limit;
   return 0;
+}
+
+export function canManageClientPortfolio(tier: string | null): boolean {
+  return tier === 'enterprise' || tier === 'assessor';
 }

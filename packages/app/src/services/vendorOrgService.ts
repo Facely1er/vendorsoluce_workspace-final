@@ -65,6 +65,10 @@ class VendorOrgService {
     return readJson<OrgMembership[]>(KEYS.memberships, []);
   }
 
+  isSoloUser(): boolean {
+    return this.getMemberships().length === 0;
+  }
+
   // ── Supabase hydration ──────────────────────────────────────────────────
 
   async hydrateFromSupabase(): Promise<void> {
