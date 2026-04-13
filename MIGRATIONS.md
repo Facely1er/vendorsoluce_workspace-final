@@ -2,8 +2,7 @@
 
 ## Supabase Project
 Schema: vs.*  (VendorSoluce schema-isolated namespace)
-Shared schema: shared.* (run 008_shared_schema.sql separately —
-  lives in the ERMITS unified repo, not here)
+Shared schema: shared.* (run 008_shared_schema.sql separately; lives in the ERMITS unified repo, not here)
 
 ## Migration Index
 

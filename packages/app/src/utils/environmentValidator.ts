@@ -182,13 +182,13 @@ export function printValidationResults(result: ValidationResult): void {
   // Print errors
   if (result.errors.length > 0) {
     // [removed console.log]
-    result.errors.forEach(_error => { /* [removed console.log] */ });
+    // errors forEach removed (console.log purged)
   }
 
   // Print warnings
   if (result.warnings.length > 0) {
     // [removed console.log]
-    result.warnings.forEach(_warning => { /* [removed console.log] */ });
+    // warnings forEach removed (console.log purged)
   }
 
   // Print summary
