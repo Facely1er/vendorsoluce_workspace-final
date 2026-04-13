@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { Crown, Calculator, Shield, Check, X, Server, Download } from 'lucide-react';
+import { Crown, Calculator, Shield, Check, Server, Download } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';

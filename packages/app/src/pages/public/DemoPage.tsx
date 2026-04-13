@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import { CheckCircle, ArrowRight, ArrowLeft, Rocket, Target, AlertCircle } from 'lucide-react';
+import { CheckCircle, ArrowRight, ArrowLeft, Target, AlertCircle } from 'lucide-react';
 
 interface DemoVendor {
   name: string;

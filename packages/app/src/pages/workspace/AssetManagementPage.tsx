@@ -8,7 +8,6 @@ import {
   Eye, 
   Edit, 
   Trash2, 
-  AlertTriangle,
   RefreshCw,
 } from 'lucide-react';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';

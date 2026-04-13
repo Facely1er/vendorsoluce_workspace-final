@@ -11,7 +11,7 @@
  */
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
@@ -25,11 +25,7 @@ import { useVendorPortfolio } from '../tools/VendorRiskRadar/hooks/useVendorPort
 import { getRiskTierFromScore, getRequirementCountForTier } from '../../utils/requirementMapping';
 import type { RequirementSummary as RequirementSummaryType } from '../../types/requirements';
 import { 
-  Shield, 
-  ArrowRight, 
-  CheckCircle, 
   AlertTriangle, 
-  ExternalLink,
   RefreshCw,
   FileText
 } from 'lucide-react';
