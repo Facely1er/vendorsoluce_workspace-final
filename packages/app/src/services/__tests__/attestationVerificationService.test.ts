@@ -28,6 +28,7 @@ vi.mock('../../lib/supabase', () => ({
   isSupabaseEnabled: mockIsSupabaseEnabled,
 }));
 
+const MS_PER_DAY = 86_400_000;
 const store = new Map<string, string>();
 
 beforeEach(() => {
@@ -60,7 +61,7 @@ describe('attestationVerificationService', () => {
 
   it('verifyToken returns valid:false when expires_at is in the past; error is "Token has expired."', async () => {
     mockIsSupabaseEnabled.mockReturnValue(true);
-    const pastDate = new Date(Date.now() - 86_400_000).toISOString();
+    const pastDate = new Date(Date.now() - MS_PER_DAY).toISOString();
     mockMaybeSingle.mockResolvedValue({
       data: {
         token: 'tok-expired',
@@ -81,7 +82,7 @@ describe('attestationVerificationService', () => {
 
   it('verifyToken returns valid:true with correctly mapped fields when token is valid and expires_at is in the future', async () => {
     mockIsSupabaseEnabled.mockReturnValue(true);
-    const futureDate = new Date(Date.now() + 86_400_000 * 365).toISOString();
+    const futureDate = new Date(Date.now() + MS_PER_DAY * 365).toISOString();
     mockMaybeSingle.mockResolvedValue({
       data: {
         token: 'tok-valid',
