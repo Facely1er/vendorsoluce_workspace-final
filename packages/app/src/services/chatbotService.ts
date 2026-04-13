@@ -41,6 +41,10 @@ class ChatbotService {
     // conversationHistory is available for future use in request object
     const normalizedMessage = message.toLowerCase().trim();
 
+    const existingSystemPrompt =
+      'You are the VendorSoluce workspace assistant. Provide concise, practical guidance and link users to the right page when possible.';
+    const systemPrompt = `${context?.section || 'The user is in the VendorSoluce workspace.'}\n\n${existingSystemPrompt}`;
+
     try {
       // Check for FAQ matches first
       const faqMatch = this.findFAQMatch(normalizedMessage);
@@ -52,7 +56,8 @@ class ChatbotService {
           metadata: {
             source: 'faq',
             confidence: 0.9,
-            action: faqMatch.action
+            action: faqMatch.action,
+            systemPrompt,
           }
         };
       }
@@ -67,7 +72,8 @@ class ChatbotService {
           metadata: {
             source: 'knowledge_base',
             confidence: kbMatch.confidence,
-            action: kbMatch.action
+            action: kbMatch.action,
+            systemPrompt,
           }
         };
       }
@@ -75,13 +81,13 @@ class ChatbotService {
       // Check for contextual help based on current page/feature
       const contextualHelp = this.getContextualHelp(normalizedMessage, context);
       if (contextualHelp) {
-        return contextualHelp;
+        return { ...contextualHelp, metadata: { ...(contextualHelp.metadata || {}), systemPrompt } };
       }
 
       // Check for common patterns
       const patternMatch = this.matchCommonPatterns(normalizedMessage);
       if (patternMatch) {
-        return patternMatch;
+        return { ...patternMatch, metadata: { ...(patternMatch.metadata || {}), systemPrompt } };
       }
 
       // Default response with suggestions
@@ -266,7 +272,8 @@ class ChatbotService {
       suggestions: suggestions.slice(0, 4),
       metadata: {
         source: 'default',
-        confidence: 0.3
+        confidence: 0.3,
+        systemPrompt: `${context?.section || 'The user is in the VendorSoluce workspace.'}\n\nYou are the VendorSoluce workspace assistant. Provide concise, practical guidance and link users to the right page when possible.`
       }
     };
   }
