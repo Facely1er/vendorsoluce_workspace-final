@@ -307,7 +307,7 @@ const VendorRequirementsDefinition: React.FC = () => {
           ) : (
             <VendorRequirementsList
               requirements={requirements}
-              onRequirementUpdate={(vendorId, updatedRequirements) => {
+              onRequirementUpdate={(_vendorId, _updatedRequirements) => {
                 // Handle requirement updates if needed
                 // [removed console.log]
               }}

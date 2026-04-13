@@ -73,12 +73,12 @@ export const useVendors = () => {
     return { id: 'new-vendor-id', ...vendorData };
   };
 
-  const updateVendor = async (id: string, vendorData: any) => {
+  const updateVendor = async (_id: string, _vendorData: any) => {
     // [removed console.log]
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
 
-  const deleteVendor = async (id: string) => {
+  const deleteVendor = async (_id: string) => {
     // [removed console.log]
     await new Promise(resolve => setTimeout(resolve, 1000));
   };

@@ -114,12 +114,12 @@ export const useVendorAssessments = () => {
     return { id: 'new-assessment-id', ...assessmentData };
   };
 
-  const sendAssessment = async (id: string) => {
+  const sendAssessment = async (_id: string) => {
     // [removed console.log]
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
 
-  const deleteAssessment = async (id: string) => {
+  const deleteAssessment = async (_id: string) => {
     // [removed console.log]
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
