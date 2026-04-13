@@ -32,6 +32,7 @@ const SupplyChainResults = () => {
   // const navigate = useNavigate();
   // const { id } = useParams<{ id: string }>();
   const location = useLocation();
+  const idFromQuery = useMemo(() => new URLSearchParams(location.search).get('id'), [location.search]);
   const { isAuthenticated } = useAuth();
   const { assessments, loading } = useSupplyChainAssessments();
   const [results, setResults] = useState<ResultData | null>(null);
@@ -62,9 +63,11 @@ const SupplyChainResults = () => {
       });
       return; // Early return to prevent further processing
     } else if (isAuthenticated && !loading && assessments.length > 0) {
-      // Find the most recent completed assessment
-      const completedAssessments = assessments.filter(a => a.status === 'completed');
-      const completedAssessment = completedAssessments.length > 0 ? completedAssessments[0] : null;
+      const completedAssessments = assessments.filter((a) => a.status === 'completed');
+      const preferredId = idFromQuery || location.state?.assessmentId;
+      const completedAssessment = preferredId
+        ? (completedAssessments.find((a) => a.id === preferredId) ?? null)
+        : (completedAssessments[0] ?? null);
       
       if (completedAssessment) {
         setResults({
@@ -98,7 +101,7 @@ const SupplyChainResults = () => {
         assessmentId: 'demo'
       });
     }
-  }, [location.state, assessments, loading, isAuthenticated]);
+  }, [location.state, assessments, loading, isAuthenticated, idFromQuery]);
   
   // Mock results for demo purposes
   const getMockResults = (): ResultData => {

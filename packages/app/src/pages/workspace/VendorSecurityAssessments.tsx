@@ -24,7 +24,7 @@ import {
   ExternalLink,
   Check,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useVendors } from '../../hooks/useVendors';
 import { useVendorAssessments } from '../../hooks/useVendorAssessments';
 import { useVendorRequirements } from '../../hooks/useVendorRequirements';
@@ -35,6 +35,7 @@ import { logger } from '../../utils/logger';
 import LoadingSkeleton from '../../components/common/LoadingSkeleton';
 import WorkspaceEmptyState from '../../components/common/WorkspaceEmptyState';
 import { MR } from 'shared/constants/routes';
+import { useSupplyChainAssessments } from '../../hooks/useSupplyChainAssessments';
 import { 
   createAssessmentWithPortal, 
   sendExistingAssessmentToPortal,
@@ -66,6 +67,7 @@ const ProgressBarFill: React.FC<{ progress: number }> = ({ progress }) => {
 const VendorSecurityAssessments: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const addNotification = useAppStore((state) => state.addNotification);
   const { vendors, loading: vendorsLoading } = useVendors();
   const { 
@@ -79,6 +81,7 @@ const VendorSecurityAssessments: React.FC = () => {
     getAssessmentProgress,
     refetch,
   } = useVendorAssessments();
+  const { assessments: supplyChainAssessments } = useSupplyChainAssessments();
   const { requirements: vendorRequirements, loading: _requirementsLoading } = useVendorRequirements();
   
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -113,6 +116,11 @@ const VendorSecurityAssessments: React.FC = () => {
     const matchesStatus = statusFilter === 'all' || assessment.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  const completedSupplyChainAssessments = supplyChainAssessments
+    .filter((a) => a.status === 'completed')
+    .slice()
+    .sort((a, b) => String(b.completed_at || b.created_at || '').localeCompare(String(a.completed_at || a.created_at || '')));
 
   const handleCreateSuccess = async (assessmentData: { 
     vendorId: string; 
@@ -702,6 +710,72 @@ const VendorSecurityAssessments: React.FC = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Past results */}
+      {completedSupplyChainAssessments.length > 0 && (
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Past results</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-800">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Assessment type
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Vendor
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Completed date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Score/status
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      &nbsp;
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                  {completedSupplyChainAssessments.map((a) => {
+                    const completed = a.completed_at || a.created_at;
+                    const vendorName = (a as any).vendor_name || '—';
+                    const score = typeof a.overall_score === 'number' ? `${a.overall_score}%` : 'Completed';
+                    return (
+                      <tr key={a.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                          Supply chain
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                          {vendorName}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
+                          {completed ? new Date(completed).toLocaleDateString() : '—'}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                          {score}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <button
+                            type="button"
+                            onClick={() => navigate(`/supply-chain-results?id=${a.id}`)}
+                            className="text-vendorsoluce-green hover:underline dark:text-vendorsoluce-light-green"
+                          >
+                            View results →
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Create Assessment Modal */}
       {showCreateModal && (

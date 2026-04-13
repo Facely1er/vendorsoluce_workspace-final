@@ -223,14 +223,17 @@ const TrialPage: React.FC = () => {
                   <div className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                     CSV format: Vendor Name, Domain, Industry
                   </div>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".csv"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
                 </div>
+                <input
+                  id="vendor-csv-upload"
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".csv"
+                  aria-label="Upload vendor CSV file"
+                  title="Upload vendor CSV file"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
 
                 <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                   <span className="flex items-center gap-2">
@@ -389,6 +392,8 @@ const TrialPage: React.FC = () => {
                   </h2>
                   <button
                     onClick={() => setShowEmailModal(false)}
+                    aria-label="Close"
+                    title="Close"
                     className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                   >
                     <X className="w-5 h-5" />

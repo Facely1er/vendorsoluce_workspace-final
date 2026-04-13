@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import Card, { CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import VendorRiskTable from '../../components/vendor/VendorRiskTable';
@@ -38,7 +38,6 @@ const VendorRiskDashboard: React.FC = () => {
   const { stats: threatStats, loading: threatLoading, refresh: refreshThreats } = useThreatIntelligence();
   const [showAddModal, setShowAddModal] = useState(false);
   const [showScoreModal, setShowScoreModal] = useState(false);
-  const [activeView, setActiveView] = useState<'dashboard' | 'workflows' | 'intelligence' | 'analytics'>('dashboard');
   const [isRefreshing, setIsRefreshing] = useState(false);
   // const workflowStats = {
   //   activeTasks: 0,
@@ -91,8 +90,19 @@ const VendorRiskDashboard: React.FC = () => {
     }
   };
 
+  const activeView = useMemo(() => {
+    const path = location.pathname;
+    if (path.endsWith('/workflows')) return 'workflows';
+    if (path.endsWith('/intelligence')) return 'intelligence';
+    if (path.endsWith('/analytics')) return 'analytics';
+    return 'dashboard';
+  }, [location.pathname]);
+
   const handleViewChange = (view: 'dashboard' | 'workflows' | 'intelligence' | 'analytics') => {
-    setActiveView(view);
+    if (view === 'workflows') navigate(WR.VENDORS_WORKFLOWS);
+    else if (view === 'intelligence') navigate(WR.VENDORS_INTELLIGENCE);
+    else if (view === 'analytics') navigate(WR.VENDORS_ANALYTICS);
+    else navigate(WR.VENDORS);
   };
 
   // const handleExportDashboard = async () => {

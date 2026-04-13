@@ -1,5 +1,5 @@
 import React from 'react';
-import { AR, MR } from 'shared/constants/routes';
+import { AR, MR, WR } from 'shared/constants/routes';
 import { Navigate, Route } from 'react-router-dom';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
 import { config } from '../../utils/config';
@@ -99,6 +99,9 @@ export const publicRoutes = (
       <Route path="/sbom-analyzer" element={<Navigate to={MR.NIST_CHECKLIST} replace />} />
       <Route path="/sbom-analysis/:id" element={<Navigate to={MR.VENDORS} replace />} />
       <Route path={MR.VENDORS} element={<ConditionalVendorDashboard />} />
+      <Route path={WR.VENDORS_WORKFLOWS} element={<ConditionalVendorDashboard />} />
+      <Route path={WR.VENDORS_INTELLIGENCE} element={<ConditionalVendorDashboard />} />
+      <Route path={WR.VENDORS_ANALYTICS} element={<ConditionalVendorDashboard />} />
       <Route path="/vendor-risk-dashboard" element={<Navigate to={MR.VENDORS} replace />} />
       <Route path={MR.VENDOR_ONBOARDING} element={<VendorOnboardingPage />} />
       <Route

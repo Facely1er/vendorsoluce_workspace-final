@@ -84,6 +84,7 @@ const FRAMEWORK_NAME = 'FedRAMP / FISMA Evidence Readiness (NIST SP 800-53 Rev 5
 
 const FedRampResults = () => {
   const location = useLocation();
+  const idFromQuery = useMemo(() => new URLSearchParams(location.search).get('id'), [location.search]);
   const { isAuthenticated } = useAuth();
   const { assessments, loading } = useSupplyChainAssessments();
   const [results, setResults] = useState<ResultData | null>(null);
@@ -113,7 +114,10 @@ const FedRampResults = () => {
 
     if (isAuthenticated && !loading && assessments.length > 0) {
       const completed = assessments.filter(a => a.status === 'completed');
-      const latest = completed.length > 0 ? completed[0] : null;
+      const preferredId = idFromQuery || location.state?.assessmentId;
+      const latest = preferredId
+        ? (completed.find((a) => a.id === preferredId) ?? null)
+        : (completed[0] ?? null);
       if (latest) {
         setResults({
           overallScore: latest.overall_score || 0,
@@ -136,7 +140,7 @@ const FedRampResults = () => {
       answers: {},
       assessmentId: 'demo',
     });
-  }, [location.state, assessments, loading, isAuthenticated]);
+  }, [location.state, assessments, loading, isAuthenticated, idFromQuery]);
 
   const handleExport = async (useComprehensive = false) => {
     if (!results) return;
