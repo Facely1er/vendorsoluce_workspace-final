@@ -117,9 +117,11 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
     ? t('navigation.collapseSidebar', 'Collapse sidebar')
     : t('navigation.expandSidebar', 'Expand sidebar');
 
+  const widthClass = expanded ? 'w-64' : 'w-14';
+
   return (
     <aside
-      className={`flex flex-col h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700/80 ${className}`}
+      className={`flex flex-col h-full ${widthClass} bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700/80 ${className}`}
       aria-label="Workspace navigation"
     >
       {expanded ? (

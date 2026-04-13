@@ -3,6 +3,8 @@ import { AR, MR, WR } from 'shared/constants/routes';
 import { Navigate, Route } from 'react-router-dom';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
 import { config } from '../../utils/config';
+import ErrorBoundary from '../../components/common/ErrorBoundary';
+import PageLoader from '../../components/common/PageLoader';
 
 const ResetPasswordPage = lazyWithRetry(() => import('../../pages/auth/ResetPasswordPage'));
 const VendorActivityCatalogPage = lazyWithRetry(() => import('../../pages/programs/VendorActivityCatalogPage'));
@@ -13,9 +15,9 @@ const NISTChecklist = lazyWithRetry(() => import('../../pages/tools/NISTChecklis
 const VendorRiskRadar = lazyWithRetry(() => import('../../pages/tools/VendorRiskRadar'));
 const VendorRiskReports = lazyWithRetry(() => import('../../pages/tools/VendorRiskReports'));
 const VendorRiskCalculator = lazyWithRetry(() => import('../../pages/tools/VendorRiskCalculator'));
-const VendorSecurityAssessments = lazyWithRetry(() => import('../../pages/workspace/VendorSecurityAssessments'));
 const VendorManagementPage = lazyWithRetry(() => import('../../pages/workspace/VendorManagementPage'));
 const VendorRequirementsDefinition = lazyWithRetry(() => import('../../pages/workspace/VendorRequirementsDefinition'));
+const VendorSecurityAssessments = lazyWithRetry(() => import('../../pages/workspace/VendorSecurityAssessments'));
 const DashboardDemoPage = lazyWithRetry(() => import('../../pages/public/DashboardDemoPage'));
 const VendorPrivacyAssessment = lazyWithRetry(() => import('../../pages/tools/VendorPrivacyAssessment'));
 const DpiaGenerator = lazyWithRetry(() => import('../../pages/tools/DpiaGenerator'));
@@ -30,6 +32,25 @@ const MarketingAdminPage = lazyWithRetry(() => import('../../pages/admin/Marketi
 const CreateCampaignPage = lazyWithRetry(() => import('../../pages/admin/CreateCampaignPage'));
 const ConditionalDashboard = lazyWithRetry(() => import('../../components/dashboard/ConditionalDashboard'));
 const ConditionalVendorDashboard = lazyWithRetry(() => import('../../components/dashboard/ConditionalVendorDashboard'));
+
+function RouteWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <ErrorBoundary
+      fallback={
+        <div className="p-8 text-center">
+          <p className="mb-4 text-gray-600 dark:text-gray-400">
+            Something went wrong loading this page.
+          </p>
+          <a href="/" className="text-vendorsoluce-green dark:text-vendorsoluce-light-green">
+            Return to dashboard
+          </a>
+        </div>
+      }
+    >
+      <React.Suspense fallback={<PageLoader />}>{children}</React.Suspense>
+    </ErrorBoundary>
+  );
+}
 
 function WebsiteRedirect({ to }: { to: string }) {
   React.useEffect(() => {
@@ -51,9 +72,9 @@ export function VendorAssessmentPortalRedirect() {
 
 export const publicRoutes = (
   <>
-    <Route path={MR.HOME} element={<ConditionalDashboard />} />
-      <Route path={MR.DASHBOARD} element={<ConditionalDashboard />} />
-      <Route path={AR.RESET_PASSWORD} element={<ResetPasswordPage />} />
+    <Route path={MR.HOME} element={<RouteWrapper><ConditionalDashboard /></RouteWrapper>} />
+      <Route path={MR.DASHBOARD} element={<RouteWrapper><ConditionalDashboard /></RouteWrapper>} />
+      <Route path={AR.RESET_PASSWORD} element={<RouteWrapper><ResetPasswordPage /></RouteWrapper>} />
       {/* Option A: marketing + legal live on the website deployment (www.vendorsoluce.com). */}
       <Route path="/careers" element={<WebsiteRedirect to={MR.CONTACT} />} />
       <Route path={MR.PRICING} element={<WebsiteRedirect to={MR.PRICING} />} />
@@ -70,54 +91,54 @@ export const publicRoutes = (
       <Route path={MR.HOW_IT_WORKS} element={<WebsiteRedirect to={MR.HOW_IT_WORKS} />} />
       <Route path="/tutorial" element={<WebsiteRedirect to={MR.HOW_IT_WORKS} />} />
       <Route path="/toolkit" element={<WebsiteRedirect to={MR.HOME} />} />
-      <Route path={MR.VENDOR_ACTIVITY_CATALOG} element={<VendorActivityCatalogPage />} />
-      <Route path={MR.PROGRAM_NIST_IMPLEMENTATION} element={<NistImplementationWorkflowPage />} />
-      <Route path={MR.PROGRAM_VIRA_DUE_DILIGENCE} element={<ViraDueDiligenceWorkflowPage />} />
-      <Route path={MR.VIRA_REPORTS} element={<ViraReportsPage />} />
+      <Route path={MR.VENDOR_ACTIVITY_CATALOG} element={<RouteWrapper><VendorActivityCatalogPage /></RouteWrapper>} />
+      <Route path={MR.PROGRAM_NIST_IMPLEMENTATION} element={<RouteWrapper><NistImplementationWorkflowPage /></RouteWrapper>} />
+      <Route path={MR.PROGRAM_VIRA_DUE_DILIGENCE} element={<RouteWrapper><ViraDueDiligenceWorkflowPage /></RouteWrapper>} />
+      <Route path={MR.VIRA_REPORTS} element={<RouteWrapper><ViraReportsPage /></RouteWrapper>} />
       <Route path={MR.API_DOCS} element={<WebsiteRedirect to={MR.API_DOCS} />} />
       <Route path={MR.INTEGRATION_GUIDES} element={<WebsiteRedirect to={MR.INTEGRATION_GUIDES} />} />
       <Route path={MR.HOSTING_OPTIONS} element={<WebsiteRedirect to={MR.HOSTING_OPTIONS} />} />
       <Route path={MR.DEMO} element={<WebsiteRedirect to={MR.DEMO} />} />
       <Route path={MR.TRIAL} element={<WebsiteRedirect to={MR.TRIAL} />} />
-      <Route path={MR.VENDOR_RISK_RADAR} element={<VendorRiskRadar />} />
-      <Route path={MR.VENDOR_RISK_REPORTS} element={<VendorRiskReports />} />
+      <Route path={MR.VENDOR_RISK_RADAR} element={<RouteWrapper><VendorRiskRadar /></RouteWrapper>} />
+      <Route path={MR.VENDOR_RISK_REPORTS} element={<RouteWrapper><VendorRiskReports /></RouteWrapper>} />
       <Route path="/vendors/radar" element={<Navigate to={MR.VENDOR_RISK_RADAR} replace />} />
       <Route path="/tools/vendor-risk-radar" element={<Navigate to={MR.VENDOR_RISK_RADAR} replace />} />
-      <Route path={MR.NIST_CHECKLIST} element={<NISTChecklist />} />
+      <Route path={MR.NIST_CHECKLIST} element={<RouteWrapper><NISTChecklist /></RouteWrapper>} />
       <Route path="/tools/sbom-quick-scan" element={<Navigate to={MR.NIST_CHECKLIST} replace />} />
-      <Route path={MR.VENDOR_RISK_CALCULATOR} element={<VendorRiskCalculator />} />
+      <Route path={MR.VENDOR_RISK_CALCULATOR} element={<RouteWrapper><VendorRiskCalculator /></RouteWrapper>} />
       <Route path="/tools/vendor-iq" element={<Navigate to={MR.VENDOR_RISK_RADAR} replace />} />
-      <Route path={MR.VENDOR_PRIVACY_ASSESSMENT} element={<VendorPrivacyAssessment />} />
-      <Route path={MR.DPIA} element={<DpiaGenerator />} />
-      <Route path={MR.DATA_INVENTORY} element={<DataInventory />} />
-      <Route path={MR.SUPPLY_CHAIN_ASSESSMENT} element={<SupplyChainAssessment />} />
-      <Route path={MR.SUPPLY_CHAIN_RESULTS} element={<SupplyChainResults />} />
-      <Route path={MR.SUPPLY_CHAIN_RECOMMENDATIONS} element={<SupplyChainRecommendations />} />
-      <Route path={MR.FEDRAMP_ASSESSMENT} element={<FedRampAssessment />} />
-      <Route path={MR.FEDRAMP_RESULTS} element={<FedRampResults />} />
-      <Route path={MR.VENDOR_REQUIREMENTS} element={<VendorRequirementsDefinition />} />
+      <Route path={MR.VENDOR_PRIVACY_ASSESSMENT} element={<RouteWrapper><VendorPrivacyAssessment /></RouteWrapper>} />
+      <Route path={MR.DPIA} element={<RouteWrapper><DpiaGenerator /></RouteWrapper>} />
+      <Route path={MR.DATA_INVENTORY} element={<RouteWrapper><DataInventory /></RouteWrapper>} />
+      <Route path={MR.SUPPLY_CHAIN_ASSESSMENT} element={<RouteWrapper><SupplyChainAssessment /></RouteWrapper>} />
+      <Route path={MR.SUPPLY_CHAIN_RESULTS} element={<RouteWrapper><SupplyChainResults /></RouteWrapper>} />
+      <Route path={MR.SUPPLY_CHAIN_RECOMMENDATIONS} element={<RouteWrapper><SupplyChainRecommendations /></RouteWrapper>} />
+      <Route path={MR.FEDRAMP_ASSESSMENT} element={<RouteWrapper><FedRampAssessment /></RouteWrapper>} />
+      <Route path={MR.FEDRAMP_RESULTS} element={<RouteWrapper><FedRampResults /></RouteWrapper>} />
+      <Route path={MR.VENDOR_REQUIREMENTS} element={<RouteWrapper><VendorRequirementsDefinition /></RouteWrapper>} />
       <Route path="/sbom-analyzer" element={<Navigate to={MR.NIST_CHECKLIST} replace />} />
       <Route path="/sbom-analysis/:id" element={<Navigate to={MR.VENDORS} replace />} />
-      <Route path={MR.VENDORS} element={<ConditionalVendorDashboard />} />
-      <Route path={WR.VENDORS_WORKFLOWS} element={<ConditionalVendorDashboard />} />
-      <Route path={WR.VENDORS_INTELLIGENCE} element={<ConditionalVendorDashboard />} />
-      <Route path={WR.VENDORS_ANALYTICS} element={<ConditionalVendorDashboard />} />
+      <Route path={MR.VENDORS} element={<RouteWrapper><ConditionalVendorDashboard /></RouteWrapper>} />
+      <Route path={WR.VENDORS_WORKFLOWS} element={<RouteWrapper><ConditionalVendorDashboard /></RouteWrapper>} />
+      <Route path={WR.VENDORS_INTELLIGENCE} element={<RouteWrapper><ConditionalVendorDashboard /></RouteWrapper>} />
+      <Route path={WR.VENDORS_ANALYTICS} element={<RouteWrapper><ConditionalVendorDashboard /></RouteWrapper>} />
       <Route path="/vendor-risk-dashboard" element={<Navigate to={MR.VENDORS} replace />} />
-      <Route path={MR.VENDOR_ONBOARDING} element={<VendorOnboardingPage />} />
+      <Route path={MR.VENDOR_ONBOARDING} element={<RouteWrapper><VendorOnboardingPage /></RouteWrapper>} />
       <Route
         path={MR.ADMIN_VENDORS}
-        element={<VendorManagementPage />}
+        element={<RouteWrapper><VendorManagementPage /></RouteWrapper>}
       />
       <Route
         path={MR.ADMIN_MARKETING}
-        element={<MarketingAdminPage />}
+        element={<RouteWrapper><MarketingAdminPage /></RouteWrapper>}
       />
       <Route
         path={MR.ADMIN_MARKETING_NEW_CAMPAIGN}
-        element={<CreateCampaignPage />}
+        element={<RouteWrapper><CreateCampaignPage /></RouteWrapper>}
       />
-      <Route path={MR.DASHBOARD_DEMO} element={<DashboardDemoPage />} />
-      <Route path={MR.VENDOR_ASSESSMENTS} element={<VendorSecurityAssessments />} />
+      <Route path={MR.DASHBOARD_DEMO} element={<RouteWrapper><DashboardDemoPage /></RouteWrapper>} />
+      <Route path={MR.VENDOR_ASSESSMENTS} element={<RouteWrapper><VendorSecurityAssessments /></RouteWrapper>} />
       <Route path={MR.VENDOR_PORTAL} element={<Navigate to={import.meta.env.VITE_PORTAL_URL || 'https://www.portal.vendorsoluce.com'} replace />} />
       <Route path="/vendor-assessments/:id" element={<VendorAssessmentPortalRedirect />} />
   </>

@@ -3,7 +3,6 @@ import { useAuth } from '../../context/AuthContext';
 import { useFromWebsite } from '../../hooks/useFromWebsite';
 import PageLoader from '../common/PageLoader';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
-import { config } from '../../utils/config';
 
 const DashboardPage = lazyWithRetry(() => import('../../pages/workspace/DashboardPage'));
 const DashboardDemoPage = lazyWithRetry(() => import('../../pages/public/DashboardDemoPage'));
@@ -16,8 +15,9 @@ const ConditionalDashboard: React.FC = () => {
     return <PageLoader />;
   }
 
-  // When coming from the website, QA ungate, or signed-in: full dashboard; otherwise demo for unauthenticated
-  const showFullDashboard = isAuthenticated || fromWebsite || config.app.ungateProtectedRoutes;
+  // Offline/anonymous mode: always render the full workspace dashboard.
+  // Individual features/pages must handle missing auth by using local persistence.
+  const showFullDashboard = true || isAuthenticated || fromWebsite;
   return (
     <Suspense fallback={<PageLoader />}>
       {showFullDashboard ? <DashboardPage /> : <DashboardDemoPage />}

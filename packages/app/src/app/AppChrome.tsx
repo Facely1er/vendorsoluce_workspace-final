@@ -31,6 +31,7 @@ export default function AppChrome({ children }: AppChromeProps) {
   const navigate = useNavigate();
   const tourTimerRef = useRef<number | null>(null);
   const [commandOpen, setCommandOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
     if (!isTourRunning) return;
@@ -78,13 +79,27 @@ export default function AppChrome({ children }: AppChromeProps) {
     return () => window.removeEventListener('keydown', handler);
   }, []);
 
+  useEffect(() => {
+    setMobileNavOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileNavOpen(false);
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col max-w-[100vw] min-w-0 overflow-x-hidden">
       <NotificationManager />
       <DemoModeBanner />
       <TrialModeBanner />
-      <Navbar />
-      <MainWrapper>{children}</MainWrapper>
+      <Navbar onMobileMenuToggle={() => setMobileNavOpen((prev) => !prev)} />
+      <MainWrapper mobileNavOpen={mobileNavOpen} onMobileNavOpenChange={setMobileNavOpen}>
+        {children}
+      </MainWrapper>
       <ChatWidget />
       <CommandPalette isOpen={commandOpen} onClose={() => setCommandOpen(false)} />
       <AppTour

@@ -9,7 +9,6 @@ import { useAuth } from '../../context/AuthContext';
 import { useFromWebsite } from '../../hooks/useFromWebsite';
 import PageLoader from '../common/PageLoader';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
-import { config } from '../../utils/config';
 
 const VendorRiskDashboard = lazyWithRetry(() => import('../../pages/workspace/VendorRiskDashboard'));
 const VendorRiskDashboardDemo = lazyWithRetry(() => import('../../pages/workspace/VendorRiskDashboardDemo'));
@@ -22,7 +21,9 @@ const ConditionalVendorDashboard: React.FC = () => {
     return <PageLoader />;
   }
 
-  const showFullDashboard = isAuthenticated || fromWebsite || config.app.ungateProtectedRoutes;
+  // Offline/anonymous mode: always render the full workspace dashboard.
+  // Individual features/pages must handle missing auth by using local persistence.
+  const showFullDashboard = true || isAuthenticated || fromWebsite;
   return (
     <Suspense fallback={<PageLoader />}>
       {showFullDashboard ? <VendorRiskDashboard /> : <VendorRiskDashboardDemo />}

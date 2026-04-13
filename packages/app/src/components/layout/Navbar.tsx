@@ -26,7 +26,11 @@ import { SHELL_CLASSES } from '../../layout/shell';
 import { MR, WR, isWorkspaceAppPath } from 'shared/constants/routes';
 import { useAuth } from '../../context/AuthContext';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onMobileMenuToggle?: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
   const { t } = useTranslation();
   const location = useLocation();
   const { profile } = useAuth();
@@ -169,7 +173,21 @@ const Navbar: React.FC = () => {
           {/* Left: Logo — compact on small screens (typography matches website includes/header.html + Footer) */}
           <div className="flex items-center flex-shrink-0 min-w-0 md:max-w-none max-w-[calc(100%-11rem)]" data-tour="main-nav">
             {workspaceChrome ? (
-              <Link to={WR.VENDOR_INTELLIGENCE} className="flex items-center min-w-0 group" title={t('navigation.dashboard')}>
+              <>
+                {onMobileMenuToggle && (
+                  <button
+                    type="button"
+                    className="mr-2 flex h-9 w-9 items-center justify-center rounded-lg
+                               text-gray-500 hover:bg-gray-100 hover:text-gray-800
+                               dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100
+                               md:hidden"
+                    onClick={onMobileMenuToggle}
+                    aria-label="Open navigation menu"
+                  >
+                    <Menu className="h-5 w-5" aria-hidden />
+                  </button>
+                )}
+                <Link to={WR.VENDOR_INTELLIGENCE} className="flex items-center min-w-0 group" title={t('navigation.dashboard')}>
                 <img
                   src="/homepage_files/vendorsoluce.png"
                   alt="VendorSoluce™ logo"
@@ -182,6 +200,7 @@ const Navbar: React.FC = () => {
                   <span className="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">Supply Chain Risk Intelligence</span>
                 </span>
               </Link>
+              </>
             ) : (
               <Link to={MR.HOME} className="flex items-center min-w-0 group" title={t('navigation.home')}>
                 <img
@@ -332,17 +351,19 @@ const Navbar: React.FC = () => {
                 </div>
               </>
             )}
-            <button
-              type="button"
-              onClick={toggleMenu}
-              data-mobile-menu-button
-              id="mobile-menu-hamburger-btn"
-              className="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none flex-shrink-0 w-9 h-9"
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-              {...(isOpen ? { 'aria-expanded': 'true' as const } : { 'aria-expanded': 'false' as const })}
-            >
-              {isOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
+            {(!workspaceChrome || !onMobileMenuToggle) && (
+              <button
+                type="button"
+                onClick={toggleMenu}
+                data-mobile-menu-button
+                id="mobile-menu-hamburger-btn"
+                className="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none flex-shrink-0 w-9 h-9"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                {...(isOpen ? { 'aria-expanded': 'true' as const } : { 'aria-expanded': 'false' as const })}
+              >
+                {isOpen ? <X size={18} /> : <Menu size={18} />}
+              </button>
+            )}
           </div>
         </div>
       </div>

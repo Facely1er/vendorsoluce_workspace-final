@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Command, BarChart3, Users, FileText, X, Shield, Radar, Calculator, ListTree, Clock, Bell, CalendarDays } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { Search, Command, BarChart3, Users, FileText, X, Shield, Radar, ListTree, CalendarDays } from 'lucide-react';
 import { MR, WR } from 'shared/constants/routes';
 
 interface CommandItem {
@@ -20,7 +19,6 @@ interface CommandPaletteProps {
 }
 
 const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose }) => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -55,7 +53,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose }) => {
         ],
       },
     ];
-  }, [t]);
+  }, []);
 
   const commands: CommandItem[] = useMemo(() => {
     const out: CommandItem[] = [];

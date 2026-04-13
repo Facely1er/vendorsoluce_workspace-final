@@ -6,6 +6,7 @@ import { Button } from '../../components/ui/Button';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabase';
 import { logger } from '../../utils/logger';
+import { MR } from 'shared/constants/routes';
 
 const SignInPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -32,6 +33,11 @@ const SignInPage: React.FC = () => {
   // Get the intended destination from the location state (pathname + search for checkout?plan=), or default to dashboard
   const fromState = (location.state as { from?: { pathname: string; search?: string } })?.from;
   const from = fromState ? fromState.pathname + (fromState.search || '') : '/dashboard';
+  const params = new URLSearchParams(location.search);
+  const returnPath = params.get('return');
+  const decodedReturn = returnPath ? decodeURIComponent(returnPath) : null;
+  const safeReturn = decodedReturn && decodedReturn.startsWith('/') ? decodedReturn : null;
+  const destination = safeReturn || from || MR.HOME;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,7 +82,7 @@ const SignInPage: React.FC = () => {
             logger.error('Link checkout session:', linkErr);
           }
         }
-        navigate(from, { replace: true });
+        navigate(destination, { replace: true });
       } else {
         await signIn(email, password);
         if (fromCheckout && checkoutSessionId) {
@@ -89,7 +95,7 @@ const SignInPage: React.FC = () => {
             logger.error('Link checkout session:', linkErr);
           }
         }
-        navigate(from, { replace: true });
+        navigate(destination, { replace: true });
       }
     } catch (err: unknown) {
       setError(isRegister ? 

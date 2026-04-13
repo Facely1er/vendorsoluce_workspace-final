@@ -2,6 +2,27 @@ import React from 'react';
 import { MR, WR } from 'shared/constants/routes';
 import { Navigate, Route } from 'react-router-dom';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
+import ErrorBoundary from '../../components/common/ErrorBoundary';
+import PageLoader from '../../components/common/PageLoader';
+
+function RouteWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <ErrorBoundary
+      fallback={
+        <div className="p-8 text-center">
+          <p className="mb-4 text-gray-600 dark:text-gray-400">
+            Something went wrong loading this page.
+          </p>
+          <a href="/" className="text-vendorsoluce-green dark:text-vendorsoluce-light-green">
+            Return to dashboard
+          </a>
+        </div>
+      }
+    >
+      <React.Suspense fallback={<PageLoader />}>{children}</React.Suspense>
+    </ErrorBoundary>
+  );
+}
 
 const OnboardingPage = lazyWithRetry(() => import('../../pages/workspace/OnboardingPage'));
 const PlatformSetupPage = lazyWithRetry(() => import('../../pages/workspace/PlatformSetupPage'));
@@ -29,70 +50,70 @@ export const workspaceRoutes = (
   <>
     <Route
       path={WR.PLATFORM_SETUP}
-      element={<PlatformSetupPage />}
+      element={<RouteWrapper><PlatformSetupPage /></RouteWrapper>}
     />
     <Route
       path={WR.ONBOARDING}
-      element={<OnboardingPage />}
+      element={<RouteWrapper><OnboardingPage /></RouteWrapper>}
     />
     <Route
       path={WR.PROFILE}
-      element={<ProfilePage />}
+      element={<RouteWrapper><ProfilePage /></RouteWrapper>}
     />
     <Route
       path={WR.BILLING}
-      element={<BillingPage />}
+      element={<RouteWrapper><BillingPage /></RouteWrapper>}
     />
     <Route
       path={WR.ACCOUNT}
-      element={<AccountPage />}
+      element={<RouteWrapper><AccountPage /></RouteWrapper>}
     />
     <Route
       path={WR.USER_DASHBOARD}
-      element={<UserDashboard />}
+      element={<RouteWrapper><UserDashboard /></RouteWrapper>}
     />
     <Route
       path={WR.USER_ACTIVITY}
-      element={<UserActivity />}
+      element={<RouteWrapper><UserActivity /></RouteWrapper>}
     />
     <Route
       path={WR.NOTIFICATIONS}
-      element={<UserNotifications />}
+      element={<RouteWrapper><UserNotifications /></RouteWrapper>}
     />
     <Route
       path={WR.ASSET_MANAGEMENT}
-      element={<AssetManagementPage />}
+      element={<RouteWrapper><AssetManagementPage /></RouteWrapper>}
     />
-    <Route path={WR.ASSETS_ALIAS} element={<Navigate to={WR.ASSET_MANAGEMENT} replace />} />
+    <Route path={WR.ASSETS_ALIAS} element={<RouteWrapper><Navigate to={WR.ASSET_MANAGEMENT} replace /></RouteWrapper>} />
     <Route
       path={WR.TEAM_COLLABORATE}
-      element={<CollaborativeAssessmentPage />}
+      element={<RouteWrapper><CollaborativeAssessmentPage /></RouteWrapper>}
     />
     <Route
       path={WR.TEAM_RACI}
-      element={<TeamRaciPage />}
+      element={<RouteWrapper><TeamRaciPage /></RouteWrapper>}
     />
     <Route
       path={WR.TEAM_STAKEHOLDERS}
-      element={<StakeholderManagementPage />}
+      element={<RouteWrapper><StakeholderManagementPage /></RouteWrapper>}
     />
     <Route
       path={WR.VENDOR_INTELLIGENCE}
-      element={<VendorIntelligencePortfolioPage />}
+      element={<RouteWrapper><VendorIntelligencePortfolioPage /></RouteWrapper>}
     />
     <Route
       path={WR.VENDOR_GRAPH_IMPORT}
-      element={<VendorIntelligenceImportPage />}
+      element={<RouteWrapper><VendorIntelligenceImportPage /></RouteWrapper>}
     />
     <Route
       path={WR.VENDOR_INTELLIGENCE_DETAIL}
-      element={<VendorIntelligenceDetailPage />}
+      element={<RouteWrapper><VendorIntelligenceDetailPage /></RouteWrapper>}
     />
     <Route
       path={WR.COMPLIANCE_ROADMAP}
-      element={<ComplianceRoadmapPage />}
+      element={<RouteWrapper><ComplianceRoadmapPage /></RouteWrapper>}
     />
-    <Route path={MR.VENDOR_ACTIVITY_CATALOG} element={<VendorActivityCatalogPage />} />
+    <Route path={MR.VENDOR_ACTIVITY_CATALOG} element={<RouteWrapper><VendorActivityCatalogPage /></RouteWrapper>} />
     {/* Program routes ungated in publicRoutes.tsx (external gate happens before workspace access). */}
   </>
 );

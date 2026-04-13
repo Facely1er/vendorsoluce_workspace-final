@@ -20,7 +20,11 @@ function readSidebarExpanded(): boolean {
 /** Applies correct top padding when demo or trial banner is visible.
  *  On desktop (lg+) renders a workspace layout with a fixed-width sidebar.
  */
-export const MainWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const MainWrapper: React.FC<{
+  children: React.ReactNode;
+  mobileNavOpen?: boolean;
+  onMobileNavOpenChange?: (open: boolean) => void;
+}> = ({ children, mobileNavOpen = false, onMobileNavOpenChange }) => {
   const location = useLocation();
   const showWorkspaceChrome = isWorkspaceAppPath(location.pathname);
   const { isTrial } = useSubscription();
@@ -51,6 +55,25 @@ export const MainWrapper: React.FC<{ children: React.ReactNode }> = ({ children 
       <div className="flex min-h-0 min-w-0 flex-1">
         {showWorkspaceChrome && (
           <>
+            {/* Mobile overlay + drawer */}
+            {mobileNavOpen && (
+              <div
+                className="fixed inset-0 z-30 bg-black/40 md:hidden"
+                onClick={() => onMobileNavOpenChange?.(false)}
+                aria-hidden="true"
+              />
+            )}
+            <div
+              className={`
+                fixed left-0 z-40 md:hidden
+                transition-transform duration-200 ease-in-out
+                ${mobileNavOpen ? 'translate-x-0' : '-translate-x-full'}
+                ${sidebarTop} ${sidebarHeight}
+              `}
+            >
+              <WorkspaceSidebar className="h-full" expanded onToggleExpanded={toggleSidebar} />
+            </div>
+
             {/* Sidebar: fixed on md+ — primary nav; header stays minimal (no duplicate section menus). */}
             <div
               className={`hidden md:fixed md:left-0 md:z-40 md:block md:overflow-y-auto md:overflow-x-hidden md:transition-[width] md:duration-200 md:ease-out ${railWidth} ${sidebarTop} ${sidebarHeight}`}
