@@ -1,5 +1,6 @@
 import React from 'react';
 import { Download, FileSearch, GitBranch, RadioTower, RefreshCw, ShieldAlert, Zap } from 'lucide-react';
+import VendorAttestationPanel from '../../../components/workspace/VendorAttestationPanel';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { useVendorStore } from '../../../stores/vendorStore';
@@ -329,6 +330,12 @@ const VendorIntelligenceDetailPage: React.FC = () => {
           </PanelCard>
         </div>
       </div>
+      <PanelCard
+        title="Attestation verification"
+        description="Verify and link third-party attestation tokens to this vendor record."
+      >
+        <VendorAttestationPanel vendorId={vendorId} />
+      </PanelCard>
     </WorkspacePageShell>
   );
 };

@@ -14,6 +14,7 @@ export function getWorkspaceSections(t: TFunction): NavSection[] {
       id: 'vendors',
       label: t('navigation.vendorsAndAssets', 'Vendors & assets'),
       items: [
+        { label: t('navigation.vendorPortfolio', 'Vendor Portfolio'), href: WR.VENDOR_PORTFOLIO },
         { label: t('navigation.portfolio', 'Portfolio'), href: WR.VENDOR_INTELLIGENCE },
         { label: t('navigation.importVendors', 'Import vendors'), href: WR.VENDOR_GRAPH_IMPORT },
         { label: t('navigation.vendorOnboarding', 'Vendor onboarding'), href: MR.VENDOR_ONBOARDING },
