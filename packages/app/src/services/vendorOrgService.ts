@@ -1,3 +1,7 @@
+// NOTE: vs.vendors is the operational vendor table for this workspace.
+// Canonical vendor records will migrate to shared.vendors in a future data migration.
+// Tracked in ermits-deploy bridge/vs_to_unified.sql.
+
 import { supabase, isSupabaseEnabled } from '../lib/supabase';
 
 // ---------------------------------------------------------------------------
