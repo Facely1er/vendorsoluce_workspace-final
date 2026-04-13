@@ -130,8 +130,8 @@ class VendorOrgService {
     );
 
     return Object.values(merged).filter((v) => {
-      const vid = v.org_id;
-      return vid === orgId || vid == null;
+      const vOrgId = v.org_id;
+      return vOrgId === orgId || vOrgId == null;
     });
   }
 }
