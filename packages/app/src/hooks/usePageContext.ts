@@ -13,6 +13,22 @@ export const usePageContext = (): PageContext => {
 
   useEffect(() => {
     const pathname = location.pathname;
+
+    const pageContextSentence = (() => {
+      if (pathname.includes('vendor-risk-radar'))   return 'The user is on the Vendor Risk Radar page, which visualizes portfolio-wide risk scores.';
+      if (pathname.includes('supply-chain'))        return 'The user is on the Supply Chain Assessment page.';
+      if (pathname.includes('vendor-assessments'))  return 'The user is on the Vendor Security Assessments page, where they send and track assessments.';
+      if (pathname.includes('vira-reports'))        return 'The user is on the VIRA Reports page, which generates vendor intelligence reports.';
+      if (pathname.includes('fedramp'))             return 'The user is on the FedRAMP/FISMA Evidence collection page.';
+      if (pathname.includes('compliance-roadmap'))  return 'The user is on the Compliance Roadmap page.';
+      if (pathname.includes('program/nist'))        return 'The user is on the NIST C-SCRM implementation program page.';
+      if (pathname.includes('program/vira'))        return 'The user is on the VIRA Due Diligence program page.';
+      if (pathname.includes('asset-management'))    return 'The user is on the Asset Management page.';
+      if (pathname.includes('vendor-requirements')) return 'The user is on the Vendor Requirements definition page.';
+      if (pathname.includes('platform-setup'))      return 'The user is on the Platform Setup page.';
+      if (pathname === '/' || pathname.includes('dashboard')) return 'The user is on the main workspace dashboard.';
+      return 'The user is in the VendorSoluce workspace.';
+    })();
     
     // Map routes to page contexts
     const pageMap: Record<string, PageContext> = {
@@ -60,7 +76,7 @@ export const usePageContext = (): PageContext => {
       pageContext = { page: 'home' };
     }
 
-    setContext(pageContext);
+    setContext({ ...pageContext, section: pageContextSentence });
   }, [location.pathname]);
 
   return context;
