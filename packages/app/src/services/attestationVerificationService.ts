@@ -1,6 +1,18 @@
 import { supabase, isSupabaseEnabled } from '../lib/supabase';
 
 // ---------------------------------------------------------------------------
+// Schema helpers
+// ---------------------------------------------------------------------------
+
+function sharedSchema() {
+  return supabase.schema('shared' as never) as typeof supabase;
+}
+
+function vsSchema() {
+  return supabase.schema('vs' as never) as typeof supabase;
+}
+
+// ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
@@ -21,7 +33,7 @@ export interface LinkedAttestation {
   id: string;
   vendorId: string;
   token: string;
-  framework: string;
+  framework?: string;
   level?: string;
   overallScore?: number;
   determination?: 'met' | 'conditional' | 'not_met';
@@ -71,7 +83,7 @@ class AttestationVerificationService {
     }
 
     try {
-      const { data, error } = await (supabase.schema('shared' as never) as typeof supabase)
+      const { data, error } = await sharedSchema()
         .from('attestation_tokens')
         .select(
           'token, framework, level, overall_score, determination, assessor_org, assessed_at, expires_at',
@@ -134,7 +146,7 @@ class AttestationVerificationService {
       id: `${vendorId}-${result.token}`,
       vendorId,
       token: result.token,
-      framework: result.framework ?? '',
+      framework: result.framework,
       level: result.level,
       overallScore: result.overallScore,
       determination: result.determination,
@@ -156,14 +168,14 @@ class AttestationVerificationService {
     if (isSupabaseEnabled()) {
       void (async () => {
         try {
-          await (supabase.schema('vs' as never) as typeof supabase)
+          await vsSchema()
             .from('vendor_attestations')
             .upsert(
               {
                 id: linked.id,
                 vendor_id: vendorId,
                 token: linked.token,
-                framework: linked.framework,
+                framework: linked.framework ?? null,
                 level: linked.level ?? null,
                 overall_score: linked.overallScore ?? null,
                 determination: linked.determination ?? null,
@@ -202,7 +214,7 @@ class AttestationVerificationService {
       void (async () => {
         try {
           const id = `${vendorId}-${token}`;
-          await (supabase.schema('vs' as never) as typeof supabase)
+          await vsSchema()
             .from('vendor_attestations')
             .delete()
             .eq('id', id);

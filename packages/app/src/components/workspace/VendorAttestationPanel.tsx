@@ -45,11 +45,11 @@ const VendorAttestationPanel: React.FC<VendorAttestationPanelProps> = ({ vendorI
         return;
       }
       const linked = await attestationVerificationService.linkAttestationToVendor(vendorId, result);
-      setAttestations(attestationVerificationService.getAttestationsForVendor(vendorId));
+      setAttestations((prev) => [...prev.filter((a) => a.token !== result.token), linked]);
       setTokenInput('');
       setFeedback({
         ok: true,
-        message: `Attestation verified and linked: ${linked.framework}${linked.level ? ` — ${linked.level}` : ''}.`,
+        message: `Attestation verified and linked: ${linked.framework ?? result.token}${linked.level ? ` — ${linked.level}` : ''}.`,
       });
     } catch (err) {
       setFeedback({
@@ -148,7 +148,7 @@ const VendorAttestationPanel: React.FC<VendorAttestationPanelProps> = ({ vendorI
                 <div className="flex items-center gap-2">
                   <Shield className="h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
                   <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                    {att.framework}
+                    {att.framework ?? att.token}
                     {att.level ? ` — ${att.level}` : ''}
                   </span>
                   {att.determination ? (
