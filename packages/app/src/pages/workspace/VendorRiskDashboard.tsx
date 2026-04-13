@@ -24,9 +24,9 @@ import { getRiskLevel, getComplianceStatus } from '../../utils/riskCalculations'
 import RadarWidget from '../../components/dashboard/RadarWidget';
 import PortalStatusWidget from '../../components/dashboard/PortalStatusWidget';
 import UnifiedQuickActions from '../../components/dashboard/UnifiedQuickActions';
-import { Skeleton } from '../../components/ui/Skeleton';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkspaceEmptyState from '../../components/common/WorkspaceEmptyState';
+import LoadingSkeleton from '../../components/common/LoadingSkeleton';
 import { MR, WR } from 'shared/constants/routes';
 const VendorRiskDashboard: React.FC = () => {
   const { t } = useTranslation();
@@ -240,18 +240,11 @@ const VendorRiskDashboard: React.FC = () => {
   }, [assessments]);
 
   if (loading) {
-    return (<WorkspacePageShell title={t('vendorRisk.title')} description={t('vendorRisk.description')}><div className="space-y-8"><Skeleton className="h-10 w-64 mb-2" />
-        <Skeleton className="h-5 w-96 mb-8" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {[1, 2, 3].map((i) => (
-            <Skeleton key={i} className="h-24 rounded-lg" />
-          ))}
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <Skeleton className="h-64 lg:col-span-7 rounded-lg" />
-          <Skeleton className="h-64 lg:col-span-5 rounded-lg" />
-        </div>
-        <Skeleton className="h-48 mt-8 rounded-lg" /></div></WorkspacePageShell>);
+    return (
+      <WorkspacePageShell title={t('vendorRisk.title')} description={t('vendorRisk.description')}>
+        <LoadingSkeleton variant="dashboard" />
+      </WorkspacePageShell>
+    );
   }
 
   if (error) {
