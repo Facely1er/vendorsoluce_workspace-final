@@ -49,7 +49,7 @@ const VendorAttestationPanel: React.FC<VendorAttestationPanelProps> = ({ vendorI
       setTokenInput('');
       setFeedback({
         ok: true,
-        message: `Attestation verified and linked: ${linked.framework ?? result.token}${linked.level ? ` — ${linked.level}` : ''}.`,
+        message: `Attestation verified and linked: ${linked.framework ?? result.token}${linked.level ? ` — ${linked.level}` : ''}`,
       });
     } catch (err) {
       setFeedback({

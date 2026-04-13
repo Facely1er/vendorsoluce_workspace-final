@@ -63,7 +63,7 @@ function getAttestationStatus(vendorId: string): AttestationBadgeStatus {
     (a) => a.determination === 'conditional' || a.determination === 'not_met',
   );
   if (conditional) return 'conditional';
-  return 'attested';
+  return 'none';
 }
 
 const ATTESTATION_BADGE: Record<
