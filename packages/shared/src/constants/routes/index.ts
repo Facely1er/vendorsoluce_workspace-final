@@ -5,4 +5,6 @@ export const WR = routes.workspace as Record<string, string>;
 export const AR = routes.auth as Record<string, string>;
 export const PR = routes.portal as Record<string, string>;
 
+export { isWorkspaceAppPath } from './workspaceChrome';
+
 export default routes;

@@ -99,7 +99,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
       <button
         type="button"
         onClick={handleToggle}
-        className="chat-widget-fab fixed bottom-5 right-5 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-gray-200/90 bg-white/90 text-gray-600 shadow-sm backdrop-blur-sm transition-colors hover:border-gray-300 hover:bg-gray-50/95 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vendorsoluce-green dark:border-gray-700 dark:bg-gray-900/90 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:bg-gray-800 dark:hover:text-white motion-safe:transition-[colors,box-shadow]"
+        className="chat-widget-fab fixed bottom-24 right-5 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-gray-200/90 bg-white/90 text-gray-600 shadow-sm backdrop-blur-sm transition-colors hover:border-gray-300 hover:bg-gray-50/95 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vendorsoluce-green dark:border-gray-700 dark:bg-gray-900/90 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:bg-gray-800 dark:hover:text-white motion-safe:transition-[colors,box-shadow] max-[480px]:bottom-28"
         aria-label="Open in-app help"
         title="In-app help"
       >
@@ -110,7 +110,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
 
   return (
     <div
-      className={`chat-widget fixed bottom-5 right-5 z-50 rounded-lg border border-gray-200 bg-white shadow-lg transition-all duration-300 dark:border-gray-700 dark:bg-gray-800 ${
+      className={`chat-widget fixed bottom-24 right-5 z-50 max-[480px]:bottom-28 rounded-lg border border-gray-200 bg-white shadow-lg transition-all duration-300 dark:border-gray-700 dark:bg-gray-800 ${
         isMinimized ? 'h-16 w-80' : 'h-[600px] w-96'
       }`}
     >

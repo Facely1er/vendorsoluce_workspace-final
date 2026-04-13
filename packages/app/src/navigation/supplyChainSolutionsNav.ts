@@ -1,6 +1,6 @@
 import type { TFunction } from 'i18next';
 import type { MenuItem } from '../types';
-import { WR } from 'shared/constants/routes';
+import { MR, WR } from 'shared/constants/routes';
 import { isFeatureEnabled, getDefaultFeaturesForProduct, FEATURE_IDS } from '../lib/ermits-template';
 
 const vendorSoluceFeatures = getDefaultFeaturesForProduct('vendorsoluce');
@@ -11,13 +11,49 @@ export interface NavSection {
   items: MenuItem[];
 }
 
+/**
+ * Workspace sidebar order follows a typical rollout: initialize the tenant, load vendor data,
+ * scope assets and requirements, run assessments, measure residual risk and reporting, then use
+ * guided programs (and the activity catalog) for sustained operating rhythm, with planning last.
+ */
 export function getWorkspaceSections(t: TFunction): NavSection[] {
   return [
     {
-      id: 'overview',
-      label: t('navigation.overview', 'Overview'),
+      id: 'setup',
+      label: t('navigation.navPhaseSetup', 'Workspace setup'),
       items: [
-        { label: t('navigation.vendorRiskAndManagement', 'Vendor Portfolio'), href: WR.VENDOR_INTELLIGENCE },
+        { label: t('navigation.platformSetup', 'Platform setup'), href: WR.PLATFORM_SETUP },
+        { label: t('navigation.workspaceOnboarding', 'Workspace onboarding'), href: WR.ONBOARDING },
+      ],
+    },
+    {
+      id: 'intake',
+      label: t('navigation.navPhaseIntake', 'Data intake'),
+      items: [
+        { label: t('navigation.vendorDataImport', 'Import vendor data'), href: WR.VENDOR_GRAPH_IMPORT },
+        { label: t('navigation.vendorOnboardingProgram', 'Vendor onboarding'), href: MR.VENDOR_ONBOARDING },
+      ],
+    },
+    {
+      id: 'scope',
+      label: t('navigation.navPhaseScope', 'Scope & context'),
+      items: [
+        {
+          label: t('navigation.assetManagement', 'Asset management'),
+          href: WR.ASSET_MANAGEMENT,
+          description: t(
+            'navigation.assetManagementSidebarHint',
+            'Systems, data, and vendor links that scope and inform assessments.',
+          ),
+        },
+        {
+          label: t('navigation.vendorRequirements', 'Vendor requirements'),
+          href: '/vendor-requirements',
+          description: t(
+            'navigation.vendorRequirementsSidebarHint',
+            'Define expectations and controls before you run assessments.',
+          ),
+        },
       ],
     },
     {
@@ -26,29 +62,41 @@ export function getWorkspaceSections(t: TFunction): NavSection[] {
       items: [
         { label: t('navigation.supplyChainAssessment', 'Supply Chain Assessment'), href: '/supply-chain-assessment' },
         { label: t('navigation.vendorAssessments', 'Vendor Assessments'), href: '/vendor-assessments' },
-        { label: t('navigation.vendorRequirements', 'Vendor Requirements'), href: '/vendor-requirements' },
         { label: t('navigation.fedRampAssessment', 'FedRAMP/FISMA Evidence'), href: '/fedramp-assessment' },
       ],
     },
     {
-      id: 'analysis',
-      label: t('navigation.analysis', 'Analysis'),
+      id: 'measure',
+      label: t('navigation.navPhaseMeasure', 'Measure & report'),
       items: [
         { label: t('navigation.vendorRiskRadar', 'Vendor Risk Radar'), href: '/vendor-risk-radar' },
         { label: t('navigation.viraReports', 'VIRA Reports'), href: '/vira-reports' },
-        { label: t('navigation.riskCalculator', 'Risk calculator'), href: '/tools/vendor-risk-calculator' },
-        { label: t('navigation.assetManagement', 'Asset management'), href: '/asset-management' },
-        { label: t('navigation.activityCatalog', 'Activity catalog'), href: '/vendor-activity-catalog' },
+        { label: t('navigation.viraIntake', 'VIRA intake'), href: '/tools/vendor-risk-calculator' },
       ],
     },
     {
-      id: 'actions',
-      label: t('navigation.actions', 'Actions'),
+      id: 'programs',
+      label: t('navigation.navPhasePrograms', 'Programs & catalog'),
       items: [
         { label: t('navigation.nistImplementationWorkflow', 'NIST implementation workflow'), href: '/program/nist-implementation' },
         { label: t('navigation.viraDueDiligenceWorkflow', 'VIRA due diligence workflow'), href: '/program/vira-due-diligence' },
+        { label: t('navigation.activityCatalog', 'Activity catalog'), href: '/vendor-activity-catalog' },
       ],
     },
+    ...(isFeatureEnabled(vendorSoluceFeatures, FEATURE_IDS.COMPLIANCE_CALENDAR)
+      ? [
+          {
+            id: 'planning',
+            label: t('navigation.planning', 'Planning'),
+            items: [
+              {
+                label: t('navigation.roadmapCalendar', 'Roadmap & calendar'),
+                href: WR.COMPLIANCE_ROADMAP,
+              },
+            ],
+          } satisfies NavSection,
+        ]
+      : []),
   ];
 }
 

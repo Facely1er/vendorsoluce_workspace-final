@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Command, BarChart3, Users, FileText, X, Shield, Radar, Calculator, ListTree } from 'lucide-react';
+import { Search, Command, BarChart3, Users, FileText, X, Shield, Radar, Calculator, ListTree, Clock, Bell, CalendarDays } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { MR, WR } from 'shared/constants/routes';
 
 interface CommandItem {
   id: string;
@@ -27,11 +28,59 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose }) => {
   const commands: CommandItem[] = useMemo(() => {
     return [
     {
-      id: 'dashboard',
+      id: 'workspace-portfolio',
       label: t('navigation.dashboard') || 'Dashboard',
-      description: 'View your main dashboard',
-      path: '/',
+      description: 'Vendor intelligence portfolio (workspace)',
+      path: WR.VENDOR_INTELLIGENCE,
       icon: <BarChart3 className="h-4 w-4" />,
+      category: 'navigation',
+    },
+    {
+      id: 'user-dashboard',
+      label: 'User dashboard',
+      description: 'Workspace overview and quick actions',
+      path: WR.USER_DASHBOARD,
+      icon: <BarChart3 className="h-4 w-4 opacity-90" />,
+      category: 'navigation',
+    },
+    {
+      id: 'activity-history',
+      label: 'Activity history',
+      description: 'Operational log and timeline',
+      path: WR.USER_ACTIVITY,
+      icon: <Clock className="h-4 w-4" />,
+      category: 'navigation',
+    },
+    {
+      id: 'notifications',
+      label: 'Notifications',
+      description: 'Workspace notifications',
+      path: WR.NOTIFICATIONS,
+      icon: <Bell className="h-4 w-4" />,
+      category: 'navigation',
+    },
+    {
+      id: 'roadmap-calendar',
+      label: t('navigation.roadmapCalendar', 'Roadmap & calendar'),
+      description: 'Program phases, milestones, and compliance calendar',
+      path: WR.COMPLIANCE_ROADMAP,
+      icon: <CalendarDays className="h-4 w-4" />,
+      category: 'navigation',
+    },
+    {
+      id: 'vira-reports',
+      label: t('navigation.viraReports', 'VIRA Reports'),
+      description: 'Portfolio inherent-risk reports',
+      path: MR.VIRA_REPORTS,
+      icon: <FileText className="h-4 w-4" />,
+      category: 'navigation',
+    },
+    {
+      id: 'vendor-assessments',
+      label: t('navigation.vendorAssessments', 'Vendor Security Assessments'),
+      description: 'Stage 3 evidence and questionnaires',
+      path: MR.VENDOR_ASSESSMENTS,
+      icon: <Shield className="h-4 w-4" />,
       category: 'navigation',
     },
     {

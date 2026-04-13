@@ -1,8 +1,18 @@
 import React from 'react';
+import { cn } from '../../utils/cn';
+import { WORKSPACE_PAGE_SHELL_EYEBROW_CLASS } from '../vendorsoluce-intelligence/WorkspacePageShell';
 
-const WorkspaceHero: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => {
+/** Re-export for pages that show a secondary headline inside a hero strip (same rhythm as the shell eyebrow). */
+export const WORKSPACE_HERO_EYEBROW_CLASS = WORKSPACE_PAGE_SHELL_EYEBROW_CLASS;
+
+const WorkspaceHero: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => {
   return (
-    <div className={`rounded-2xl border border-vendorsoluce-green/20 bg-gradient-to-r from-vendorsoluce-pale-green via-white to-white p-5 shadow-sm dark:border-vendorsoluce-green/20 dark:from-vendorsoluce-green/10 dark:via-gray-900 dark:to-gray-900 ${className}`.trim()}>
+    <div
+      className={cn(
+        'border-b border-gray-200/80 pb-6 dark:border-gray-800',
+        className,
+      )}
+    >
       {children}
     </div>
   );

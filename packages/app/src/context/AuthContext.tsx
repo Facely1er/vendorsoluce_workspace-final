@@ -34,17 +34,17 @@ const createLocalWorkspaceUser = (): User =>
   ({
     id: LOCAL_USER_ID,
     email: 'local@vendorsoluce.local',
-    user_metadata: { full_name: 'Local Workspace Operator', organization_name: 'Local Workspace' },
+    user_metadata: { full_name: 'Local', organization_name: 'Local Workspace' },
     app_metadata: { provider: 'local' },
     aud: 'authenticated',
     created_at: new Date().toISOString(),
-    name: 'Local Workspace Operator',
+    name: 'Local',
   }) as User;
 
 const createLocalWorkspaceProfile = (): Profile => ({
   id: LOCAL_USER_ID,
   email: 'local@vendorsoluce.local',
-  full_name: 'Local Workspace Operator',
+  full_name: 'Local',
   company: 'Local Workspace',
   role: 'workspace_admin',
   is_first_login: false,

@@ -22,6 +22,22 @@ This folder summarizes **what this VendorSoluce monorepo implements today** (rou
 
 ---
 
+### [VENDORSOLUCE_NORMALIZATION_REFERENCE.md](./VENDORSOLUCE_NORMALIZATION_REFERENCE.md)
+
+**Purpose:** Action-oriented checklist to **complete normalization**: route constants (`MR`/`WR`/`AR`/`PR`), shared tokens and `verify:ui`, shell/surface rules, ERMITS pack mapping, verification commands, and suggested work order.
+
+**Read this if:** You are standardizing new work across app, website, and portal, or closing gaps against the design checklist and shared Tailwind enforcement.
+
+---
+
+### [WEBSITE_STATIC_NORMALIZATION.md](./WEBSITE_STATIC_NORMALIZATION.md)
+
+**Purpose:** Static marketing site (`packages/website`): how `routes.json` feeds the route manifest, token/Tailwind verification, canonical `includes/` header and footer, intentional padding vs the general design checklist, and `npm run verify` / `npm run verify:website` workflow.
+
+**Read this if:** You edit HTML, radar assets, or static chrome for VendorSoluce.
+
+---
+
 ## Quick start by use case
 
 | Goal | Start here |
@@ -30,6 +46,8 @@ This folder summarizes **what this VendorSoluce monorepo implements today** (rou
 | Trace providers and global chrome | Reference baseline: `AppProviders`, `AppChrome` |
 | Find canonical paths | Reference baseline: Routes; `packages/shared/routes.json` |
 | Align UI tokens / NIST template | Reference baseline: `ermits-template` |
+| Finish cross-surface normalization (routes, tokens, verification) | [Normalization reference](./VENDORSOLUCE_NORMALIZATION_REFERENCE.md) |
+| Static website (HTML, radar, embed pipeline) | [Website static normalization](./WEBSITE_STATIC_NORMALIZATION.md) |
 | Assess localStorage / license / tenancy risk | Known debt summary |
 
 ---

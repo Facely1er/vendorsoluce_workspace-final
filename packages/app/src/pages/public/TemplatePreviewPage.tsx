@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import { ArrowLeft, Download, Eye, FileText, AlertTriangle, Loader, Copy, ChevronRight, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Download, Eye, FileText, AlertTriangle, Loader, Copy, ChevronRight, ChevronDown, Lightbulb } from 'lucide-react';
 import { downloadTemplateFile } from '../../utils/generatePdf';
 import { logger } from '../../utils/logger';
 import DOMPurify from 'dompurify';
@@ -587,8 +587,14 @@ const TemplatePreviewPage: React.FC = () => {
           </div>
           <div className="p-5 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 dark:border-blue-400 rounded-lg">
             <p className="text-sm leading-relaxed text-blue-800 dark:text-blue-200">
-              <strong className="font-semibold text-blue-900 dark:text-blue-100">💡 Usage Tip:</strong> This template is designed to be customized for your organization's specific needs. 
-              Download and modify the content to match your requirements and branding.
+              <span className="inline-flex items-start gap-2">
+                <Lightbulb className="h-4 w-4 shrink-0 mt-0.5 text-blue-600 dark:text-blue-300" aria-hidden />
+                <span>
+                  <strong className="font-semibold text-blue-900 dark:text-blue-100">Usage tip:</strong> This template is designed to be customized for your organization&apos;s specific needs.
+                  {' '}
+                  Download and modify the content to match your requirements and branding.
+                </span>
+              </span>
             </p>
           </div>
         </CardContent>

@@ -82,7 +82,6 @@ const UserNotifications: React.FC = () => {
 
   return (
     <WorkspacePageShell
-      eyebrow="Workspace administration"
       title="Notifications"
       description="Review alerts, updates, and workflow notifications in one consistent operational inbox."
       actions={[{ label: 'Mark all read', onClick: markAllAsRead, variant: 'outline' }, { label: 'Notification settings', to: '/account', variant: 'outline' }]}

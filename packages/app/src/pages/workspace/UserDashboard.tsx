@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import {
@@ -27,7 +27,8 @@ const UserDashboard: React.FC = () => {
   const { vendors } = useVendors();
   const { assessments } = useSupplyChainAssessments();
 
-  const recentActivity = [
+  const recentActivity = useMemo(() => {
+    const base: { id: number | string; action: string; timestamp: string; icon: React.ReactNode }[] = [
     {
       id: 1,
       action: 'Completed Supply Chain Assessment',
@@ -52,7 +53,20 @@ const UserDashboard: React.FC = () => {
       timestamp: '3 days ago',
       icon: <User className="h-4 w-4 text-gray-500" />
     }
-  ];
+    ];
+    if (assessments.length > 0) {
+      return [
+        {
+          id: 'sync-assessments',
+          action: `Workspace: ${assessments.length} supply chain assessment record(s)`,
+          timestamp: 'From your workspace',
+          icon: <BarChart3 className="h-4 w-4 text-vendorsoluce-green" />
+        },
+        ...base.slice(0, 3),
+      ];
+    }
+    return base;
+  }, [assessments.length]);
 
   const achievements = [
     {
@@ -107,7 +121,7 @@ const UserDashboard: React.FC = () => {
   ];
 
   return (
-    <WorkspacePageShell eyebrow="Workspace overview" title={`Welcome back, ${profile?.full_name || 'User'}!`} description={`${profile?.role || 'Security Professional'} at ${profile?.company || 'Your Organization'}`} actions={[{ label: 'Edit profile', to: WR.PROFILE, variant: 'outline' }, { label: 'Account settings', to: WR.ACCOUNT, variant: 'outline' }]} stats={quickStats.map((s)=>({label:s.label,value:s.value,hint:s.change}))}>{/* Quick Stats */}
+    <WorkspacePageShell title={`Welcome back, ${profile?.full_name || 'User'}!`} description={`${profile?.role || 'Security Professional'} at ${profile?.company || 'Your Organization'}`} actions={[{ label: 'Edit profile', to: WR.PROFILE, variant: 'outline' }, { label: 'Account settings', to: WR.ACCOUNT, variant: 'outline' }]} stats={quickStats.map((s)=>({label:s.label,value:s.value,hint:s.change}))}>{/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {quickStats.map((stat, index) => (
           <Card key={index}>

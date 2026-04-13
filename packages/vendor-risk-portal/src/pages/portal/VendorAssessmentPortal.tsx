@@ -27,6 +27,7 @@ import {
 import type { PortalQuestionSnapshot } from '../../services/portalQuestionBuilder';
 import { isVendorPortalDomain, getPlatformAppUrl } from '../../utils/domainDetection';
 import { loadPdfCore } from 'shared/utils/lazyModules';
+import { PORTAL_LOGO_SRC } from 'shared/components/portal/portalBrand';
 
 type AnswerValue = string | number | boolean | null;
 
@@ -919,6 +920,26 @@ const VendorAssessmentPortal: React.FC = () => {
       {/* Secure Portal Header */}
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 mb-4 border-b border-gray-100 dark:border-gray-700/80">
+            <Link to="/" className="flex items-center min-w-0 group w-fit">
+              <img
+                src={PORTAL_LOGO_SRC}
+                alt="VendorSoluce™ Logo"
+                width={60}
+                height={60}
+                className="vs-brand-logo h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] max-h-[3.75rem] max-w-[3.75rem] flex-shrink-0 transition-transform group-hover:scale-105 object-contain"
+                loading="eager"
+              />
+              <span className="ml-1.5 min-w-0">
+                <span className="block text-[1.25rem] sm:text-[1.5rem] md:text-[1.625rem] font-bold text-vendorsoluce-green dark:text-white leading-tight">
+                  VendorSoluce™
+                </span>
+                <span className="block text-xs sm:text-sm italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green font-normal leading-tight tracking-tighter tagline-text">
+                  Supply Chain Risk Intelligence
+                </span>
+              </span>
+            </Link>
+          </div>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="flex items-start gap-3 min-w-0">
               <div className="flex items-center gap-2 shrink-0 pt-0.5">

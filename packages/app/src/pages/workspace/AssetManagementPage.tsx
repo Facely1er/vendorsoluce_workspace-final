@@ -8,11 +8,8 @@ import {
   Eye, 
   Edit, 
   Trash2, 
-  Shield, 
-  Building, 
   AlertTriangle,
   RefreshCw,
-  Zap
 } from 'lucide-react';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import { Asset, AssetWithVendors } from '../types';
@@ -239,159 +236,72 @@ const AssetManagementPage: React.FC = () => {
     return { level: 'Low', color: 'text-green-600' };
   };
 
+  const criticalCount = assets.filter((a: AssetWithVendors) => a.criticality_level === 'critical').length;
+  const withVendorsCount = assets.filter((a: AssetWithVendors) => (a.vendors?.length || 0) > 0).length;
+  const highRiskCount = assets.filter((a: AssetWithVendors) => (a.risk_score || 0) >= 70).length;
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-vendorsoluce-navy mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-300">Loading assets...</p>
+      <WorkspacePageShell
+        title="Asset management"
+        description="Loading your asset inventory…"
+      >
+        <div className="flex min-h-[40vh] items-center justify-center">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-vendorsoluce-navy" />
+            <p className="text-sm text-gray-600 dark:text-gray-300">Loading assets…</p>
+          </div>
         </div>
-      </div>
+      </WorkspacePageShell>
     );
   }
 
   if (selectedAsset) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setSelectedAsset(null)}
-                >
-                  ← Back to Assets
-                </Button>
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {selectedAsset.name}
-                  </h1>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {selectedAsset.asset_type} • {selectedAsset.category}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => openEditModal(selectedAsset)}
-                >
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit Asset
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <AssetVendorRelationshipManager
-            assetId={selectedAsset.id}
-            onRelationshipChange={loadAssets}
-          />
-        </div>
-      </div>
+      <WorkspacePageShell
+        title={selectedAsset.name}
+        description={`${selectedAsset.asset_type} • ${selectedAsset.category}`}
+        headerActionsSlot={
+          <>
+            <Button variant="outline" size="sm" onClick={() => setSelectedAsset(null)}>
+              ← Back to list
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => openEditModal(selectedAsset)}>
+              <Edit className="mr-2 h-4 w-4" />
+              Edit asset
+            </Button>
+          </>
+        }
+      >
+        <AssetVendorRelationshipManager assetId={selectedAsset.id} onRelationshipChange={loadAssets} />
+      </WorkspacePageShell>
     );
   }
 
   return (
-    <WorkspacePageShell eyebrow="Asset intelligence" title="Asset management" description="Manage your asset inventory, business criticality, and vendor relationships through the same consistent workspace shell used across VendorSoluce.">
+    <WorkspacePageShell
+      title="Asset management"
+      description="Inventory, criticality, and vendor relationships in one place."
+      headerActionsSlot={
+        <>
+          <Button variant="outline" size="sm" onClick={loadAssets}>
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Refresh
+          </Button>
+          <Button variant="primary" size="sm" onClick={() => setShowAddModal(true)}>
+            <Plus className="mr-2 h-4 w-4" />
+            Add asset
+          </Button>
+        </>
+      }
+      stats={[
+        { label: 'Total assets', value: assets.length, hint: 'In inventory' },
+        { label: 'Critical', value: criticalCount, hint: 'Highest criticality' },
+        { label: 'With vendors', value: withVendorsCount, hint: 'Linked relationships' },
+        { label: 'High risk', value: highRiskCount, hint: 'Risk score ≥ 70' },
+      ]}
+    >
       <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                Asset Management
-              </h1>
-              <p className="text-gray-600 dark:text-gray-300">
-                Manage your asset inventory and vendor relationships
-              </p>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm" onClick={loadAssets}>
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Refresh
-              </Button>
-              <Button variant="primary" size="sm" onClick={() => setShowAddModal(true)}>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Asset
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mr-4">
-                  <Shield className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Assets</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{assets.length}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-red-100 dark:bg-red-900/20 rounded-lg flex items-center justify-center mr-4">
-                  <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Critical Assets</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {assets.filter((a: AssetWithVendors) => a.criticality_level === 'critical').length}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-lg flex items-center justify-center mr-4">
-                  <Building className="h-6 w-6 text-orange-600 dark:text-orange-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Assets with Vendors</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {assets.filter((a: AssetWithVendors) => (a.vendors?.length || 0) > 0).length}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center mr-4">
-                  <Zap className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">High Risk Assets</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {assets.filter((a: AssetWithVendors) => (a.risk_score || 0) >= 70).length}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
         {/* Filters */}
         <Card className="mb-8">
           <CardContent className="p-6">
@@ -749,7 +659,6 @@ const AssetManagementPage: React.FC = () => {
           </div>
         </div>
       )}
-      </div>
     </WorkspacePageShell>
   );
 };

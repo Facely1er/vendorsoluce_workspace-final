@@ -83,7 +83,6 @@ export default function TeamRaciPage() {
 
   return (
     <WorkspacePageShell
-      eyebrow="VendorSoluce governance"
       title="Team RACI matrix"
       description="Keep ownership explicit across onboarding, assessment, governance, incident response, and reporting so vendor risk work does not degrade into ambiguous handoffs."
       actions={[{ label: 'Export CSV', onClick: handleExport, variant: 'outline' }]}

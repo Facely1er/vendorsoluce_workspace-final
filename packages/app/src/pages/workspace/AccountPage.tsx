@@ -106,7 +106,6 @@ const AccountPage: React.FC = () => {
 
   return (
     <WorkspacePageShell
-      eyebrow="Workspace administration"
       title="Account settings"
       description="Manage appearance, language, notifications, privacy, account security, and export controls from one consistent settings surface."
       stats={[

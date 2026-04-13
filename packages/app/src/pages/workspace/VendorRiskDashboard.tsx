@@ -6,7 +6,7 @@ import { VendorRisk } from '../types';
 import Button from '../../components/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { useVendors } from '../../hooks/useVendors';
-import { Plus, RefreshCw, BarChart3, Zap, Shield, Brain } from 'lucide-react';
+import { Plus, RefreshCw, BarChart3, Zap, Shield, Brain, AlertTriangle, Check, Users } from 'lucide-react';
 import AddVendorModal from '../../components/vendor/AddVendorModal';
 import ScoreVendorModal from '../../components/vendor/ScoreVendorModal';
 // import { generateRecommendationsPdf } from '../../utils/generatePdf';
@@ -26,8 +26,7 @@ import PortalStatusWidget from '../../components/dashboard/PortalStatusWidget';
 import UnifiedQuickActions from '../../components/dashboard/UnifiedQuickActions';
 import { Skeleton } from '../../components/ui/Skeleton';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
-import { Users } from 'lucide-react';
-
+import { MR } from 'shared/constants/routes';
 const VendorRiskDashboard: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -230,22 +229,22 @@ const VendorRiskDashboard: React.FC = () => {
   }, [assessments]);
 
   if (loading) {
-    return (<WorkspacePageShell eyebrow="VendorSoluce workspace" title={t('vendorRisk.title')} description={t('vendorRisk.description')}><div className="space-y-8"><Skeleton className="h-10 w-64 mb-2" />
+    return (<WorkspacePageShell title={t('vendorRisk.title')} description={t('vendorRisk.description')}><div className="space-y-8"><Skeleton className="h-10 w-64 mb-2" />
         <Skeleton className="h-5 w-96 mb-8" />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {[1, 2, 3].map((i) => (
             <Skeleton key={i} className="h-24 rounded-lg" />
           ))}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Skeleton className="h-64 lg:col-span-2 rounded-lg" />
-          <Skeleton className="h-64 rounded-lg" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <Skeleton className="h-64 lg:col-span-7 rounded-lg" />
+          <Skeleton className="h-64 lg:col-span-5 rounded-lg" />
         </div>
         <Skeleton className="h-48 mt-8 rounded-lg" /></div></WorkspacePageShell>);
   }
 
   if (error) {
-    return (<WorkspacePageShell eyebrow="VendorSoluce workspace" title={t('vendorRisk.title')} description={t('vendorRisk.description')}><div className="text-center">
+    return (<WorkspacePageShell title={t('vendorRisk.title')} description={t('vendorRisk.description')}><div className="text-center">
           <p className="text-red-600 dark:text-red-400 mb-4">Error loading vendors: {error}</p>
           <Button 
             onClick={handleRefresh} 
@@ -260,7 +259,7 @@ const VendorRiskDashboard: React.FC = () => {
   }
   
   return (
-    <WorkspacePageShell eyebrow="VendorSoluce workspace" title={t('vendorRisk.title')} description={t('vendorRisk.description')} actions={[{ label: isRefreshing ? 'Refreshing…' : 'Refresh', onClick: handleRefresh, variant: 'outline' }, { label: 'Add vendor', onClick: () => setShowAddModal(true), variant: 'primary' }]} stats={[{ label: 'Total vendors', value: vendorRiskData.length, hint: 'Tracked in the active portfolio' }, { label: 'High risk', value: riskCounts.high, hint: 'Critical or high vendors' }, { label: 'Assessments', value: assessments.length, hint: 'Completed or in progress' }, { label: 'Threat signals', value: threatLoading ? '…' : (((threatStats as any)?.criticalAlerts ?? (threatStats as any)?.highSeverityCount ?? '—')), hint: 'Current threat feed pressure' }]}>
+    <WorkspacePageShell title={t('vendorRisk.title')} description={t('vendorRisk.description')} actions={[{ label: isRefreshing ? 'Refreshing…' : 'Refresh', onClick: handleRefresh, variant: 'outline' }, { label: 'Add vendor', onClick: () => setShowAddModal(true), variant: 'primary' }]} stats={[{ label: 'Total vendors', value: vendorRiskData.length, hint: 'Tracked in the active portfolio' }, { label: 'High risk', value: riskCounts.high, hint: 'Critical or high vendors' }, { label: 'Assessments', value: assessments.length, hint: 'Completed or in progress' }, { label: 'Threat signals', value: threatLoading ? '…' : (((threatStats as any)?.criticalAlerts ?? (threatStats as any)?.highSeverityCount ?? '—')), hint: 'Current threat feed pressure' }]}>
       {/* Action Cascade Banner */}
       <div id="action-cascade" className="relative overflow-hidden rounded-2xl mb-8 bg-gradient-to-br from-vendorsoluce-navy via-vendorsoluce-teal to-vendorsoluce-green p-px shadow-lg">
         <div className="relative rounded-[calc(1rem-1px)] bg-gradient-to-br from-vendorsoluce-navy/95 to-vendorsoluce-teal/90 px-6 py-8 sm:px-10 sm:py-10">
@@ -278,14 +277,14 @@ const VendorRiskDashboard: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-8 sm:gap-10 md:gap-12 justify-center items-center">
               <Link
-                to="/vendors/radar"
+                to={MR.VENDOR_RISK_RADAR}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-vendorsoluce-navy font-semibold text-sm hover:bg-white/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
               >
                 <BarChart3 className="h-4 w-4" />
                 Discover Vendor Threats
               </Link>
               <Link
-                to="/supply-chain-assessment"
+                to={MR.SUPPLY_CHAIN_ASSESSMENT}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/15 text-white font-semibold text-sm border border-white/30 hover:bg-white/25 transition-all backdrop-blur-sm hover:-translate-y-0.5"
               >
                 <Shield className="h-4 w-4" />
@@ -311,6 +310,7 @@ const VendorRiskDashboard: React.FC = () => {
               const ariaProps: React.AriaAttributes = {
                 'aria-selected': isSelected,
                 'aria-controls': panelId,
+                id: `${id}-tab`,
               };
               return (
               <button
@@ -439,9 +439,9 @@ const VendorRiskDashboard: React.FC = () => {
             </div>
 
             {/* Unified Integration Section: Radar + Portal + Quick Actions */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* Vendor Risk Radar Widget */}
-              <div className="lg:col-span-2">
+              <div className="lg:col-span-7 min-w-0">
                 <RadarWidget 
                   vendors={vendorRiskData}
                   onVendorClick={(vendor) => {
@@ -452,7 +452,7 @@ const VendorRiskDashboard: React.FC = () => {
               </div>
               
               {/* Portal Status, Quick Actions, Recent Activity */}
-              <div className="space-y-6">
+              <div className="space-y-6 lg:col-span-5 min-w-0">
                 <PortalStatusWidget 
                   assessments={assessments.map(a => ({
                     id: a.id,
@@ -614,15 +614,17 @@ const VendorRiskDashboard: React.FC = () => {
               <Card className="p-6">
                 <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">{t('vendorRisk.actions.title')}</h2>
                 <div className="space-y-4">
-                  {[
-                    { type: 'criticalRisk', color: 'red', icon: '!' },
-                    { type: 'highRisk', color: 'orange', icon: '!' },
-                    { type: 'mediumRisk', color: 'yellow', icon: '!' },
-                    { type: 'lowRisk', color: 'green', icon: '✓' }
-                  ].map(({ type, color, icon }) => (
+                  {(
+                    [
+                      { type: 'criticalRisk' as const, ring: 'bg-red-100 dark:bg-red-900/30', Icon: AlertTriangle, iconClass: 'text-red-600 dark:text-red-400' },
+                      { type: 'highRisk' as const, ring: 'bg-orange-100 dark:bg-orange-900/30', Icon: AlertTriangle, iconClass: 'text-orange-600 dark:text-orange-400' },
+                      { type: 'mediumRisk' as const, ring: 'bg-yellow-100 dark:bg-yellow-900/30', Icon: AlertTriangle, iconClass: 'text-yellow-600 dark:text-yellow-400' },
+                      { type: 'lowRisk' as const, ring: 'bg-green-100 dark:bg-green-900/30', Icon: Check, iconClass: 'text-green-600 dark:text-green-400' },
+                    ] as const
+                  ).map(({ type, ring, Icon, iconClass }) => (
                     <div key={type} className="flex items-start space-x-3">
-                      <div className={`flex-shrink-0 h-6 w-6 rounded-full bg-${color}-100 dark:bg-${color}-900/30 flex items-center justify-center mt-0.5`}>
-                        <span className={`text-${color}-600 dark:text-${color}-400 text-sm font-medium`}>{icon}</span>
+                      <div className={`flex-shrink-0 h-6 w-6 rounded-full ${ring} flex items-center justify-center mt-0.5`}>
+                        <Icon className={`h-3.5 w-3.5 ${iconClass}`} aria-hidden />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-sm font-medium text-gray-900 dark:text-white">

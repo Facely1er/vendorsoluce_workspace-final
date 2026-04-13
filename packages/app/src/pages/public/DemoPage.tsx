@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import { CheckCircle, ArrowRight, ArrowLeft } from 'lucide-react';
+import { CheckCircle, ArrowRight, ArrowLeft, Rocket, Target, AlertCircle } from 'lucide-react';
 
 interface DemoVendor {
   name: string;
@@ -89,8 +89,9 @@ const DemoPage: React.FC = () => {
           <Card className="mb-6">
             <CardContent className="p-8">
               <div className="mb-6 p-4 bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/10 rounded-lg border border-vendorsoluce-green/30">
-                <div className="text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">
-                  🎯 STAGE 1 OUTCOME
+                <div className="text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2 inline-flex items-center gap-2">
+                  <Target className="h-4 w-4 shrink-0" aria-hidden />
+                  STAGE 1 OUTCOME
                 </div>
                 <p className="text-base font-medium text-gray-900 dark:text-white">
                   "I know exactly which vendors pose the greatest risk"
@@ -167,8 +168,9 @@ const DemoPage: React.FC = () => {
           <Card className="mb-6">
             <CardContent className="p-8">
               <div className="mb-6 p-4 bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/10 rounded-lg border border-vendorsoluce-green/30">
-                <div className="text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">
-                  🎯 STAGE 2 OUTCOME
+                <div className="text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2 inline-flex items-center gap-2">
+                  <Target className="h-4 w-4 shrink-0" aria-hidden />
+                  STAGE 2 OUTCOME
                 </div>
                 <p className="text-base font-medium text-gray-900 dark:text-white">
                   "I know exactly what controls I need from each vendor"
@@ -202,7 +204,7 @@ const DemoPage: React.FC = () => {
                           ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
                           : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
                       }`}>
-                        {req.status === 'collected' ? <CheckCircle className="w-5 h-5" /> : '!'}
+                        {req.status === 'collected' ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" aria-hidden />}
                       </div>
                       <div className="flex-1">
                         <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-1">{req.name}</h4>
@@ -248,14 +250,17 @@ const DemoPage: React.FC = () => {
             <CardContent className="p-8">
               <div className="text-center mb-8">
                 <div className="mb-6 p-4 bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/10 rounded-lg border border-vendorsoluce-green/30 max-w-2xl mx-auto">
-                  <div className="text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">
-                    🎯 STAGE 3 OUTCOME
+                  <div className="text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2 inline-flex items-center gap-2">
+                    <Target className="h-4 w-4 shrink-0" aria-hidden />
+                    STAGE 3 OUTCOME
                   </div>
                   <p className="text-base font-medium text-gray-900 dark:text-white">
                     "I have evidence-based proof of vendor compliance"
                   </p>
                 </div>
-                <div className="text-6xl mb-4">✅</div>
+                <div className="mb-4 flex justify-center">
+                  <CheckCircle className="h-16 w-16 text-vendorsoluce-green" aria-hidden />
+                </div>
                 <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-gray-900 dark:text-white">
                   Stage 3: Close the Gaps - Demo Complete!
                 </h2>

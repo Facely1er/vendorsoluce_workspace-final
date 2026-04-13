@@ -1,14 +1,13 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import { AlertTriangle, CheckCircle, Circle, Info, ArrowLeft, ArrowRight, Clipboard, FileText, Shield, ExternalLink } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Circle, Info, ArrowLeft, ArrowRight, Clipboard, FileText, Shield, ExternalLink, Check } from 'lucide-react';
 import { RotateCcw } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSupplyChainAssessments } from '../../hooks/useSupplyChainAssessments';
 import { useAuth } from '../../context/AuthContext';
 import DataImportExport from '../../components/data/DataImportExport';
-import BackToDashboardLink from '../../components/common/BackToDashboardLink';
 import WorkspacePage from '../../components/workspace/WorkspacePage';
 import WorkspaceHero from '../../components/workspace/WorkspaceHero';
 import WorkspaceContextBar from '../../components/workspace/WorkspaceContextBar';
@@ -446,8 +445,6 @@ const SupplyChainAssessment = () => {
   // Start Screen Component
   const StartScreen = () => (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <BackToDashboardLink />
-      
       {/* Foundation Track Header — VRM program maturity, not Stage 2 of vendor workflow */}
       <div className="mb-6 p-4 bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/10 rounded-lg border border-vendorsoluce-green/30">
         <div className="flex items-center gap-2 mb-2">
@@ -540,8 +537,6 @@ const SupplyChainAssessment = () => {
   // Onboarding Component
   const OnboardingScreen = () => (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <BackToDashboardLink />
-
       <Card>
         <CardHeader>
           <CardTitle className="text-xl text-gray-900 dark:text-white">
@@ -571,20 +566,20 @@ const SupplyChainAssessment = () => {
           <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-md mb-6">
             <h3 className="font-medium text-gray-900 dark:text-white mb-2">{t('assessment.onboarding.whatToExpect')}</h3>
             <ul className="space-y-2 text-gray-600 dark:text-gray-400 text-sm">
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-green-500 shrink-0 mt-0.5" aria-hidden />
                 <span>{t('assessment.onboarding.expectation1')}</span>
               </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-green-500 shrink-0 mt-0.5" aria-hidden />
                 <span>{t('assessment.onboarding.expectation2')}</span>
               </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-green-500 shrink-0 mt-0.5" aria-hidden />
                 <span>{t('assessment.onboarding.expectation3')}</span>
               </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-green-500 shrink-0 mt-0.5" aria-hidden />
                 <span>{t('assessment.onboarding.expectation4')}</span>
               </li>
             </ul>
@@ -623,7 +618,6 @@ const SupplyChainAssessment = () => {
         </Button>
       )}
     >
-      <BackToDashboardLink className="mb-4 sm:mb-0" />
       <WorkspaceHero>
         <div className="space-y-4">
           <WorkspaceContextBar

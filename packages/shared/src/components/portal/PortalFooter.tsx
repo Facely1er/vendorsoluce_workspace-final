@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Workflow, Users, Shield, Lock, Layers, Play, ExternalLink, FileText, Scale } from 'lucide-react';
+import { PORTAL_LOGO_SRC } from './portalBrand';
 
 const WEBSITE = 'https://www.vendorsoluce.com';
-
-// Same logo path as main app (public/vendorsoluce.png); respects Vite base path
-const LOGO_SRC = `${(import.meta.env.BASE_URL || '/').replace(/\/*$/, '')}/vendorsoluce.png`;
 
 const PortalFooter: React.FC = () => {
   const [logoError, setLogoError] = useState(false);
@@ -23,7 +21,7 @@ const PortalFooter: React.FC = () => {
                 </span>
               ) : (
                 <img
-                  src={LOGO_SRC}
+                  src={PORTAL_LOGO_SRC}
                   alt="VendorSoluce™"
                   className="h-10 w-10 flex-shrink-0 object-contain transition-transform group-hover:scale-105"
                   onError={() => setLogoError(true)}
@@ -31,7 +29,9 @@ const PortalFooter: React.FC = () => {
               )}
               <span className="ml-1.5 min-w-0">
                 <span className="block text-base font-bold text-vendorsoluce-green dark:text-white leading-tight">VendorSoluce™</span>
-                <span className="block text-xs italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green leading-tight">Vendor Risk Portal</span>
+                <span className="block text-xs italic text-vendorsoluce-green/80 dark:text-vendorsoluce-light-green leading-tight tracking-tighter tagline-text">
+                  Supply Chain Risk Intelligence
+                </span>
               </span>
             </Link>
             <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-snug max-w-xs mt-0.5">

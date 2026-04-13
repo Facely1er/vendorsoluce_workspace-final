@@ -2,7 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, {
+  WORKSPACE_PAGE_SHELL_INNER_CLASS,
+  WORKSPACE_PAGE_SHELL_OUTER_CLASS,
+} from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { Badge } from '../../components/ui/Badge';
 import { 
@@ -20,7 +24,8 @@ import {
   BarChart3,
   Crown,
   Copy,
-  ExternalLink
+  ExternalLink,
+  Check,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useVendors } from '../../hooks/useVendors';
@@ -28,7 +33,6 @@ import { useVendorAssessments } from '../../hooks/useVendorAssessments';
 import { useVendorRequirements } from '../../hooks/useVendorRequirements';
 import CreateAssessmentModal from '../../components/vendor-assessments/CreateAssessmentModal';
 import AssessmentProgressTracker from '../../components/vendor-assessments/AssessmentProgressTracker';
-import BackToDashboardLink from '../../components/common/BackToDashboardLink';
 import JourneyProgress from '../../components/journey/JourneyProgress';
 import { logger } from '../../utils/logger';
 import { 
@@ -247,9 +251,11 @@ const VendorSecurityAssessments: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-vendorsoluce-green"></div>
+      <div className={WORKSPACE_PAGE_SHELL_OUTER_CLASS}>
+        <div className={WORKSPACE_PAGE_SHELL_INNER_CLASS}>
+          <div className="flex h-64 items-center justify-center">
+            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-vendorsoluce-green" />
+          </div>
         </div>
       </div>
     );
@@ -257,15 +263,14 @@ const VendorSecurityAssessments: React.FC = () => {
 
   if (assessmentsError) {
     return (
-      <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center">
-          <p className="text-red-600 dark:text-red-400 mb-4">Error loading assessments: {assessmentsError}</p>
-          <Button 
-            onClick={() => window.location.reload()} 
-            variant="outline"
-          >
-            Retry
-          </Button>
+      <div className={WORKSPACE_PAGE_SHELL_OUTER_CLASS}>
+        <div className={WORKSPACE_PAGE_SHELL_INNER_CLASS}>
+          <div className="text-center">
+            <p className="mb-4 text-red-600 dark:text-red-400">Error loading assessments: {assessmentsError}</p>
+            <Button onClick={() => window.location.reload()} variant="outline">
+              Retry
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -282,9 +287,7 @@ const VendorSecurityAssessments: React.FC = () => {
   };
 
   return (
-    <WorkspacePageShell eyebrow="Stage 3 of 3" title={t('vendorAssessments.title')} description="Collect evidence, orchestrate portal-based questionnaires, and turn requirements into reviewable proof of vendor compliance." actions={[{ label: t('vendorAssessments.buttons.newAssessment'), onClick: () => setShowCreateModal(true), variant: 'primary' }]} stats={[{ label: 'Assessments', value: assessments.length, hint: 'Tracked across portal and workspace' }, { label: 'Vendors', value: vendors.length, hint: 'Available for evidence collection' }, { label: 'Requirements ready', value: vendorRequirements.length, hint: 'Imported from stage 2' }, { label: 'Frameworks', value: frameworks.length, hint: 'Templates available for launch' }]}><div className="space-y-6">
-      <BackToDashboardLink />
-      
+    <WorkspacePageShell title={t('vendorAssessments.title')} description="Stage 3 of 3 — Collect evidence, orchestrate portal-based questionnaires, and turn requirements into reviewable proof of vendor compliance." actions={[{ label: t('vendorAssessments.buttons.newAssessment'), onClick: () => setShowCreateModal(true), variant: 'primary' }]} stats={[{ label: 'Assessments', value: assessments.length, hint: 'Tracked across portal and workspace' }, { label: 'Vendors', value: vendors.length, hint: 'Available for evidence collection' }, { label: 'Requirements ready', value: vendorRequirements.length, hint: 'Imported from stage 2' }, { label: 'Frameworks', value: frameworks.length, hint: 'Templates available for launch' }]}><WorkspacePageBody>
       {/* Journey Progress */}
       <JourneyProgress 
         currentStage={3} 
@@ -311,47 +314,40 @@ const VendorSecurityAssessments: React.FC = () => {
         </p>
         {vendorRequirements.length > 0 && (
           <div className="mt-3 pt-3 border-t border-vendorsoluce-green/30">
-            <p className="text-xs text-vendorsoluce-green dark:text-vendorsoluce-light-green">
-              ✓ {vendorRequirements.length} vendor(s) have requirements from Stage 2 ready for evidence collection
+            <p className="text-xs text-vendorsoluce-green dark:text-vendorsoluce-light-green inline-flex items-center gap-1.5">
+              <Check className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              <span>{vendorRequirements.length} vendor(s) have requirements from Stage 2 ready for evidence collection</span>
             </p>
           </div>
         )}
       </div></PanelCard>
       
-      {/* Header */}
-      <PanelCard title="Assessment orchestration" description="Keep premium assessment creation, portal routing, and evidence status in the same review frame."><div>
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <Crown className="h-6 w-6 text-yellow-500" />
-              <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-medium px-2 py-1 rounded-full">
-                {t('vendorAssessments.premiumFeature')}
-              </span>
-              <Badge variant="outline" className="bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-200">
-                VendorSoluce Portal
-              </Badge>
-            </div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              {t('vendorAssessments.title')}
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mb-2">
-              {t('vendorAssessments.description')}
-            </p>
-            <p className="text-lg text-gray-500 dark:text-gray-400 max-w-3xl italic">
-              Premium assessments are completed in the <strong>VendorSoluce Portal</strong>—VendorSoluce&apos;s vendor-facing experience for{' '}
-              <strong>vendor assurance</strong>, <strong>due diligence</strong>, and security questionnaires (evidence, status, and sign-off in one place).
-            </p>
+      {/* Orchestration strip (title/description live in WorkspacePageShell above) */}
+      <PanelCard title="Assessment orchestration" description="Keep premium assessment creation, portal routing, and evidence status in the same review frame."><div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <Crown className="h-6 w-6 text-yellow-500" aria-hidden />
+            <span className="rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 px-2 py-1 text-xs font-medium text-white">
+              {t('vendorAssessments.premiumFeature')}
+            </span>
+            <Badge variant="outline" className="bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-200">
+              VendorSoluce Portal
+            </Badge>
           </div>
-          <Button 
-            variant="primary" 
-            size="lg"
-            onClick={() => setShowCreateModal(true)}
-            className="flex items-center"
-          >
-            <Plus className="h-5 w-5 mr-2" />
-            {t('vendorAssessments.buttons.newAssessment')}
-          </Button>
+          <p className="max-w-3xl text-sm italic text-gray-500 dark:text-gray-400">
+            Premium assessments run in the <strong className="font-medium text-gray-700 dark:text-gray-300">VendorSoluce Portal</strong>
+            —vendor-facing assurance, due diligence, and questionnaires with evidence and sign-off in one place.
+          </p>
         </div>
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => setShowCreateModal(true)}
+          className="flex shrink-0 items-center self-start sm:self-center"
+        >
+          <Plus className="mr-2 h-5 w-5" />
+          {t('vendorAssessments.buttons.newAssessment')}
+        </Button>
       </div></PanelCard>
 
       {/* Premium Features Showcase */}
@@ -707,7 +703,7 @@ const VendorSecurityAssessments: React.FC = () => {
           onSuccess={handleCreateSuccess}
         />
       )}
-    </div></WorkspacePageShell>
+    </WorkspacePageBody></WorkspacePageShell>
   );
 };
 

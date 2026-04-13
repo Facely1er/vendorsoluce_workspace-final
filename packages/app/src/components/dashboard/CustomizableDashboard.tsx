@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { MR } from 'shared/constants/routes';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import LazyChart from '../charts/LazyChart';
@@ -35,6 +37,7 @@ interface MetricData {
 }
 
 const CustomizableDashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [widgets, setWidgets] = useState<DashboardWidget[]>([
     {
@@ -271,7 +274,7 @@ const CustomizableDashboard: React.FC = () => {
             <Button 
               variant="outline" 
               className="justify-start"
-              onClick={() => window.location.href = '/vendor-risk-dashboard'}
+              onClick={() => navigate(MR.VENDORS)}
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Vendor
@@ -279,7 +282,7 @@ const CustomizableDashboard: React.FC = () => {
             <Button 
               variant="outline" 
               className="justify-start"
-              onClick={() => window.location.href = '/supply-chain-assessment'}
+              onClick={() => navigate(MR.SUPPLY_CHAIN_ASSESSMENT)}
             >
               <BarChart3 className="h-4 w-4 mr-2" />
               Run Assessment
@@ -287,7 +290,7 @@ const CustomizableDashboard: React.FC = () => {
             <Button 
               variant="outline" 
               className="justify-start"
-              onClick={() => window.location.href = '/tools/nist-checklist'}
+              onClick={() => navigate(MR.NIST_CHECKLIST)}
             >
               <PieChart className="h-4 w-4 mr-2" />
               Run NIST Checklist
@@ -295,10 +298,7 @@ const CustomizableDashboard: React.FC = () => {
             <Button 
               variant="outline" 
               className="justify-start"
-              onClick={() => {
-                // In a real app, this would generate a report
-                alert('Report generation would start here');
-              }}
+              onClick={() => navigate(MR.VIRA_REPORTS)}
             >
               <TrendingUp className="h-4 w-4 mr-2" />
               Generate Report

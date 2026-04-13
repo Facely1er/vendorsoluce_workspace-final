@@ -21,7 +21,7 @@ const BillingPage: React.FC = () => {
 
   if (loading) {
     return (
-      <WorkspacePageShell eyebrow="Workspace administration" title="Billing & subscription" description="Manage subscription details, feature usage, refunds, and invoices from a single operational billing view.">
+      <WorkspacePageShell title="Billing & subscription" description="Manage subscription details, feature usage, refunds, and invoices from a single operational billing view.">
         <LoadingBlock label="Loading subscription and billing controls…" />
       </WorkspacePageShell>
     );
@@ -29,7 +29,6 @@ const BillingPage: React.FC = () => {
 
   return (
     <WorkspacePageShell
-      eyebrow="Workspace administration"
       title="Billing & subscription"
       description="Manage your subscription, billing details, refunds, and operational usage from one structured view."
       stats={[

@@ -1,24 +1,19 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { MR } from 'shared/constants/routes';
 import {
   ArrowLeft,
   FileText,
   FileBarChart,
   Radar,
-  AlertTriangle,
-  TrendingUp,
-  Database,
-  Shield,
   Search,
   ExternalLink,
   Printer,
-  Calendar,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
 import WorkspacePage from '../../components/workspace/WorkspacePage';
-import WorkspaceHero from '../../components/workspace/WorkspaceHero';
-import WorkspaceContextBar from '../../components/workspace/WorkspaceContextBar';
+import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { useVendorPortfolio } from '../tools/VendorRiskRadar/hooks/useVendorPortfolio';
@@ -168,138 +163,92 @@ const ViraReportsPage: React.FC = () => {
 
   if (vendors.length === 0) {
     return (
-      <WorkspacePage title="VIRA Portfolio Reports" subtitle="Aggregated VIRA inherent-risk summaries, review schedules, and recommendations across your vendor portfolio.">
-        <WorkspaceHero>
-          <WorkspaceContextBar items={[
-            { label: 'Total vendors', value: `${stats.total}` },
-            { label: 'Average inherent', value: `${stats.avgInherentRisk}/100` },
-            { label: 'High risk', value: `${stats.highRisk}` },
-            { label: 'Generated', value: generatedAt },
-          ]} />
-        </WorkspaceHero>
-        <Link
-          to="/vendor-risk-radar"
-          className="inline-flex items-center gap-2 text-sm text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline mb-6"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Vendor Risk Radar
-        </Link>
-
-        <div className="flex items-start gap-3 mb-8">
-          <div className="w-12 h-12 rounded-xl bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 flex items-center justify-center text-vendorsoluce-green dark:text-vendorsoluce-light-green flex-shrink-0">
-            <Radar className="h-6 w-6" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-1">VIRA Portfolio Reports</h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              Aggregated inherent-risk summaries, review schedules, and recommendations across your vendor portfolio.
-            </p>
-          </div>
-        </div>
-
-        <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-12 text-center">
-          <Radar className="h-12 w-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No vendors in your portfolio yet</h2>
-          <p className="text-gray-500 dark:text-gray-400 mb-6 max-w-md mx-auto text-sm">
-            Add vendors in the Vendor Risk Radar to start generating VIRA risk reports and track your portfolio posture.
-          </p>
-          <Link to="/vendor-risk-radar">
-            <Button variant="primary">
-              Go to Vendor Risk Radar
-            </Button>
+      <WorkspacePage
+        title="VIRA Portfolio Reports"
+        subtitle="Aggregated VIRA inherent-risk summaries, review schedules, and recommendations across your vendor portfolio."
+        stats={[
+          { label: 'Total vendors', value: stats.total },
+          { label: 'Average inherent', value: `${stats.avgInherentRisk}/100` },
+          { label: 'High risk', value: stats.highRisk },
+          { label: 'Generated', value: generatedAt },
+        ]}
+      >
+        <WorkspacePageBody>
+          <Link
+            to={MR.VENDOR_RISK_RADAR}
+            className="inline-flex w-fit items-center gap-2 text-sm font-medium text-emerald-700 dark:text-emerald-400 hover:underline"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Vendor Risk Radar
           </Link>
-        </div>
+
+          <div className="rounded-2xl border border-gray-200/70 bg-white p-12 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <Radar className="mx-auto mb-4 h-12 w-12 text-gray-300 dark:text-gray-600" />
+            <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">No vendors in your portfolio yet</h2>
+            <p className="mx-auto mb-6 max-w-md text-sm text-gray-500 dark:text-gray-400">
+              Add vendors in the Vendor Risk Radar to start generating VIRA risk reports and track your portfolio posture.
+            </p>
+            <Link to={MR.VENDOR_RISK_RADAR}>
+              <Button variant="primary">Go to Vendor Risk Radar</Button>
+            </Link>
+          </div>
+        </WorkspacePageBody>
       </WorkspacePage>
     );
   }
 
   return (
     <>
-      <WorkspacePage title="VIRA Portfolio Reports" subtitle="Aggregated VIRA inherent-risk summaries, review schedules, and recommendations across your vendor portfolio.">
-        <WorkspaceHero>
-          <WorkspaceContextBar items={[
-            { label: 'Total vendors', value: `${stats.total}` },
-            { label: 'Average inherent', value: `${stats.avgInherentRisk}/100` },
-            { label: 'High risk', value: `${stats.highRisk}` },
-            { label: 'Generated', value: generatedAt },
-          ]} />
-        </WorkspaceHero>
-        <Link
-          to="/vendor-risk-radar"
-          className="inline-flex items-center gap-2 text-sm text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline mb-6"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Vendor Risk Radar
-        </Link>
-
-        {/* Page header */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
-          <div className="flex items-start gap-3">
-            <div className="w-12 h-12 rounded-xl bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 flex items-center justify-center text-vendorsoluce-green dark:text-vendorsoluce-light-green flex-shrink-0">
-              <Radar className="h-6 w-6" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-1">VIRA Portfolio Reports</h1>
-              <p className="text-gray-600 dark:text-gray-300 max-w-2xl text-sm">
-                Aggregated VIRA inherent-risk summaries across your vendor portfolio. Use the in-app summary report
-                or the full portfolio C-SCRM report for management readouts and audit evidence.
-              </p>
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 flex items-center gap-1">
-                <Calendar className="h-3 w-3" />
-                Generated {generatedAt} · {stats.total} vendor{stats.total !== 1 ? 's' : ''}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+      <WorkspacePage
+        title="VIRA Portfolio Reports"
+        subtitle="Aggregated VIRA inherent-risk summaries, review schedules, and recommendations across your vendor portfolio."
+        descriptionExtra={
+          <p className="max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-300">
+            Use the in-app summary report or the full portfolio C-SCRM report for management readouts and audit evidence.
+          </p>
+        }
+        stats={[
+          { label: 'Total vendors', value: stats.total },
+          { label: 'Avg inherent', value: `${stats.avgInherentRisk}/100` },
+          { label: 'Critical (90+)', value: stats.criticalRisk },
+          {
+            label: 'PII / PHI vendors',
+            value: stats.sensitiveData,
+            hint: `${generatedAt} · ${stats.total} vendor${stats.total !== 1 ? 's' : ''}`,
+          },
+        ]}
+        actions={(
+          <>
             <Button
               variant="primary"
               size="md"
               onClick={() => setShowSummaryReport(true)}
-              className="flex items-center gap-2 justify-center"
+              className="flex items-center justify-center gap-2"
             >
               <FileText className="h-4 w-4" />
               Open summary report
             </Button>
-            <a
-              href="/vendor-risk-radar#vendor-risk-radar-deliverables"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button
-                variant="outline"
-                size="md"
-                className="flex items-center gap-2 justify-center w-full"
-              >
+            <a href={`${MR.VENDOR_RISK_RADAR}#vendor-risk-radar-deliverables`} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="md" className="flex w-full items-center justify-center gap-2 sm:w-auto">
                 <FileBarChart className="h-4 w-4" />
                 Portfolio C-SCRM report
                 <ExternalLink className="h-3.5 w-3.5 opacity-60" />
               </Button>
             </a>
-          </div>
-        </div>
-
-        {/* KPI strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
-          {[
-            { label: 'Total vendors', value: stats.total, icon: Database, color: 'text-blue-600 dark:text-blue-400' },
-            { label: 'Avg inherent', value: `${stats.avgInherentRisk}/100`, icon: TrendingUp, color: 'text-gray-600 dark:text-gray-300' },
-            { label: 'Critical (90+)', value: stats.criticalRisk, icon: AlertTriangle, color: 'text-red-600 dark:text-red-400' },
-            { label: 'High (70–89)', value: stats.highRisk, icon: AlertTriangle, color: 'text-orange-500 dark:text-orange-400' },
-            { label: 'PII / PHI vendors', value: stats.sensitiveData, icon: Shield, color: 'text-purple-600 dark:text-purple-400' },
-          ].map(({ label, value, icon: Icon, color }) => (
-            <Card key={label}>
-              <CardContent className="p-4">
-                <Icon className={`h-4 w-4 mb-2 ${color}`} />
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">{value}</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{label}</div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+          </>
+        )}
+      >
+        <WorkspacePageBody>
+          <Link
+            to={MR.VENDOR_RISK_RADAR}
+            className="inline-flex w-fit items-center gap-2 text-sm font-medium text-emerald-700 dark:text-emerald-400 hover:underline"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Vendor Risk Radar
+          </Link>
 
         {/* Vendor register */}
-        <Card className="mb-8">
+        <Card className="border-gray-200/70 shadow-sm dark:border-gray-800">
           <CardHeader className="border-b border-gray-100 dark:border-gray-700">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <CardTitle className="text-base">
@@ -422,7 +371,7 @@ const ViraReportsPage: React.FC = () => {
 
         {/* Portfolio recommendations */}
         {recommendations.length > 0 && (
-          <Card className="mb-8">
+          <Card className="border-gray-200/70 shadow-sm dark:border-gray-800">
             <CardHeader className="border-b border-gray-100 dark:border-gray-700">
               <CardTitle className="text-base">Recommended Actions</CardTitle>
             </CardHeader>
@@ -440,7 +389,7 @@ const ViraReportsPage: React.FC = () => {
         )}
 
         {/* Export hint */}
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-sm text-gray-500 dark:text-gray-400">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gray-200/70 bg-gray-50 px-4 py-3 text-sm text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-400">
           <span>
             Use <strong className="text-gray-700 dark:text-gray-300">Open summary report</strong> above, then
             choose <strong className="text-gray-700 dark:text-gray-300">Print / Save as PDF</strong> for a
@@ -451,6 +400,7 @@ const ViraReportsPage: React.FC = () => {
             Browser print dialog · no server required
           </div>
         </div>
+        </WorkspacePageBody>
       </WorkspacePage>
 
       {/* Full-screen report modal */}

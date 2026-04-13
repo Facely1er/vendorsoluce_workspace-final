@@ -8,7 +8,10 @@ export const SHELL_CLASSES = {
   fixedBannerOffset: `top-[${APP_HEADER_HEIGHT_VAR}]`,
   fixedMobileMenuOffset: `top-[${APP_HEADER_HEIGHT_VAR}]`,
   stickyHeaderOffset: `top-[${APP_HEADER_HEIGHT_VAR}]`,
+  /** When demo/trial banner is visible, fixed sidebar sits below navbar + banner (matches pageTopOffsetWithBanner). */
+  stickyHeaderOffsetWithBanner: `top-[calc(${APP_HEADER_HEIGHT_VAR}_+_${APP_BANNER_HEIGHT_REM}rem)]`,
   sidebarHeight: `h-[calc(100vh_-_${APP_HEADER_HEIGHT_VAR})]`,
+  sidebarHeightWithBanner: `h-[calc(100vh_-_${APP_HEADER_HEIGHT_VAR}_-_${APP_BANNER_HEIGHT_REM}rem)]`,
   heroTopSpacing: 'pt-12 lg:pt-12',
 } as const;
 

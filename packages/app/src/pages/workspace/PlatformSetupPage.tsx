@@ -7,7 +7,6 @@ import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 const PlatformSetupPage: React.FC = () => {
   return (
     <WorkspacePageShell
-      eyebrow="Workspace setup"
       title="Platform setup"
       description="Configure your supply chain risk environment with vendor data, requirements, and assessment context so risk scoring and reporting are immediately operational."
       stats={[

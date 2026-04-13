@@ -15,10 +15,10 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { Badge } from '../../components/ui/Badge';
 import JourneyProgress from '../../components/journey/JourneyProgress';
-import BackToDashboardLink from '../../components/common/BackToDashboardLink';
 import VendorRequirementsList from '../../components/vendor-requirements/VendorRequirementsList';
 import RequirementSummary from '../../components/vendor-requirements/RequirementSummary';
 import { useVendorRequirements } from '../../hooks/useVendorRequirements';
@@ -165,7 +165,6 @@ const VendorRequirementsDefinition: React.FC = () => {
   if (vendors.length === 0) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <BackToDashboardLink />
         <Card>
           <CardContent className="p-8 text-center">
             <AlertTriangle className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
@@ -199,9 +198,7 @@ const VendorRequirementsDefinition: React.FC = () => {
   }
 
   return (
-    <WorkspacePageShell eyebrow="Stage 2 of 3" title="Vendor requirements definition" description="Convert risk-tiered vendors into explicit control expectations so the next assessment stage starts with defined evidence targets." actions={[{ label: 'Continue to Stage 3', onClick: handleContinueToStage3, variant: 'primary' }]} stats={[{ label: 'Total vendors', value: stats.totalVendors, hint: 'Imported from stage 1' }, { label: 'Requirements generated', value: stats.totalRequirements, hint: 'Mapped from risk tiers' }, { label: 'Gaps identified', value: stats.totalGaps, hint: 'Control shortfalls requiring evidence' }, { label: 'Critical vendors', value: stats.vendorsByTier.Critical, hint: 'Need the highest control burden' }]}><div className="space-y-6">
-      <BackToDashboardLink />
-      
+    <WorkspacePageShell title="Vendor requirements definition" description="Stage 2 of 3 — Convert risk-tiered vendors into explicit control expectations so the next assessment stage starts with defined evidence targets." actions={[{ label: 'Continue to Stage 3', onClick: handleContinueToStage3, variant: 'primary' }]}><WorkspacePageBody>
       {/* Journey Progress */}
       <JourneyProgress 
         currentStage={2} 
@@ -226,34 +223,6 @@ const VendorRequirementsDefinition: React.FC = () => {
           Based on your vendor risk analysis from Stage 1, we've automatically generated vendor-specific security requirements using NIST SP 800-161.
         </p>
       </div></PanelCard>
-
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Vendors</div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalVendors}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Critical Risk</div>
-            <div className="text-2xl font-bold text-red-600">{stats.vendorsByTier.Critical}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Requirements Generated</div>
-            <div className="text-2xl font-bold text-vendorsoluce-green">{stats.totalRequirements}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Gaps Identified</div>
-            <div className="text-2xl font-bold text-orange-600">{stats.totalGaps}</div>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Requirements by Risk Tier */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -374,27 +343,9 @@ const VendorRequirementsDefinition: React.FC = () => {
                     Stage 2 Complete: You Understand Your Gaps
                   </h3>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  You've defined requirements for {requirements.length} vendor(s) with {stats.totalGaps} missing requirements identified. Continue to Stage 3 to collect evidence from vendors.
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  You've defined requirements for {requirements.length} vendor(s) with {stats.totalGaps} gap(s) to address. Continue to Stage 3 to collect evidence from vendors.
                 </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                  <div>
-                    <div className="text-gray-500 dark:text-gray-400">Critical Vendors</div>
-                    <div className="font-semibold text-red-600">{stats.vendorsByTier.Critical}</div>
-                  </div>
-                  <div>
-                    <div className="text-gray-500 dark:text-gray-400">High Risk</div>
-                    <div className="font-semibold text-orange-600">{stats.vendorsByTier.High}</div>
-                  </div>
-                  <div>
-                    <div className="text-gray-500 dark:text-gray-400">Total Requirements</div>
-                    <div className="font-semibold text-vendorsoluce-green">{stats.totalRequirements}</div>
-                  </div>
-                  <div>
-                    <div className="text-gray-500 dark:text-gray-400">Gaps to Address</div>
-                    <div className="font-semibold text-orange-600">{stats.totalGaps}</div>
-                  </div>
-                </div>
               </div>
               <Button
                 variant="primary"
@@ -435,7 +386,7 @@ const VendorRequirementsDefinition: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-    </div></WorkspacePageShell>
+    </WorkspacePageBody></WorkspacePageShell>
   );
 };
 

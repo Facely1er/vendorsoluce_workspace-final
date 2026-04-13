@@ -36,7 +36,12 @@ function scrollToSection(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-const RadarWorkflowGuide: React.FC = () => {
+export type RadarWorkflowGuideProps = {
+  /** Run before scrolling (e.g. switch to the tab that contains the targets). */
+  onBeforeJump?: () => void;
+};
+
+const RadarWorkflowGuide: React.FC<RadarWorkflowGuideProps> = ({ onBeforeJump }) => {
   return (
     <section
       className="mb-6 rounded-xl border border-vendorsoluce-green/25 bg-gradient-to-br from-vendorsoluce-pale-green/80 to-white dark:from-vendorsoluce-green/10 dark:to-gray-900/40 dark:border-vendorsoluce-green/30 px-4 py-5 sm:px-6"
@@ -62,7 +67,12 @@ const RadarWorkflowGuide: React.FC = () => {
             <li key={step.n}>
               <button
                 type="button"
-                onClick={() => scrollToSection(step.targetId)}
+                onClick={() => {
+                  onBeforeJump?.();
+                  window.requestAnimationFrame(() => {
+                    window.requestAnimationFrame(() => scrollToSection(step.targetId));
+                  });
+                }}
                 className="w-full text-left h-full rounded-lg border border-gray-200 dark:border-gray-600 bg-white/90 dark:bg-gray-800/80 px-3 py-3 shadow-sm hover:border-vendorsoluce-green/60 hover:shadow-md dark:hover:border-vendorsoluce-light-green/50 transition-all focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green/40 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               >
                 <div className="flex items-center gap-2 mb-1.5">

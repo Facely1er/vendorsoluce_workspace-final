@@ -47,10 +47,6 @@
         "label": "Email",
         "value": "contact@ermits.com"
       },
-      "phone": {
-        "label": "Téléphone",
-        "value": "+1 (240) 599-0102"
-      },
       "address": {
         "label": "Siège Social",
         "line1": "8300 McCullough Lane",
@@ -252,8 +248,7 @@
         "company": "VendorSoluce™",
         "address1": "8300 McCullough Lane, Suite 203",
         "address2": "Gaithersburg, MD 20877",
-        "email": "Email : contact@ermits.com",
-        "phone": "Téléphone : +1 (240) 599-0102"
+        "email": "Email : contact@ermits.com"
       }
     }
   },
@@ -2456,7 +2451,6 @@
       "description": "Plateforme complète de gestion des risques de la chaîne d'approvisionnement pour les organisations modernes avec évaluations et outils de conformité automatisés.",
       "contact": {
         "email": "contact@ermits.com",
-        "phone": "+1 (240) 599-0102",
         "address": "Gaithersburg, MD"
       },
       "links": {

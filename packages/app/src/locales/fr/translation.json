@@ -47,10 +47,6 @@
         "label": "Email",
         "value": "contact@ermits.com"
       },
-      "phone": {
-        "label": "Téléphone",
-        "value": "+1 (240) 599-0102"
-      },
       "address": {
         "label": "Siège Social",
         "line1": "8300 McCullough Lane",
@@ -252,8 +248,7 @@
         "company": "VendorSoluce™",
         "address1": "8300 McCullough Lane, Suite 203",
         "address2": "Gaithersburg, MD 20877",
-        "email": "Email : contact@ermits.com",
-        "phone": "Téléphone : +1 (240) 599-0102"
+        "email": "Email : contact@ermits.com"
       }
     }
   },
@@ -2400,6 +2395,7 @@
   },
   "navigation": {
     "home": "Accueil",
+    "corporateWebsite": "Site institutionnel",
     "solutions": "Solutions",
     "dashboard": "Tableau de bord",
     "pricing": "Tarifs",
@@ -2417,10 +2413,13 @@
     "vendorAssessments": "Évaluations de Sécurité des Fournisseurs",
     "supplyChainTools": "Outils chaîne d'approvisionnement",
     "riskCalculator": "Calculateur de risque",
+    "viraIntake": "Saisie VIRA",
     "nistChecklist": "Liste de contrôle NIST",
     "sbomQuickScan": "Analyse SBOM rapide",
     "assetManagement": "Gestion des actifs",
     "activityCatalog": "Catalogue d'activités",
+    "planning": "Planification",
+    "roadmapCalendar": "Feuille de route et calendrier",
     "nistImplementationWorkflow": "Programme C-SCRM",
     "viraDueDiligenceWorkflow": "Programme d'évaluation VIRA™",
     "teamSessions": "Sessions d'équipe",
@@ -2435,7 +2434,50 @@
     "integrationDescription": "Guides d'installation et tutoriels",
     "about": "À propos",
     "contact": "Contact",
-    "privacy": "Confidentialité"
+    "privacy": "Confidentialité",
+    "navPhaseSetup": "Configuration de l’espace",
+    "navPhaseIntake": "Collecte des données",
+    "navPhaseScope": "Périmètre et contexte",
+    "navPhaseMeasure": "Mesure et rapports",
+    "navPhasePrograms": "Programmes et catalogue",
+    "platformSetup": "Configuration de la plateforme",
+    "workspaceOnboarding": "Accueil de l’espace de travail",
+    "vendorDataImport": "Importer les données fournisseurs",
+    "vendorOnboardingProgram": "Onboarding fournisseur",
+    "fedRampAssessment": "Preuves FedRAMP/FISMA",
+    "assetManagementSidebarHint": "Systèmes, données et liens fournisseurs qui cadreront les évaluations.",
+    "vendorRequirementsSidebarHint": "Définir les attentes et contrôles avant de lancer les évaluations.",
+    "programs": "Programmes",
+    "search": "Rechercher",
+    "workspaceSearchAria": "Rechercher dans l’espace de travail",
+    "workspaceSearchHint": "Accéder à une page (Ctrl+K)"
+  },
+  "workspace": {
+    "roadmapPage": {
+      "title": "Feuille de route et calendrier de conformité",
+      "description": "Feuille de route par phases et calendrier partagé pour les renouvellements, jalons de saisie VIRA et audits. Les entrées ci-dessous sont stockées dans ce navigateur jusqu'à liaison avec les tâches d'équipe.",
+      "statMilestones": "Jalons",
+      "statMilestonesHint": "Dates suivies",
+      "statMonth": "Vue",
+      "statMonthHint": "Focus calendrier",
+      "statUpcoming": "À venir",
+      "statUpcomingHint": "Prochains événements",
+      "statPrograms": "Programmes",
+      "statProgramsHint": "Phases liées",
+      "programTitle": "Feuille de route programme",
+      "programDescription": "Séquence type C-SCRM / VIRA. Accédez à chaque module au rythme souhaité — l'ordre correspond aux déploiements entreprise courants.",
+      "calendarTitle": "Calendrier",
+      "calendarDescription": "Les dates avec jalons affichent un point. Utilisez les flèches pour changer de mois.",
+      "milestonesTitle": "Jalons et échéances",
+      "milestonesDescription": "Ajoutez des renouvellements, audits ou comités de pilotage. Supprimez les lignes inutiles.",
+      "labelTitle": "Titre",
+      "labelDate": "Date",
+      "placeholderTitle": "ex. dépôt de preuves FedRAMP",
+      "add": "Ajouter",
+      "noUpcoming": "Aucun jalon à venir. Ajoutez-en un ci-dessus.",
+      "footerNote": "Pour la topologie des dépendances et les chemins critiques, utilisez le portefeuille d'intelligence fournisseur et les pages détail. Ce calendrier sert uniquement à planifier des dates.",
+      "footerLink": "Ouvrir le portefeuille"
+    }
   },
   "auth": {
     "login": "Se connecter",
@@ -2456,7 +2498,6 @@
       "description": "Plateforme complète de gestion des risques de la chaîne d'approvisionnement pour les organisations modernes avec évaluations et outils de conformité automatisés.",
       "contact": {
         "email": "contact@ermits.com",
-        "phone": "+1 (240) 599-0102",
         "address": "Gaithersburg, MD"
       },
       "links": {

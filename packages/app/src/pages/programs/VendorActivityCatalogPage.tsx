@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '../../components/ui/Card';
 import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
-import { ListTree, ArrowLeft, Search, X, CheckCircle2, Circle, Users } from 'lucide-react';
+import { Search, X, CheckCircle2, Circle, Users } from 'lucide-react';
 import {
   allVendorSupplyPhaseIds,
   VENDOR_SUPPLY_ACTIVITIES_BY_PHASE,
@@ -14,6 +14,7 @@ import {
   type VendorSupplyProgramTrack,
   type VendorSupplySipocRow,
 } from '../../catalog/vendorSupplyChainSipocCatalog';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 // ── Persistence ────────────────────────────────────────────────────────────────
 
@@ -219,37 +220,22 @@ const VendorActivityCatalogPage: React.FC = () => {
   );
 
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-      <Link
-        to="/"
-        className="inline-flex items-center gap-2 text-sm text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline mb-6"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back to dashboard
-      </Link>
-
-      {/* Header */}
-      <div className="flex items-start gap-3 mb-3">
-        <div className="w-12 h-12 rounded-xl bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 flex items-center justify-center text-vendorsoluce-green dark:text-vendorsoluce-light-green flex-shrink-0">
-          <ListTree className="h-6 w-6" />
-        </div>
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Vendor Program Activity Catalog
-          </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            {phases.length} phases · {total} predefined activities ·{' '}
-            <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1 rounded">src/catalog/vendorSupplyChainSipocCatalog.ts</code>
-          </p>
-        </div>
-      </div>
-
-      <p className="text-gray-600 dark:text-gray-300 max-w-3xl mb-6">
-        Full platform process catalog with phase-by-phase traceability.
-        Phases are tagged for NIST Vendor Risk Program and Vendor Intelligence &amp; Risk Assessment (VIRA) workflows.
-      </p>
-
-      <div className="rounded-xl border border-vendorsoluce-green/25 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4 mb-6">
+    <WorkspacePageShell
+      title="Vendor Program Activity Catalog"
+      description={`Full platform process catalog with phase-by-phase traceability. ${phases.length} phases · ${total} predefined activities · src/catalog/vendorSupplyChainSipocCatalog.ts. Tagged for NIST and VIRA program tracks.`}
+      stats={[
+        { label: 'Phases', value: phases.length, hint: 'In current program filter' },
+        { label: 'Activities', value: total, hint: 'Predefined SIPOC rows' },
+        { label: 'Completed', value: totalDone, hint: 'Marked done in this browser' },
+        {
+          label: 'Catalog',
+          value: 'SIPOC',
+          hint: 'Supplier / Input / Process / Output / Customer',
+        },
+      ]}
+    >
+      <div className="space-y-6">
+      <div className="rounded-xl border border-vendorsoluce-green/25 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4">
         <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">
           {t('vendorProgramWorkflow.common.programBanner')}
         </p>
@@ -510,7 +496,8 @@ const VendorActivityCatalogPage: React.FC = () => {
           );
         })}
       </div>
-    </div>
+      </div>
+    </WorkspacePageShell>
   );
 };
 

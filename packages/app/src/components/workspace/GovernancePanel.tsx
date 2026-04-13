@@ -8,7 +8,7 @@ import type {
   NistScrm10ControlStatus,
 } from '../../types/workspace';
 import { SUPPLIER_CRITICALITY_MATRIX } from '../../catalog/nistScrm800161Controls';
-import { CheckCircle, Clock, Circle, AlertTriangle, Flag } from 'lucide-react';
+import { CheckCircle, Clock, Circle, AlertTriangle, Flag, RefreshCw, Hourglass } from 'lucide-react';
 import { ProgressBarFill } from '../ui/ProgressBarFill';
 
 interface GovernancePanelProps {
@@ -89,10 +89,19 @@ const GovernancePanel: React.FC<GovernancePanelProps> = ({
             aria-valuemax={100}
             aria-label={`Framework completion: ${frameworkCompletion.percent}%`}
           />
-          <div className="flex gap-4 mt-2 text-xs text-gray-500 dark:text-gray-400">
-            <span>✅ {frameworkCompletion.complete} complete</span>
-            <span>🔄 {frameworkCompletion.in_progress} in progress</span>
-            <span>⏳ {frameworkCompletion.not_started} not started</span>
+          <div className="flex flex-wrap gap-4 mt-2 text-xs text-gray-500 dark:text-gray-400">
+            <span className="inline-flex items-center gap-1.5">
+              <CheckCircle className="h-3.5 w-3.5 text-green-500 shrink-0" aria-hidden />
+              {frameworkCompletion.complete} complete
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <RefreshCw className="h-3.5 w-3.5 text-amber-500 shrink-0" aria-hidden />
+              {frameworkCompletion.in_progress} in progress
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Hourglass className="h-3.5 w-3.5 text-gray-400 shrink-0" aria-hidden />
+              {frameworkCompletion.not_started} not started
+            </span>
           </div>
         </CardHeader>
         <CardContent className="p-0">

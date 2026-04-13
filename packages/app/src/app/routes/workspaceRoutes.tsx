@@ -23,11 +23,11 @@ const CollaborativeAssessmentPage = lazyWithRetry(() => import('../../pages/work
 const VendorIntelligencePortfolioPage = lazyWithRetry(() => import('../../pages/workspace/vendorsoluce/VendorIntelligencePortfolioPage'));
 const VendorIntelligenceImportPage = lazyWithRetry(() => import('../../pages/workspace/vendorsoluce/VendorIntelligenceImportPage'));
 const VendorIntelligenceDetailPage = lazyWithRetry(() => import('../../pages/workspace/vendorsoluce/VendorIntelligenceDetailPage'));
+const ComplianceRoadmapPage = lazyWithRetry(() => import('../../pages/workspace/ComplianceRoadmapPage'));
 
-export function WorkspaceRoutes() {
-  return (
-    <>
-      <Route path={WR.PLATFORM_SETUP} element={<ProtectedRoute><PlatformSetupPage /></ProtectedRoute>} />
+export const workspaceRoutes = (
+  <>
+    <Route path={WR.PLATFORM_SETUP} element={<ProtectedRoute><PlatformSetupPage /></ProtectedRoute>} />
       <Route path={WR.ONBOARDING} element={<ProtectedRoute><OnboardingPage /></ProtectedRoute>} />
       <Route path={WR.PROFILE} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
       <Route path={WR.BILLING} element={<ProtectedRoute><BillingPage /></ProtectedRoute>} />
@@ -43,6 +43,6 @@ export function WorkspaceRoutes() {
       <Route path={WR.VENDOR_INTELLIGENCE} element={<ProtectedRoute><VendorIntelligencePortfolioPage /></ProtectedRoute>} />
       <Route path={WR.VENDOR_GRAPH_IMPORT} element={<ProtectedRoute><VendorIntelligenceImportPage /></ProtectedRoute>} />
       <Route path={WR.VENDOR_INTELLIGENCE_DETAIL} element={<ProtectedRoute><VendorIntelligenceDetailPage /></ProtectedRoute>} />
-    </>
-  );
-}
+      <Route path={WR.COMPLIANCE_ROADMAP} element={<ProtectedRoute><ComplianceRoadmapPage /></ProtectedRoute>} />
+  </>
+);

@@ -1,5 +1,8 @@
+import { MR, WR } from 'shared/constants/routes';
 import { countVendorSupplyActivitiesForPhases } from './vendorSupplyChainSipocCatalog';
 import type { VendorProgramWorkflowDefinition, VendorProgramWorkflowStep } from '../lib/vendorProgramWorkflowTypes';
+
+const RADAR_DELIVERABLES_HASH = '#vendor-risk-radar-deliverables';
 
 const steps: VendorProgramWorkflowStep[] = [
   {
@@ -17,13 +20,13 @@ const steps: VendorProgramWorkflowStep[] = [
       'Prioritize tier-1 vendors for deeper diligence',
     ],
     deliverables: [
-      { id: 'v1', label: 'Inherent risk tier summary', href: '/vendors' },
-      { id: 'v2', label: 'Calculator export / email handoff', href: '/tools/vendor-risk-calculator' },
+      { id: 'v1', label: 'Inherent risk tier summary', href: MR.VENDORS },
+      { id: 'v2', label: 'Calculator export / email handoff', href: MR.VENDOR_RISK_CALCULATOR },
     ],
     tools: [
-      { label: 'Vendor dashboard', href: '/vendors' },
-      { label: 'VIRA risk calculator', href: '/tools/vendor-risk-calculator' },
-      { label: 'Vendor Risk Radar', href: '/vendor-risk-radar' },
+      { label: 'Vendor dashboard', href: MR.VENDORS },
+      { label: 'VIRA risk calculator', href: MR.VENDOR_RISK_CALCULATOR },
+      { label: 'Vendor Risk Radar', href: MR.VENDOR_RISK_RADAR },
     ],
   },
   {
@@ -40,13 +43,13 @@ const steps: VendorProgramWorkflowStep[] = [
       'Align contractual and policy references with trust center artifacts',
     ],
     deliverables: [
-      { id: 'v3', label: 'Security requirements baseline', href: '/vendor-requirements' },
-      { id: 'v4', label: 'Template pack references', href: '/templates' },
-      { id: 'v4-dl', label: 'Download questionnaire templates', href: '/download' },
+      { id: 'v3', label: 'Security requirements baseline', href: MR.VENDOR_REQUIREMENTS },
+      { id: 'v4', label: 'Template pack references', href: MR.TEMPLATES },
+      { id: 'v4-dl', label: 'Download questionnaire templates', href: MR.DOWNLOAD },
     ],
     tools: [
-      { label: 'Vendor requirements', href: '/vendor-requirements' },
-      { label: 'Templates', href: '/templates' },
+      { label: 'Vendor requirements', href: MR.VENDOR_REQUIREMENTS },
+      { label: 'Templates', href: MR.TEMPLATES },
     ],
   },
   {
@@ -64,14 +67,14 @@ const steps: VendorProgramWorkflowStep[] = [
       'Collect portal submissions where VendorSoluce™ Portal is deployed',
     ],
     deliverables: [
-      { id: 'v5', label: 'Completed questionnaire set', href: '/vendor-assessments' },
-      { id: 'v6', label: 'Collaboration notes', href: '/team/collaborate' },
+      { id: 'v5', label: 'Completed questionnaire set', href: MR.VENDOR_ASSESSMENTS },
+      { id: 'v6', label: 'Collaboration notes', href: WR.TEAM_COLLABORATE },
     ],
     tools: [
-      { label: 'Vendor assessments', href: '/vendor-assessments' },
-      { label: 'Team sessions', href: '/team/collaborate' },
-      { label: 'RACI', href: '/team/raci' },
-      { label: 'Stakeholders', href: '/team/stakeholders' },
+      { label: 'Vendor assessments', href: MR.VENDOR_ASSESSMENTS },
+      { label: 'Team sessions', href: WR.TEAM_COLLABORATE },
+      { label: 'RACI', href: WR.TEAM_RACI },
+      { label: 'Stakeholders', href: WR.TEAM_STAKEHOLDERS },
     ],
   },
   {
@@ -88,12 +91,18 @@ const steps: VendorProgramWorkflowStep[] = [
       'Tie asset and dependency data to vendor criticality',
     ],
     deliverables: [
-      { id: 'v7', label: 'Portfolio radar snapshot', href: '/vendor-risk-radar' },
-      { id: 'v8', label: 'Vendor compliance evidence', href: '/vendor-assessments' },
+      { id: 'v7', label: 'Portfolio radar snapshot', href: MR.VENDOR_RISK_RADAR },
+      {
+        id: 'v7-vira',
+        label: 'VIRA portfolio reports (summary, print/PDF, audit trail)',
+        href: MR.VIRA_REPORTS,
+      },
+      { id: 'v8', label: 'Vendor compliance evidence', href: MR.VENDOR_ASSESSMENTS },
     ],
     tools: [
-      { label: 'Vendor Risk Radar', href: '/vendor-risk-radar' },
-      { label: 'Asset management', href: '/asset-management' },
+      { label: 'Vendor Risk Radar', href: MR.VENDOR_RISK_RADAR },
+      { label: 'VIRA portfolio reports', href: MR.VIRA_REPORTS },
+      { label: 'Asset management', href: WR.ASSET_MANAGEMENT },
     ],
   },
   {
@@ -110,14 +119,19 @@ const steps: VendorProgramWorkflowStep[] = [
       'Monitor vendor changes and trigger re-assessment',
     ],
     deliverables: [
-      { id: 'v9', label: 'Action plan & recommendations', href: '/supply-chain-assessment' },
-      { id: 'v10', label: 'Management readout', href: '/download' },
-      { id: 'v10-rpt', label: 'Export portfolio report', href: '/download' },
+      { id: 'v9', label: 'Action plan & recommendations', href: MR.SUPPLY_CHAIN_ASSESSMENT },
+      { id: 'v10', label: 'Management readout (VIRA summary)', href: MR.VIRA_REPORTS },
+      {
+        id: 'v10-rpt',
+        label: 'Portfolio C-SCRM report (HTML export)',
+        href: `${MR.VENDOR_RISK_RADAR}${RADAR_DELIVERABLES_HASH}`,
+      },
     ],
     tools: [
-      { label: 'Supply chain assessment', href: '/supply-chain-assessment' },
-      { label: 'Downloads', href: '/download' },
-      { label: 'Vendor dashboard', href: '/vendors' },
+      { label: 'Supply chain assessment', href: MR.SUPPLY_CHAIN_ASSESSMENT },
+      { label: 'VIRA portfolio reports', href: MR.VIRA_REPORTS },
+      { label: 'Downloads', href: MR.DOWNLOAD },
+      { label: 'Vendor dashboard', href: MR.VENDORS },
     ],
   },
 ];

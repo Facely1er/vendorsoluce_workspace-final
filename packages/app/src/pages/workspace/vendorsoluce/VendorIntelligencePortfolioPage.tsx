@@ -9,17 +9,188 @@ import { Badge } from '../../../components/ui/Badge';
 import WorkspacePageShell from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../../components/vendorsoluce-intelligence/PanelCard';
 import { MetricPill } from '../../../components/vendorsoluce-intelligence/MetricPill';
+import VendorPortfolioDependencyGraph from '../../../components/vendorsoluce-intelligence/VendorPortfolioDependencyGraph';
 import { formatPercent, resolveOrgId, riskTone } from './utils';
+
 const VendorIntelligencePortfolioPage: React.FC = () => {
   const { user } = useAuth();
   const { vendors, integratedRiskRecords, loading, error, fetchVendors } = useVendorStore();
   const orgId = React.useMemo(() => resolveOrgId(user), [user]);
-  React.useEffect(() => { if (user?.id) void fetchVendors(user.id, orgId ?? undefined); }, [fetchVendors, orgId, user?.id]);
+  React.useEffect(() => {
+    if (user?.id) void fetchVendors(user.id, orgId ?? undefined);
+  }, [fetchVendors, orgId, user?.id]);
+
   const linkedCount = integratedRiskRecords.filter((record) => record.graphLinked).length;
   const highRiskCount = integratedRiskRecords.filter((record) => (record.finalRiskScore ?? 0) >= 75).length;
-  const avgRisk = integratedRiskRecords.length ? Math.round(integratedRiskRecords.reduce((sum, record) => sum + (record.finalRiskScore ?? 0), 0) / integratedRiskRecords.length) : 0;
-  return <WorkspacePageShell eyebrow="VendorSoluce dependency intelligence" title="Vendor portfolio intelligence" description="Review the vendor portfolio as a dependency-aware risk system, not a flat list. This workspace merges baseline vendor records with graph-derived systemic, propagation, and concentration signals." actions={[{ label: 'Refresh intelligence', onClick: () => user?.id && fetchVendors(user.id, orgId ?? undefined), variant: 'outline' }, { label: 'Import dependency data', to: WR.VENDOR_GRAPH_IMPORT, variant: 'primary' }]} stats={[{ label: 'Portfolio vendors', value: vendors.length, hint: 'Registered vendor records' }, { label: 'Graph linked', value: linkedCount, hint: 'Matched to dependency graph nodes' }, { label: 'Average integrated risk', value: `${avgRisk}%`, hint: 'Assessment + graph metrics' }, { label: 'High-risk vendors', value: highRiskCount, hint: 'Final risk 75% or higher' }]}>
-    {!orgId ? <PanelCard title="Organization context required" description="This workspace needs an organization identifier to load graph-backed metrics."><div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-200"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" /><div>No org context was found in the current session. The page falls back to your user id where possible, but the dependency graph should be tied to a stable organization id.</div></div></PanelCard> : null}
-    <div className="grid gap-6 xl:grid-cols-[1.6fr,1fr]"><PanelCard title="Portfolio view" description="Consistent vendor ranking using the integrated risk record. Click a vendor to open detail and scenario analysis.">{loading ? <div className="py-10 text-sm text-gray-500 dark:text-gray-400">Loading vendor intelligence…</div> : error ? <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300">{error}</div> : integratedRiskRecords.length === 0 ? <div className="space-y-4 rounded-2xl border border-dashed border-gray-300 p-8 text-center dark:border-gray-700"><Network className="mx-auto h-8 w-8 text-gray-400" /><div><div className="text-base font-semibold text-gray-900 dark:text-white">No graph-backed vendor intelligence yet</div><div className="mt-1 text-sm text-gray-500 dark:text-gray-400">Import vendors, services, processing, and edges to generate centrality and propagation metrics.</div></div><div className="flex items-center justify-center gap-3"><Link to={WR.VENDOR_GRAPH_IMPORT}><Button variant="primary"><Upload className="h-4 w-4" />Import data</Button></Link></div></div> : <div className="overflow-hidden rounded-2xl border border-gray-200/70 dark:border-gray-800"><div className="grid grid-cols-[minmax(0,1.8fr)_repeat(4,minmax(0,1fr))] gap-4 border-b border-gray-200/70 bg-gray-50 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:border-gray-800 dark:bg-gray-900/60 dark:text-gray-400"><div>Vendor</div><div>Final risk</div><div>Propagation</div><div>Systemic</div><div>Confidence</div></div><div className="divide-y divide-gray-200/70 dark:divide-gray-800">{integratedRiskRecords.slice().sort((a, b) => (b.finalRiskScore ?? 0) - (a.finalRiskScore ?? 0)).map((record) => <Link key={record.vendorId} to={WR.VENDOR_INTELLIGENCE_DETAIL.replace(':vendorId', record.vendorId)} className="grid grid-cols-[minmax(0,1.8fr)_repeat(4,minmax(0,1fr))] gap-4 px-4 py-4 transition hover:bg-emerald-50/50 dark:hover:bg-emerald-950/10"><div className="min-w-0"><div className="truncate text-sm font-semibold text-gray-950 dark:text-white">{record.vendorName}</div><div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400"><Badge variant={record.graphLinked ? 'default' : 'secondary'}>{record.graphLinked ? 'Graph linked' : 'Unlinked'}</Badge>{record.graphNodeName ? <span>{record.graphNodeName}</span> : null}</div></div><div className="text-sm font-semibold text-gray-900 dark:text-white">{formatPercent(record.finalRiskScore)}</div><div className="text-sm text-gray-600 dark:text-gray-300">{formatPercent(record.propagationRiskScore)}</div><div className="text-sm text-gray-600 dark:text-gray-300">{formatPercent(record.systemicDependencyScore)}</div><div className="flex items-center justify-between gap-2 text-sm text-gray-600 dark:text-gray-300"><span>{formatPercent(record.graphConfidenceScore)}</span><ArrowRight className="h-4 w-4 text-gray-400" /></div></Link>)}</div></div>}</PanelCard><div className="grid gap-6"><PanelCard title="Portfolio signals" description="Quick view of the strongest graph-derived signals across the current vendor set."><div className="grid gap-3"><MetricPill label="Graph coverage" value={`${linkedCount}/${vendors.length || 0}`} tone={linkedCount === vendors.length && vendors.length > 0 ? 'good' : 'warn'} /><MetricPill label="Integrated risk average" value={`${avgRisk}%`} tone={riskTone(avgRisk)} /><MetricPill label="High-risk exposure" value={highRiskCount} tone={highRiskCount > 0 ? 'danger' : 'good'} /></div></PanelCard><PanelCard title="Recommended next steps" description="Use the same operational rhythm on every vendor page: import, compute, review, simulate, export."><div className="space-y-3 text-sm text-gray-600 dark:text-gray-300"><div className="flex items-start gap-3"><RefreshCw className="mt-0.5 h-4 w-4 text-emerald-600" /><span>Recompute metrics after every graph import or structural dependency change.</span></div><div className="flex items-start gap-3"><ShieldAlert className="mt-0.5 h-4 w-4 text-emerald-600" /><span>Prioritize vendors with high systemic and propagation scores even when questionnaire risk appears moderate.</span></div><div className="flex items-start gap-3"><Upload className="mt-0.5 h-4 w-4 text-emerald-600" /><span>Keep import bundles versioned so report narratives remain evidence-ready.</span></div></div></PanelCard></div></div></WorkspacePageShell>;
+  const avgRisk = integratedRiskRecords.length
+    ? Math.round(
+        integratedRiskRecords.reduce((sum, record) => sum + (record.finalRiskScore ?? 0), 0) /
+          integratedRiskRecords.length
+      )
+    : 0;
+
+  return (
+    <WorkspacePageShell
+      title="Vendor portfolio intelligence"
+      description="Dependency graph plus integrated risk: see how vendors connect (services, processing, edges), then scan the ranking table for final, propagation, and systemic scores. Critical paths and outage/breach scenarios live on each vendor page."
+      actions={[
+        {
+          label: 'Refresh intelligence',
+          onClick: () => user?.id && fetchVendors(user.id, orgId ?? undefined),
+          variant: 'outline',
+        },
+        { label: 'Import dependency data', to: WR.VENDOR_GRAPH_IMPORT, variant: 'primary' },
+      ]}
+      stats={[
+        { label: 'Portfolio vendors', value: vendors.length, hint: 'Registered vendor records' },
+        { label: 'Graph linked', value: linkedCount, hint: 'Matched to dependency graph nodes' },
+        { label: 'Average integrated risk', value: `${avgRisk}%`, hint: 'Assessment + graph metrics' },
+        { label: 'High-risk vendors', value: highRiskCount, hint: 'Final risk 75% or higher' },
+      ]}
+    >
+      {!orgId ? (
+        <PanelCard
+          title="Organization context required"
+          description="This workspace needs an organization identifier to load graph-backed metrics."
+        >
+          <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-200">
+            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+            <div>
+              No org context was found in the current session. The page falls back to your user id where possible, but the
+              dependency graph should be tied to a stable organization id.
+            </div>
+          </div>
+        </PanelCard>
+      ) : null}
+
+      <PanelCard
+        title="Dependency graph (portfolio)"
+        description="Live nodes and edges from your import bundle, or a demo ring when the database graph is unavailable. Click a vendor node to open intelligence, scenarios, and critical paths."
+      >
+        <VendorPortfolioDependencyGraph orgId={orgId} integratedRiskRecords={integratedRiskRecords} />
+      </PanelCard>
+
+      <div className="grid gap-6 xl:grid-cols-[1.6fr,1fr]">
+        <PanelCard
+          title="Portfolio view"
+          description="Consistent vendor ranking using the integrated risk record. Click a vendor to open detail and scenario analysis."
+        >
+          {loading ? (
+            <div className="py-10 text-sm text-gray-500 dark:text-gray-400">Loading vendor intelligence…</div>
+          ) : error ? (
+            <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300">
+              {error}
+            </div>
+          ) : integratedRiskRecords.length === 0 ? (
+            <div className="space-y-4 rounded-2xl border border-dashed border-gray-300 p-8 text-center dark:border-gray-700">
+              <Network className="mx-auto h-8 w-8 text-gray-400" />
+              <div>
+                <div className="text-base font-semibold text-gray-900 dark:text-white">
+                  No graph-backed vendor intelligence yet
+                </div>
+                <div className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  Import vendors, services, processing, and edges to generate centrality and propagation metrics.
+                </div>
+              </div>
+              <div className="flex items-center justify-center gap-3">
+                <Link to={WR.VENDOR_GRAPH_IMPORT}>
+                  <Button variant="primary">
+                    <Upload className="h-4 w-4" />
+                    Import data
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="overflow-hidden rounded-2xl border border-gray-200/70 dark:border-gray-800">
+              <div className="grid grid-cols-[minmax(0,1.8fr)_repeat(4,minmax(0,1fr))] gap-4 border-b border-gray-200/70 bg-gray-50 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:border-gray-800 dark:bg-gray-900/60 dark:text-gray-400">
+                <div>Vendor</div>
+                <div>Final risk</div>
+                <div>Propagation</div>
+                <div>Systemic</div>
+                <div>Confidence</div>
+              </div>
+              <div className="divide-y divide-gray-200/70 dark:divide-gray-800">
+                {integratedRiskRecords
+                  .slice()
+                  .sort((a, b) => (b.finalRiskScore ?? 0) - (a.finalRiskScore ?? 0))
+                  .map((record) => (
+                    <Link
+                      key={record.vendorId}
+                      to={WR.VENDOR_INTELLIGENCE_DETAIL.replace(':vendorId', record.vendorId)}
+                      className="grid grid-cols-[minmax(0,1.8fr)_repeat(4,minmax(0,1fr))] gap-4 px-4 py-4 transition hover:bg-emerald-50/50 dark:hover:bg-emerald-950/10"
+                    >
+                      <div className="min-w-0">
+                        <div className="truncate text-sm font-semibold text-gray-950 dark:text-white">
+                          {record.vendorName}
+                        </div>
+                        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                          <Badge variant={record.graphLinked ? 'default' : 'secondary'}>
+                            {record.graphLinked ? 'Graph linked' : 'Unlinked'}
+                          </Badge>
+                          {record.graphNodeName ? <span>{record.graphNodeName}</span> : null}
+                        </div>
+                      </div>
+                      <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                        {formatPercent(record.finalRiskScore)}
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">
+                        {formatPercent(record.propagationRiskScore)}
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">
+                        {formatPercent(record.systemicDependencyScore)}
+                      </div>
+                      <div className="flex items-center justify-between gap-2 text-sm text-gray-600 dark:text-gray-300">
+                        <span>{formatPercent(record.graphConfidenceScore)}</span>
+                        <ArrowRight className="h-4 w-4 text-gray-400" />
+                      </div>
+                    </Link>
+                  ))}
+              </div>
+            </div>
+          )}
+        </PanelCard>
+
+        <div className="grid gap-6">
+          <PanelCard
+            title="Portfolio signals"
+            description="Quick view of the strongest graph-derived signals across the current vendor set."
+          >
+            <div className="grid gap-3">
+              <MetricPill
+                label="Graph coverage"
+                value={`${linkedCount}/${vendors.length || 0}`}
+                tone={linkedCount === vendors.length && vendors.length > 0 ? 'good' : 'warn'}
+              />
+              <MetricPill label="Integrated risk average" value={`${avgRisk}%`} tone={riskTone(avgRisk)} />
+              <MetricPill label="High-risk exposure" value={highRiskCount} tone={highRiskCount > 0 ? 'danger' : 'good'} />
+            </div>
+          </PanelCard>
+          <PanelCard
+            title="Recommended next steps"
+            description="Use the same operational rhythm on every vendor page: import, compute, review, simulate, export."
+          >
+            <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+              <div className="flex items-start gap-3">
+                <RefreshCw className="mt-0.5 h-4 w-4 text-emerald-600" />
+                <span>Recompute metrics after every graph import or structural dependency change.</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <ShieldAlert className="mt-0.5 h-4 w-4 text-emerald-600" />
+                <span>
+                  Prioritize vendors with high systemic and propagation scores even when questionnaire risk appears moderate.
+                </span>
+              </div>
+              <div className="flex items-start gap-3">
+                <Upload className="mt-0.5 h-4 w-4 text-emerald-600" />
+                <span>Keep import bundles versioned so report narratives remain evidence-ready.</span>
+              </div>
+            </div>
+          </PanelCard>
+        </div>
+      </div>
+    </WorkspacePageShell>
+  );
 };
+
 export default VendorIntelligencePortfolioPage;

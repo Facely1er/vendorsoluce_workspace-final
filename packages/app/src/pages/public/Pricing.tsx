@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { Crown, Calculator, Shield, Check, Server, Download } from 'lucide-react';
+import { Crown, Calculator, Shield, Check, X, Server, Download } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -123,7 +123,7 @@ const Pricing: React.FC = () => {
             <div className="flex items-center gap-3">
               <Crown className="h-8 w-8" />
               <div>
-                <h3 className="text-xl font-bold mb-1">🎉 Save 20% with Annual Billing</h3>
+                <h3 className="text-xl font-bold mb-1">Save 20% with Annual Billing</h3>
                 <p className="text-green-50">
                   Switch to annual billing and save up to {formatCurrency(calculateAnnualSavings('enterprise') * 100)} per year on Enterprise plans
                 </p>

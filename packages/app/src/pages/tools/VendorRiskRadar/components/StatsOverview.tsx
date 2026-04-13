@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent } from '../../../../components/ui/Card';
-import { AlertTriangle, Shield, TrendingUp, Database, Target } from 'lucide-react';
+import { AlertTriangle, Shield, TrendingUp, Database, Target, Info } from 'lucide-react';
 import type { PortfolioStats } from '../../../../types/vendorRadar';
 
 interface StatsOverviewProps {
@@ -62,10 +62,8 @@ const StatsOverview: React.FC<StatsOverviewProps> = ({ stats }) => {
   return (
     <div className="mb-8">
       <div className="flex items-center gap-2 mb-4">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Quick Stats Overview</h2>
-        <span className="text-gray-500 dark:text-gray-400 cursor-help" title="Quick statistics overview">
-          ℹ️
-        </span>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Quick stats overview</h2>
+        <Info className="h-4 w-4 text-gray-400 shrink-0" aria-hidden title="Quick statistics overview" />
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
         {statCards.map((stat, index) => {

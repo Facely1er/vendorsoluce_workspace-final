@@ -24,6 +24,7 @@
     "verify:ui-tokens": "npm run verify:ui-tokens -w shared",
     "verify:ui-inline": "npm run verify:ui-inline -w shared",
     "verify:ui": "npm run verify:ui -w shared",
+    "verify:website": "npm run verify -w vendorsoluce-static",
     "test": "node ./scripts/run-turbo.mjs run test",
     "test:coverage": "npm run test:coverage -w app",
     "clean": "node ./scripts/run-turbo.mjs run clean && rm -rf node_modules",

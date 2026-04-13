@@ -60,7 +60,8 @@
     "TEAM_STAKEHOLDERS": "/team/stakeholders",
     "VENDOR_INTELLIGENCE": "/workspace/vendors",
     "VENDOR_GRAPH_IMPORT": "/workspace/vendors/import",
-    "VENDOR_INTELLIGENCE_DETAIL": "/workspace/vendors/:vendorId"
+    "VENDOR_INTELLIGENCE_DETAIL": "/workspace/vendors/:vendorId",
+    "COMPLIANCE_ROADMAP": "/workspace/roadmap"
   },
   "auth": {
     "SIGNIN": "/signin",

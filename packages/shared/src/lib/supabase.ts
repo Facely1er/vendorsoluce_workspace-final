@@ -12,12 +12,36 @@ function createStubClient(): SupabaseClient<Database> {
   const emptyUser = () => Promise.resolve({ data: { user: null }, error: null });
 
   const errResult = { data: null, error: { message: NOT_CONFIGURED_MSG } };
+  /** Minimal PostgREST-style chain so `.from().select().eq().order()…` does not throw when Supabase is disabled. */
   const stubChain: Record<string, unknown> = {
     select: () => stubChain,
     insert: () => stubChain,
     update: () => stubChain,
+    upsert: () => stubChain,
+    delete: () => stubChain,
     eq: () => stubChain,
+    neq: () => stubChain,
+    gt: () => stubChain,
+    gte: () => stubChain,
+    lt: () => stubChain,
+    lte: () => stubChain,
+    like: () => stubChain,
+    ilike: () => stubChain,
+    is: () => stubChain,
+    in: () => stubChain,
+    contains: () => stubChain,
+    not: () => stubChain,
+    or: () => stubChain,
+    filter: () => stubChain,
+    match: () => stubChain,
+    order: () => stubChain,
+    limit: () => stubChain,
+    range: () => stubChain,
+    abortSignal: () => stubChain,
     single: () => stubChain,
+    maybeSingle: () => stubChain,
+    csv: () => stubChain,
+    returns: () => stubChain,
   };
   stubChain.then = (resolve: (v: typeof errResult) => void) => {
     resolve(errResult);

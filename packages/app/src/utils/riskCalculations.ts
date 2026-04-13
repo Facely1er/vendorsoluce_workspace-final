@@ -202,6 +202,19 @@ export function hasCompleteIntakeFactors(factors: Record<string, number> | undef
   });
 }
 
+/** Valid 1–5 values only, for pre-filling VIRA sliders when intake is incomplete. */
+export function intakeFactorsForDisplay(
+  factors: Record<string, number> | undefined
+): Record<string, number> | undefined {
+  if (!factors || typeof factors !== 'object') return undefined;
+  const out: Record<string, number> = {};
+  for (const id of INTAKE_SLIDER_IDS) {
+    const v = factors[id];
+    if (typeof v === 'number' && v >= 1 && v <= 5) out[id] = Math.round(v);
+  }
+  return Object.keys(out).length > 0 ? out : undefined;
+}
+
 /**
  * Inherent risk 0–100 from VIRA weighted sliders: 1 = stronger posture (lower risk), 5 = weaker (higher risk).
  * Aligned with portfolio tiers in `getRiskLevel` / Vendor Risk Radar.

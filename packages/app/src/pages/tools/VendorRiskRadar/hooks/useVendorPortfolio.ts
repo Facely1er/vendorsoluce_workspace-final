@@ -7,6 +7,7 @@ import {
   calculatePortfolioStats,
   vendorRiskFieldsFromResidual,
   hasCompleteIntakeFactors,
+  intakeFactorsForDisplay,
 } from '../../../../utils/riskCalculations';
 import { mergeRadarMetaIntoNotes, parseRadarMetaFromNotes } from '../../../../utils/vendorRadarMeta';
 import { parseCSV, generateCSV } from '../../../../utils/csvImportExport';
@@ -57,6 +58,9 @@ export const useVendorPortfolio = () => {
               ? 'tactical'
               : 'commodity') as VendorRadar['category'];
         const intakeFactors = meta.intakeFactors;
+        const intakeForUi = hasCompleteIntakeFactors(intakeFactors)
+          ? intakeFactors
+          : intakeFactorsForDisplay(intakeFactors);
         const base: Partial<VendorRadar> = {
           category,
           sector: v.industry || '',
@@ -64,7 +68,7 @@ export const useVendorPortfolio = () => {
           dataTypes: [],
           serviceType: meta.serviceType,
           populationImpacted: meta.populationImpacted,
-          intakeFactors: hasCompleteIntakeFactors(intakeFactors) ? intakeFactors : undefined,
+          intakeFactors: intakeForUi,
         };
         const stored = v.risk_score || 0;
         const inherentRisk = hasCompleteIntakeFactors(intakeFactors)
@@ -84,7 +88,7 @@ export const useVendorPortfolio = () => {
           dataTypes: [],
           serviceType: meta.serviceType,
           populationImpacted: meta.populationImpacted,
-          intakeFactors: hasCompleteIntakeFactors(intakeFactors) ? intakeFactors : undefined,
+          intakeFactors: intakeForUi,
           inherentRisk,
           residualRisk,
           sbomProfile: undefined,

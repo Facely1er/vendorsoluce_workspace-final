@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseEnabled } from '../lib/supabase';
 import { canAccessFeature, getUsageLimit } from '../config/tiers';
 import type { TierKey } from '../config/tiers';
 import { isLicenseMode } from '../config/license';
@@ -96,26 +96,32 @@ export function useSubscription() {
 
     fetchSubscription();
 
-    if (!isLicenseMode()) {
-      const sub = supabase
-        .channel('subscription_changes')
-        .on(
-          'postgres_changes',
-          {
-            event: '*',
-            schema: 'public',
-            table: 'vs_subscriptions',
-            filter: `user_id=eq.${user.id}`,
-          },
-          () => fetchSubscription()
-        )
-        .subscribe();
-      return () => sub.unsubscribe();
+    if (isLicenseMode()) {
+      const onLicenseChange = () => fetchSubscription();
+      window.addEventListener('vs_license_change', onLicenseChange);
+      return () => window.removeEventListener('vs_license_change', onLicenseChange);
     }
 
-    const onLicenseChange = () => fetchSubscription();
-    window.addEventListener('vs_license_change', onLicenseChange);
-    return () => window.removeEventListener('vs_license_change', onLicenseChange);
+    if (!isSupabaseEnabled()) {
+      return undefined;
+    }
+
+    const sub = supabase
+      .channel('subscription_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'vs_subscriptions',
+          filter: `user_id=eq.${user.id}`,
+        },
+        () => fetchSubscription()
+      )
+      .subscribe();
+    return () => {
+      void sub.unsubscribe();
+    };
   }, [user, fetchSubscription]);
 
   const effectiveTier: TierKey =

@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import {
   Users, Shield, CheckCircle, ArrowRight, ChevronRight,
   BarChart2, Database, Upload, Package, AlertCircle, Zap, Eye,
+  Check, X, CircleDot, AlertTriangle,
 } from 'lucide-react';
 import { usePortalSEO } from '../../hooks/usePortalSEO';
 import { SHELL_CLASSES } from '../../layout/shell';
+import { WR } from 'shared/constants/routes';
 import { CONTROL_MAPPINGS, FRAMEWORKS, TIER_COLORS, type RiskTier, type FrameworkId } from '../../data/portalFrameworkData';
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -223,6 +225,16 @@ const PortalDemo: React.FC = () => {
             Step through the full workflow — from buyer vendor risk scoring to vendor assessment submission and evidence review.
             Select different service types at Step 1 to see how requirements change.
           </p>
+          <div className="mt-6">
+            <Link
+              to={WR.VENDOR_INTELLIGENCE}
+              className="inline-flex items-center gap-2 rounded-lg border border-emerald-200 bg-white px-4 py-2.5 text-sm font-medium text-emerald-800 shadow-sm transition hover:bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200 dark:hover:bg-emerald-950/60"
+            >
+              <BarChart2 className="h-4 w-4 shrink-0" />
+              Open dependency intelligence (portfolio demo)
+              <ChevronRight className="h-4 w-4 shrink-0 opacity-70" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -507,7 +519,10 @@ const PortalDemo: React.FC = () => {
                                 : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-gray-300'
                             }`}
                           >
-                            {val === 'yes' ? '✓ Yes' : val === 'partial' ? '◑ Partial' : '✗ No / N/A'}
+                            <span className="inline-flex items-center gap-1.5">
+                              {val === 'yes' ? <Check className="w-3.5 h-3.5 shrink-0" aria-hidden /> : val === 'partial' ? <CircleDot className="w-3.5 h-3.5 shrink-0" aria-hidden /> : <X className="w-3.5 h-3.5 shrink-0" aria-hidden />}
+                              {val === 'yes' ? 'Yes' : val === 'partial' ? 'Partial' : 'No / N/A'}
+                            </span>
                           </button>
                         ))}
                       </div>
@@ -526,7 +541,10 @@ const PortalDemo: React.FC = () => {
                                   : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-gray-300'
                               }`}
                             >
-                              {val === 'yes' ? '✓ Confirmed' : val === 'partial' ? '◑ Partial' : '✗ N/A'}
+                              <span className="inline-flex items-center gap-1.5">
+                                {val === 'yes' ? <Check className="w-3.5 h-3.5 shrink-0" aria-hidden /> : val === 'partial' ? <CircleDot className="w-3.5 h-3.5 shrink-0" aria-hidden /> : <X className="w-3.5 h-3.5 shrink-0" aria-hidden />}
+                                {val === 'yes' ? 'Confirmed' : val === 'partial' ? 'Partial' : 'N/A'}
+                              </span>
                             </button>
                           ))}
                         </div>
@@ -670,7 +688,10 @@ const PortalDemo: React.FC = () => {
                             : status === 'insufficient' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
                             : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
                         }`}>
-                          {status === 'documented' ? '✓ Documented' : status === 'insufficient' ? '⚠ Insufficient' : '✗ Gap'}
+                          <span className="inline-flex items-center gap-1">
+                            {status === 'documented' ? <Check className="w-3 h-3 shrink-0" aria-hidden /> : status === 'insufficient' ? <AlertTriangle className="w-3 h-3 shrink-0" aria-hidden /> : <X className="w-3 h-3 shrink-0" aria-hidden />}
+                            {status === 'documented' ? 'Documented' : status === 'insufficient' ? 'Insufficient' : 'Gap'}
+                          </span>
                         </span>
                         {status !== 'documented' && (
                           <button className="text-xs text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline whitespace-nowrap">

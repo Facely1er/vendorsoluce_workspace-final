@@ -24,6 +24,8 @@ export * from './scenarios/degradationScenario';
 export * from './orchestration/computeAllVendorMetrics';
 
 export * from './import/dedupe';
+export * from './import/csvParser';
+export * from './import/csvSchemas';
 
 export * from './analysis/explanations';
 export * from './export/htmlReportTemplate';

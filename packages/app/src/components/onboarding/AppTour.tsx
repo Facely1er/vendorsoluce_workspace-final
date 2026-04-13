@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Joyride, { Step, CallBackProps, STATUS, EVENTS } from 'react-joyride';
+import { Lightbulb } from 'lucide-react';
 import { appTour } from '../../theme/inlineUiTokens';
 // import { useAuth } from '../../context/AuthContext';
 // import { useLocation } from 'react-router-dom';
@@ -116,8 +117,11 @@ const AppTour: React.FC<AppTourProps> = ({ isRunning, onComplete, onSkip }) => {
           <h3 className="text-lg font-bold mb-2">Tour Complete!</h3>
           <p>You're all set! Start by adding your first vendor or running a supply chain assessment. You can always access help and documentation from the resources menu.</p>
           <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-md">
-            <p className="text-sm text-blue-800 dark:text-blue-300">
-              💡 <strong>Tip:</strong> You can retake this tour anytime from your profile menu.
+            <p className="text-sm text-blue-800 dark:text-blue-300 flex gap-2">
+              <Lightbulb className="h-4 w-4 shrink-0 mt-0.5 text-blue-600 dark:text-blue-400" aria-hidden />
+              <span>
+                <strong>Tip:</strong> You can retake this tour anytime from your profile menu.
+              </span>
             </p>
           </div>
         </div>

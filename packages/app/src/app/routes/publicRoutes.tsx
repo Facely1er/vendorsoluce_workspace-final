@@ -64,10 +64,9 @@ export function VendorAssessmentPortalRedirect() {
   return null;
 }
 
-export function PublicRoutes() {
-  return (
-    <>
-      <Route path={MR.HOME} element={<ConditionalDashboard />} />
+export const publicRoutes = (
+  <>
+    <Route path={MR.HOME} element={<ConditionalDashboard />} />
       <Route path={MR.DASHBOARD} element={<ConditionalDashboard />} />
       <Route path={AR.RESET_PASSWORD} element={<ResetPasswordPage />} />
       <Route path="/careers" element={<Navigate to={MR.CONTACT} replace />} />
@@ -95,6 +94,7 @@ export function PublicRoutes() {
       <Route path={MR.DEMO} element={<DemoPage />} />
       <Route path={MR.TRIAL} element={<TrialPage />} />
       <Route path={MR.VENDOR_RISK_RADAR} element={<VendorRiskRadar />} />
+      <Route path="/vendors/radar" element={<Navigate to={MR.VENDOR_RISK_RADAR} replace />} />
       <Route path="/tools/vendor-risk-radar" element={<Navigate to={MR.VENDOR_RISK_RADAR} replace />} />
       <Route path={MR.NIST_CHECKLIST} element={<NISTChecklist />} />
       <Route path="/tools/sbom-quick-scan" element={<Navigate to={MR.NIST_CHECKLIST} replace />} />
@@ -130,6 +130,5 @@ export function PublicRoutes() {
       <Route path={MR.VENDOR_ASSESSMENTS} element={<VendorSecurityAssessments />} />
       <Route path={MR.VENDOR_PORTAL} element={<Navigate to={import.meta.env.VITE_PORTAL_URL || 'https://www.portal.vendorsoluce.com'} replace />} />
       <Route path="/vendor-assessments/:id" element={<VendorAssessmentPortalRedirect />} />
-    </>
-  );
-}
+  </>
+);

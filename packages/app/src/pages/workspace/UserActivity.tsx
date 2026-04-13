@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import {
   Activity,
@@ -13,6 +14,7 @@ import {
   BarChart3,
 } from 'lucide-react';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import { MR, WR } from 'shared/constants/routes';
 // import { useAuth } from '../../context/AuthContext';
 
 interface ActivityItem {
@@ -22,6 +24,8 @@ interface ActivityItem {
   timestamp: string;
   type: 'vendor' | 'assessment' | 'sbom' | 'settings' | 'security' | 'compliance';
   status: 'success' | 'warning' | 'error' | 'info';
+  /** Deep link into the relevant workspace surface (illustrative rows use mock targets). */
+  href?: string;
 }
 
 const UserActivity: React.FC = () => {
@@ -29,7 +33,7 @@ const UserActivity: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Mock activity data - in a real app this would come from an API
+  // Illustrative timeline until a unified activity API feeds this view.
   const activities: ActivityItem[] = [
     {
       id: '1',
@@ -37,7 +41,8 @@ const UserActivity: React.FC = () => {
       details: 'NIST SP 800-161 assessment with 78% compliance score',
       timestamp: '2025-01-17T14:30:00Z',
       type: 'assessment',
-      status: 'success'
+      status: 'success',
+      href: MR.SUPPLY_CHAIN_ASSESSMENT,
     },
     {
       id: '2',
@@ -45,7 +50,8 @@ const UserActivity: React.FC = () => {
       details: 'TechCorp Solutions added to vendor portfolio',
       timestamp: '2025-01-16T09:15:00Z',
       type: 'vendor',
-      status: 'success'
+      status: 'success',
+      href: MR.VENDORS,
     },
     {
       id: '3',
@@ -53,7 +59,8 @@ const UserActivity: React.FC = () => {
       details: 'Analyzed app-v2.1.json - 3 critical vulnerabilities found',
       timestamp: '2025-01-15T16:45:00Z',
       type: 'sbom',
-      status: 'warning'
+      status: 'warning',
+      href: MR.NIST_CHECKLIST,
     },
     {
       id: '4',
@@ -61,7 +68,8 @@ const UserActivity: React.FC = () => {
       details: 'Two-factor authentication enabled',
       timestamp: '2025-01-14T11:20:00Z',
       type: 'security',
-      status: 'success'
+      status: 'success',
+      href: WR.ACCOUNT,
     },
     {
       id: '5',
@@ -69,7 +77,8 @@ const UserActivity: React.FC = () => {
       details: 'CloudSecure Inc assessment incomplete due to missing responses',
       timestamp: '2025-01-13T13:30:00Z',
       type: 'vendor',
-      status: 'error'
+      status: 'error',
+      href: MR.VENDOR_ASSESSMENTS,
     },
     {
       id: '6',
@@ -77,7 +86,8 @@ const UserActivity: React.FC = () => {
       details: 'Company and role information updated',
       timestamp: '2025-01-12T10:00:00Z',
       type: 'settings',
-      status: 'success'
+      status: 'success',
+      href: WR.PROFILE,
     },
     {
       id: '7',
@@ -85,7 +95,8 @@ const UserActivity: React.FC = () => {
       details: 'Q4 2024 supply chain compliance report exported',
       timestamp: '2025-01-11T15:30:00Z',
       type: 'compliance',
-      status: 'success'
+      status: 'success',
+      href: MR.VIRA_REPORTS,
     },
     {
       id: '8',
@@ -93,8 +104,9 @@ const UserActivity: React.FC = () => {
       details: 'DevTools Pro vendor risk score increased to 85 (High)',
       timestamp: '2025-01-10T08:45:00Z',
       type: 'vendor',
-      status: 'warning'
-    }
+      status: 'warning',
+      href: MR.VENDOR_RISK_RADAR,
+    },
   ];
 
   const getActivityIcon = (type: string) => {
@@ -157,7 +169,7 @@ const UserActivity: React.FC = () => {
   ];
 
   return (
-    <WorkspacePageShell eyebrow="Workspace administration" title="Activity history" description="Track operational actions, system events, assessments, and workflow changes across VendorSoluce." actions={[{ label: 'Export activity log', onClick: () => {}, variant: 'outline' }]} stats={[{ label: 'Total activities', value: activities.length, hint: 'Across current log view' }, { label: 'Filtered', value: filteredActivities.length, hint: 'Current search/filter result' }]}>{/* Filters */}
+    <WorkspacePageShell title="Activity history" description="Operational actions, assessments, and workflow events. Sample timeline for UX; connect your activity stream to replace illustrative entries." actions={[{ label: 'Export activity log', onClick: () => {}, variant: 'outline' }]} stats={[{ label: 'Total activities', value: activities.length, hint: 'Across current log view' }, { label: 'Filtered', value: filteredActivities.length, hint: 'Current search/filter result' }]}>{/* Filters */}
       <Card className="mb-6">
         <CardContent className="p-4">
           <div className="flex flex-col md:flex-row gap-4">
@@ -245,35 +257,51 @@ const UserActivity: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              {filteredActivities.map((activity) => (
-                <div
-                  key={activity.id}
-                  className={`border-l-4 p-4 rounded-lg ${getStatusColor(activity.status)}`}
-                >
-                  <div className="flex items-start justify-between">
+              {filteredActivities.map((activity) => {
+                const body = (
+                  <>
                     <div className="flex items-start space-x-3">
                       <div className="flex-shrink-0 p-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
                         {getActivityIcon(activity.type)}
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center flex-wrap gap-2">
                           <h3 className="font-medium text-gray-900 dark:text-white">
                             {activity.action}
                           </h3>
                           {getStatusIcon(activity.status)}
+                          {activity.href ? (
+                            <span className="text-xs font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green">
+                              Open related page →
+                            </span>
+                          ) : null}
                         </div>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                           {activity.details}
                         </p>
                         <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-2">
-                          <Clock className="h-3 w-3 mr-1" />
+                          <Clock className="h-3 w-3 mr-1 shrink-0" />
                           {formatTimestamp(activity.timestamp)}
                         </div>
                       </div>
                     </div>
+                  </>
+                );
+                return (
+                  <div
+                    key={activity.id}
+                    className={`border-l-4 p-4 rounded-lg ${getStatusColor(activity.status)}`}
+                  >
+                    {activity.href ? (
+                      <Link to={activity.href} className="block outline-none rounded-md focus-visible:ring-2 focus-visible:ring-vendorsoluce-green/60">
+                        {body}
+                      </Link>
+                    ) : (
+                      body
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </CardContent>

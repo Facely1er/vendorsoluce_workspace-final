@@ -16,6 +16,7 @@ import {
   Clock,
   HelpCircle,
   ExternalLink,
+  Check,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import SBOMUploader from '../../components/sbom/SBOMUploader';
@@ -23,7 +24,6 @@ import EnhancedSBOMAnalysis from '../../components/sbom/EnhancedSBOMAnalysis';
 import { useTranslation } from 'react-i18next';
 import { useSBOMAnalyses } from '../../hooks/useSBOMAnalyses';
 import { useAuth } from '../../context/AuthContext';
-import BackToDashboardLink from '../../components/common/BackToDashboardLink';
 import ChatWidget from '../../components/chatbot/ChatWidget';
 import { useUsageTracking } from '../../hooks/useUsageTracking';
 import { logger } from '../../utils/logger';
@@ -535,8 +535,6 @@ const SBOMAnalyzer: React.FC = () => {
 
   return (
     <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <BackToDashboardLink />
-
       {technoSbomUrl ? (
         <div
           className="mb-6 rounded-lg border border-vendorsoluce-green/40 bg-vendorsoluce-pale-green/40 dark:bg-vendorsoluce-green/10 px-4 py-3 text-sm text-gray-800 dark:text-gray-100"
@@ -590,8 +588,9 @@ const SBOMAnalyzer: React.FC = () => {
         <div className="mt-4">
           <div className="inline-flex items-center px-4 py-2 bg-green-50 border border-green-200 rounded-lg">
             <Shield className="h-5 w-5 text-green-600 mr-2" />
-            <span className="text-green-800 font-medium">
-              ✓ Real-time vulnerability intelligence powered by OSV Database
+            <span className="text-green-800 font-medium inline-flex items-center gap-2">
+              <Check className="h-4 w-4 shrink-0" aria-hidden />
+              Real-time vulnerability intelligence powered by OSV Database
             </span>
           </div>
         </div>
@@ -753,8 +752,9 @@ const SBOMAnalyzer: React.FC = () => {
                     <BarChart3 className="h-5 w-5 mr-2 text-vendorsoluce-teal" />
                     {t('sbom.results.title')}
                     {currentAnalysis.analysisType === 'production' && (
-                      <span className="ml-2 px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-medium">
-                        ✓ Real Data
+                      <span className="ml-2 inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-medium">
+                        <Check className="h-3 w-3 shrink-0" aria-hidden />
+                        Real Data
                       </span>
                     )}
                   </CardTitle>
@@ -1099,11 +1099,23 @@ const SBOMAnalyzer: React.FC = () => {
                     This analyzer uses real vulnerability data from the Open Source Vulnerabilities (OSV) Database, 
                     providing current, actionable security intelligence for your software components.
                   </p>
-                  <div className="flex items-center space-x-4 text-xs text-green-600 dark:text-green-400">
-                    <span>✓ Real-time API integration</span>
-                    <span>✓ CVE cross-referencing</span>
-                    <span>✓ CVSS scoring</span>
-                    <span>✓ Actionable remediation</span>
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-green-600 dark:text-green-400">
+                    <span className="inline-flex items-center gap-1">
+                      <Check className="h-3 w-3 shrink-0" aria-hidden />
+                      Real-time API integration
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <Check className="h-3 w-3 shrink-0" aria-hidden />
+                      CVE cross-referencing
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <Check className="h-3 w-3 shrink-0" aria-hidden />
+                      CVSS scoring
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <Check className="h-3 w-3 shrink-0" aria-hidden />
+                      Actionable remediation
+                    </span>
                   </div>
                 </div>
               </div>

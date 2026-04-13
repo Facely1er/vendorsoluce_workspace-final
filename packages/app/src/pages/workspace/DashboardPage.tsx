@@ -13,8 +13,7 @@ import { TrialCountdownBanner } from '../../components/onboarding/TrialCountdown
 import { TrialConversionPrompt } from '../../components/onboarding/TrialConversionPrompt';
 import { OnboardingChecklist } from '../../components/onboarding/OnboardingChecklist';
 import WorkspacePage from '../../components/workspace/WorkspacePage';
-import WorkspaceHero from '../../components/workspace/WorkspaceHero';
-import WorkspaceContextBar from '../../components/workspace/WorkspaceContextBar';
+import { WORKSPACE_PAGE_SHELL_INNER_CLASS, WORKSPACE_PAGE_SHELL_OUTER_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkspaceSection from '../../components/workspace/WorkspaceSection';
 
 const DashboardPage: React.FC = () => {
@@ -53,8 +52,10 @@ const DashboardPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <LoadingSkeleton variant="dashboard" />
+      <div className={WORKSPACE_PAGE_SHELL_OUTER_CLASS}>
+        <div className={WORKSPACE_PAGE_SHELL_INNER_CLASS}>
+          <LoadingSkeleton variant="dashboard" />
+        </div>
       </div>
     );
   }
@@ -63,6 +64,12 @@ const DashboardPage: React.FC = () => {
     <WorkspacePage
       title={`Welcome back, ${currentUserName}`}
       subtitle="Control the workflow from portfolio discovery through assessment, reporting, and follow-up actions."
+      stats={[
+        { label: 'Portfolio', value: `${vendors.length} vendors` },
+        { label: 'High exposure', value: `${highRiskCount} high / critical` },
+        { label: 'Assessments', value: `${assessments.length} total` },
+        { label: 'Completed', value: `${completedAssessments} completed` },
+      ]}
       actions={(
         <>
           <Link to="/supply-chain-assessment">
@@ -87,27 +94,6 @@ const DashboardPage: React.FC = () => {
         )}
       </div>
 
-      <WorkspaceHero>
-        <div className="space-y-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-vendorsoluce-green dark:text-vendorsoluce-light-green">
-              Vendor risk command center
-            </p>
-            <h2 className="mt-2 text-xl font-semibold text-gray-900 dark:text-white">
-              One workspace for portfolio visibility, assessment continuity, reporting, and follow-up.
-            </h2>
-          </div>
-          <WorkspaceContextBar
-            items={[
-              { label: 'Portfolio', value: `${vendors.length} vendors` },
-              { label: 'High exposure', value: `${highRiskCount} high / critical` },
-              { label: 'Assessments', value: `${assessments.length} total` },
-              { label: 'Completed', value: `${completedAssessments} completed` },
-            ]}
-          />
-        </div>
-      </WorkspaceHero>
-
       <WorkspaceSection title="Workflow status" description="The workspace should move users through one operating sequence instead of isolated tools.">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-5">
           {[
@@ -117,7 +103,7 @@ const DashboardPage: React.FC = () => {
             ['Report', vendors.length > 0],
             ['Act', completedAssessments > 0],
           ].map(([label, complete]) => (
-            <div key={label} className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-gray-950/40">
+            <div key={label} className="rounded-xl border border-gray-200/70 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-gray-950/40">
               <div className="flex items-center justify-between gap-3">
                 <span className="text-sm font-semibold text-gray-900 dark:text-white">{label}</span>
                 {complete ? <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" /> : <ArrowRight className="h-4 w-4 text-gray-400" />}
@@ -143,7 +129,7 @@ const DashboardPage: React.FC = () => {
             ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400'
             : 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400';
           return (
-            <Card key={metric.label} className="rounded-2xl border-gray-200 shadow-sm dark:border-gray-800 dark:bg-gray-900/80">
+            <Card key={metric.label} className="rounded-2xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <CardContent className="p-5">
                 <div className="flex items-center gap-4">
                   <div className={`rounded-xl p-3 ${toneClasses}`}>
@@ -164,7 +150,7 @@ const DashboardPage: React.FC = () => {
         <WorkspaceSection title="Current priorities" description="These are the next actions that move the workspace forward.">
           <ul className="space-y-3">
             {priorities.map((item) => (
-              <li key={item} className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm leading-relaxed text-gray-700 dark:border-gray-800 dark:bg-gray-950/40 dark:text-gray-300">
+              <li key={item} className="rounded-xl border border-gray-200/70 bg-gray-50 px-4 py-3 text-sm leading-relaxed text-gray-700 dark:border-gray-800 dark:bg-gray-950/40 dark:text-gray-300">
                 {item}
               </li>
             ))}
@@ -186,7 +172,7 @@ const DashboardPage: React.FC = () => {
                   key={action.href + action.label}
                   to={action.href}
                   data-tour={'tour' in action ? action.tour : undefined}
-                  className="flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-800 transition hover:border-vendorsoluce-green hover:text-vendorsoluce-green dark:border-gray-800 dark:bg-gray-950/40 dark:text-gray-200"
+                  className="flex items-center justify-between rounded-xl border border-gray-200/70 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-800 transition hover:border-vendorsoluce-green hover:text-vendorsoluce-green dark:border-gray-800 dark:bg-gray-950/40 dark:text-gray-200"
                 >
                   <span className="flex items-center gap-3">
                     <Icon className="h-4 w-4" />

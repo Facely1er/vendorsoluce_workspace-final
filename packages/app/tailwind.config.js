@@ -11,7 +11,9 @@ export default {
     'pt-[var(--header-height)]',
     'pt-[calc(var(--header-height)_+_2.25rem)]',
     'top-[var(--header-height)]',
+    'top-[calc(var(--header-height)_+_2.25rem)]',
     'h-[calc(100vh_-_var(--header-height))]',
+    'h-[calc(100vh_-_var(--header-height)_-_2.25rem)]',
   ],
   darkMode: 'class',
   theme: {

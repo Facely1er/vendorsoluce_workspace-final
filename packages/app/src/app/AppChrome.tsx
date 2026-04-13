@@ -5,7 +5,6 @@ import { Analytics } from '@vercel/analytics/react';
 import NotificationManager from '../components/common/NotificationManager';
 import Navbar from '../components/layout/Navbar';
 import { MainWrapper } from '../components/layout/MainWrapper';
-import Footer from '../components/layout/Footer';
 import DemoModeBanner from '../components/common/DemoModeBanner';
 import TrialModeBanner from '../components/common/TrialModeBanner';
 import ChatWidget from '../components/chatbot/ChatWidget';
@@ -73,7 +72,6 @@ export default function AppChrome({ children }: AppChromeProps) {
       <TrialModeBanner />
       <Navbar />
       <MainWrapper>{children}</MainWrapper>
-      <Footer />
       <ChatWidget />
       <AppTour
         isRunning={isTourRunning}

@@ -26,6 +26,20 @@ const FACTOR_IDS = [
   { id: 'system_exposure' as const, weight: INTAKE_SLIDER_WEIGHTS.system_exposure, Icon: Server },
 ] as const;
 
+function buildDefaultFactorValues(): Record<string, number> {
+  return FACTOR_IDS.reduce((acc, { id }) => ({ ...acc, [id]: 1 }), {} as Record<string, number>);
+}
+
+function normalizeInitialIntakeFactors(partial?: Record<string, number>): Record<string, number> {
+  const base = buildDefaultFactorValues();
+  if (!partial) return base;
+  for (const { id } of FACTOR_IDS) {
+    const v = partial[id];
+    if (typeof v === 'number' && v >= 1 && v <= 5) base[id] = Math.round(v);
+  }
+  return base;
+}
+
 export type RiskLevel = ReturnType<typeof getRiskLevel>;
 
 export interface InherentRiskResult {
@@ -46,6 +60,16 @@ export interface InherentRiskCalculatorProps {
   showResultInline?: boolean;
   /** Optional initial vendor name */
   initialVendorName?: string;
+  /** Pre-fill VIRA weighted sliders (1–5 per factor) when continuing intake for an existing vendor */
+  initialIntakeFactors?: Record<string, number>;
+  /** Override primary save button label (e.g. "Save VIRA intake") */
+  saveActionLabel?: string;
+  /** Fires after a successful calculation so parents can export compliance artifacts. */
+  onIntakeComputed?: (payload: {
+    vendorName: string;
+    riskScore: number;
+    intakeFactors: Record<string, number>;
+  }) => void;
 }
 
 const InherentRiskCalculator: React.FC<InherentRiskCalculatorProps> = ({
@@ -53,11 +77,14 @@ const InherentRiskCalculator: React.FC<InherentRiskCalculatorProps> = ({
   compact = false,
   showResultInline = true,
   initialVendorName = '',
+  initialIntakeFactors,
+  saveActionLabel,
+  onIntakeComputed,
 }) => {
   const { t } = useTranslation();
   const [vendorName, setVendorName] = useState(initialVendorName);
-  const [factorValues, setFactorValues] = useState<Record<string, number>>(
-    FACTOR_IDS.reduce((acc, { id }) => ({ ...acc, [id]: 1 }), {})
+  const [factorValues, setFactorValues] = useState<Record<string, number>>(() =>
+    normalizeInitialIntakeFactors(initialIntakeFactors)
   );
   const [calculationComplete, setCalculationComplete] = useState(false);
   const [riskScore, setRiskScore] = useState(0);
@@ -109,6 +136,11 @@ const InherentRiskCalculator: React.FC<InherentRiskCalculatorProps> = ({
       const residual = calculateResidualRisk({ intakeFactors: factors }, inherent);
       setRiskScore(residual);
       setCalculationComplete(true);
+      onIntakeComputed?.({
+        vendorName: vendorName.trim(),
+        riskScore: residual,
+        intakeFactors: factors,
+      });
     } catch (err) {
       logger.error('Error calculating risk:', err);
       setError(err instanceof Error ? err.message : 'Failed to calculate risk score');
@@ -268,7 +300,7 @@ const InherentRiskCalculator: React.FC<InherentRiskCalculatorProps> = ({
           >
             {isSaving
               ? t('common.saving', 'Saving...')
-              : t('vendorRisk.dashboard.inherentRisk.addToRadar', 'Add to radar')}
+              : saveActionLabel ?? t('vendorRisk.dashboard.inherentRisk.addToRadar', 'Add to radar')}
           </Button>
         )}
       </CardContent>

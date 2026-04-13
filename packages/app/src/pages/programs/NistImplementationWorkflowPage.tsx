@@ -1,8 +1,8 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Shield, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { PlatformPageLayout } from '../../components/layout/PlatformPageLayout';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import { ImplementationWorkflowTimeline } from '../../components/program/ImplementationWorkflowTimeline';
 import { NIST_IMPLEMENTATION_WORKFLOW, nistWorkflowStepActivityCount } from '../../catalog/nistImplementationWorkflow';
 
@@ -87,34 +87,25 @@ const NistImplementationWorkflowPage: React.FC = () => {
   );
 
   return (
-    <PlatformPageLayout>
+    <WorkspacePageShell
+      title={t('vendorProgramWorkflow.nist.pageTitle')}
+      description={t('vendorProgramWorkflow.nist.pageSubtitle')}
+      descriptionExtra={
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          {t('vendorProgramWorkflow.nist.checklistHint')}{' '}
+          <Link to="/tools/nist-checklist" className="font-medium text-vendorsoluce-green hover:underline dark:text-vendorsoluce-light-green">
+            {t('navigation.nistChecklist')}
+          </Link>
+        </p>
+      }
+    >
       <Link
         to="/"
-        className="inline-flex items-center gap-2 text-sm text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline mb-6"
+        className="inline-flex items-center gap-2 text-sm text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline"
       >
         <ArrowLeft className="h-4 w-4" />
         {t('navigation.home')}
       </Link>
-
-      <div className="flex items-start gap-3 mb-8">
-        <div className="w-12 h-12 rounded-xl bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 flex items-center justify-center text-vendorsoluce-green dark:text-vendorsoluce-light-green flex-shrink-0">
-          <Shield className="h-6 w-6" />
-        </div>
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            {t('vendorProgramWorkflow.nist.pageTitle')}
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300 max-w-3xl">
-            {t('vendorProgramWorkflow.nist.pageSubtitle')}
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-            {t('vendorProgramWorkflow.nist.checklistHint')}{' '}
-            <Link to="/tools/nist-checklist" className="text-vendorsoluce-green dark:text-vendorsoluce-light-green font-medium hover:underline">
-              {t('navigation.nistChecklist')}
-            </Link>
-          </p>
-        </div>
-      </div>
 
       <ImplementationWorkflowTimeline
         workflowId="nist-implementation"
@@ -125,7 +116,7 @@ const NistImplementationWorkflowPage: React.FC = () => {
         alternateProgramLabel={t('navigation.viraDueDiligenceWorkflow')}
         stepHint={(step) => <ChecklistStepHint stepId={step.id} doneIds={checklistDone} />}
       />
-    </PlatformPageLayout>
+    </WorkspacePageShell>
   );
 };
 

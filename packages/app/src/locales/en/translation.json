@@ -47,10 +47,6 @@
         "label": "Email",
         "value": "contact@ermits.com"
       },
-      "phone": {
-        "label": "Phone",
-        "value": "+1 (240) 599-0102"
-      },
       "address": {
         "label": "Headquarters",
         "line1": "8300 McCullough Lane",
@@ -252,8 +248,7 @@
         "company": "VendorSoluce™",
         "address1": "8300 McCullough Lane, Suite 203",
         "address2": "Gaithersburg, MD 20877",
-        "email": "Email: contact@ermits.com",
-        "phone": "Phone: +1 (240) 599-0102"
+        "email": "Email: contact@ermits.com"
       }
     }
   },
@@ -2652,6 +2647,7 @@
   },
   "navigation": {
     "home": "Home",
+    "corporateWebsite": "Corporate website",
     "solutions": "Solutions",
     "dashboard": " Dashboard",
     "pricing": "Pricing",
@@ -2669,10 +2665,13 @@
     "vendorAssessments": "Vendor Security Assessments",
     "supplyChainTools": "Supply chain tools",
     "riskCalculator": "Risk calculator",
+    "viraIntake": "VIRA intake",
     "nistChecklist": "NIST checklist",
     "sbomQuickScan": "SBOM quick scan",
     "assetManagement": "Asset management",
     "activityCatalog": "Activity catalog",
+    "planning": "Planning",
+    "roadmapCalendar": "Roadmap & calendar",
     "nistImplementationWorkflow": "C-SCRM Implementation",
     "viraDueDiligenceWorkflow": "VIRA™ Risk Assessment Program",
     "teamSessions": "Team sessions",
@@ -2692,7 +2691,50 @@
     "foundation": "Foundation",
     "stage1": "Stage 1",
     "stage2": "Stage 2",
-    "stage3": "Stage 3"
+    "stage3": "Stage 3",
+    "navPhaseSetup": "Workspace setup",
+    "navPhaseIntake": "Data intake",
+    "navPhaseScope": "Scope & context",
+    "navPhaseMeasure": "Measure & report",
+    "navPhasePrograms": "Programs & catalog",
+    "platformSetup": "Platform setup",
+    "workspaceOnboarding": "Workspace onboarding",
+    "vendorDataImport": "Import vendor data",
+    "vendorOnboardingProgram": "Vendor onboarding",
+    "fedRampAssessment": "FedRAMP/FISMA Evidence",
+    "assetManagementSidebarHint": "Systems, data, and vendor links that scope and inform assessments.",
+    "vendorRequirementsSidebarHint": "Define expectations and controls before you run assessments.",
+    "programs": "Programs",
+    "search": "Search",
+    "workspaceSearchAria": "Search workspace",
+    "workspaceSearchHint": "Jump to a page (Ctrl+K)"
+  },
+  "workspace": {
+    "roadmapPage": {
+      "title": "Roadmap & compliance calendar",
+      "description": "Phase-aligned program roadmap plus a shared calendar for renewals, intake checkpoints, and audit milestones. Entries below are stored in this browser until connected to team tasks.",
+      "statMilestones": "Milestones",
+      "statMilestonesHint": "Tracked dates",
+      "statMonth": "View",
+      "statMonthHint": "Calendar focus",
+      "statUpcoming": "Upcoming",
+      "statUpcomingHint": "Next events",
+      "statPrograms": "Programs",
+      "statProgramsHint": "Linked phases",
+      "programTitle": "Program roadmap",
+      "programDescription": "Default C-SCRM / VIRA sequence. Jump into each surface when you are ready—order matches typical enterprise rollouts.",
+      "calendarTitle": "Calendar",
+      "calendarDescription": "Dates with milestones show a dot. Use arrows to change months.",
+      "milestonesTitle": "Milestones & deadlines",
+      "milestonesDescription": "Add renewal dates, audit gates, or steering reviews. Remove rows you do not need.",
+      "labelTitle": "Title",
+      "labelDate": "Date",
+      "placeholderTitle": "e.g. FedRAMP evidence drop",
+      "add": "Add",
+      "noUpcoming": "No upcoming milestones. Add one above.",
+      "footerNote": "For dependency topology and critical paths, use the vendor intelligence portfolio and per-vendor detail pages. This calendar is for planning dates only.",
+      "footerLink": "Open portfolio"
+    }
   },
   "auth": {
     "login": "Log In",
@@ -2783,7 +2825,6 @@
       "description": "Comprehensive supply chain risk management platform for modern organizations featuring assessments and automated compliance tools.",
       "contact": {
         "email": "contact@ermits.com",
-        "phone": "+1 (240) 599-0102",
         "address": "Gaithersburg, MD"
       },
       "links": {

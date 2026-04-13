@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from 'react';
-import { X, Printer, AlertTriangle, Shield, TrendingUp, Database, FileText, MapPin, Building2 } from 'lucide-react';
+import { X, Printer, AlertTriangle, Shield, TrendingUp, Database, FileText, MapPin, Building2, Check } from 'lucide-react';
 import { Button } from '../../../../components/ui/Button';
 import {
   getRiskLevel,
@@ -477,14 +477,14 @@ const VendorInherentRiskReport: React.FC<VendorInherentRiskReportProps> = ({
                             <td className="px-3 py-2 text-center">
                               {sbomGap ? (
                                 <span
-                                  className="inline-block w-5 h-5 rounded-full bg-amber-100 text-amber-700 text-xs font-bold leading-5 text-center"
+                                  className="inline-flex w-5 h-5 items-center justify-center rounded-full bg-amber-100 text-amber-700"
                                   title="SBOM gap"
                                 >
-                                  !
+                                  <AlertTriangle className="h-3 w-3" aria-hidden />
                                 </span>
                               ) : sbomOk ? (
-                                <span className="inline-block w-5 h-5 rounded-full bg-green-100 text-green-700 text-xs font-bold leading-5 text-center">
-                                  ✓
+                                <span className="inline-flex w-5 h-5 items-center justify-center rounded-full bg-green-100 text-green-700">
+                                  <Check className="h-3 w-3" aria-hidden />
                                 </span>
                               ) : (
                                 <span className="text-gray-300">—</span>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseEnabled } from '../lib/supabase';
 import type { Database } from '../lib/database.types';
 
 type VendorAssessment = Database['public']['Tables']['vs_vendor_assessments']['Row'];
@@ -38,6 +38,13 @@ export const useVendorAssessments = () => {
       return;
     }
 
+    if (!isSupabaseEnabled()) {
+      setAssessments([]);
+      setError(null);
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       
@@ -64,6 +71,10 @@ export const useVendorAssessments = () => {
   }, [user]);
 
   const fetchFrameworks = useCallback(async () => {
+    if (!isSupabaseEnabled()) {
+      setFrameworks([]);
+      return;
+    }
     try {
       const { data, error } = await supabase
         .from('vs_assessment_frameworks')

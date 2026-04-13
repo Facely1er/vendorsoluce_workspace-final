@@ -4,6 +4,24 @@ import type { IntegratedVendorRiskRecord, VendorIntelligenceSnapshot, VendorNode
 
 type VendorRow = Database["public"]["Tables"]["vs_vendors"]["Row"];
 
+function demoHash(id: string, salt: number): number {
+  let h = salt >>> 0;
+  for (let i = 0; i < id.length; i++) {
+    h = (Math.imul(31, h) + id.charCodeAt(i)) >>> 0;
+  }
+  return h;
+}
+
+function demoPercent(id: string, salt: number, min = 18, max = 92): number {
+  const h = demoHash(id, salt);
+  return min + (h % (max - min + 1));
+}
+
+/** Deterministic 0–1 float for snapshot fields that mirror DB metric columns. */
+function demoUnit(id: string, salt: number): number {
+  return (demoHash(id, salt) % 10000) / 10000;
+}
+
 function normalizeKey(value: string | null | undefined): string {
   return (value ?? "").trim().toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 }
@@ -89,6 +107,76 @@ export async function buildIntegratedVendorRiskRecords(orgId: string, vendors: V
       graphLinked: snapshot.linked,
     };
   });
+
+  return { intelligence, records };
+}
+
+/**
+ * Synthetic graph intelligence for demo mode or when Supabase is not configured.
+ * Keeps portfolio and detail views usable without live graph_nodes / metrics tables.
+ */
+export function buildDemoIntegratedVendorRiskRecords(
+  vendors: VendorRow[],
+): { intelligence: Record<string, VendorIntelligenceSnapshot>; records: IntegratedVendorRiskRecord[] } {
+  const intelligence: Record<string, VendorIntelligenceSnapshot> = {};
+  const records: IntegratedVendorRiskRecord[] = [];
+
+  for (const vendor of vendors) {
+    const graphNodeId = `demo-graph-node-${vendor.id}`;
+    const systemicPct = demoPercent(vendor.id, 11);
+    const propagationPct = demoPercent(vendor.id, 22);
+    const concentrationPct = demoPercent(vendor.id, 33);
+    const blastPct = demoPercent(vendor.id, 44);
+    const confidencePct = demoPercent(vendor.id, 55, 62, 96);
+
+    const inherentRiskScore = vendor.risk_score ?? null;
+    const systemicDependencyScore = systemicPct;
+    const propagationRiskScore = propagationPct;
+    const concentrationFactor = concentrationPct;
+    const blastRadiusWeightedImpact = blastPct;
+    const graphConfidenceScore = confidencePct;
+
+    const riskInputs = [inherentRiskScore, systemicDependencyScore, propagationRiskScore].filter(
+      (value): value is number => typeof value === "number",
+    );
+    const finalRiskScore =
+      riskInputs.length > 0 ? Math.round(riskInputs.reduce((sum, value) => sum + value, 0) / riskInputs.length) : null;
+
+    intelligence[vendor.id] = {
+      vendorId: vendor.id,
+      graphNodeId,
+      nodeName: vendor.name,
+      linked: true,
+      matchType: "name",
+      confidence: 0.88,
+      weightedDegree: 0.15 + demoUnit(vendor.id, 1) * 0.55,
+      betweenness: 0.05 + demoUnit(vendor.id, 2) * 0.35,
+      closeness: 0.1 + demoUnit(vendor.id, 3) * 0.4,
+      eigenvector: 0.05 + demoUnit(vendor.id, 4) * 0.25,
+      concentrationFactor: concentrationPct / 100,
+      hiddenConcentrationScore: demoUnit(vendor.id, 5) * 0.4,
+      systemicDependencyScore: systemicPct / 100,
+      propagationRiskScore: propagationPct / 100,
+      blastRadiusWeightedImpact: blastPct / 100,
+      confidenceScore: confidencePct / 100,
+    };
+
+    records.push({
+      vendorId: vendor.id,
+      vendorName: vendor.name,
+      userId: vendor.user_id,
+      inherentRiskScore,
+      systemicDependencyScore,
+      propagationRiskScore,
+      concentrationFactor,
+      blastRadiusWeightedImpact,
+      graphConfidenceScore,
+      finalRiskScore,
+      graphNodeId,
+      graphNodeName: vendor.name,
+      graphLinked: true,
+    });
+  }
 
   return { intelligence, records };
 }

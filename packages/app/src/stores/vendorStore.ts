@@ -3,7 +3,11 @@ import { devtools, persist } from 'zustand/middleware';
 import { supabase, isSupabaseEnabled } from '../lib/supabase';
 import type { Database } from '../lib/database.types';
 import type { IntegratedVendorRiskRecord, VendorIntelligenceSnapshot } from 'shared/domain/vendorsoluce';
-import { buildIntegratedVendorRiskRecords } from '../services/vendorsoluce';
+import {
+  buildIntegratedVendorRiskRecords,
+  buildDemoIntegratedVendorRiskRecords,
+} from '../services/vendorsoluce';
+import { config } from '../utils/config';
 import { createLocalVendor, deleteLocalVendor, getLocalVendors, updateLocalVendor } from '../services/local/workspaceLocalStore';
 
 type Vendor = Database['public']['Tables']['vs_vendors']['Row'];
@@ -89,7 +93,10 @@ export const useVendorStore = create<VendorState>()(
             let intelligenceByVendorId = get().intelligenceByVendorId;
             let integratedRiskRecords = get().integratedRiskRecords;
             if (orgId) {
-              const integrated = await buildIntegratedVendorRiskRecords(orgId, vendors);
+              const useDemoIntelligence = !isSupabaseEnabled() || config.app.demoMode;
+              const integrated = useDemoIntelligence
+                ? buildDemoIntegratedVendorRiskRecords(vendors)
+                : await buildIntegratedVendorRiskRecords(orgId, vendors);
               intelligenceByVendorId = integrated.intelligence;
               integratedRiskRecords = integrated.records;
             }
@@ -121,7 +128,10 @@ export const useVendorStore = create<VendorState>()(
         fetchVendorIntelligence: async (orgId: string) => {
           set({ loading: true, error: null }, false, 'fetchVendorIntelligence/start');
           try {
-            const integrated = await buildIntegratedVendorRiskRecords(orgId, get().vendors);
+            const useDemoIntelligence = !isSupabaseEnabled() || config.app.demoMode;
+            const integrated = useDemoIntelligence
+              ? buildDemoIntegratedVendorRiskRecords(get().vendors)
+              : await buildIntegratedVendorRiskRecords(orgId, get().vendors);
             set({
               intelligenceByVendorId: integrated.intelligence,
               integratedRiskRecords: integrated.records,

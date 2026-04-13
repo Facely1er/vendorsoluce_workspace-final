@@ -11,11 +11,11 @@ import {
   FileText,
   Shield,
   RotateCcw,
+  Check,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useSupplyChainAssessments } from '../../hooks/useSupplyChainAssessments';
-import BackToDashboardLink from '../../components/common/BackToDashboardLink';
 import WorkspacePage from '../../components/workspace/WorkspacePage';
 import WorkspaceHero from '../../components/workspace/WorkspaceHero';
 import WorkspaceContextBar from '../../components/workspace/WorkspaceContextBar';
@@ -432,8 +432,6 @@ const FedRampAssessment = () => {
   if (assessmentStage === 'startScreen') {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <BackToDashboardLink />
-
         <div className="mb-6 p-4 bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/10 rounded-lg border border-vendorsoluce-green/30">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green uppercase tracking-wide">
@@ -526,8 +524,6 @@ const FedRampAssessment = () => {
   if (assessmentStage === 'onboarding') {
     return (
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <BackToDashboardLink />
-
         <Card>
           <CardHeader>
             <CardTitle className="text-xl text-gray-900 dark:text-white">
@@ -558,10 +554,22 @@ const FedRampAssessment = () => {
             <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-md mb-6">
               <h3 className="font-medium text-gray-900 dark:text-white mb-2">What to expect</h3>
               <ul className="space-y-2 text-gray-600 dark:text-gray-400 text-sm">
-                <li className="flex items-start"><span className="text-green-500 mr-2">✓</span><span>7 control-family sections, 4 evidence questions each (28 total)</span></li>
-                <li className="flex items-start"><span className="text-green-500 mr-2">✓</span><span>Answer "Has Evidence", "Partial", or "No Evidence" for each artifact</span></li>
-                <li className="flex items-start"><span className="text-green-500 mr-2">✓</span><span>Progress is auto-saved if you are signed in</span></li>
-                <li className="flex items-start"><span className="text-green-500 mr-2">✓</span><span>Results are mapped to FISMA Low / Moderate / High impact-level readiness</span></li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-green-500 shrink-0 mt-0.5" aria-hidden />
+                  <span>7 control-family sections, 4 evidence questions each (28 total)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-green-500 shrink-0 mt-0.5" aria-hidden />
+                  <span>Answer &quot;Has Evidence&quot;, &quot;Partial&quot;, or &quot;No Evidence&quot; for each artifact</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-green-500 shrink-0 mt-0.5" aria-hidden />
+                  <span>Progress is auto-saved if you are signed in</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-green-500 shrink-0 mt-0.5" aria-hidden />
+                  <span>Results are mapped to FISMA Low / Moderate / High impact-level readiness</span>
+                </li>
               </ul>
             </div>
 
@@ -600,7 +608,17 @@ const FedRampAssessment = () => {
             { label: 'Overall score', value: `${overallScore}/100` },
             { label: 'Section', value: `${currentSection + 1}/${sections.length}` },
             { label: 'Section score', value: `${sectionScore.percentage}%` },
-            { label: 'Save status', value: saveStatus === 'saved' ? 'Saved ✓' : saveStatus === 'saving' ? 'Saving…' : saveStatus === 'error' ? 'Save error' : 'Unsaved' },
+            {
+              label: 'Save status',
+              value:
+                saveStatus === 'saved'
+                  ? 'Saved'
+                  : saveStatus === 'saving'
+                    ? 'Saving…'
+                    : saveStatus === 'error'
+                      ? 'Save error'
+                      : 'Unsaved',
+            },
           ]}
         />
       </WorkspaceHero>

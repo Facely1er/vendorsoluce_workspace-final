@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Radar, Plus, RefreshCw, AlertCircle, ArrowRight, ExternalLink, X } from 'lucide-react';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { Plus, RefreshCw, AlertCircle, ArrowRight, ExternalLink, X, Info, Check, Gauge, BookOpen } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Card, CardContent } from '../../components/ui/Card';
-import BackToDashboardLink from '../../components/common/BackToDashboardLink';
 import JourneyProgress from '../../components/journey/JourneyProgress';
 import { useVendorPortfolio } from './VendorRiskRadar/hooks/useVendorPortfolio';
 import VendorDashboard from './VendorRiskRadar/components/VendorDashboard';
@@ -18,17 +17,19 @@ import RadarDeliverablesSection from './VendorRiskRadar/components/RadarDelivera
 import type { VendorRadar, VendorBase } from '../../types/vendorRadar';
 import { openVendorPortfolioReportWithVendors } from '../../utils/vendorPortfolioReportSync';
 import { config } from '../../utils/config';
-import { PlatformPageLayout } from '../../components/layout/PlatformPageLayout';
 import WorkspacePage from '../../components/workspace/WorkspacePage';
-import WorkspaceHero from '../../components/workspace/WorkspaceHero';
-import WorkspaceContextBar from '../../components/workspace/WorkspaceContextBar';
+import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 
 const RADAR_IMPORT_HANDOFF_TS_KEY = 'vs_radar_import_handoff_ts';
 const RADAR_IMPORT_HANDOFF_MAX_AGE_MS = 15_000;
 
+type RadarPagePanel = 'analyze' | 'guide';
+
 const VendorRiskRadar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const panel: RadarPagePanel = searchParams.get('panel') === 'guide' ? 'guide' : 'analyze';
   const workflowHelpRef = useRef<HTMLDivElement>(null);
   const importHandoffHandledRef = useRef(false);
   const [showWebsiteImportHandoff, setShowWebsiteImportHandoff] = useState(false);
@@ -50,8 +51,6 @@ const VendorRiskRadar: React.FC = () => {
   const [showCatalog, setShowCatalog] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
   const [showReport, setShowReport] = useState(false);
-  const [systemStatus, setSystemStatus] = useState<'operational' | 'initializing' | 'error'>('operational');
-  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
   const [filters, setFilters] = useState({
     category: 'all',
     riskLevel: 'all'
@@ -86,6 +85,7 @@ const VendorRiskRadar: React.FC = () => {
       params.delete('handoff');
       params.delete('from');
       params.delete('ref');
+      params.delete('panel');
       const q = params.toString();
       navigate(`${location.pathname}${q ? `?${q}` : ''}`, { replace: true });
     } else {
@@ -99,42 +99,22 @@ const VendorRiskRadar: React.FC = () => {
     return () => window.cancelAnimationFrame(raf);
   }, [location.search, location.pathname, navigate]);
 
-  // Update system status based on loading state
+  // Deep links to deliverables (e.g. workflow catalog) need the Analyze tab where that section mounts.
   useEffect(() => {
-    if (loading) {
-      setSystemStatus('initializing');
-    } else if (error) {
-      setSystemStatus('error');
-    } else {
-      setSystemStatus('operational');
-    }
-  }, [loading, error]);
-
-  // Update last refresh time when scan completes
-  useEffect(() => {
-    if (!loading && vendors.length > 0) {
-      setLastRefresh(new Date());
-    }
-  }, [loading, vendors.length]);
-
-  const formatLastRefresh = (date: Date): string => {
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    
-    if (diffMins < 1) return 'Just now';
-    if (diffMins < 60) return `${diffMins}m ago`;
-    const diffHours = Math.floor(diffMins / 60);
-    if (diffHours < 24) return `${diffHours}h ago`;
-    return date.toLocaleDateString();
-  };
-
-  const handleStatusClick = () => {
-    if (systemStatus === 'operational') {
-      // Trigger a refresh
-      scanVendors();
-    }
-  };
+    if (location.hash !== '#vendor-risk-radar-deliverables') return;
+    setSearchParams(
+      (prev) => {
+        const p = new URLSearchParams(prev);
+        p.delete('panel');
+        return p;
+      },
+      { replace: true }
+    );
+    const t = window.setTimeout(() => {
+      document.getElementById('vendor-risk-radar-deliverables')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    return () => window.clearTimeout(t);
+  }, [location.hash, setSearchParams]);
 
   const handleAddFromCatalog = async (vendor: Partial<VendorBase>) => {
     try {
@@ -175,44 +155,130 @@ const VendorRiskRadar: React.FC = () => {
     return location.pathname === path;
   };
 
+  const setPanel = (next: RadarPagePanel) => {
+    setSearchParams(
+      (prev) => {
+        const p = new URLSearchParams(prev);
+        if (next === 'analyze') {
+          p.delete('panel');
+        } else {
+          p.set('panel', 'guide');
+        }
+        return p;
+      },
+      { replace: true }
+    );
+  };
+
   const scrollToWorkflowHelp = () => {
-    workflowHelpRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setPanel('guide');
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        workflowHelpRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
   };
 
   return (
     <WorkspacePage
       title="Vendor Risk Radar"
       subtitle="Portfolio visibility, inherent risk signals, and import-to-report continuity in one workspace surface."
-      actions={(
-        <>
-          <Button variant="primary" onClick={() => setShowWizard(true)} className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Add vendors
-          </Button>
-          <Button variant="outline" onClick={scanVendors} className="flex items-center gap-2">
-            <RefreshCw className="h-4 w-4" />
-            Refresh
-          </Button>
-        </>
-      )}
     >
-      <WorkspaceHero>
-        <WorkspaceContextBar items={[
-          { label: 'Portfolio', value: `${vendors.length} vendors` },
-          { label: 'System status', value: systemStatus },
-          { label: 'Last refresh', value: formatLastRefresh(lastRefresh) },
-          { label: 'Current stage', value: 'Analyze' },
-        ]} />
-      </WorkspaceHero>
-      <PlatformPageLayout className="px-0 sm:px-0 lg:px-0 py-0">
-        <BackToDashboardLink />
-        
-        {/* Journey Progress */}
-        <JourneyProgress 
-          currentStage={1} 
-          stage1Complete={vendors.length > 0}
-          showNavigation={true}
-        />
+      <WorkspacePageBody>
+        {/* Related flows: sidebar covers portfolio; keep shortcuts to intake + assessments only. */}
+        <div className="mb-6">
+          <div className="border-b border-gray-200 dark:border-gray-700">
+            <nav className="flex flex-wrap gap-4 sm:gap-6" aria-label="Vendor Risk related pages">
+              <Link
+                to="/vendor-risk-radar"
+                className={`border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
+                  isActiveRoute('/vendor-risk-radar')
+                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                Radar
+              </Link>
+              <Link
+                to="/vendor-onboarding"
+                className={`border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
+                  isActiveRoute('/vendor-onboarding')
+                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                Intake
+              </Link>
+              <Link
+                to="/vendor-assessments"
+                className={`border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
+                  isActiveRoute('/vendor-assessments')
+                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                Assessments
+              </Link>
+            </nav>
+          </div>
+        </div>
+
+        {/* Error Display — always visible regardless of panel */}
+        {error && (
+          <Card className="mb-6 border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 text-red-700 dark:text-red-400">
+                <AlertCircle className="w-5 h-5" />
+                <span>{error}</span>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        <div className="mb-6" role="tablist" aria-label="Vendor Risk Radar page sections">
+          <div className="flex flex-wrap gap-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50/80 dark:bg-gray-900/40 p-1">
+            <button
+              type="button"
+              role="tab"
+              id="radar-panel-analyze"
+              aria-selected={panel === 'analyze'}
+              aria-controls="radar-panel-analyze-panel"
+              className={`inline-flex flex-1 min-w-[10rem] items-center justify-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium transition-colors sm:flex-none ${
+                panel === 'analyze'
+                  ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-800 dark:text-white'
+                  : 'text-gray-600 hover:bg-white/60 dark:text-gray-400 dark:hover:bg-gray-800/60'
+              }`}
+              onClick={() => setPanel('analyze')}
+            >
+              <Gauge className="h-4 w-4 shrink-0" aria-hidden />
+              Analyze workspace
+            </button>
+            <button
+              type="button"
+              role="tab"
+              id="radar-panel-guide"
+              aria-selected={panel === 'guide'}
+              aria-controls="radar-panel-guide-panel"
+              className={`inline-flex flex-1 min-w-[10rem] items-center justify-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium transition-colors sm:flex-none ${
+                panel === 'guide'
+                  ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-800 dark:text-white'
+                  : 'text-gray-600 hover:bg-white/60 dark:text-gray-400 dark:hover:bg-gray-800/60'
+              }`}
+              onClick={() => setPanel('guide')}
+            >
+              <BookOpen className="h-4 w-4 shrink-0" aria-hidden />
+              Journey &amp; guidance
+            </button>
+          </div>
+          <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+            {panel === 'analyze'
+              ? 'Scan, filter, charts, and the vendor table. Switch to the other tab for staged journey content and import help.'
+              : 'Stage progress, workflow context, and learning links—kept separate from the analysis tools.'}
+          </p>
+        </div>
+
+        {panel === 'analyze' && (
+        <div id="radar-panel-analyze-panel" role="tabpanel" aria-labelledby="radar-panel-analyze">
 
         {showWebsiteImportHandoff && (
           <div
@@ -264,221 +330,6 @@ const VendorRiskRadar: React.FC = () => {
             </div>
           </div>
         )}
-        
-        {/* Stage 1 Header */}
-        <div className="mb-6">
-          <div className="mb-4 p-4 bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/10 rounded-lg border border-vendorsoluce-green/30">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green uppercase tracking-wide">
-                Stage 1 of 3
-              </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">•</span>
-              <span className="text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green">
-                Discover Your Exposure
-              </span>
-            </div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-              Outcome: "I know exactly which vendors pose the greatest risk"
-            </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Upload your vendor list and instantly see which vendors pose the greatest risk to your organization.
-            </p>
-          </div>
-          
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-2 gap-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <Radar className="w-8 h-8 text-vendorsoluce-green flex-shrink-0" />
-                <div className="min-w-0">
-                  <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
-                    VENDORSOLUCE • STAGE 1
-                  </div>
-                  <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-                    Vendor Risk Radar
-                  </h1>
-                </div>
-              </div>
-              <p className="text-sm lg:text-base text-gray-600 dark:text-gray-300 ml-11">
-                Supply chain risk signal map with SBOM-aware classification (EO 14028 posture signals).
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-2 lg:gap-3">
-              <button
-                onClick={handleStatusClick}
-                disabled={systemStatus === 'initializing'}
-                className={`px-3 py-1.5 rounded-full text-xs lg:text-sm font-medium whitespace-nowrap transition-all ${
-                  systemStatus === 'operational'
-                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/40 cursor-pointer'
-                    : systemStatus === 'error'
-                    ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
-                    : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 cursor-not-allowed'
-                }`}
-                title={systemStatus === 'operational' ? 'Click to refresh' : systemStatus === 'initializing' ? 'System initializing...' : 'System error'}
-              >
-                Status: {systemStatus === 'operational' ? 'Operational' : systemStatus === 'error' ? 'Error' : 'Initializing'}
-              </button>
-              <div className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-xs lg:text-sm font-medium whitespace-nowrap">
-                Last refresh: {loading ? 'INITIALIZING...' : formatLastRefresh(lastRefresh)}
-              </div>
-            </div>
-          </div>
-          
-          {/* Sub-navigation bar */}
-          <div className="mt-4 border-b border-gray-200 dark:border-gray-700">
-            <nav className="flex space-x-6" aria-label="Vendor Risk Navigation">
-              <Link
-                to="/vendor-risk-radar"
-                className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
-                  isActiveRoute('/vendor-risk-radar')
-                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                }`}
-              >
-                Radar
-              </Link>
-              <Link
-                to="/vendors"
-                className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
-                  isActiveRoute('/vendors') || isActiveRoute('/vendor-risk-dashboard')
-                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                }`}
-              >
-                Dashboard
-              </Link>
-              <Link
-                to="/vendor-onboarding"
-                className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
-                  isActiveRoute('/vendor-onboarding')
-                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                }`}
-              >
-                Intake
-              </Link>
-              <Link
-                to="/vendor-assessments"
-                className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
-                  isActiveRoute('/vendor-assessments')
-                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                }`}
-              >
-                Reports
-              </Link>
-            </nav>
-          </div>
-        </div>
-
-        <RadarWorkflowGuide />
-
-        {/* Error Display */}
-        {error && (
-          <Card className="mb-6 border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-red-700 dark:text-red-400">
-                <AlertCircle className="w-5 h-5" />
-                <span>{error}</span>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Executive KPIs Section */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <h2 className="text-lg lg:text-xl font-semibold text-gray-900 dark:text-white">Executive KPIs</h2>
-            <span className="text-gray-500 dark:text-gray-400 cursor-help" title="Key performance indicators for vendor risk management">
-              ℹ️
-            </span>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <Card className="bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-900/20 dark:to-green-800/10 border-green-200 dark:border-green-800">
-              <CardContent className="p-6">
-                <div className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-                  {stats.total}
-                </div>
-                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  VENDORS IN VIEW
-                </div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">
-                  Demo capped at 8
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-red-50 to-red-100/50 dark:from-red-900/20 dark:to-red-800/10 border-red-200 dark:border-red-800">
-              <CardContent className="p-6">
-                <div className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-                  {stats.criticalRisk}
-                </div>
-                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  CRITICAL VENDORS
-                </div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">
-                  Top operational exposure
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100/50 dark:from-yellow-900/20 dark:to-yellow-800/10 border-yellow-200 dark:border-yellow-800">
-              <CardContent className="p-6">
-                <div className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-                  {stats.sbomGaps}
-                </div>
-                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  SBOM GAPS
-                </div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">
-                  Software vendors without SBOM
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-orange-50 to-orange-100/50 dark:from-orange-900/20 dark:to-orange-800/10 border-orange-200 dark:border-orange-800">
-              <CardContent className="p-6">
-                <div className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-                  {stats.maxRisk}
-                </div>
-                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  HIGHEST RISK
-                </div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">
-                  Residual score (0-100)
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* Insights & Guidance Section */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <h2 className="text-lg lg:text-xl font-semibold text-gray-900 dark:text-white">Insights & Guidance</h2>
-            <span className="text-gray-500 dark:text-gray-400 cursor-help" title="Actionable insights and guidance">
-              ℹ️
-            </span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10">
-              <CardContent className="p-5">
-                <div className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  EO 14028 signal:
-                </div>
-                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                  Vendors that provide software and cannot produce an SBOM are flagged and prioritized for procurement follow-up. This demo shows signal detection; full SBOM ingestion & component risk scoring is a Professional feature.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="border-green-200 dark:border-green-800 bg-green-50/50 dark:bg-green-900/10">
-              <CardContent className="p-5">
-                <div className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  What you get in 3 minutes:
-                </div>
-                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                  Identify the vendors that can break execution, see the SBOM gaps, and export a defensible narrative for leadership (PDF locked in demo).
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
 
         {/* Initialization Status */}
         {loading && (
@@ -515,7 +366,7 @@ const VendorRiskRadar: React.FC = () => {
             />
             <div className="flex items-center gap-2 ml-auto">
               <div className="flex items-center gap-1">
-                <span className="text-xs text-gray-500 dark:text-gray-400">ℹ️</span>
+                <Info className="h-3.5 w-3.5 text-gray-400 shrink-0" aria-hidden title="Filter vendors" />
                 <select 
                   value={filters.category}
                   onChange={(e) => setFilters({ ...filters, category: e.target.value })}
@@ -530,7 +381,7 @@ const VendorRiskRadar: React.FC = () => {
                 </select>
               </div>
               <div className="flex items-center gap-1">
-                <span className="text-xs text-gray-500 dark:text-gray-400">ℹ️</span>
+                <Info className="h-3.5 w-3.5 text-gray-400 shrink-0" aria-hidden title="Filter by risk" />
                 <select 
                   value={filters.riskLevel}
                   onChange={(e) => setFilters({ ...filters, riskLevel: e.target.value })}
@@ -609,7 +460,7 @@ const VendorRiskRadar: React.FC = () => {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-8 h-8 rounded-full bg-vendorsoluce-green flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">✓</span>
+                      <Check className="h-4 w-4 text-white" aria-hidden />
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                       Stage 1 Complete: You've Discovered Your Exposure
@@ -632,10 +483,54 @@ const VendorRiskRadar: React.FC = () => {
           </Card>
         )}
 
+        </div>
+        )}
+
+        {panel === 'guide' && (
+        <div id="radar-panel-guide-panel" role="tabpanel" aria-labelledby="radar-panel-guide" className="space-y-6">
+
+        <JourneyProgress
+          currentStage={1}
+          stage1Complete={vendors.length > 0}
+          showNavigation={true}
+        />
+
+        <RadarWorkflowGuide onBeforeJump={() => setPanel('analyze')} />
+
+        {/* Insights & Guidance Section */}
+        <div className="mb-2">
+          <div className="flex items-center gap-2 mb-4">
+            <h2 className="text-lg lg:text-xl font-semibold text-gray-900 dark:text-white">Insights &amp; guidance</h2>
+            <Info className="h-4 w-4 text-gray-400 shrink-0" aria-hidden title="Actionable insights and guidance" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card className="border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10">
+              <CardContent className="p-5">
+                <div className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                  EO 14028 signal:
+                </div>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                  Vendors that provide software and cannot produce an SBOM are flagged and prioritized for procurement follow-up. This demo shows signal detection; full SBOM ingestion & component risk scoring is a Professional feature.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="border-green-200 dark:border-green-800 bg-green-50/50 dark:bg-green-900/10">
+              <CardContent className="p-5">
+                <div className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                  What you get in 3 minutes:
+                </div>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                  Identify the vendors that can break execution, see the SBOM gaps, and export a defensible narrative for leadership (PDF locked in demo).
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
         <div
           ref={workflowHelpRef}
           id="vendor-risk-radar-workflow"
-          className="mb-6 scroll-mt-24"
+          className="scroll-mt-24"
         >
           <Card className="border-vendorsoluce-green/25 dark:border-vendorsoluce-green/30">
             <CardContent className="p-6">
@@ -645,7 +540,7 @@ const VendorRiskRadar: React.FC = () => {
               <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-3 list-disc list-inside">
                 <li>
                   Use <strong className="text-gray-900 dark:text-white">Template</strong> then{' '}
-                  <strong className="text-gray-900 dark:text-white">Import</strong> in the toolbar for CSV. The same
+                  <strong className="text-gray-900 dark:text-white">Import</strong> in the <strong className="text-gray-900 dark:text-white">Analyze workspace</strong> tab toolbar for CSV. The same
                   control accepts <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1 rounded">.json</code>{' '}
                   portfolio files (website or app).
                 </li>
@@ -655,8 +550,8 @@ const VendorRiskRadar: React.FC = () => {
                   with the static Vendor Threat Radar page.
                 </li>
                 <li>
-                  The large <strong className="text-gray-900 dark:text-white">Reports &amp; exports</strong> section
-                  above is where you open the inherent risk summary and the full portfolio HTML report.
+                  On the <strong className="text-gray-900 dark:text-white">Analyze workspace</strong> tab, the{' '}
+                  <strong className="text-gray-900 dark:text-white">Reports &amp; exports</strong> section is where you open the inherent risk summary and the full portfolio HTML report.
                 </li>
               </ul>
             </CardContent>
@@ -664,7 +559,7 @@ const VendorRiskRadar: React.FC = () => {
         </div>
 
         {/* Cross-Project Links */}
-        <Card className="mb-6">
+        <Card>
           <CardContent className="p-4">
             <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
               <span className="text-gray-500 dark:text-gray-400">Also try:</span>
@@ -697,6 +592,9 @@ const VendorRiskRadar: React.FC = () => {
             </div>
           </CardContent>
         </Card>
+
+        </div>
+        )}
 
         {/* Vendor Detail Modal (simplified - can be expanded) */}
         {selectedVendor && (
@@ -799,7 +697,7 @@ const VendorRiskRadar: React.FC = () => {
             onClose={() => setShowReport(false)}
           />
         )}
-      </PlatformPageLayout>
+      </WorkspacePageBody>
     </WorkspacePage>
   );
 };

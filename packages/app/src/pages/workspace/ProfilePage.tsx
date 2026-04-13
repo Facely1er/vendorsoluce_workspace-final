@@ -59,7 +59,6 @@ const ProfilePage: React.FC = () => {
 
   return (
     <WorkspacePageShell
-      eyebrow="Workspace administration"
       title="Profile"
       description="Manage your identity, role, company details, and presentation settings from one consistent profile workspace."
       actions={[{ label: isEditing ? 'Cancel edits' : 'Edit profile', onClick: () => (isEditing ? handleCancel() : setIsEditing(true)), variant: 'outline' }]}

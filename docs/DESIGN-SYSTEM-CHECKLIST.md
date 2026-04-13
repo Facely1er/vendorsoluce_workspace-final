@@ -20,7 +20,7 @@ Prefer `packages/shared/tailwind-colors.js` and Tailwind classes (e.g. `bg-vendo
 ## Layout
 
 - **Max width:** `max-w-7xl mx-auto`
-- **Horizontal padding:** `px-4 sm:px-6 lg:px-8`
+- **Horizontal padding:** `px-4 sm:px-6 lg:px-8` (platform and portal). **Static website:** the fixed nav row uses `px-2 sm:px-4 lg:px-8` in `packages/website/includes/header.html` by design; footer and main blocks use wider padding. See `docs/baseline/WEBSITE_STATIC_NORMALIZATION.md`.
 - **Shell:** `min-h-screen flex flex-col`; main content `flex-1`.
 
 ## Shell components

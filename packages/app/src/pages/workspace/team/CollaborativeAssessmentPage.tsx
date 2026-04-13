@@ -14,7 +14,6 @@ export default function CollaborativeAssessmentPage() {
 
   return (
     <WorkspacePageShell
-      eyebrow="VendorSoluce collaboration"
       title="Collaborative assessment"
       description="Launch a structured team session for vendor review so procurement, security, legal, and business owners work from the same operating context."
       actions={[{ label: "Back to dashboard", to: WR.VENDOR_INTELLIGENCE, variant: "outline" }]}

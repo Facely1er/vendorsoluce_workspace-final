@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Radar } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { PlatformPageLayout } from '../../components/layout/PlatformPageLayout';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import { ImplementationWorkflowTimeline } from '../../components/program/ImplementationWorkflowTimeline';
+import { MR } from 'shared/constants/routes';
 import { VIRA_DUE_DILIGENCE_WORKFLOW, viraWorkflowStepActivityCount } from '../../catalog/viraDueDiligenceWorkflow';
 
 const ViraDueDiligenceWorkflowPage: React.FC = () => {
@@ -34,38 +35,27 @@ const ViraDueDiligenceWorkflowPage: React.FC = () => {
   );
 
   return (
-    <PlatformPageLayout>
+    <WorkspacePageShell
+      title={t('vendorProgramWorkflow.vira.pageTitle')}
+      description={t('vendorProgramWorkflow.vira.pageSubtitle')}
+    >
       <Link
         to="/"
-        className="inline-flex items-center gap-2 text-sm text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline mb-6"
+        className="inline-flex items-center gap-2 text-sm text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline"
       >
         <ArrowLeft className="h-4 w-4" />
         {t('navigation.home')}
       </Link>
-
-      <div className="flex items-start gap-3 mb-8">
-        <div className="w-12 h-12 rounded-xl bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 flex items-center justify-center text-vendorsoluce-green dark:text-vendorsoluce-light-green flex-shrink-0">
-          <Radar className="h-6 w-6" />
-        </div>
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            {t('vendorProgramWorkflow.vira.pageTitle')}
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300 max-w-3xl">
-            {t('vendorProgramWorkflow.vira.pageSubtitle')}
-          </p>
-        </div>
-      </div>
 
       <ImplementationWorkflowTimeline
         workflowId="vira-due-diligence"
         steps={VIRA_DUE_DILIGENCE_WORKFLOW.steps}
         activityCountForStep={viraWorkflowStepActivityCount}
         labels={labels}
-        alternateProgramHref="/program/nist-implementation"
+        alternateProgramHref={MR.PROGRAM_NIST_IMPLEMENTATION}
         alternateProgramLabel={t('navigation.nistImplementationWorkflow')}
       />
-    </PlatformPageLayout>
+    </WorkspacePageShell>
   );
 };
 

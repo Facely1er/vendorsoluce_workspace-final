@@ -20,7 +20,8 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "app/*": ["../app/src/*"]
+      "app/*": ["../app/src/*"],
+      "shared/*": ["../shared/src/*"]
     }
   },
   "include": ["src"]

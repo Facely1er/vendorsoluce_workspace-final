@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import { Upload, CheckCircle, Mail, ArrowRight, X, Zap, Database } from 'lucide-react';
+import { Upload, CheckCircle, Mail, ArrowRight, X, Zap, Database, Target, AlertTriangle, Lightbulb } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useSubscription } from '../../context/SubscriptionContext';
 
@@ -188,8 +188,9 @@ const TrialPage: React.FC = () => {
                 Stage 1: Discover Your Exposure
               </h1>
               <div className="mb-6 p-4 bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/10 rounded-lg border border-vendorsoluce-green/30 max-w-2xl mx-auto">
-                <div className="text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">
-                  🎯 OUTCOME
+                <div className="text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2 inline-flex items-center gap-2">
+                  <Target className="h-4 w-4 shrink-0" aria-hidden />
+                  OUTCOME
                 </div>
                 <p className="text-base font-medium text-gray-900 dark:text-white">
                   "I know exactly which vendors pose the greatest risk"
@@ -203,8 +204,17 @@ const TrialPage: React.FC = () => {
             <Card className="mb-8">
               <CardContent className="p-8 md:p-12 text-center">
                 <div
-                  className="border-3 border-dashed border-vendorsoluce-light-green rounded-xl p-12 bg-vendorsoluce-pale-green cursor-pointer hover:bg-vendorsoluce-green/5 transition-colors"
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Upload vendor CSV file"
+                  className="border-3 border-dashed border-vendorsoluce-light-green rounded-xl p-12 bg-vendorsoluce-pale-green cursor-pointer hover:bg-vendorsoluce-green/5 transition-colors focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                   onClick={() => fileInputRef.current?.click()}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      fileInputRef.current?.click();
+                    }
+                  }}
                 >
                   <Upload className="w-16 h-16 text-vendorsoluce-green mx-auto mb-4" />
                   <div className="text-2xl font-semibold mb-2 text-gray-900 dark:text-white">
@@ -246,8 +256,9 @@ const TrialPage: React.FC = () => {
               <CardContent className="p-8">
                 <div className="text-center mb-8">
                   <div className="mb-6 p-4 bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/10 rounded-lg border border-vendorsoluce-green/30 max-w-2xl mx-auto">
-                    <div className="text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">
-                      ✅ STAGE 1 COMPLETE
+                    <div className="text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2 inline-flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 shrink-0" aria-hidden />
+                      STAGE 1 COMPLETE
                     </div>
                     <p className="text-base font-medium text-gray-900 dark:text-white">
                       "I know exactly which vendors pose the greatest risk"
@@ -286,8 +297,9 @@ const TrialPage: React.FC = () => {
 
                 {/* Top Risks */}
                 <div className="mb-8">
-                  <h3 className="text-xl md:text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
-                    ⚠️ YOUR Top 3 Riskiest Vendors:
+                  <h3 className="text-xl md:text-2xl font-semibold mb-4 text-gray-900 dark:text-white flex flex-wrap items-center gap-2">
+                    <AlertTriangle className="h-6 w-6 text-amber-500 shrink-0" aria-hidden />
+                    YOUR Top 3 Riskiest Vendors:
                   </h3>
                   <div className="space-y-3">
                     {vendors
@@ -314,8 +326,9 @@ const TrialPage: React.FC = () => {
                 {/* Recommendations */}
                 <Card className="mb-8 bg-vendorsoluce-pale-green dark:bg-gray-700 border-vendorsoluce-green/30">
                   <CardContent className="p-6">
-                    <h3 className="text-lg md:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-                      💡 Immediate Actions:
+                    <h3 className="text-lg md:text-xl font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
+                      <Lightbulb className="h-5 w-5 text-vendorsoluce-green shrink-0" aria-hidden />
+                      Immediate Actions:
                     </h3>
                     <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                       <li>• Prioritize assessment of {criticalCount} critical vendor{criticalCount !== 1 ? 's' : ''}</li>
@@ -348,8 +361,8 @@ const TrialPage: React.FC = () => {
             {!emailSubmitted && (
               <div className="fixed bottom-8 right-8 bg-vendorsoluce-green text-white p-6 rounded-xl shadow-lg z-50 max-w-sm">
                 <div className="text-center">
-                  <Mail className="w-8 h-8 mx-auto mb-2" />
-                  <h3 className="font-bold text-lg mb-2">📧 Get Detailed Report</h3>
+                  <Mail className="w-8 h-8 mx-auto mb-2" aria-hidden />
+                  <h3 className="font-bold text-lg mb-2">Get Detailed Report</h3>
                   <p className="text-sm mb-4">Want vendor-by-vendor analysis with specific requirements?</p>
                   <Button
                     variant="secondary"

@@ -168,7 +168,6 @@ const Privacy: React.FC = () => {
           <p>{t('privacy.section11.contact.address1')}</p>
           <p>{t('privacy.section11.contact.address2')}</p>
           <p>{t('privacy.section11.contact.email')}</p>
-          <p>{t('privacy.section11.contact.phone')}</p>
         </div>
       </Card>
     </div>
