@@ -1,28 +1,42 @@
-# This is the GitHub Actions workflow for CI
-
-name: CI
+name: CI — VendorSoluce App
 
 on:
   push:
-    branches:
-      - main
+    branches: [main, develop]
+    paths:
+      - 'packages/app/**'
+      - 'packages/shared/**'
+      - 'packages/dependency-graph/**'
   pull_request:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - 'packages/app/**'
+      - 'packages/shared/**'
+      - 'packages/dependency-graph/**'
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/app
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
+          cache-dependency-path: package-lock.json
       - name: Install dependencies
-        run: npm install
-      - name: Run build
+        run: npm ci --legacy-peer-deps
+      - name: Type check
+        run: npm run type-check
+      - name: Lint
+        run: npm run lint
+      - name: Build
         run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || 'placeholder' }}
+      - name: Test
+        run: npm run test -- --run
