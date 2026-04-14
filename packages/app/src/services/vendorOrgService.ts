@@ -121,9 +121,51 @@ class VendorOrgService {
     }
   }
 
+  // ── Vendor Supabase hydration ────────────────────────────────────────────
+
+  async hydrateVendorsFromSupabase(orgId: string): Promise<void> {
+    if (!isSupabaseEnabled()) return;
+
+    try {
+      const { data, error } = await supabase
+        .schema('shared' as never)
+        .from('vendors')
+        .select('*')
+        .eq('organization_id', orgId)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.warn('hydrateVendorsFromSupabase: failed to fetch vendors', error);
+        return;
+      }
+
+      if (!data || data.length === 0) return;
+
+      const local = readJson<Record<string, unknown>[]>(KEYS.workspaceVendors, []);
+      const remote = data as Record<string, unknown>[];
+
+      // Merge: local first, then Supabase — Supabase wins on id conflict
+      const merged = [...local, ...remote].reduce(
+        (acc, v) => {
+          const id = v.id as string;
+          if (id) acc[id] = v;
+          return acc;
+        },
+        {} as Record<string, Record<string, unknown>>,
+      );
+
+      localStorage.setItem(KEYS.workspaceVendors, JSON.stringify(Object.values(merged)));
+    } catch (err) {
+      console.warn('hydrateVendorsFromSupabase: unexpected error', err);
+    }
+  }
+
   // ── Vendors for org ─────────────────────────────────────────────────────
 
   getVendorsForOrg(orgId: string): Record<string, unknown>[] {
+    // Fire-and-forget: hydrate from Supabase shared.vendors in the background
+    void this.hydrateVendorsFromSupabase(orgId);
+
     const workspace = readJson<Record<string, unknown>[]>(KEYS.workspaceVendors, []);
     const radar = readJson<Record<string, unknown>[]>(KEYS.radarVendors, []);
 
