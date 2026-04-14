@@ -15,8 +15,8 @@ const WEBSITE = path.join(ROOT, 'packages/website');
 const SHARED_ROUTES = path.join(ROOT, 'packages/shared/routes.json');
 
 const platformLinks = [
-  { href: 'https://www.platform.vendorsoluce.com/supply-chain-assessment', label: 'Supply Chain Assessment', type: 'app' },
-  { href: 'https://www.platform.vendorsoluce.com/vendors', label: 'Vendor Dashboard', type: 'app' },
+  { href: 'https://app.vendorsoluce.com/supply-chain-assessment', label: 'Supply Chain Assessment', type: 'app' },
+  { href: 'https://app.vendorsoluce.com/vendors', label: 'Vendor Dashboard', type: 'app' },
   { href: 'https://www.vendorsoluce.com/radar/vendor-threat-radar.html', label: 'Vendor Threat Radar', type: 'static' },
   { href: 'https://www.portal.vendorsoluce.com', label: 'Vendor Assurance Portal', type: 'portal' },
 ];

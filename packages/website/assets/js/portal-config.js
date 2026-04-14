@@ -5,7 +5,7 @@
  * canonical path map as the app route modules.
  */
 (function () {
-  window.VENDOR_PORTAL_BASE = window.VENDOR_PORTAL_BASE || 'https://www.platform.vendorsoluce.com';
+  window.VENDOR_PORTAL_BASE = window.VENDOR_PORTAL_BASE || 'https://app.vendorsoluce.com';
   window.PLATFORM_APP_BASE = window.PLATFORM_APP_BASE || window.VENDOR_PORTAL_BASE;
   window.VENDOR_RISK_PORTAL_BASE = window.VENDOR_RISK_PORTAL_BASE || 'https://www.portal.vendorsoluce.com';
   window.CONTACT_API_URL = window.CONTACT_API_URL || 'https://dfklqsdfycwjlcasfciu.supabase.co/functions/v1/contact-form';
