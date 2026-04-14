@@ -49,6 +49,7 @@ export default [
       ],
       'react-hooks/exhaustive-deps': 'warn',
       'no-case-declarations': 'error',
+      'no-redeclare': 'off',
     },
   },
   {
