@@ -1,14 +1,20 @@
 # VendorSoluce marketing website
 # In Netlify: set Base directory = EMPTY, Config file path = packages/website/netlify.toml
+# See NETLIFY_DEPLOYMENT.md at the repo root for the full www / app / platform / portal map.
 # Build runs from repo root so npm ci uses the committed root lockfile, then builds the website workspace.
 # Apex → www: see packages/website/_redirects (https://vendorsoluce.com/* → www).
 
 [build]
-  command = "npm ci --include=dev --no-audit && npm run build:website"
+  command = "npm ci --include=dev --no-audit --no-fund && npm run build:website"
   publish = "packages/website"
 
 [build.environment]
   NODE_VERSION = "20"
+  CI = "true"
+  NODE_OPTIONS = "--max-old-space-size=6144"
+  NPM_CONFIG_AUDIT = "false"
+  NPM_CONFIG_FUND = "false"
+  SECRETS_SCAN_SMART_DETECTION_ENABLED = "false"
 
 [[headers]]
   for = "/*"

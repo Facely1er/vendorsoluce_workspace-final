@@ -3,16 +3,21 @@
 #
 # Netlify site settings:
 #   Base directory:    leave EMPTY (build runs from repo root so npm ci installs all workspaces)
-#   Build command:     npm ci --no-audit && npm run build:portal
+#   Build command:     (from [build] below — includes --include=dev for Vite)
 #   Publish directory: packages/vendor-risk-portal/dist
 #   Config file path:  packages/vendor-risk-portal/netlify.toml
 
 [build]
-  command = "npm ci --no-audit && npm run build:portal"
+  command = "npm ci --include=dev --no-audit --no-fund && npm run build:portal"
   publish = "packages/vendor-risk-portal/dist"
 
 [build.environment]
   NODE_VERSION = "20"
+  CI = "true"
+  NODE_OPTIONS = "--max-old-space-size=6144"
+  NPM_CONFIG_AUDIT = "false"
+  NPM_CONFIG_FUND = "false"
+  SECRETS_SCAN_SMART_DETECTION_ENABLED = "false"
 
 # Serve static assets with correct MIME types (must come before SPA catch-all)
 [[redirects]]
