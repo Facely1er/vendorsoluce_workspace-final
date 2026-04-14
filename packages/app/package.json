@@ -5,7 +5,7 @@
   "type": "module",
   "description": "VendorSoluce - Vendor risk and supply chain assurance workflow platform with SBOM analysis, NIST SP 800-161 compliance, vendor assessments, and supply chain security tools",
   "scripts": {
-    "clean": "rm -rf dist dist-demo node_modules",
+    "clean": "rm -rf dist dist-demo dist-enterprise node_modules",
     "dev": "node ./scripts/run-vite.mjs",
     "build": "npm run verify:ui && npm run verify:shell && node ../../node_modules/typescript/bin/tsc && node ./scripts/run-vite.mjs build",
     "build:demo": "node scripts/copy-demo-html.js",
@@ -20,6 +20,7 @@
     "test:coverage": "vitest run --coverage",
     "preview": "node ./scripts/run-vite.mjs preview",
     "preview:demo": "npx serve demo",
+    "preview:enterprise": "node ./scripts/run-vite.mjs preview --dir dist-enterprise --port 4174",
     "verify-stripe-catalog": "node scripts/verify-stripe-catalog.js",
     "align-stripe-catalog": "node scripts/align-stripe-catalog.js",
     "rebuild-stripe-catalog": "node scripts/rebuild-stripe-catalog.js",
