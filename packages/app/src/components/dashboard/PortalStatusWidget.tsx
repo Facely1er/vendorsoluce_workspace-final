@@ -51,7 +51,7 @@ const PortalStatusWidget: React.FC<PortalStatusWidgetProps> = ({ assessments = [
   const portalUrl = import.meta.env.VITE_VENDOR_PORTAL_URL || 'https://www.portal.vendorsoluce.com';
 
   return (
-    <Card className="h-full">
+    <Card className="h-full rounded-2xl border-gray-200/70 shadow-sm dark:border-gray-800">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center">

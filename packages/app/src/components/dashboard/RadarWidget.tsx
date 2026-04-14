@@ -23,7 +23,7 @@ const RadarWidget: React.FC<RadarWidgetProps> = ({ vendors, onVendorClick }) => 
   const highRiskCount = riskDistribution.critical + riskDistribution.high;
 
   return (
-    <Card className="h-full">
+    <Card className="h-full rounded-2xl border-gray-200/70 shadow-sm dark:border-gray-800">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center">

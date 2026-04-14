@@ -23,6 +23,7 @@ import { useAuth } from '../../context/AuthContext';
 import {
   WORKSPACE_PAGE_SHELL_INNER_CLASS,
   WORKSPACE_PAGE_SHELL_OUTER_CLASS,
+  WORKSPACE_PAGE_SHELL_EYEBROW_CLASS,
 } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 const DashboardDemoPage: React.FC = () => {
@@ -50,16 +51,16 @@ const DashboardDemoPage: React.FC = () => {
       value: 23,
       delta: '+5 completed',
       icon: FileText,
-      accent: 'text-slate-800 dark:text-slate-200',
-      soft: 'bg-slate-100 ring-slate-500/10 dark:bg-slate-900 dark:ring-slate-500/25',
+      accent: 'text-vendorsoluce-navy dark:text-gray-200',
+      soft: 'bg-gray-100 ring-gray-400/15 dark:bg-gray-900 dark:ring-gray-600/30',
     },
     {
       label: 'SBOM reviews',
       value: 15,
       delta: '+7 this week',
       icon: Shield,
-      accent: 'text-teal-800 dark:text-teal-200',
-      soft: 'bg-teal-50 ring-teal-600/10 dark:bg-teal-950/40 dark:ring-teal-500/20',
+      accent: 'text-vendorsoluce-teal dark:text-vendorsoluce-teal',
+      soft: 'bg-teal-50/80 ring-vendorsoluce-teal/20 dark:bg-vendorsoluce-teal/15 dark:ring-vendorsoluce-teal/30',
     },
   ];
 
@@ -105,13 +106,15 @@ const DashboardDemoPage: React.FC = () => {
 
   return (
     <div className={WORKSPACE_PAGE_SHELL_OUTER_CLASS}>
-      <div className={`${WORKSPACE_PAGE_SHELL_INNER_CLASS} max-w-7xl`}>
+      <div className={WORKSPACE_PAGE_SHELL_INNER_CLASS}>
         <section className="overflow-hidden rounded-3xl bg-gradient-to-br from-vendorsoluce-navy via-[#0f2744] to-vendorsoluce-teal text-white shadow-xl ring-1 ring-black/5">
           <div className="relative px-6 py-10 sm:px-10 sm:py-12">
             <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-emerald-400/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-16 left-1/3 h-48 w-48 rounded-full bg-teal-300/10 blur-2xl" />
             <div className="relative max-w-3xl space-y-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200/90">VendorSoluce preview</p>
+              <p className={`${WORKSPACE_PAGE_SHELL_EYEBROW_CLASS} text-vendorsoluce-light-green dark:text-vendorsoluce-light-green`}>
+                VendorSoluce preview
+              </p>
               <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[2.35rem] lg:leading-tight">
                 See supply chain risk the way your program lead does—without the spreadsheet.
               </h1>
@@ -147,7 +150,7 @@ const DashboardDemoPage: React.FC = () => {
               <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-2 text-sm text-white/75">
                 {trustPoints.map((t) => (
                   <li key={t} className="inline-flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden />
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-vendorsoluce-light-green" aria-hidden />
                     {t}
                   </li>
                 ))}
@@ -178,7 +181,7 @@ const DashboardDemoPage: React.FC = () => {
             return (
               <Card
                 key={metric.label}
-                className="relative overflow-hidden border-gray-200/80 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
+                className="relative overflow-hidden rounded-2xl border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
               >
                 <CardContent className="p-5">
                   <div className="flex items-start justify-between gap-3">
@@ -190,7 +193,7 @@ const DashboardDemoPage: React.FC = () => {
                     {metric.value}
                   </p>
                   <p className="mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">{metric.label}</p>
-                  <p className="mt-2 text-xs font-medium text-emerald-700 dark:text-emerald-400">{metric.delta}</p>
+                  <p className="mt-2 text-xs font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green">{metric.delta}</p>
                 </CardContent>
               </Card>
             );
@@ -199,7 +202,7 @@ const DashboardDemoPage: React.FC = () => {
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-start">
           <div className="space-y-6 lg:col-span-2">
-            <Card className="border-gray-200/80 shadow-sm dark:border-gray-800">
+            <Card className="rounded-2xl border-gray-200/70 shadow-sm dark:border-gray-800">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-lg font-semibold tracking-tight">
                   <BarChart3 className="h-5 w-5 text-vendorsoluce-green" aria-hidden />
@@ -209,7 +212,7 @@ const DashboardDemoPage: React.FC = () => {
               </CardHeader>
               <CardContent className="space-y-5">
                 {[
-                  { label: 'Low risk', count: '31 vendors', widthClass: 'w-[66%]', bar: 'bg-emerald-500' },
+                  { label: 'Low risk', count: '31 vendors', widthClass: 'w-[66%]', bar: 'bg-vendorsoluce-green' },
                   { label: 'Medium risk', count: '8 vendors', widthClass: 'w-[17%]', bar: 'bg-amber-400' },
                   { label: 'High risk', count: '8 vendors', widthClass: 'w-[17%]', bar: 'bg-orange-500' },
                 ].map((row) => (
@@ -228,7 +231,7 @@ const DashboardDemoPage: React.FC = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-gray-200/80 shadow-sm dark:border-gray-800">
+            <Card className="rounded-2xl border-gray-200/70 shadow-sm dark:border-gray-800">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-lg font-semibold tracking-tight">
                   <Zap className="h-5 w-5 text-vendorsoluce-green" aria-hidden />
@@ -244,7 +247,7 @@ const DashboardDemoPage: React.FC = () => {
                       <Link
                         key={action.title}
                         to={action.href}
-                        className="group flex flex-col rounded-2xl border border-gray-200/90 bg-gray-50/50 p-4 transition-colors hover:border-emerald-300/80 hover:bg-white dark:border-gray-800 dark:bg-gray-950/30 dark:hover:border-emerald-800 dark:hover:bg-gray-900"
+                        className="group flex flex-col rounded-2xl border border-gray-200/90 bg-gray-50/50 p-4 transition-colors hover:border-vendorsoluce-green/45 hover:bg-white dark:border-gray-800 dark:bg-gray-950/30 dark:hover:border-vendorsoluce-green/40 dark:hover:bg-gray-900"
                       >
                         <div className="flex items-start gap-3">
                           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-vendorsoluce-green shadow-sm ring-1 ring-gray-200/80 dark:bg-gray-900 dark:ring-gray-700">
@@ -268,10 +271,10 @@ const DashboardDemoPage: React.FC = () => {
           </div>
 
           <div className="space-y-6">
-            <Card className="border-l-[3px] border-l-vendorsoluce-green shadow-sm dark:border-gray-800">
+            <Card className="rounded-2xl border-l-[3px] border-l-vendorsoluce-green shadow-sm dark:border-gray-800">
               <CardContent className="p-6">
                 <div className="text-center">
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-vendorsoluce-green dark:bg-emerald-950/50">
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-vendorsoluce-pale-green text-vendorsoluce-green dark:bg-vendorsoluce-green/10">
                     <Lock className="h-6 w-6" aria-hidden />
                   </div>
                   <h3 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">Use your own data</h3>
@@ -295,10 +298,10 @@ const DashboardDemoPage: React.FC = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-gray-200/80 shadow-sm dark:border-gray-800">
+            <Card className="rounded-2xl border-gray-200/70 shadow-sm dark:border-gray-800">
               <CardHeader className="pb-3">
                 <CardTitle className="flex flex-wrap items-center gap-2 text-base font-semibold tracking-tight">
-                  <Activity className="h-5 w-5 text-teal-600 dark:text-teal-400" aria-hidden />
+                  <Activity className="h-5 w-5 text-vendorsoluce-green" aria-hidden />
                   Recent activity
                   <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-900 dark:bg-amber-900/40 dark:text-amber-200">
                     Demo
@@ -312,10 +315,10 @@ const DashboardDemoPage: React.FC = () => {
                       <span
                         className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
                           activity.type === 'success'
-                            ? 'bg-emerald-500'
+                            ? 'bg-vendorsoluce-green'
                             : activity.type === 'warning'
                               ? 'bg-amber-500'
-                              : 'bg-sky-500'
+                              : 'bg-vendorsoluce-blue'
                         }`}
                         aria-hidden
                       />
@@ -373,14 +376,14 @@ const DashboardDemoPage: React.FC = () => {
           </div>
         </section>
 
-        <div className="rounded-3xl bg-gradient-to-r from-vendorsoluce-green to-emerald-600 px-6 py-10 text-center text-white shadow-lg sm:px-10">
+        <div className="rounded-3xl bg-gradient-to-r from-vendorsoluce-green to-vendorsoluce-dark-green px-6 py-10 text-center text-white shadow-lg sm:px-10">
           <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Ready to run this on your supply base?</h2>
           <p className="mx-auto mt-3 max-w-2xl text-base text-white/90">
             Create an account to replace demo numbers with your vendors, evidence, and audit trail.
           </p>
           <div className="mt-6 flex justify-center">
             <Link to="/signup">
-              <Button variant="secondary" size="lg" className="gap-2 bg-white font-semibold text-emerald-800 hover:bg-gray-50">
+              <Button variant="secondary" size="lg" className="gap-2 bg-white font-semibold text-vendorsoluce-navy hover:bg-gray-50">
                 <User className="h-5 w-5" aria-hidden />
                 Start free account
               </Button>

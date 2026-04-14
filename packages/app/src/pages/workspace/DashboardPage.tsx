@@ -155,13 +155,13 @@ const DashboardPage: React.FC = () => {
               return (
                 <Card
                   key={step.title}
-                  className="group relative overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+                  className="group relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
                 >
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-vendorsoluce-green via-emerald-400 to-teal-500 opacity-90" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-vendorsoluce-green via-vendorsoluce-light-green to-vendorsoluce-teal opacity-95" />
                   <CardContent className="p-6">
                     <div className="flex flex-col gap-4">
                       <div className="flex items-start gap-4">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/15 dark:bg-emerald-950/50 dark:text-emerald-300 dark:ring-emerald-500/25">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-vendorsoluce-pale-green text-vendorsoluce-green ring-1 ring-vendorsoluce-green/20 dark:bg-vendorsoluce-green/10 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-green/25">
                           <Icon className="h-5 w-5" aria-hidden />
                         </div>
                         <div className="min-w-0">
@@ -204,10 +204,10 @@ const DashboardPage: React.FC = () => {
               {priorities.map((item, index) => (
                 <li
                   key={item}
-                  className="flex gap-4 rounded-xl border border-gray-100 bg-gray-50/80 px-4 py-3.5 dark:border-gray-800 dark:bg-gray-950/50"
+                  className="flex gap-4 rounded-xl border border-gray-200/70 bg-gray-50/80 px-4 py-3.5 dark:border-gray-800 dark:bg-gray-950/50"
                 >
                   <span
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-sm font-semibold text-emerald-700 shadow-sm ring-1 ring-gray-200/80 dark:bg-gray-900 dark:text-emerald-400 dark:ring-gray-700"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-sm font-semibold text-vendorsoluce-green shadow-sm ring-1 ring-gray-200/80 dark:bg-gray-900 dark:text-vendorsoluce-light-green dark:ring-gray-700"
                     aria-hidden
                   >
                     {index + 1}
