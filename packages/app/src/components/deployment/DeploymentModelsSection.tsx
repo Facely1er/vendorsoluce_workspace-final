@@ -8,9 +8,9 @@ import { DEPLOYMENT_TRACK_IDS, type DeploymentTrackId } from '../../config/deplo
 
 const ICONS = [Laptop, Database, Puzzle] as const;
 const ACCENTS = [
-  'border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10',
-  'border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-900/10',
-  'border-violet-200 dark:border-violet-800 bg-violet-50/50 dark:bg-violet-900/10',
+  'border-vendorsoluce-navy/25 bg-vendorsoluce-navy/[0.06] dark:border-vendorsoluce-navy/40 dark:bg-vendorsoluce-navy/10',
+  'border-vendorsoluce-green/30 bg-vendorsoluce-pale-green/50 dark:border-vendorsoluce-green/35 dark:bg-vendorsoluce-green/10',
+  'border-vendorsoluce-teal/30 bg-teal-50/60 dark:border-vendorsoluce-teal/40 dark:bg-vendorsoluce-teal/10',
 ] as const;
 
 function getHighlights(t: (key: string, options?: { returnObjects?: boolean }) => unknown, id: DeploymentTrackId): string[] {
@@ -54,7 +54,9 @@ export const DeploymentModelsSection: React.FC<DeploymentModelsSectionProps> = (
   return (
     <div className={className}>
       <div className={`text-center ${isCompact ? 'mb-6' : 'mb-10'} max-w-3xl mx-auto`}>
-        <h2 className={`font-bold text-gray-900 dark:text-white ${isCompact ? 'text-2xl mb-2' : 'text-3xl mb-3'}`}>
+        <h2
+          className={`font-semibold tracking-tight text-gray-950 dark:text-white ${isCompact ? 'mb-2 text-2xl' : 'mb-3 text-2xl sm:text-3xl'}`}
+        >
           {t('deployment.sectionTitle')}
         </h2>
         <p className={`text-gray-600 dark:text-gray-400 ${isCompact ? 'text-sm' : ''}`}>
@@ -156,17 +158,17 @@ export const DeploymentModelsSection: React.FC<DeploymentModelsSectionProps> = (
         })}
       </div>
       {showTrust && (
-        <div className="max-w-4xl mx-auto mt-10 flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+        <div className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
           <div className="flex items-center gap-2">
-            <Shield className="h-4 w-4 text-blue-500" />
+            <Shield className="h-4 w-4 text-vendorsoluce-navy dark:text-vendorsoluce-light-green" />
             <span>{t('deployment.trust.security')}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Check className="h-4 w-4 text-green-500" />
+            <Check className="h-4 w-4 text-vendorsoluce-green" />
             <span>{t('deployment.trust.trial')}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Crown className="h-4 w-4 text-purple-500" />
+            <Crown className="h-4 w-4 text-vendorsoluce-green" />
             <span>{t('deployment.trust.annual')}</span>
           </div>
         </div>

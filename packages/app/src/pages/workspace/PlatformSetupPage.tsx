@@ -7,6 +7,7 @@ import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 const PlatformSetupPage: React.FC = () => {
   return (
     <WorkspacePageShell
+      eyebrow="Workspace"
       title="Platform setup"
       description="Set up your vendor portfolio, requirements, and assessment defaults."
       stats={[

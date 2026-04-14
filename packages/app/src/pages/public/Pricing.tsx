@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { Crown, Calculator, Shield, Check, Server, Download } from 'lucide-react';
+import { Crown, Calculator, Check, Server, Download } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -18,6 +18,7 @@ import {
   ONE_TIME_MAIN_PRODUCTS
 } from '../../lib/stripeProducts';
 import { DeploymentModelsSection } from '../../components/deployment/DeploymentModelsSection';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 const Pricing: React.FC = () => {
   const { t } = useTranslation();
@@ -86,7 +87,7 @@ const Pricing: React.FC = () => {
   const renderTableCell = (value: string) => {
     if (value === '✓') {
       return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-vendorsoluce-pale-green text-vendorsoluce-dark-green dark:bg-vendorsoluce-green/15 dark:text-vendorsoluce-light-green">
           {value}
         </span>
       );
@@ -114,81 +115,79 @@ const Pricing: React.FC = () => {
     window.location.href = checkoutUrl;
   };
 
+  const billingToggle = (
+    <div className="flex flex-shrink-0 flex-wrap items-center justify-end gap-3">
+      <span
+        className={`text-sm font-medium ${!isAnnual ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}
+      >
+        Monthly
+      </span>
+      <button
+        type="button"
+        onClick={() => setIsAnnual(!isAnnual)}
+        aria-label={isAnnual ? 'Switch to monthly billing' : 'Switch to annual billing'}
+        className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors ${
+          isAnnual ? 'bg-vendorsoluce-green' : 'bg-gray-200 dark:bg-gray-600'
+        }`}
+      >
+        <span
+          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+            isAnnual ? 'translate-x-6' : 'translate-x-1'
+          }`}
+        />
+      </button>
+      <span
+        className={`text-sm font-medium ${isAnnual ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}
+      >
+        Annual
+      </span>
+      {isAnnual ? (
+        <Badge className="border border-vendorsoluce-green/30 bg-vendorsoluce-pale-green text-vendorsoluce-dark-green dark:border-vendorsoluce-green/40 dark:bg-vendorsoluce-green/15 dark:text-vendorsoluce-light-green">
+          <Crown className="mr-1 h-3 w-3" />
+          Save 20%
+        </Badge>
+      ) : null}
+    </div>
+  );
+
   return (
-    <div className="min-h-screen min-w-0 w-full py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Annual Prepay Promotion Banner */}
-      {!isAnnual && (
-        <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg shadow-lg p-6 mb-8 text-white">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Crown className="h-8 w-8" />
-              <div>
-                <h3 className="text-xl font-bold mb-1">Save 20% with Annual Billing</h3>
-                <p className="text-green-50">
-                  Switch to annual billing and save up to {formatCurrency(calculateAnnualSavings('enterprise') * 100)} per year on Enterprise plans
-                </p>
+    <WorkspacePageShell
+      eyebrow="Plans & billing"
+      title="Choose your compliance solution"
+      description={t('deployment.pricingPage.heroSubtitle')}
+      headerActionsSlot={billingToggle}
+    >
+      <div className="flex min-w-0 flex-col gap-12 lg:gap-16">
+        {!isAnnual ? (
+          <div className="rounded-2xl bg-gradient-to-r from-vendorsoluce-green to-vendorsoluce-dark-green p-6 text-white shadow-lg">
+            <div className="flex flex-col items-stretch justify-between gap-4 md:flex-row md:items-center">
+              <div className="flex items-center gap-3">
+                <Crown className="h-8 w-8 shrink-0 text-white/95" />
+                <div>
+                  <h3 className="mb-1 text-xl font-semibold tracking-tight">Save 20% with annual billing</h3>
+                  <p className="text-white/90">
+                    Switch to annual billing and save up to {formatCurrency(calculateAnnualSavings('enterprise') * 100)}{' '}
+                    per year on Enterprise plans.
+                  </p>
+                </div>
               </div>
+              <Button
+                variant="secondary"
+                onClick={() => setIsAnnual(true)}
+                className="whitespace-nowrap border-0 bg-white px-6 py-3 font-semibold text-vendorsoluce-navy hover:bg-gray-50 dark:bg-white dark:text-vendorsoluce-navy dark:hover:bg-gray-50"
+              >
+                View annual plans →
+              </Button>
             </div>
-            <Button
-              variant="secondary"
-              onClick={() => setIsAnnual(true)}
-              className="bg-white text-green-700 hover:bg-green-50 font-semibold px-6 py-3 whitespace-nowrap border-0 dark:bg-white dark:text-green-700 dark:hover:bg-green-50"
-            >
-              View Annual Plans →
-            </Button>
           </div>
-        </div>
-      )}
+        ) : null}
 
-      {/* Header */}
-      <div className="text-center mb-12">
-        <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm font-medium mb-6">
-          <Shield className="h-4 w-4 mr-2" />
-          Enterprise-grade security and compliance
-        </div>
-        <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
-          Choose Your Compliance Solution
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto">
-          {t('deployment.pricingPage.heroSubtitle')}
-        </p>
-
-        {/* Billing Toggle */}
-        <div className="flex items-center justify-center space-x-4 mb-8">
-          <span className={`text-sm font-medium ${!isAnnual ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
-            Monthly
-          </span>
-          <button
-            onClick={() => setIsAnnual(!isAnnual)}
-            aria-label={isAnnual ? 'Switch to monthly billing' : 'Switch to annual billing'}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              isAnnual ? 'bg-green-600' : 'bg-gray-200 dark:bg-gray-600'
-            }`}
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                isAnnual ? 'translate-x-6' : 'translate-x-1'
-              }`}
-            />
-          </button>
-          <span className={`text-sm font-medium ${isAnnual ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
-            Annual
-          </span>
-          {isAnnual && (
-            <Badge className="bg-green-100 text-green-800 border border-green-200 dark:bg-emerald-950/80 dark:text-emerald-100 dark:border-emerald-600/50">
-              <Crown className="h-3 w-3 mr-1" />
-              Save 20%
-            </Badge>
-          )}
-        </div>
-
-        {/* Savings Calculator */}
-        {isAnnual && (
-          <Card className="max-w-2xl mx-auto mb-8 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-700">
+        {isAnnual ? (
+          <Card className="mx-auto max-w-2xl border-vendorsoluce-green/25 bg-gradient-to-r from-vendorsoluce-pale-green/80 to-white dark:from-vendorsoluce-green/10 dark:to-gray-900/40 dark:border-vendorsoluce-green/30">
             <CardContent className="p-6">
-              <div className="flex items-center justify-center space-x-2 text-green-600 dark:text-green-400 mb-4">
+              <div className="mb-4 flex items-center justify-center space-x-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green">
                 <Calculator className="h-6 w-6" />
-                <span className="font-semibold text-lg">Annual Savings Calculator</span>
+                <span className="text-lg font-semibold">Annual savings calculator</span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                 <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
@@ -215,14 +214,13 @@ const Pricing: React.FC = () => {
               </div>
             </CardContent>
           </Card>
-        )}
-      </div>
+        ) : null}
 
-      <DeploymentModelsSection variant="full" clientBackendPlanHref="#choose-plan" className="mb-16" />
+        <DeploymentModelsSection variant="full" clientBackendPlanHref="#choose-plan" className="mb-16" />
 
       {/* Main Products */}
       <div className="mb-16" id="choose-plan">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 text-center">
+        <h2 className="text-2xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-3xl mb-3 text-center">
           {t('deployment.pricingPage.choosePlanTitle')}
         </h2>
         <p className="text-center text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
@@ -252,7 +250,7 @@ const Pricing: React.FC = () => {
 
       {/* On-Premise / Download — aligned with SaaS plans */}
       <div className="mb-16">
-        <Card className="max-w-6xl mx-auto border-2 border-dashed border-vendorsoluce-green/40 dark:border-vendorsoluce-green/50 bg-gradient-to-br from-gray-50 to-green-50/50 dark:from-gray-800/50 dark:to-green-900/10">
+        <Card className="mx-auto max-w-6xl border-2 border-dashed border-vendorsoluce-green/40 bg-gradient-to-br from-gray-50 to-vendorsoluce-pale-green/40 dark:border-vendorsoluce-green/50 dark:from-gray-800/50 dark:to-vendorsoluce-green/10">
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div className="flex items-start gap-4">
@@ -300,7 +298,7 @@ const Pricing: React.FC = () => {
       {/* Add-ons Section */}
       <div className="mb-16">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-2xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-3xl mb-4">
             Add-on Services
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
@@ -332,7 +330,7 @@ const Pricing: React.FC = () => {
       {/* Bundle Deals */}
       <div className="mb-16">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-2xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-3xl mb-4">
             Bundle Deals
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
@@ -354,7 +352,7 @@ const Pricing: React.FC = () => {
       {/* Premium Features - Add-ons */}
       <div className="mb-16">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-2xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-3xl mb-4">
             Premium Features & Add-ons
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
@@ -362,21 +360,21 @@ const Pricing: React.FC = () => {
           </p>
         </div>
 
-        <Card className="border-2 border-purple-200 dark:border-purple-800 bg-gradient-to-br from-purple-50 to-white dark:from-purple-900/20 dark:to-gray-800">
+        <Card className="border-2 border-vendorsoluce-green/25 bg-gradient-to-br from-vendorsoluce-pale-green/60 to-white dark:border-vendorsoluce-green/35 dark:from-vendorsoluce-green/10 dark:to-gray-900">
           <CardContent className="p-8">
             <div className="flex items-start gap-6">
-              <div className="flex-shrink-0">
-                <Crown className="h-12 w-12 text-purple-600 dark:text-purple-400" />
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-vendorsoluce-green/15 dark:bg-vendorsoluce-green/25">
+                <Crown className="h-8 w-8 text-vendorsoluce-green dark:text-vendorsoluce-light-green" />
               </div>
               <div className="flex-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                <div className="mb-3 flex flex-wrap items-center gap-3">
+                  <h3 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                     Vendor Security Assessments
                   </h3>
-                  <Badge variant="default" className="bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                  <Badge className="border-0 bg-vendorsoluce-green/15 text-vendorsoluce-dark-green dark:bg-vendorsoluce-green/25 dark:text-vendorsoluce-light-green">
                     Premium
                   </Badge>
-                  <Badge variant="outline" className="bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-200">
+                  <Badge variant="outline" className="border-vendorsoluce-navy/25 bg-vendorsoluce-navy/5 text-vendorsoluce-navy dark:border-vendorsoluce-light-green/30 dark:bg-vendorsoluce-navy/20 dark:text-vendorsoluce-light-green">
                     VendorSoluce™ Portal
                   </Badge>
                 </div>
@@ -408,7 +406,7 @@ const Pricing: React.FC = () => {
                 </div>
                 <div className="flex gap-4">
                   <Link to="/vendor-assessments">
-                    <Button variant="primary" className="bg-purple-600 hover:bg-purple-700 text-white">
+                    <Button variant="primary" className="bg-vendorsoluce-green text-white hover:bg-vendorsoluce-dark-green">
                       Learn More
                     </Button>
                   </Link>
@@ -426,7 +424,7 @@ const Pricing: React.FC = () => {
 
       {/* Features Comparison */}
       <div className="mb-16">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+        <h2 className="text-2xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-3xl mb-8 text-center">
           Features Comparison
         </h2>
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 overflow-x-auto min-w-0 overscroll-x-contain">
@@ -590,7 +588,7 @@ const Pricing: React.FC = () => {
 
       {/* FAQ Section */}
       <div className="mb-16">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+        <h2 className="text-2xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-3xl mb-8 text-center">
           Frequently Asked Questions
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
@@ -732,39 +730,43 @@ const Pricing: React.FC = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="text-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-12">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Ready to Transform Your Compliance?
+      <div className="rounded-2xl bg-gradient-to-r from-vendorsoluce-pale-green/90 via-white to-vendorsoluce-teal/10 p-10 text-center dark:from-gray-900 dark:via-gray-900 dark:to-vendorsoluce-teal/15 sm:p-12">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-4 text-2xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-3xl">
+            Ready to transform your compliance program?
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-            Join organizations worldwide using our platform to streamline vendor risk management 
-            and achieve compliance more efficiently.
+          <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
+            Join organizations using VendorSoluce to streamline vendor risk management and ship evidence-backed
+            assurance.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+          <div className="mb-8 flex flex-col justify-center gap-4 sm:flex-row">
             <Link to="/checkout?plan=professional">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
+              <Button
+                size="lg"
+                className="bg-vendorsoluce-green px-8 py-4 text-lg text-white hover:bg-vendorsoluce-dark-green"
+              >
                 Get Professional
               </Button>
             </Link>
           </div>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex flex-col items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400 sm:flex-row">
             <div className="flex items-center">
-              <Check className="h-4 w-4 mr-2 text-green-500" />
+              <Check className="mr-2 h-4 w-4 text-vendorsoluce-green" />
               No credit card required
             </div>
             <div className="flex items-center">
-              <Check className="h-4 w-4 mr-2 text-green-500" />
+              <Check className="mr-2 h-4 w-4 text-vendorsoluce-green" />
               14-day free trial
             </div>
             <div className="flex items-center">
-              <Check className="h-4 w-4 mr-2 text-green-500" />
+              <Check className="mr-2 h-4 w-4 text-vendorsoluce-green" />
               Cancel anytime
             </div>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </WorkspacePageShell>
   );
 };
 
