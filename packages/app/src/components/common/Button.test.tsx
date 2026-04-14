@@ -9,7 +9,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { AuthProvider } from '../../context/AuthContext';
 import { ThemeProvider } from '../../context/ThemeContext';
 import { I18nProvider } from '../../context/I18nContext';
-import Button from '../ui/button';
+import Button from '../ui/Button';
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter>

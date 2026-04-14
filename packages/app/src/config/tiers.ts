@@ -280,9 +280,8 @@ export function getActiveLicenseTier(): VendorSoluceTier | null {
   return getActiveTier();
 }
 
-export function canManageClientPortfolio(): boolean;
-export function canManageClientPortfolio(tier: string | null): boolean;
-export function canManageClientPortfolio(tier?: string | null): boolean {
-  const effectiveTier = tier ?? getActiveLicenseTier();
-  return effectiveTier === 'enterprise' || effectiveTier === 'assessor';
+export function canManageClientPortfolio(
+  tier: VendorSoluceTier | null = getActiveLicenseTier()
+): boolean {
+  return tier === 'enterprise' || tier === 'assessor';
 }
