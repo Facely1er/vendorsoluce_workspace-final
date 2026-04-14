@@ -1,6 +1,7 @@
 import type { TFunction } from 'i18next';
 import type { MenuItem } from '../types';
 import { MR, WR } from 'shared/constants/routes';
+import { getActiveTier } from '../lib/licenseActivation';
 
 export interface NavSection {
   id: string;
@@ -9,6 +10,7 @@ export interface NavSection {
 }
 
 export function getWorkspaceSections(t: TFunction): NavSection[] {
+  const showActivateLicense = getActiveTier() == null;
   return [
     {
       id: 'vendors',
@@ -60,6 +62,15 @@ export function getWorkspaceSections(t: TFunction): NavSection[] {
         { label: t('navigation.stakeholders', 'Stakeholders'), href: WR.TEAM_STAKEHOLDERS },
       ],
     },
+    ...(showActivateLicense
+      ? [
+          {
+            id: 'account',
+            label: t('navigation.account', 'Account'),
+            items: [{ label: t('navigation.activateLicense', 'Activate License'), href: '/workspace/activate' }],
+          },
+        ]
+      : []),
   ];
 }
 

@@ -67,6 +67,7 @@ window.VENDORSOLUCE_ROUTE_MANIFEST = {
     "VENDOR_INTELLIGENCE": "/workspace/vendors",
     "VENDOR_GRAPH_IMPORT": "/workspace/vendors/import",
     "VENDOR_INTELLIGENCE_DETAIL": "/workspace/vendors/:vendorId",
+    "VENDOR_PORTFOLIO": "/workspace/portfolio",
     "COMPLIANCE_ROADMAP": "/workspace/roadmap"
   },
   "auth": {

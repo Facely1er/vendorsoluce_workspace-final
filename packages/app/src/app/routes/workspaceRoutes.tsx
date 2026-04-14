@@ -46,6 +46,7 @@ const VendorIntelligenceDetailPage = lazyWithRetry(() => import('../../pages/wor
 const VendorPortfolioPage = lazyWithRetry(() => import('../../pages/workspace/vendorsoluce/VendorPortfolioPage'));
 const ComplianceRoadmapPage = lazyWithRetry(() => import('../../pages/workspace/ComplianceRoadmapPage'));
 const VendorActivityCatalogPage = lazyWithRetry(() => import('../../pages/programs/VendorActivityCatalogPage'));
+const ActivateLicensePage = lazyWithRetry(() => import('../../pages/workspace/ActivateLicensePage'));
 
 export const workspaceRoutes = (
   <>
@@ -117,6 +118,10 @@ export const workspaceRoutes = (
     <Route
       path={WR.COMPLIANCE_ROADMAP}
       element={<RouteWrapper><ComplianceRoadmapPage /></RouteWrapper>}
+    />
+    <Route
+      path="/workspace/activate"
+      element={<RouteWrapper><ActivateLicensePage /></RouteWrapper>}
     />
     <Route path={MR.VENDOR_ACTIVITY_CATALOG} element={<RouteWrapper><VendorActivityCatalogPage /></RouteWrapper>} />
     {/* Program routes ungated in publicRoutes.tsx (external gate happens before workspace access). */}

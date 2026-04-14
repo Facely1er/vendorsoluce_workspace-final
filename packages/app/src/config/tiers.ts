@@ -8,6 +8,9 @@
  * - Custom integration: tiers extend to SOW-specific SLAs and environments.
  */
 
+import { getActiveTier, isPortalEnabled } from '../lib/licenseActivation';
+import type { VendorSoluceTier } from '../lib/licenseActivation';
+
 export type TierKey = 'free' | 'starter' | 'professional' | 'enterprise' | 'federal' | 'assessor';
 
 export interface TierLimits {
@@ -269,6 +272,17 @@ export function getUsageLimit(
   return 0;
 }
 
-export function canManageClientPortfolio(tier: string | null): boolean {
-  return tier === 'enterprise' || tier === 'assessor';
+export function canAccessPortal(): boolean {
+  return isPortalEnabled();
+}
+
+export function getActiveLicenseTier(): VendorSoluceTier | null {
+  return getActiveTier();
+}
+
+export function canManageClientPortfolio(): boolean;
+export function canManageClientPortfolio(tier: string | null): boolean;
+export function canManageClientPortfolio(tier?: string | null): boolean {
+  const effectiveTier = tier ?? getActiveLicenseTier();
+  return effectiveTier === 'enterprise' || effectiveTier === 'assessor';
 }
