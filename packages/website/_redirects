@@ -19,4 +19,4 @@ https://vendorsoluce.com/* https://www.vendorsoluce.com/:splat 301!
 /download /download.html 200
 /account /account.html 200
 /tutorial /tutorial.html 200
-/app/* https://www.platform.vendorsoluce.com/:splat 301
+/app/* https://app.vendorsoluce.com/:splat 301

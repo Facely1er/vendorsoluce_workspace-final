@@ -36,6 +36,8 @@ Shared checklist: **`docs/NETLIFY_MONOREPO_TEMPLATE.md`** in **CyberCorrect** (`
 
 Apex → `www` is handled by **`packages/website/_redirects`** where configured.
 
+**Links from `www`:** CTAs in **`packages/website/`** (footer, hero, radar handoff, etc.) should open the **public demo** at **`https://app.vendorsoluce.com/...`**, not `platform.*`. Billing, org sign-in, and the vendor assurance **portal** stay on **`platform.vendorsoluce.com`** / **`portal.vendorsoluce.com`** as appropriate. Short path **`/app/*`** on `www` redirects to **`app.vendorsoluce.com`** via **`packages/website/_redirects`**.
+
 ---
 
 ## 2. App demo — `app.vendorsoluce.com`
@@ -46,6 +48,8 @@ Apex → `www` is handled by **`packages/website/_redirects`** where configured.
 | Config file | `packages/app/netlify.app-demo.toml` |
 
 Build runs **`npm run build:demo:react -w app`**; publish **`packages/app/dist-demo`**. The `packages/app` script uses Unix-style `BUILD_MODE=demo` inline, which is fine on **Netlify’s Linux** builders.
+
+This site is the **ungated** browser demo linked from marketing; do not point `www` “try the app” buttons at **`platform.*`** unless the flow explicitly requires a signed-in org (e.g. checkout).
 
 ---
 

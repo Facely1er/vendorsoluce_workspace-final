@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Verifies that website footer links to the platform have valid targets:
- * - App/public/workspace routes exist in packages/shared/routes.json
+ * Verifies that website footer links to the public app (demo) have valid targets:
+ * - Workspace routes exist in packages/shared/routes.json
  * - Static file /radar/vendor-threat-radar.html exists in website
  */
 import fs from 'fs';
@@ -37,7 +37,7 @@ function main() {
     ...Object.values(routeConfig.portal || {}),
   ]);
 
-  console.log('Verifying website → platform links\n');
+  console.log('Verifying website → app (public demo) links\n');
   console.log('Footer file:', footerPath);
   console.log('');
 
@@ -76,7 +76,7 @@ function main() {
     console.log(`Result: ${failed} link(s) failed verification.`);
     process.exit(1);
   }
-  console.log('Result: All platform links are valid.');
+  console.log('Result: All app footer links are valid.');
 }
 
 main();

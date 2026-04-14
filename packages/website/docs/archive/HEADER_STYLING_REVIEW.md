@@ -40,7 +40,7 @@ After reviewing the standard header (`includes/header.html`) and comparing it wi
 - Spacing: `space-x-1.5 sm:space-x-2`
 
 **Current Pages Have:**
-- Account button linking to `https://www.platform.vendorsoluce.com/signin`
+- Account / sign-in: hosted org flows use `platform.vendorsoluce.com`; public try-the-app CTAs use `app.vendorsoluce.com` (see `NETLIFY_DEPLOYMENT.md`).
 - Button styles: `p-2` (smaller, different shape)
 - Theme toggle: `px-3 py-1.5 text-sm` (different sizing)
 - Spacing: `space-x-0.5` (tighter)
