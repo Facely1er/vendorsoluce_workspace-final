@@ -1,222 +1,265 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import { 
-  Shield, 
-  Users, 
-  BarChart3, 
-  TrendingUp, 
+import {
+  Shield,
+  Users,
+  BarChart3,
+  TrendingUp,
   AlertTriangle,
   Plus,
-  Target,
   FileText,
   Lock,
   Eye,
   User,
   Activity,
   Database,
-  Award,
-  Zap
+  ArrowRight,
+  Zap,
+  CheckCircle2,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import {
+  WORKSPACE_PAGE_SHELL_INNER_CLASS,
+  WORKSPACE_PAGE_SHELL_OUTER_CLASS,
+} from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+
 const DashboardDemoPage: React.FC = () => {
   useAuth();
 
-  // Note: This component is now used for demo mode in ConditionalDashboard
-  // Authenticated users will see the actual DashboardPage instead
-
   const demoMetrics = [
-    { label: 'Total Vendors', value: 47, icon: <Users className="h-6 w-6 text-blue-500" />, change: '+12 this month' },
-    { label: 'High Risk Vendors', value: 8, icon: <AlertTriangle className="h-6 w-6 text-orange-500" />, change: '-3 resolved' },
-    { label: 'Assessments', value: 23, icon: <FileText className="h-6 w-6 text-green-500" />, change: '+5 completed' },
-    { label: 'SBOM Analyses', value: 15, icon: <Shield className="h-6 w-6 text-purple-500" />, change: '+7 this week' }
+    {
+      label: 'Vendors tracked',
+      value: 47,
+      delta: '+12 this month',
+      icon: Users,
+      accent: 'text-emerald-700 dark:text-emerald-300',
+      soft: 'bg-emerald-50 ring-emerald-600/10 dark:bg-emerald-950/40 dark:ring-emerald-500/20',
+    },
+    {
+      label: 'Elevated risk',
+      value: 8,
+      delta: '3 resolved recently',
+      icon: AlertTriangle,
+      accent: 'text-amber-800 dark:text-amber-200',
+      soft: 'bg-amber-50 ring-amber-600/10 dark:bg-amber-950/35 dark:ring-amber-500/20',
+    },
+    {
+      label: 'Assessments',
+      value: 23,
+      delta: '+5 completed',
+      icon: FileText,
+      accent: 'text-slate-800 dark:text-slate-200',
+      soft: 'bg-slate-100 ring-slate-500/10 dark:bg-slate-900 dark:ring-slate-500/25',
+    },
+    {
+      label: 'SBOM reviews',
+      value: 15,
+      delta: '+7 this week',
+      icon: Shield,
+      accent: 'text-teal-800 dark:text-teal-200',
+      soft: 'bg-teal-50 ring-teal-600/10 dark:bg-teal-950/40 dark:ring-teal-500/20',
+    },
   ];
 
   const recentActivity = [
-    { action: 'Completed NIST 800-161 Assessment', time: '2 hours ago', type: 'success' },
-    { action: 'Added new vendor: CloudSecure Inc', time: '1 day ago', type: 'info' },
-    { action: 'Critical vulnerability detected in SBOM', time: '2 days ago', type: 'warning' },
-    { action: 'Generated compliance report', time: '3 days ago', type: 'success' }
+    { action: 'NIST SP 800-161 assessment completed', time: '2 hours ago', type: 'success' as const },
+    { action: 'Vendor added: CloudSecure Inc.', time: '1 day ago', type: 'info' as const },
+    { action: 'SBOM review flagged transitive dependency', time: '2 days ago', type: 'warning' as const },
+    { action: 'VIRA portfolio report generated', time: '3 days ago', type: 'success' as const },
   ];
 
   const quickActions = [
     {
-      title: 'Add Vendor',
-      description: 'Add a new vendor to your risk portfolio',
-      icon: <Plus className="h-6 w-6" />,
-      color: 'bg-blue-500'
+      title: 'Add vendor',
+      description: 'Seed the radar with your critical suppliers.',
+      icon: Plus,
+      href: '/vendor-risk-radar',
     },
     {
-      title: 'Run Assessment',
-      description: 'Start a supply chain risk assessment',
-      icon: <BarChart3 className="h-6 w-6" />,
-      color: 'bg-green-500'
+      title: 'Run assessment',
+      description: 'Walk the supply chain questionnaire—no login for the first pass.',
+      icon: BarChart3,
+      href: '/supply-chain-assessment',
     },
     {
       title: 'Analyze SBOM',
-      description: 'Upload and analyze software components',
-      icon: <Database className="h-6 w-6" />,
-      color: 'bg-purple-500'
+      description: 'Upload a package manifest and review dependency risk.',
+      icon: Database,
+      href: '/sbom-analyzer',
     },
     {
-      title: 'View Reports',
-      description: 'Generate compliance reports',
-      icon: <FileText className="h-6 w-6" />,
-      color: 'bg-orange-500'
-    }
+      title: 'View reports',
+      description: 'Consolidate scores into stakeholder-ready output.',
+      icon: FileText,
+      href: '/vendor-assessments',
+    },
+  ];
+
+  const trustPoints = [
+    'Evidence-friendly workflows',
+    'NIST-aligned structure',
+    'Built for defense supply chains',
   ];
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Engaging hero — value first, then actions */}
-      <div className="mb-8 rounded-2xl bg-gradient-to-br from-vendorsoluce-navy via-vendorsoluce-navy to-vendorsoluce-teal text-white p-6 sm:p-8 shadow-xl">
-        <div className="max-w-3xl">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-3 tracking-tight">
-            Supply chain risk, one dashboard
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-100 mb-6">
-            Monitor vendors, run NIST-aligned assessments, and track compliance without the spreadsheet. 
-            Try an assessment now — no account required — or sign in to see your own data.
-          </p>
-          <div className="flex flex-wrap items-center gap-3">
-            <Link to="/supply-chain-assessment">
-              <Button variant="secondary" size="lg" className="inline-flex items-center gap-2 bg-white text-vendorsoluce-navy hover:bg-gray-100 font-semibold shadow-lg">
-                <Zap className="h-5 w-5" />
-                Try Supply Chain Assessment
-              </Button>
-            </Link>
-            <Link to="/signin?redirect=/dashboard">
-              <Button variant="outline" size="lg" className="inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white/15 font-medium">
-                <User className="h-5 w-5" />
-                Sign in
-              </Button>
-            </Link>
-            <Link to="/trial" className="text-sm font-medium text-white/90 hover:text-white underline">
-              Start free trial →
-            </Link>
+    <div className={WORKSPACE_PAGE_SHELL_OUTER_CLASS}>
+      <div className={`${WORKSPACE_PAGE_SHELL_INNER_CLASS} max-w-7xl`}>
+        <section className="overflow-hidden rounded-3xl bg-gradient-to-br from-vendorsoluce-navy via-[#0f2744] to-vendorsoluce-teal text-white shadow-xl ring-1 ring-black/5">
+          <div className="relative px-6 py-10 sm:px-10 sm:py-12">
+            <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-emerald-400/15 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-16 left-1/3 h-48 w-48 rounded-full bg-teal-300/10 blur-2xl" />
+            <div className="relative max-w-3xl space-y-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200/90">VendorSoluce preview</p>
+              <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[2.35rem] lg:leading-tight">
+                See supply chain risk the way your program lead does—without the spreadsheet.
+              </h1>
+              <p className="max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
+                Explore sample metrics below, run an assessment without an account, or sign in when you are ready to
+                persist vendors, SBOMs, and assessments in your workspace.
+              </p>
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <Link to="/supply-chain-assessment">
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    className="inline-flex items-center gap-2 bg-white font-semibold text-vendorsoluce-navy shadow-lg hover:bg-gray-50"
+                  >
+                    <Zap className="h-5 w-5" aria-hidden />
+                    Try supply chain assessment
+                  </Button>
+                </Link>
+                <Link to="/signin?redirect=/dashboard">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="inline-flex items-center gap-2 border-2 border-white/40 bg-white/5 font-medium text-white backdrop-blur hover:bg-white/10"
+                  >
+                    <User className="h-5 w-5" aria-hidden />
+                    Sign in
+                  </Button>
+                </Link>
+                <Link to="/trial" className="text-sm font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">
+                  Start free trial
+                </Link>
+              </div>
+              <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-2 text-sm text-white/75">
+                {trustPoints.map((t) => (
+                  <li key={t} className="inline-flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* Demo strip — sample data notice */}
-      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3">
-        <div className="flex items-center gap-2">
-          <Eye className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
-          <span className="text-sm font-medium text-amber-800 dark:text-amber-200">
-            Sample data below — sign in or start a trial to use your own vendors and assessments.
-          </span>
+        <div className="flex flex-col gap-3 rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between dark:border-amber-900/60 dark:bg-amber-950/25">
+          <div className="flex items-start gap-2.5 sm:items-center">
+            <Eye className="mt-0.5 h-4 w-4 shrink-0 text-amber-700 dark:text-amber-400 sm:mt-0" aria-hidden />
+            <p className="text-sm font-medium leading-snug text-amber-950 dark:text-amber-100">
+              Figures below are illustrative. Sign in or start a trial to connect your real vendor and assessment data.
+            </p>
+          </div>
+          <Link
+            to="/signin"
+            className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-amber-900 hover:underline dark:text-amber-200"
+          >
+            Sign in
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
         </div>
-        <Link to="/signin" className="text-sm font-semibold text-amber-700 dark:text-amber-300 hover:underline shrink-0">
-          Sign in →
-        </Link>
-      </div>
-      
-      <div>
 
-        {/* Key Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {demoMetrics.map((metric, index) => (
-            <Card key={index} className="relative overflow-hidden">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{metric.value}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{metric.label}</p>
-                    <p className="text-xs text-green-600 dark:text-green-400 mt-1">{metric.change}</p>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {demoMetrics.map((metric) => {
+            const Icon = metric.icon;
+            return (
+              <Card
+                key={metric.label}
+                className="relative overflow-hidden border-gray-200/80 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
+              >
+                <CardContent className="p-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className={`flex h-11 w-11 items-center justify-center rounded-xl ring-1 ${metric.soft}`}>
+                      <Icon className={`h-5 w-5 ${metric.accent}`} aria-hidden />
+                    </div>
                   </div>
-                  <div className="opacity-20">
-                    {metric.icon}
-                  </div>
-                </div>
-              </CardContent>
-              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-vendorsoluce-green/10 to-vendorsoluce-blue/10 rounded-bl-full"></div>
-            </Card>
-          ))}
+                  <p className="mt-4 text-3xl font-semibold tabular-nums tracking-tight text-gray-950 dark:text-white">
+                    {metric.value}
+                  </p>
+                  <p className="mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">{metric.label}</p>
+                  <p className="mt-2 text-xs font-medium text-emerald-700 dark:text-emerald-400">{metric.delta}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Risk Overview */}
-          <div className="lg:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <BarChart3 className="h-5 w-5 mr-2 text-vendorsoluce-green" />
-                  Risk Distribution
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-start">
+          <div className="space-y-6 lg:col-span-2">
+            <Card className="border-gray-200/80 shadow-sm dark:border-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-lg font-semibold tracking-tight">
+                  <BarChart3 className="h-5 w-5 text-vendorsoluce-green" aria-hidden />
+                  Portfolio distribution
                 </CardTitle>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Sample mix across risk tiers (demo data).</p>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Low Risk</span>
-                    <span className="text-sm font-bold text-green-600 dark:text-green-400">31 vendors</span>
+              <CardContent className="space-y-5">
+                {[
+                  { label: 'Low risk', count: '31 vendors', widthClass: 'w-[66%]', bar: 'bg-emerald-500' },
+                  { label: 'Medium risk', count: '8 vendors', widthClass: 'w-[17%]', bar: 'bg-amber-400' },
+                  { label: 'High risk', count: '8 vendors', widthClass: 'w-[17%]', bar: 'bg-orange-500' },
+                ].map((row) => (
+                  <div key={row.label}>
+                    <div className="mb-2 flex items-center justify-between gap-3 text-sm">
+                      <span className="font-medium text-gray-800 dark:text-gray-200">{row.label}</span>
+                      <span className="shrink-0 font-semibold tabular-nums text-gray-600 dark:text-gray-400">
+                        {row.count}
+                      </span>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                      <div className={`${row.bar} ${row.widthClass} h-2 rounded-full transition-all`} />
+                    </div>
                   </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div className="bg-green-500 h-2 rounded-full risk-bar-low"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Medium Risk</span>
-                    <span className="text-sm font-bold text-yellow-600 dark:text-yellow-400">8 vendors</span>
-                  </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div className="bg-yellow-500 h-2 rounded-full risk-bar-medium"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">High Risk</span>
-                    <span className="text-sm font-bold text-orange-600 dark:text-orange-400">8 vendors</span>
-                  </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div className="bg-orange-500 h-2 rounded-full risk-bar-high"></div>
-                  </div>
-                </div>
+                ))}
               </CardContent>
             </Card>
 
-            {/* Quick Actions */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Zap className="h-5 w-5 mr-2 text-vendorsoluce-blue" />
-                  Quick Actions
+            <Card className="border-gray-200/80 shadow-sm dark:border-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-lg font-semibold tracking-tight">
+                  <Zap className="h-5 w-5 text-vendorsoluce-green" aria-hidden />
+                  Next actions
                 </CardTitle>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Jump into the tools that ship with VendorSoluce.</p>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {quickActions.map((action, index) => {
-                    const actionRoutes: Record<string, string> = {
-                      'Add Vendor': '/vendor-risk-radar',
-                      'Run Assessment': '/supply-chain-assessment',
-                      'Analyze SBOM': '/sbom-analyzer',
-                      'View Reports': '/vendor-assessments'
-                    };
-                    const route = actionRoutes[action.title];
-                    
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  {quickActions.map((action) => {
+                    const Icon = action.icon;
                     return (
-                      <div key={index} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-vendorsoluce-green dark:hover:border-vendorsoluce-green transition-colors">
-                        <div className="flex items-center mb-2">
-                          <div className={`w-10 h-10 ${action.color} rounded-lg flex items-center justify-center text-white mr-3`}>
-                            {action.icon}
-                          </div>
-                          <div>
-                            <h3 className="font-medium text-gray-900 dark:text-white">{action.title}</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">{action.description}</p>
+                      <Link
+                        key={action.title}
+                        to={action.href}
+                        className="group flex flex-col rounded-2xl border border-gray-200/90 bg-gray-50/50 p-4 transition-colors hover:border-emerald-300/80 hover:bg-white dark:border-gray-800 dark:bg-gray-950/30 dark:hover:border-emerald-800 dark:hover:bg-gray-900"
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-vendorsoluce-green shadow-sm ring-1 ring-gray-200/80 dark:bg-gray-900 dark:ring-gray-700">
+                            <Icon className="h-5 w-5" aria-hidden />
+                          </span>
+                          <div className="min-w-0">
+                            <h3 className="font-semibold text-gray-900 dark:text-white">{action.title}</h3>
+                            <p className="mt-1 text-sm leading-relaxed text-gray-600 dark:text-gray-400">{action.description}</p>
                           </div>
                         </div>
-                        {route ? (
-                          <Link to={route}>
-                            <div className="mt-2 flex items-center text-vendorsoluce-green hover:text-vendorsoluce-dark-green text-sm font-medium cursor-pointer">
-                              Try in Demo Mode →
-                            </div>
-                          </Link>
-                        ) : (
-                          <div className="mt-2 flex items-center text-gray-500 dark:text-gray-400 text-sm">
-                            <Lock className="h-3 w-3 mr-1" />
-                            Sign in required
-                          </div>
-                        )}
-                      </div>
+                        <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green">
+                          Open
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+                        </span>
+                      </Link>
                     );
                   })}
                 </div>
@@ -224,29 +267,27 @@ const DashboardDemoPage: React.FC = () => {
             </Card>
           </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Sign In Prompt */}
-            <Card className="border-l-4 border-l-vendorsoluce-green">
+          <div className="space-y-6">
+            <Card className="border-l-[3px] border-l-vendorsoluce-green shadow-sm dark:border-gray-800">
               <CardContent className="p-6">
                 <div className="text-center">
-                  <Lock className="h-12 w-12 text-vendorsoluce-green mx-auto mb-4" />
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-                    Sign in to unlock full dashboard
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    Access all features, save your data, and get personalized insights
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-vendorsoluce-green dark:bg-emerald-950/50">
+                    <Lock className="h-6 w-6" aria-hidden />
+                  </div>
+                  <h3 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">Use your own data</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                    Save vendors, assessments, and SBOM history to your tenant. Same navigation—real persistence.
                   </p>
-                  <div className="space-y-2">
-                    <Link to="/signin">
-                      <Button variant="primary" size="sm" className="w-full inline-flex items-center justify-center gap-2 text-sm py-2">
-                        <User className="h-4 w-4" />
-                        Sign In
+                  <div className="mt-5 space-y-2">
+                    <Link to="/signin" className="block">
+                      <Button variant="primary" size="sm" className="w-full justify-center gap-2">
+                        <User className="h-4 w-4" aria-hidden />
+                        Sign in
                       </Button>
                     </Link>
-                    <Link to="/signup">
-                      <Button variant="outline" size="sm" className="w-full text-sm py-2">
-                        Create Account
+                    <Link to="/signup" className="block">
+                      <Button variant="outline" size="sm" className="w-full">
+                        Create account
                       </Button>
                     </Link>
                   </div>
@@ -254,118 +295,94 @@ const DashboardDemoPage: React.FC = () => {
               </CardContent>
             </Card>
 
-            {/* Recent Activity */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Activity className="h-5 w-5 mr-2 text-vendorsoluce-teal" />
-                  Recent Activity
-                  <span className="ml-2 text-xs bg-yellow-100 dark:bg-yellow-900/30 px-2 py-1 rounded-full text-yellow-800 dark:text-yellow-300 font-semibold">
-                    DEMO
+            <Card className="border-gray-200/80 shadow-sm dark:border-gray-800">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex flex-wrap items-center gap-2 text-base font-semibold tracking-tight">
+                  <Activity className="h-5 w-5 text-teal-600 dark:text-teal-400" aria-hidden />
+                  Recent activity
+                  <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-900 dark:bg-amber-900/40 dark:text-amber-200">
+                    Demo
                   </span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
+                <ul className="space-y-4">
                   {recentActivity.map((activity, index) => (
-                    <div key={index} className="flex items-start space-x-3 opacity-60">
-                      <div className={`w-2 h-2 rounded-full mt-2 ${
-                        activity.type === 'success' ? 'bg-green-500' :
-                        activity.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
-                      }`}></div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{activity.action}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</p>
+                    <li key={index} className="flex gap-3">
+                      <span
+                        className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
+                          activity.type === 'success'
+                            ? 'bg-emerald-500'
+                            : activity.type === 'warning'
+                              ? 'bg-amber-500'
+                              : 'bg-sky-500'
+                        }`}
+                        aria-hidden
+                      />
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{activity.action}</p>
+                        <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{activity.time}</p>
                       </div>
-                    </div>
+                    </li>
                   ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Achievements Preview */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Award className="h-5 w-5 mr-2 text-yellow-500" />
-                  Achievements
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-                    <div className="flex items-center">
-                      <Award className="h-5 w-5 text-yellow-500 mr-2" />
-                      <div>
-                        <h4 className="font-medium text-yellow-800 dark:text-yellow-300">Risk Assessment Expert</h4>
-                        <p className="text-xs text-yellow-700 dark:text-yellow-400">Complete 5 assessments</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg opacity-60">
-                    <div className="flex items-center">
-                      <Target className="h-5 w-5 text-gray-400 mr-2" />
-                      <div>
-                        <h4 className="font-medium text-gray-600 dark:text-gray-400">Vendor Manager</h4>
-                        <p className="text-xs text-gray-500 dark:text-gray-500">Manage 25+ vendors</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </ul>
               </CardContent>
             </Card>
           </div>
         </div>
 
-        {/* Feature Highlights */}
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
-            What you get with a VendorSoluce account
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="text-center p-6">
-              <div className="w-12 h-12 bg-vendorsoluce-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <BarChart3 className="h-6 w-6 text-vendorsoluce-green" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Complete Risk Visibility</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm">
-                Monitor all your vendors, track compliance, and get real-time risk scores
-              </p>
-            </Card>
-            
-            <Card className="text-center p-6">
-              <div className="w-12 h-12 bg-vendorsoluce-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="h-6 w-6 text-vendorsoluce-blue" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">NIST 800-161 Aligned</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm">
-                Built-in compliance framework ensures you meet federal requirements
-              </p>
-            </Card>
-            
-            <Card className="text-center p-6">
-              <div className="w-12 h-12 bg-vendorsoluce-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <TrendingUp className="h-6 w-6 text-vendorsoluce-teal" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Automated Insights</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm">
-                Get actionable recommendations and automated risk scoring
-              </p>
-            </Card>
+        <section className="rounded-3xl border border-gray-200/80 bg-white px-6 py-10 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:px-10">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-2xl font-semibold tracking-tight text-gray-950 dark:text-white">What a full seat unlocks</h2>
+            <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+              Same workflows you are previewing—plus saved evidence, collaboration, and reporting continuity across teams.
+            </p>
           </div>
-        </div>
+          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
+            {[
+              {
+                title: 'Portfolio visibility',
+                body: 'One vendor graph feeding radar, assessments, and leadership summaries.',
+                icon: BarChart3,
+              },
+              {
+                title: 'NIST-aligned posture',
+                body: 'Structure that maps to SP 800-161 expectations without re-inventing templates.',
+                icon: Shield,
+              },
+              {
+                title: 'Operational cadence',
+                body: 'Prioritized queues so reviews happen on a rhythm—not after an incident.',
+                icon: TrendingUp,
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-2xl border border-gray-100 bg-gray-50/60 p-6 text-left dark:border-gray-800 dark:bg-gray-950/40"
+                >
+                  <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white text-vendorsoluce-green shadow-sm ring-1 ring-gray-200/80 dark:bg-gray-900 dark:ring-gray-700">
+                    <Icon className="h-5 w-5" aria-hidden />
+                  </div>
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-white">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">{item.body}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
 
-        {/* CTA Section */}
-        <div className="mt-12 bg-gradient-to-r from-vendorsoluce-green to-vendorsoluce-light-green text-white rounded-lg p-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to secure your supply chain?</h2>
-          <p className="text-xl text-gray-100 mb-6 max-w-2xl mx-auto">
-            Join organizations using VendorSoluce to manage supply chain risks and ensure compliance
+        <div className="rounded-3xl bg-gradient-to-r from-vendorsoluce-green to-emerald-600 px-6 py-10 text-center text-white shadow-lg sm:px-10">
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Ready to run this on your supply base?</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-base text-white/90">
+            Create an account to replace demo numbers with your vendors, evidence, and audit trail.
           </p>
-          <div className="flex justify-center">
+          <div className="mt-6 flex justify-center">
             <Link to="/signup">
-              <Button variant="secondary" size="sm" className="inline-flex items-center gap-2 bg-white text-vendorsoluce-green hover:bg-gray-100 text-sm px-4 py-2">
-                <User className="h-4 w-4" />
-                Start Free Account
+              <Button variant="secondary" size="lg" className="gap-2 bg-white font-semibold text-emerald-800 hover:bg-gray-50">
+                <User className="h-5 w-5" aria-hidden />
+                Start free account
               </Button>
             </Link>
           </div>
