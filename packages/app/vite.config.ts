@@ -12,8 +12,11 @@ const __dirname = path.dirname(__filename);
  *
  * Base path
  * ---------
- * Controlled by the VITE_BASE_PATH environment variable (default: '/').
- * Set this when the app is deployed under a sub-path, e.g. VITE_BASE_PATH=/app/
+ * Controlled by the VITE_BASE_PATH environment variable (default: './').
+ * The default './' produces relative asset paths so dist/index.html opens
+ * directly in a browser without a local server.
+ * Set VITE_BASE_PATH=/ (or any sub-path) when deploying behind a web server,
+ * e.g. VITE_BASE_PATH=/app/
  *
  * Build modes & output directories
  * ---------------------------------
@@ -53,7 +56,7 @@ export default defineConfig(({ mode }) => {
 
   // Get base path from environment or default to root
   // This is critical for dynamic imports to work correctly
-  const base = env.VITE_BASE_PATH || '/';
+  const base = env.VITE_BASE_PATH || './';
 
   return {
   base,
