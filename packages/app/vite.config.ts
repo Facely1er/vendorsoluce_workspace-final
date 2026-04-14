@@ -7,6 +7,30 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+/**
+ * Vite Build Configuration — VendorSoluce (packages/app)
+ *
+ * Base path
+ * ---------
+ * Controlled by the VITE_BASE_PATH environment variable (default: './').
+ * The default './' produces relative asset paths so dist/index.html opens
+ * directly in a browser without a local server.
+ * Set VITE_BASE_PATH=/ (or any sub-path) when deploying behind a web server,
+ * e.g. VITE_BASE_PATH=/app/
+ *
+ * Build modes & output directories
+ * ---------------------------------
+ * | npm script              | Mode / env var                           | outDir          |
+ * |-------------------------|------------------------------------------|-----------------|
+ * | npm run build           | production (default)                     | dist            |
+ * | npm run build:demo:react| --mode demo  OR  BUILD_MODE=demo         | dist-demo       |
+ * | npm run build:enterprise| --mode enterprise  OR  VITE_LICENSE_MODE=true | dist-enterprise |
+ *
+ * Demo builds keep console logs and sourcemaps enabled for easier debugging.
+ * Enterprise builds omit Stripe and output to a separate directory.
+ * Default production builds must not have VITE_DEMO_MODE=true set.
+ */
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   // Load environment variables using Vite's loadEnv
