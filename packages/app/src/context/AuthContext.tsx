@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase, isSupabaseEnabled } from '../lib/supabase';
+import { ermitsAuthPlane } from '../lib/ermits';
+import { AR } from 'shared/constants/routes';
 import { useNavigate } from 'react-router-dom';
 import { Profile } from '../types';
 import { setUserContext, clearUserContext, addBreadcrumb } from '../utils/sentry';
@@ -72,6 +74,8 @@ interface AuthContextType {
   /** In demo mode: signs in as demo user without Supabase */
   enterDemoMode: () => void;
   resetPassword: (email: string) => Promise<void>;
+  /** Magic link for trial / passwordless sign-in (allows user creation). */
+  sendMagicLinkTrial: (email: string) => Promise<void>;
   updatePassword: (newPassword: string) => Promise<void>;
   resendVerificationEmail: () => Promise<void>;
   markOnboardingComplete: (profileData?: {
@@ -195,6 +199,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (session?.user) {
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
+          try {
+            await ermitsAuthPlane.bootstrapProfile(user.id, user.email ?? '');
+          } catch (e) {
+            logger.warn('[ermits] bootstrapProfile skipped:', e);
+          }
           setUser(user);
           fetchProfile(user.id);
           setUserContext({ id: user.id, email: user.email });
@@ -228,6 +237,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       
       if (session?.user) {
+        void (async () => {
+          try {
+            await ermitsAuthPlane.bootstrapProfile(session.user.id, session.user.email ?? '');
+          } catch (e) {
+            logger.warn('[ermits] bootstrapProfile skipped:', e);
+          }
+        })();
         fetchProfile(session.user.id);
         // Set user context in Sentry
         setUserContext({
@@ -253,6 +269,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     if (error) throw error;
+  };
+
+  const sendMagicLinkTrial = async (email: string) => {
+    if (!isSupabaseEnabled()) throw new Error(AUTH_NOT_CONFIGURED_MSG);
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    await ermitsAuthPlane.sendMagicLink(
+      email.trim(),
+      `${origin}${AR.CALLBACK}`,
+      true
+    );
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
@@ -442,6 +468,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     logout,
     enterDemoMode,
     resetPassword,
+    sendMagicLinkTrial,
     updatePassword,
     resendVerificationEmail,
     markOnboardingComplete,

@@ -3,6 +3,10 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import PageLoader from '../common/PageLoader';
 import { config } from '../../utils/config';
+import { useErmitsEntitlement } from '../../hooks/useErmitsEntitlement';
+import { AR } from 'shared/constants/routes';
+
+const ERMITS_PRODUCT = 'vendorsoluce';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -13,10 +17,19 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children, 
   requireAuth = true 
 }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, isDemoMode, isLocalWorkspaceMode } = useAuth();
   const location = useLocation();
+  const needsErmits =
+    requireAuth &&
+    isAuthenticated &&
+    !isDemoMode &&
+    !isLocalWorkspaceMode &&
+    !config.app.ungateProtectedRoutes;
+  const { result: entResult, loading: entLoading } = useErmitsEntitlement(ERMITS_PRODUCT, {
+    skip: !needsErmits,
+  });
 
-  if (isLoading) {
+  if (isLoading || (needsErmits && entLoading)) {
     return <PageLoader message="Checking authentication..." />;
   }
 
@@ -40,6 +53,17 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       );
     }
     return <Navigate to="/signin" state={{ from: location }} replace />;
+  }
+
+  if (needsErmits && entResult && !entResult.access) {
+    const reason = 'reason' in entResult ? entResult.reason : 'no_entitlement';
+    return (
+      <Navigate
+        to={AR.UPGRADE}
+        replace
+        state={{ reason, productCode: ERMITS_PRODUCT }}
+      />
+    );
   }
 
   if (!requireAuth && isAuthenticated) {

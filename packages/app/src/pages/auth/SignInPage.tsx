@@ -28,7 +28,7 @@ const SignInPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const fromCheckout = searchParams.get('from_checkout') === 'true';
   const checkoutSessionId = searchParams.get('session_id');
-  const { signIn, signUp, resetPassword, authAvailable, isDemoMode, isAuthenticated, enterDemoMode } = useAuth();
+  const { signIn, signUp, resetPassword, sendMagicLinkTrial, authAvailable, isDemoMode, isAuthenticated, enterDemoMode } = useAuth();
   
   // Get the intended destination from the location state (pathname + search for checkout?plan=), or default to dashboard
   const fromState = (location.state as { from?: { pathname: string; search?: string } })?.from;
@@ -195,6 +195,36 @@ const SignInPage: React.FC = () => {
             <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-md flex items-start border border-green-200 dark:border-green-800">
               <Shield className="h-5 w-5 text-green-600 dark:text-green-400 mr-2 flex-shrink-0" />
               <span className="text-green-600 dark:text-green-400 text-sm">{success}</span>
+            </div>
+          )}
+
+          {!isRegister && authAvailable && !showForgotPassword && (
+            <div className="mb-4 p-3 border border-gray-200 dark:border-gray-700 rounded-md bg-white/50 dark:bg-gray-800/50">
+              <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">Try without a password</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+                Enter your email above, then we send a one-time sign-in link (trial signup).
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                disabled={isLoading || !email.trim()}
+                onClick={async () => {
+                  setError('');
+                  setSuccess('');
+                  setIsLoading(true);
+                  try {
+                    await sendMagicLinkTrial(email);
+                    setSuccess('Check your email for the sign-in link.');
+                  } catch (err: unknown) {
+                    setError(err instanceof Error ? err.message : 'Could not send magic link.');
+                  } finally {
+                    setIsLoading(false);
+                  }
+                }}
+              >
+                Email me a magic link
+              </Button>
             </div>
           )}
           
