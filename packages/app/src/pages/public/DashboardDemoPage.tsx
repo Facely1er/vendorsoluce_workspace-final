@@ -107,7 +107,7 @@ const DashboardDemoPage: React.FC = () => {
   return (
     <div className={WORKSPACE_PAGE_SHELL_OUTER_CLASS}>
       <div className={WORKSPACE_PAGE_SHELL_INNER_CLASS}>
-        <section className="overflow-hidden rounded-3xl bg-gradient-to-br from-vendorsoluce-navy via-[#0f2744] to-vendorsoluce-teal text-white shadow-xl ring-1 ring-black/5">
+        <section className="overflow-hidden rounded-3xl bg-gradient-to-br from-vendorsoluce-navy to-vendorsoluce-teal text-white shadow-xl ring-1 ring-black/5">
           <div className="relative px-6 py-10 sm:px-10 sm:py-12">
             <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-emerald-400/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-16 left-1/3 h-48 w-48 rounded-full bg-teal-300/10 blur-2xl" />
