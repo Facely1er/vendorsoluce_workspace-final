@@ -21,9 +21,7 @@ const ConditionalVendorDashboard: React.FC = () => {
     return <PageLoader />;
   }
 
-  // Offline/anonymous mode: always render the full workspace dashboard.
-  // Individual features/pages must handle missing auth by using local persistence.
-  const showFullDashboard = true || isAuthenticated || fromWebsite;
+  const showFullDashboard = isAuthenticated || fromWebsite;
   return (
     <Suspense fallback={<PageLoader />}>
       {showFullDashboard ? <VendorRiskDashboard /> : <VendorRiskDashboardDemo />}

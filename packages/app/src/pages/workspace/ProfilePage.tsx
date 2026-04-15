@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../../components/ui/Button';
 import { User, Mail, Building, Save, Shield } from 'lucide-react';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
@@ -7,11 +7,19 @@ import StatusBanner from '../../components/vendorsoluce-intelligence/StatusBanne
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabase';
 import { logger } from '../../utils/logger';
+import {
+  clearBrowserWorkspaceDisplayName,
+  getBrowserWorkspaceDisplayName,
+  setBrowserWorkspaceDisplayName,
+} from '../../utils/workspaceBrowserIdentity';
 
 const fieldClass = (editing: boolean) => `w-full rounded-md border border-gray-300 px-3 py-2 dark:border-gray-600 ${editing ? 'bg-white text-gray-900 dark:bg-gray-800 dark:text-white' : 'bg-gray-50 text-gray-500 dark:bg-gray-700 dark:text-gray-400'}`;
 
 const ProfilePage: React.FC = () => {
-  const { user, profile } = useAuth();
+  const { user, profile, isDemoMode, isLocalWorkspaceMode } = useAuth();
+  const ephemeralSession = isDemoMode || isLocalWorkspaceMode;
+  const [browserDisplayName, setBrowserDisplayName] = useState('');
+  const [browserNameMessage, setBrowserNameMessage] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -21,6 +29,11 @@ const ProfilePage: React.FC = () => {
     role: profile?.role || '',
     avatar_url: profile?.avatar_url || '',
   });
+
+  useEffect(() => {
+    if (!ephemeralSession) return;
+    setBrowserDisplayName(getBrowserWorkspaceDisplayName() || '');
+  }, [ephemeralSession]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -138,6 +151,56 @@ const ProfilePage: React.FC = () => {
               ) : null}
             </div>
           </PanelCard>
+
+          {ephemeralSession ? (
+            <PanelCard
+              title="This browser"
+              description="Optional display name for greetings and the account menu. Stored only in this browser — not sent to the server. Clear it to return to an anonymous workspace label."
+            >
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="vs-browser-display-name" className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Display name
+                  </label>
+                  <input
+                    id="vs-browser-display-name"
+                    type="text"
+                    value={browserDisplayName}
+                    onChange={(e) => setBrowserDisplayName(e.target.value)}
+                    className={fieldClass(true)}
+                    placeholder="e.g. Alex (optional)"
+                    maxLength={80}
+                  />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant="primary"
+                    type="button"
+                    onClick={() => {
+                      setBrowserWorkspaceDisplayName(browserDisplayName);
+                      setBrowserNameMessage(browserDisplayName.trim() ? 'Saved for this browser.' : 'Cleared. You are anonymous again.');
+                      setTimeout(() => setBrowserNameMessage(null), 3000);
+                    }}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    variant="outline"
+                    type="button"
+                    onClick={() => {
+                      clearBrowserWorkspaceDisplayName();
+                      setBrowserDisplayName('');
+                      setBrowserNameMessage('Cleared. You are anonymous again.');
+                      setTimeout(() => setBrowserNameMessage(null), 3000);
+                    }}
+                  >
+                    Clear
+                  </Button>
+                </div>
+                {browserNameMessage ? <p className="text-sm text-gray-600 dark:text-gray-400">{browserNameMessage}</p> : null}
+              </div>
+            </PanelCard>
+          ) : null}
 
           <PanelCard title="Account information" description="Keep immutable account dates visible in the same profile view.">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

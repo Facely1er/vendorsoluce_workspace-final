@@ -15,9 +15,9 @@ const ConditionalDashboard: React.FC = () => {
     return <PageLoader />;
   }
 
-  // Offline/anonymous mode: always render the full workspace dashboard.
-  // Individual features/pages must handle missing auth by using local persistence.
-  const showFullDashboard = true || isAuthenticated || fromWebsite;
+  // Full workspace after sign-in, marketing handoff (?from=website), or demo/local session (auth context provides a session).
+  // Otherwise show the structured preview landing (sample metrics, CTAs) without personalized dashboard chrome.
+  const showFullDashboard = isAuthenticated || fromWebsite;
   return (
     <Suspense fallback={<PageLoader />}>
       {showFullDashboard ? <DashboardPage /> : <DashboardDemoPage />}

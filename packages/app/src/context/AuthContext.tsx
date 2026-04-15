@@ -15,17 +15,16 @@ const createDemoUser = (): User =>
   ({
     id: DEMO_USER_ID,
     email: 'demo@vendorsoluce.com',
-    user_metadata: { full_name: 'Demo User' },
+    user_metadata: {},
     app_metadata: {},
     aud: 'authenticated',
     created_at: new Date().toISOString(),
-    name: 'Demo User', // Compatibility with UserMenu and other components
   }) as User;
 
 const createDemoProfile = (): Profile => ({
   id: DEMO_USER_ID,
   email: 'demo@vendorsoluce.com',
-  full_name: 'Demo User',
+  full_name: '',
   role: 'admin',
   is_first_login: false,
 });
@@ -34,18 +33,17 @@ const createLocalWorkspaceUser = (): User =>
   ({
     id: LOCAL_USER_ID,
     email: 'local@vendorsoluce.local',
-    user_metadata: { full_name: 'Local', organization_name: 'Local Workspace' },
+    user_metadata: { organization_name: '' },
     app_metadata: { provider: 'local' },
     aud: 'authenticated',
     created_at: new Date().toISOString(),
-    name: 'Local',
   }) as User;
 
 const createLocalWorkspaceProfile = (): Profile => ({
   id: LOCAL_USER_ID,
   email: 'local@vendorsoluce.local',
-  full_name: 'Local',
-  company: 'Local Workspace',
+  full_name: '',
+  company: '',
   role: 'workspace_admin',
   is_first_login: false,
 });
@@ -65,6 +63,8 @@ interface AuthContextType {
   authAvailable: boolean;
   /** True when VITE_DEMO_MODE is enabled (bypasses real auth) */
   isDemoMode: boolean;
+  /** True when Supabase is not configured and not in demo mode — local browser-only session */
+  isLocalWorkspaceMode: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, fullName: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -435,6 +435,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isAuthenticated: !!user,
     authAvailable: isSupabaseEnabled() || isDemoMode || isLocalWorkspaceMode,
     isDemoMode,
+    isLocalWorkspaceMode,
     signIn,
     signUp,
     signOut,

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ClipboardList, Shield, Users } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
@@ -17,9 +17,29 @@ import PortalStatusWidget from '../../components/dashboard/PortalStatusWidget';
 import { WORKSPACE_PAGE_BODY_STACK_LOOSE_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import type { VendorRisk } from '../../types';
 import { MR, WR } from 'shared/constants/routes';
+import {
+  getBrowserWorkspaceDisplayName,
+  WORKSPACE_DISPLAY_NAME_EVENT,
+} from '../../utils/workspaceBrowserIdentity';
 
 const DashboardPage: React.FC = () => {
-  const { user, profile } = useAuth();
+  const { user, profile, isDemoMode, isLocalWorkspaceMode } = useAuth();
+  const [, refreshBrowserLabel] = useState(0);
+
+  useEffect(() => {
+    const onIdentity = () => refreshBrowserLabel((n) => n + 1);
+    window.addEventListener(WORKSPACE_DISPLAY_NAME_EVENT, onIdentity);
+    return () => window.removeEventListener(WORKSPACE_DISPLAY_NAME_EVENT, onIdentity);
+  }, []);
+
+  const ephemeralSession = isDemoMode || isLocalWorkspaceMode;
+  const browserDisplayName = getBrowserWorkspaceDisplayName();
+  const accountDisplayName = (() => {
+    const raw = user?.user_metadata?.full_name || profile?.full_name;
+    const t = typeof raw === 'string' ? raw.trim() : '';
+    return t || null;
+  })();
+  const greetingName = ephemeralSession ? browserDisplayName : accountDisplayName;
   const { vendors, loading: vendorsLoading } = useVendors();
   const { assessments, loading: assessmentsLoading } = useSupplyChainAssessments();
 
@@ -39,7 +59,6 @@ const DashboardPage: React.FC = () => {
 
   const highRiskCount = riskSummary.critical + riskSummary.high;
   const completedAssessments = assessments.filter((assessment) => assessment.status === 'completed').length;
-  const currentUserName = user?.user_metadata?.full_name || profile?.full_name || 'User';
   const isGettingStarted =
     vendors.length === 0 ||
     profile?.onboarding_complete === false ||
@@ -59,6 +78,37 @@ const DashboardPage: React.FC = () => {
     if (items.length === 0) items.push('Your baseline is in place. Move into review cadence and evidence collection.');
     return items.slice(0, 3);
   }, [vendors.length, highRiskCount, completedAssessments]);
+
+  const anonymousHint =
+    ephemeralSession && !greetingName ? (
+      <span>
+        You are browsing without a named account. Data may be stored locally on this device. Optional
+        display name:{' '}
+        <Link to="/profile" className="font-medium text-vendorsoluce-green hover:underline dark:text-vendorsoluce-light-green">
+          Profile → This browser
+        </Link>
+        .
+      </span>
+    ) : null;
+
+  const loadingTitle =
+    ephemeralSession && !greetingName
+      ? 'Loading workspace…'
+      : greetingName
+        ? `Welcome back, ${greetingName}`
+        : `Welcome back, ${accountDisplayName || 'User'}`;
+
+  const gettingStartedTitle = greetingName
+    ? `Welcome, ${greetingName}`
+    : ephemeralSession
+      ? 'Start in three coordinated steps'
+      : `Welcome, ${accountDisplayName || 'User'}`;
+
+  const overviewTitle = greetingName
+    ? `Welcome back, ${greetingName}`
+    : ephemeralSession
+      ? 'Program overview'
+      : `Welcome back, ${accountDisplayName || 'User'}`;
 
   const overviewSubtitle = useMemo(() => {
     if (vendors.length === 0) {
@@ -91,7 +141,7 @@ const DashboardPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <WorkspacePage title={`Welcome back, ${currentUserName}`}>
+      <WorkspacePage title={loadingTitle}>
         <LoadingSkeleton variant="dashboard" />
       </WorkspacePage>
     );
@@ -138,9 +188,10 @@ const DashboardPage: React.FC = () => {
     return (
       <WorkspacePage
         eyebrow="Build your program"
-        title={`Welcome, ${currentUserName}`}
+        title={gettingStartedTitle}
         subtitle="Three moves turn VendorSoluce from an empty workspace into a living risk picture your leadership can trust."
         stats={onboardingStats}
+        descriptionExtra={anonymousHint}
       >
         <div className={WORKSPACE_PAGE_BODY_STACK_LOOSE_CLASS}>
           <div data-tour="get-started-widget">
@@ -189,9 +240,10 @@ const DashboardPage: React.FC = () => {
   return (
     <WorkspacePage
       eyebrow="Program overview"
-      title={`Welcome back, ${currentUserName}`}
+      title={overviewTitle}
       subtitle={overviewSubtitle}
       stats={riskStats}
+      descriptionExtra={anonymousHint}
     >
       <div className={WORKSPACE_PAGE_BODY_STACK_LOOSE_CLASS}>
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] xl:items-start">

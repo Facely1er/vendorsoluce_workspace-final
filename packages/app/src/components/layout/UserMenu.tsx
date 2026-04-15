@@ -1,16 +1,37 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { User, LogOut, Settings, UserCog, Bell, Activity, Mail, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { HelpCircle } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
+import {
+  getBrowserWorkspaceDisplayName,
+  WORKSPACE_DISPLAY_NAME_EVENT,
+} from '../../utils/workspaceBrowserIdentity';
 
 const UserMenu: React.FC = () => {
   const { t } = useTranslation();
-  const { user, logout, isAuthenticated, startTour } = useAuth();
+  const { user, logout, isAuthenticated, startTour, isDemoMode, isLocalWorkspaceMode } = useAuth();
+  const ephemeralSession = isDemoMode || isLocalWorkspaceMode;
+  const [browserLabelTick, setBrowserLabelTick] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onIdentity = () => setBrowserLabelTick((n) => n + 1);
+    window.addEventListener(WORKSPACE_DISPLAY_NAME_EVENT, onIdentity);
+    return () => window.removeEventListener(WORKSPACE_DISPLAY_NAME_EVENT, onIdentity);
+  }, []);
+
+  const navDisplayName = useMemo(() => {
+    if (!user) return '';
+    if (ephemeralSession) {
+      const local = getBrowserWorkspaceDisplayName();
+      return local?.trim() || t('auth.browserGuest', 'Guest');
+    }
+    return user.name || user.user_metadata?.full_name || user.email || '';
+  }, [user, ephemeralSession, t, browserLabelTick]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -49,7 +70,7 @@ const UserMenu: React.FC = () => {
         {user?.avatar ? (
           <img
             src={user.avatar}
-            alt={user.name}
+            alt={navDisplayName}
             className="h-8 w-8 rounded-full object-cover border border-gray-200"
           />
         ) : (
@@ -58,15 +79,17 @@ const UserMenu: React.FC = () => {
           </div>
         )}
         <span className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300 hidden md:block">
-          {user?.name}
+          {navDisplayName}
         </span>
       </button>
 
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-10 border border-gray-200 dark:border-gray-700">
           <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-            <div className="font-medium text-gray-900 dark:text-white">{user?.name}</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 truncate">{user?.email}</div>
+            <div className="font-medium text-gray-900 dark:text-white">{navDisplayName}</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
+              {ephemeralSession ? t('auth.browserSessionHint', 'This browser only') : user?.email}
+            </div>
           </div>
 
           <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
