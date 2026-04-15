@@ -264,42 +264,7 @@ const VendorRiskDashboard: React.FC = () => {
   
   return (
     <WorkspacePageShell title={t('vendorRisk.title')} description={t('vendorRisk.description')} actions={[{ label: isRefreshing ? 'Refreshing…' : 'Refresh', onClick: handleRefresh, variant: 'outline' }, { label: 'Add vendor', onClick: () => setShowAddModal(true), variant: 'primary' }]} stats={[{ label: 'Total vendors', value: vendorRiskData.length, hint: 'Tracked in the active portfolio' }, { label: 'High risk', value: riskCounts.high, hint: 'Critical or high vendors' }, { label: 'Assessments', value: assessments.length, hint: 'Completed or in progress' }, { label: 'Threat signals', value: threatLoading ? '…' : (threatStats.threatsToday ?? '—'), hint: 'Current threat feed pressure' }]}>
-      {/* Action Cascade Banner */}
-      <div id="action-cascade" className="relative overflow-hidden rounded-2xl mb-8 bg-gradient-to-br from-vendorsoluce-navy via-vendorsoluce-teal to-vendorsoluce-green p-px shadow-lg">
-        <div className="relative rounded-[calc(1rem-1px)] bg-gradient-to-br from-vendorsoluce-navy/95 to-vendorsoluce-teal/90 px-6 py-8 sm:px-10 sm:py-10">
-          {/* Decorative background rings */}
-          <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-vendorsoluce-green/10" aria-hidden="true" />
-          <div className="pointer-events-none absolute -left-8 -bottom-12 h-48 w-48 rounded-full bg-vendorsoluce-teal/10" aria-hidden="true" />
-          <div className="max-w-3xl mx-auto text-center relative z-10">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 uppercase tracking-widest mb-4 backdrop-blur-sm border border-white/10">
-              <Shield className="h-3.5 w-3.5" />
-              Vendor Risk Intelligence
-            </div>
-            <h2 className="text-xl md:text-2xl font-bold text-white mb-2">Map your vendor risk</h2>
-            <p className="text-white/70 text-sm mb-6">
-              Add your vendors to build a threat radar, or run a supply chain assessment — choose your next step.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-8 sm:gap-10 md:gap-12 justify-center items-center">
-              <Link
-                to={MR.VENDOR_RISK_RADAR}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-vendorsoluce-navy font-semibold text-sm hover:bg-white/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-              >
-                <BarChart3 className="h-4 w-4" />
-                Discover Vendor Threats
-              </Link>
-              <Link
-                to={MR.SUPPLY_CHAIN_ASSESSMENT}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/15 text-white font-semibold text-sm border border-white/30 hover:bg-white/25 transition-all backdrop-blur-sm hover:-translate-y-0.5"
-              >
-                <Shield className="h-4 w-4" />
-                Assess Your Supply Chain
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Enhanced Navigation */}
+      {/* Navigation */}
       <div className="mb-8">
         <div className="border-b border-gray-200 dark:border-gray-700" role="tablist" aria-label="Dashboard sections">
           <div className="flex flex-wrap -mb-px">
