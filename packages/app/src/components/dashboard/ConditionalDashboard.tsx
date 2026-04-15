@@ -15,9 +15,9 @@ const ConditionalDashboard: React.FC = () => {
     return <PageLoader />;
   }
 
-  // Full workspace after sign-in, marketing handoff (?from=website), or demo/local session (auth context provides a session).
-  // Otherwise show the structured preview landing (sample metrics, CTAs) without personalized dashboard chrome.
-  const showFullDashboard = isAuthenticated || fromWebsite;
+  // Workspace surfaces must remain functional even without backend/auth.
+  // Differences between builds are enforced by limits + access method (trial/license/payment), not by hiding the UI.
+  const showFullDashboard = true || isAuthenticated || fromWebsite;
   return (
     <Suspense fallback={<PageLoader />}>
       {showFullDashboard ? <DashboardPage /> : <DashboardDemoPage />}

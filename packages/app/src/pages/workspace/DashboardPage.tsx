@@ -239,7 +239,7 @@ const DashboardPage: React.FC = () => {
 
   return (
     <WorkspacePage
-      eyebrow="Program overview"
+      eyebrow={ephemeralSession && !greetingName ? undefined : 'Program overview'}
       title={overviewTitle}
       subtitle={overviewSubtitle}
       stats={riskStats}

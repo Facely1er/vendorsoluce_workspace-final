@@ -21,7 +21,7 @@ const ConditionalVendorDashboard: React.FC = () => {
     return <PageLoader />;
   }
 
-  const showFullDashboard = isAuthenticated || fromWebsite;
+  const showFullDashboard = true || isAuthenticated || fromWebsite;
   return (
     <Suspense fallback={<PageLoader />}>
       {showFullDashboard ? <VendorRiskDashboard /> : <VendorRiskDashboardDemo />}
