@@ -110,15 +110,6 @@ const VendorRiskDashboardDemo: React.FC = () => {
       </div>
 
       <div className="mb-8">
-        <h1 className="text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
-          {t('vendorRisk.title')}
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
-          {t('vendorRisk.description')} This demo shows sample data. Sign in for full access.
-        </p>
-      </div>
-
-      <div className="mb-8">
         <div className="border-b border-gray-200 dark:border-gray-700" role="tablist" aria-label="Dashboard sections">
           <div className="flex flex-wrap -mb-px">
             {[

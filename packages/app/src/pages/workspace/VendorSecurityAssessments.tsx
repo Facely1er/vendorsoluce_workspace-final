@@ -8,7 +8,6 @@ import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { Badge } from '../../components/ui/Badge';
 import { 
   Shield, 
-  Users, 
   Plus,
   FileCheck,
   Clock,
@@ -18,7 +17,6 @@ import {
   Eye,
   Search,
   Download,
-  BarChart3,
   Crown,
   Copy,
   ExternalLink,
@@ -379,81 +377,6 @@ const VendorSecurityAssessments: React.FC = () => {
           New assessment
         </Button>
       </div></PanelCard>
-
-      {/* Premium Features Showcase */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card className="border-l-4 border-l-yellow-500">
-          <CardContent className="p-8">
-            <div className="flex items-center mb-4 mt-4">
-              <Shield className="h-8 w-8 text-yellow-500 mr-3" />
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                {t('vendorAssessments.features.cmmcAssessments.title')}
-              </h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              {t('vendorAssessments.features.cmmcAssessments.description')}
-            </p>
-            <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1 mb-4">
-              <li>• {t('vendorAssessments.features.cmmcAssessments.feature1')}</li>
-              <li>• {t('vendorAssessments.features.cmmcAssessments.feature2')}</li>
-              <li>• {t('vendorAssessments.features.cmmcAssessments.feature3')}</li>
-            </ul>
-            {/* CyberCertitude mention for vendor preparation */}
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                <strong className="text-gray-700 dark:text-gray-300">Tip:</strong> Help your vendors prepare with{' '}
-                <a 
-                  href="https://cybercertitude.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-                >
-                  CyberCertitude™
-                </a>
-                {' '}— a CMMC readiness toolkit for self-assessments and documentation.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-l-4 border-l-blue-500">
-          <CardContent className="p-8">
-            <div className="flex items-center mb-4 mt-4">
-              <Users className="h-8 w-8 text-blue-500 mr-3" />
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                {t('vendorAssessments.features.vendorPortal.title')}
-              </h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              {t('vendorAssessments.features.vendorPortal.description')}
-            </p>
-            <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-              <li>• {t('vendorAssessments.features.vendorPortal.feature1')}</li>
-              <li>• {t('vendorAssessments.features.vendorPortal.feature2')}</li>
-              <li>• {t('vendorAssessments.features.vendorPortal.feature3')}</li>
-            </ul>
-          </CardContent>
-        </Card>
-
-        <Card className="border-l-4 border-l-green-500">
-          <CardContent className="p-8">
-            <div className="flex items-center mb-4 mt-4">
-              <BarChart3 className="h-8 w-8 text-green-500 mr-3" />
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                {t('vendorAssessments.features.analytics.title')}
-              </h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              {t('vendorAssessments.features.analytics.description')}
-            </p>
-            <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-              <li>• {t('vendorAssessments.features.analytics.feature1')}</li>
-              <li>• {t('vendorAssessments.features.analytics.feature2')}</li>
-              <li>• {t('vendorAssessments.features.analytics.feature3')}</li>
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Progress Tracker */}
       <AssessmentProgressTracker assessments={assessments} />
