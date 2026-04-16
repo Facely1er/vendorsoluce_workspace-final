@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="index, follow">
   <title>Vendor Review — VendorSoluce&trade; | ERMITS</title>
-  <meta name="description" content="Start the VendorSoluce Vendor Review journey: assess vendors, review portfolio exposure, analyze radar signals, and continue into assurance workflows aligned with the workspace." />
+  <meta name="description" content="VendorSoluce Vendor Review: build a vendor exposure map, layer Vendor Risk Radar for threat context, then deepen with assessments and assurance when you are ready." />
   <link href="assets/css/tailwind.css" rel="stylesheet"/>
   <link href="assets/css/tokens.css" rel="stylesheet"/>
   <link href="assets/css/components.css" rel="stylesheet"/>
@@ -31,10 +31,10 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ERMITS">
 <meta property="og:title" content="Vendor Review — VendorSoluce&trade; | ERMITS">
-<meta property="og:description" content="Start the VendorSoluce Vendor Review journey: assess vendors, review portfolio exposure, analyze radar signals, and continue into assurance workflows aligned with the workspace.">
+<meta property="og:description" content="VendorSoluce Vendor Review: build a vendor exposure map, layer Vendor Risk Radar for threat context, then deepen with assessments and assurance when you are ready.">
 
 <meta name="twitter:title" content="Vendor Review — VendorSoluce&trade; | ERMITS">
-<meta name="twitter:description" content="Start the VendorSoluce Vendor Review journey: assess vendors, review portfolio exposure, analyze radar signals, and continue into assurance workflows aligned with the workspace.">
+<meta name="twitter:description" content="VendorSoluce Vendor Review: build a vendor exposure map, layer Vendor Risk Radar for threat context, then deepen with assessments and assurance when you are ready.">
 
 <meta name="twitter:card" content="summary">
   <link href="assets/css/shell.css" rel="stylesheet"/>
@@ -294,70 +294,75 @@
     <section class="px-6 sm:px-8 lg:px-12 py-10 lg:py-14">
       <div class="max-w-7xl mx-auto">
         <div class="max-w-3xl">
-          <span class="mini-kicker">Guided Entry Point</span>
-          <h1 class="mt-4 text-4xl md:text-5xl font-bold tracking-tight text-vendorsoluce-green dark:text-white">Vendor Review</h1>
-          <p class="mt-5 text-lg text-gray-700 dark:text-gray-300">Use this page as the controlled starting point for the phases aligned with the workspace: review vendor posture, understand portfolio exposure, analyze threat context, and continue into evidence-backed assurance only when the user is ready.</p>
+          <span class="mini-kicker">Vendor Review · Map → radar → action</span>
+          <h1 class="mt-4 text-4xl md:text-5xl font-bold tracking-tight text-vendorsoluce-green dark:text-white">Build your vendor exposure map</h1>
+          <p class="mt-5 text-lg text-gray-700 dark:text-gray-300">See where risk concentrates across vendors and criticality first. Then add <span class="font-semibold text-gray-900 dark:text-white">Vendor Risk Radar</span> for threat and signal context before you spend time on questionnaires or evidence cycles.</p>
+          <p class="mt-4 text-base text-gray-600 dark:text-gray-400">The tools linked below run locally in your browser on this site. When you need saved portfolio data and workflows, use a single workspace sign-in instead of juggling deep links.</p>
         </div>
       </div>
     </section>
 
-    <section class="px-6 sm:px-8 lg:px-12 pb-14">
-      <div class="max-w-7xl mx-auto grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+    <section class="px-6 sm:px-8 lg:px-12 pb-6" aria-labelledby="where-tools-live">
+      <div class="max-w-7xl mx-auto review-card p-6 md:p-8">
+        <h2 id="where-tools-live" class="text-lg font-semibold text-gray-900 dark:text-white">Where each layer lives</h2>
+        <ul class="mt-4 space-y-3 text-sm text-gray-700 dark:text-gray-300 list-disc pl-5">
+          <li><span class="font-semibold text-gray-900 dark:text-white">This website</span> — Freemium exposure report and Vendor Risk Radar you can try without an account.</li>
+          <li><span class="font-semibold text-gray-900 dark:text-white">VendorSoluce app</span> (<span class="font-mono text-xs">app.vendorsoluce.com</span>) — Signed-in workspace for portfolio views, saved radar, and supply-chain assessments.</li>
+          <li><span class="font-semibold text-gray-900 dark:text-white">Vendor Assurance Portal</span> — Structured evidence and vendor-facing workflows when assurance is underway.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="px-6 sm:px-8 lg:px-12 pb-10" aria-labelledby="step-exposure-map step-risk-radar">
+      <div class="max-w-7xl mx-auto grid gap-8 lg:grid-cols-2">
+        <article id="exposure-map" class="review-card p-8 flex flex-col">
+          <div class="mini-kicker">Step 1</div>
+          <h2 id="step-exposure-map" class="mt-4 text-2xl font-semibold text-gray-900 dark:text-white">Vendor exposure map</h2>
+          <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 flex-1">Prioritize vendors by structural exposure and business impact—concentration, data access, and criticality—so you know what deserves attention first.</p>
+          <div class="mt-6">
+            <a href="/radar/vendor-inherent-risk-report.html" class="inline-flex w-full sm:w-auto items-center justify-center rounded-lg bg-vendorsoluce-green px-5 py-3 text-sm font-semibold text-white">Open exposure report (local)</a>
+          </div>
+        </article>
+        <article id="vendor-risk-radar" class="review-card p-8 flex flex-col">
+          <div class="mini-kicker">Step 2</div>
+          <h2 id="step-risk-radar" class="mt-4 text-2xl font-semibold text-gray-900 dark:text-white">Vendor Risk Radar</h2>
+          <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 flex-1">Layer external and threat context on top of the map: spot which relationships warrant escalation, deeper diligence, or a scoped evidence request.</p>
+          <div class="mt-6">
+            <a href="/radar/vendor-threat-radar.html" class="inline-flex w-full sm:w-auto items-center justify-center rounded-lg bg-vendorsoluce-green px-5 py-3 text-sm font-semibold text-white">Launch free Vendor Risk Radar</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="px-6 sm:px-8 lg:px-12 pb-10" aria-labelledby="deeper-heading">
+      <div class="max-w-7xl mx-auto">
+        <h2 id="deeper-heading" class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Optional next steps</h2>
+        <div class="grid gap-6 md:grid-cols-2">
         <article id="assessment" class="review-card p-6">
-          <div class="mini-kicker">Phase 1</div>
-          <h2 class="mt-4 text-xl font-semibold">Assess Vendor Risk</h2>
-          <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">Start with the freemium review to score baseline exposure and identify where deeper due diligence is justified.</p>
-          <div class="mt-5 flex flex-col gap-2">
-            <a href="/assessment/index.html" class="inline-flex items-center justify-center rounded-lg bg-vendorsoluce-green px-4 py-2.5 text-sm font-semibold text-white">Open Free Assessment</a>
-            <a href="https://app.vendorsoluce.com/supply-chain-assessment" target="_blank" rel="noopener noreferrer" class="text-sm text-center text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green dark:hover:text-vendorsoluce-light-green font-medium py-1">Continue in workspace <span aria-hidden="true">→</span></a>
-          </div>
+          <div class="mini-kicker">When you need more depth</div>
+          <h3 class="mt-3 text-xl font-semibold text-gray-900 dark:text-white">Baseline vendor assessment</h3>
+          <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">Score baseline exposure for a vendor or program when the map and radar justify a deeper pass.</p>
+          <a href="/assessment/index.html" class="mt-5 inline-flex items-center justify-center rounded-lg border-2 border-vendorsoluce-green text-vendorsoluce-green dark:text-vendorsoluce-light-green dark:border-vendorsoluce-light-green px-4 py-2.5 text-sm font-semibold hover:bg-vendorsoluce-green/5 dark:hover:bg-white/5 transition-colors">Open free assessment</a>
         </article>
-
-        <article id="portfolio" class="review-card p-6">
-          <div class="mini-kicker">Phase 2</div>
-          <h2 class="mt-4 text-xl font-semibold">Review Portfolio Exposure</h2>
-          <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">Move from single-vendor checks to portfolio-level prioritization so teams can focus on material concentrations and business impact.</p>
-          <div class="mt-5 flex flex-col gap-2">
-            <a href="/radar/vendor-inherent-risk-report.html" class="inline-flex items-center justify-center rounded-lg bg-vendorsoluce-green px-4 py-2.5 text-sm font-semibold text-white">View Local Report Example</a>
-            <a href="https://app.vendorsoluce.com/vendors" target="_blank" rel="noopener noreferrer" class="text-sm text-center text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green dark:hover:text-vendorsoluce-light-green font-medium py-1">Open portfolio workspace <span aria-hidden="true">→</span></a>
-          </div>
+        <article id="assurance" class="review-card p-6">
+          <div class="mini-kicker">Assurance and governance</div>
+          <h3 class="mt-3 text-xl font-semibold text-gray-900 dark:text-white">Evidence-backed decisions</h3>
+          <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">When reviews justify formal follow-through, align on methodology and use assurance workflows your stakeholders can defend.</p>
+          <a href="/vira-methodology.html#process" class="mt-5 inline-flex items-center justify-center rounded-lg border-2 border-vendorsoluce-green text-vendorsoluce-green dark:text-vendorsoluce-light-green dark:border-vendorsoluce-light-green px-4 py-2.5 text-sm font-semibold hover:bg-vendorsoluce-green/5 dark:hover:bg-white/5 transition-colors">VIRA methodology</a>
         </article>
-
-        <article id="radar" class="review-card p-6">
-          <div class="mini-kicker">Phase 3</div>
-          <h2 class="mt-4 text-xl font-semibold">Analyze Threat Radar</h2>
-          <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">Use the freemium radar to inspect threat context and determine which vendors require escalation, evidence requests, or deeper review.</p>
-          <div class="mt-5 flex flex-col gap-2">
-            <a href="/radar/vendor-threat-radar.html" class="inline-flex items-center justify-center rounded-lg bg-vendorsoluce-green px-4 py-2.5 text-sm font-semibold text-white">Launch Free Radar</a>
-            <a href="https://app.vendorsoluce.com/vendor-risk-radar" target="_blank" rel="noopener noreferrer" class="text-sm text-center text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green dark:hover:text-vendorsoluce-light-green font-medium py-1">Open workspace radar <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-
-        <article id="portal" class="review-card p-6">
-          <div class="mini-kicker">Phase 4</div>
-          <h2 class="mt-4 text-xl font-semibold">Assure and Govern</h2>
-          <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">When the review justifies action, continue into evidence collection, assurance workflows, and defensible governance through the portal and workspace.</p>
-          <div class="mt-5 flex flex-col gap-2">
-            <a href="/vira-methodology.html#process" class="inline-flex items-center justify-center rounded-lg bg-vendorsoluce-green px-4 py-2.5 text-sm font-semibold text-white">Review Methodology</a>
-            <a href="https://www.portal.vendorsoluce.com" target="_blank" rel="noopener noreferrer" class="text-sm text-center text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green dark:hover:text-vendorsoluce-light-green font-medium py-1">Open assurance portal <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
+        </div>
       </div>
     </section>
 
-    <section id="workflow" class="px-6 sm:px-8 lg:px-12 pb-16">
+    <section id="workspace" class="px-6 sm:px-8 lg:px-12 pb-16" aria-labelledby="workspace-heading">
       <div class="max-w-7xl mx-auto review-card p-8">
-        <div class="max-w-3xl">
-          <span class="mini-kicker">Workspace Alignment</span>
-          <h2 class="mt-4 text-2xl md:text-3xl font-semibold">How the website phases connect to the workspace</h2>
-          <p class="mt-4 text-gray-700 dark:text-gray-300">The website is the orientation and freemium layer. The workspace is the operational layer. This page keeps the transition clean: users start with understandable local tools, then move into the workspace only when they need portfolio management, formal assessments, reporting, or evidence-backed assurance.</p>
+        <h2 id="workspace-heading" class="text-xl font-semibold text-gray-900 dark:text-white">Continue with saved data</h2>
+        <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 max-w-2xl">Sign in once and move between Vendors (portfolio), Vendor Risk Radar, and assessments from the workspace navigation—instead of opening several workspace URLs from this page.</p>
+        <div class="mt-6 flex flex-col sm:flex-row gap-3 flex-wrap">
+          <a href="https://app.vendorsoluce.com/?utm_source=vendorsoluce&amp;utm_medium=website&amp;utm_campaign=vendor-review" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-lg bg-vendorsoluce-green px-5 py-3 text-sm font-semibold text-white">Open VendorSoluce workspace</a>
+          <a href="https://www.portal.vendorsoluce.com/?utm_source=vendorsoluce&amp;utm_medium=website&amp;utm_campaign=vendor-review" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-lg bg-gray-800 dark:bg-gray-700 px-5 py-3 text-sm font-semibold text-white">Vendor Assurance Portal</a>
         </div>
-        <div class="mt-8 grid gap-4 md:grid-cols-4">
-          <div class="rounded-lg border border-gray-200 dark:border-gray-700 p-4"><div class="text-sm font-semibold">1. Assessment</div><p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Initial review and scoring.</p></div>
-          <div class="rounded-lg border border-gray-200 dark:border-gray-700 p-4"><div class="text-sm font-semibold">2. Portfolio</div><p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Prioritize vendors by concentration and risk.</p></div>
-          <div class="rounded-lg border border-gray-200 dark:border-gray-700 p-4"><div class="text-sm font-semibold">3. Radar</div><p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Add live context before escalation.</p></div>
-          <div class="rounded-lg border border-gray-200 dark:border-gray-700 p-4"><div class="text-sm font-semibold">4. Assurance</div><p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Collect evidence and govern decisions.</p></div>
-        </div>
+        <p class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-400"><span class="font-semibold text-gray-800 dark:text-gray-200">At a glance:</span> map exposure, add radar context, deepen with an assessment if needed, then govern with assurance. The first two steps are the focus of this page; the rest is optional until you need it.</p>
       </div>
     </section>
   </main>
