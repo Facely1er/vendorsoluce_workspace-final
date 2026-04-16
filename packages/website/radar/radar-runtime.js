@@ -502,7 +502,7 @@
         upstreamCount[p] = (upstreamCount[p] || 0) + 1;
       });
     });
-    var hotspots = Object.values(upstreamCount).filter(function (c) { return c > 1; }).length;
+    var hotspots = Object.keys(upstreamCount).filter(function (k) { return upstreamCount[k] > 1; }).length;
 
     function setEl(id, val) { var el = document.getElementById(id); if (el) el.textContent = String(val); }
     setEl('kpiMappedDeps', mappedDeps);
@@ -531,7 +531,8 @@
       if (Object.keys(upstreamCount).length === 0) {
         hotspotsPanel.innerHTML = '<p class="dependency-empty">No shared upstream dependencies detected. Add upstream providers to vendor entries to enable hotspot analysis.</p>';
       } else {
-        var hotspotEntries = Object.entries(upstreamCount)
+        var hotspotEntries = Object.keys(upstreamCount)
+          .map(function (k) { return [k, upstreamCount[k]]; })
           .filter(function (e) { return e[1] > 1; })
           .sort(function (a, b) { return b[1] - a[1]; });
         if (hotspotEntries.length === 0) {
@@ -1085,7 +1086,7 @@
     var mappedDepsCount = vendorData.filter(function (v) { return v.dependentSystems && v.dependentSystems.length > 0; }).length;
     var upstreamMap = {};
     vendorData.forEach(function (v) { (v.upstreamProviders || []).forEach(function (p) { upstreamMap[p] = (upstreamMap[p] || 0) + 1; }); });
-    var sharedDeps = Object.entries(upstreamMap).filter(function (e) { return e[1] > 1; });
+    var sharedDeps = Object.keys(upstreamMap).map(function (k) { return [k, upstreamMap[k]]; }).filter(function (e) { return e[1] > 1; });
 
     // Recommendations
     var recs = [];
@@ -1151,9 +1152,12 @@
       '<p>2. Dependency Concentration — ' + mappedDepsCount + ' vendor' + (mappedDepsCount !== 1 ? 's' : '') + ' with mapped dependencies.</p>\n' +
       '<p>3. Operational Exposure — based on population impacted and service criticality across the portfolio.</p>\n' +
       '<p>4. Data Exposure Overview — data types handled include: ' +
-        escHtml([...new Set(vendorData.flatMap(function (v) { return v.dataTypes || []; }))].join(', ') || 'not specified') + '.</p>\n' +
+        escHtml(vendorData.reduce(function (acc, v) {
+          (v.dataTypes || []).forEach(function (dt) { if (acc.indexOf(dt) === -1) acc.push(dt); });
+          return acc;
+        }, []).join(', ') || 'not specified') + '.</p>\n' +
       '<p>5. Supply Chain Visibility — tier and upstream mappings available for ' + mappedDepsCount + ' vendor' + (mappedDepsCount !== 1 ? 's' : '') + '.</p>\n' +
-      '<p>6. Portfolio Risk Posture Statement — inherent risk scores may influence procurement and monitoring decisions. This assessment does not assess control effectiveness or residual residual risk beyond SBOM availability signals.</p>\n' +
+      '<p>6. Portfolio Risk Posture Statement — inherent risk scores may influence procurement and monitoring decisions. This assessment does not assess control effectiveness or residual risk beyond SBOM availability signals.</p>\n' +
       '<h2>Section 2  -  Vendor Risk Register</h2>\n' +
       '<table>\n<thead><tr>' +
         '<th>Vendor</th><th>Category</th><th>Sector</th><th>Location</th>' +
