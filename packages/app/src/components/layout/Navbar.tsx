@@ -23,7 +23,7 @@ import {
   getWorkspaceSections,
 } from '../../navigation/supplyChainSolutionsNav';
 import { SHELL_CLASSES } from '../../layout/shell';
-import { MR, WR, isWorkspaceAppPath } from 'shared/constants/routes';
+import { MR, isWorkspaceAppPath } from 'shared/constants/routes';
 import { useAuth } from '../../context/AuthContext';
 
 interface NavbarProps {
