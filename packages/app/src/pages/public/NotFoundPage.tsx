@@ -4,14 +4,16 @@ import { Button } from '../../components/ui/Button';
 import { Card, CardContent } from '../../components/ui/Card';
 import { Home, ArrowLeft, Search, Mail } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { MR, isWorkspaceAppPath } from 'shared/constants/routes';
 
 const NotFoundPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+  const inWorkspaceChrome = isWorkspaceAppPath(location.pathname);
 
   const handleGoHome = () => {
-    navigate('/');
+    navigate(inWorkspaceChrome ? MR.DASHBOARD : MR.HOME);
   };
 
   const handleGoBack = () => {
@@ -23,8 +25,14 @@ const NotFoundPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4">
-      <div className="max-w-2xl w-full">
+    <div
+      className={
+        inWorkspaceChrome
+          ? 'w-full max-w-3xl mx-auto px-4 py-8 md:py-10'
+          : 'min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4'
+      }
+    >
+      <div className={inWorkspaceChrome ? 'w-full' : 'max-w-2xl w-full'}>
         <Card className="text-center">
           <CardContent className="p-8">
             {/* 404 Icon */}
