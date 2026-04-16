@@ -3,8 +3,21 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Laptop, Database, Puzzle, Check, Shield, Crown } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
-import { Button } from '../ui/Button';
+import { cn } from '../../utils/cn';
 import { DEPLOYMENT_TRACK_IDS, type DeploymentTrackId } from '../../config/deploymentOfferings';
+
+const linkButtonBase =
+  'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vendorsoluce-green focus-visible:ring-offset-2 px-4 py-2 text-sm w-full';
+
+const primaryLinkClass = cn(linkButtonBase, 'bg-vendorsoluce-green text-white hover:bg-vendorsoluce-dark-green');
+
+function outlineCtaLinkClass(isCompact: boolean): string {
+  return cn(
+    linkButtonBase,
+    'border border-vendorsoluce-green text-vendorsoluce-green hover:bg-vendorsoluce-green/10',
+    isCompact && 'text-xs py-2'
+  );
+}
 
 const ICONS = [Laptop, Database, Puzzle] as const;
 const ACCENTS = [
@@ -73,12 +86,6 @@ export const DeploymentModelsSection: React.FC<DeploymentModelsSectionProps> = (
           const primaryLabel = t(`deployment.tracks.${id}.ctaPrimary`);
           const secondaryLabel = secondary ? t(`deployment.tracks.${id}.ctaSecondary`) : '';
 
-          const primaryButton = (
-            <Button variant="primary" className="w-full bg-vendorsoluce-green hover:bg-vendorsoluce-dark-green text-white">
-              {primaryLabel}
-            </Button>
-          );
-
           return (
             <Card key={id} className={`h-full flex flex-col border-2 ${accent}`}>
               <CardHeader className={isCompact ? 'pb-2 pt-4 px-4' : 'pb-2'}>
@@ -133,22 +140,17 @@ export const DeploymentModelsSection: React.FC<DeploymentModelsSectionProps> = (
                 )}
                 <div className="flex flex-col gap-2 mt-auto">
                   {isSamePageHash(primary) ? (
-                    <a href={primary} className="w-full">
-                      {primaryButton}
+                    <a href={primary} className={primaryLinkClass}>
+                      {primaryLabel}
                     </a>
                   ) : (
-                    <Link to={primary} className="w-full">
-                      {primaryButton}
+                    <Link to={primary} className={primaryLinkClass}>
+                      {primaryLabel}
                     </Link>
                   )}
                   {secondary ? (
-                    <Link to={secondary} className="w-full">
-                      <Button
-                        variant="outline"
-                        className={`w-full ${isCompact ? 'text-xs py-2' : ''}`}
-                      >
-                        {secondaryLabel}
-                      </Button>
+                    <Link to={secondary} className={outlineCtaLinkClass(isCompact)}>
+                      {secondaryLabel}
                     </Link>
                   ) : null}
                 </div>
