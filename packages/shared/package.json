@@ -19,6 +19,9 @@
     "verify:ui": "node scripts/verify-ui-tokens.mjs && node scripts/verify-ui-inline.mjs && node scripts/verify-workspace-layout.mjs && node scripts/verify-static-radar-design.mjs && node scripts/verify-website-tokens-css.mjs && node scripts/verify-website-html-loads-tokens.mjs"
   },
   "dependencies": {
-    "@ermits/dependency-graph": "file:../dependency-graph"
+    "@ermits/dependency-graph": "file:../dependency-graph",
+    "mammoth": "^1.6.0",
+    "react-is": "^19.2.4",
+    "recharts": "^3.1.0"
   }
 }
