@@ -102,14 +102,14 @@ const PROGRAM_PHASES: {
   },
   {
     title: 'Reporting & oversight',
-    description: 'Portfolio reports, executive summaries, and continuous monitoring.',
+    description: 'Risk reports, executive summaries, and continuous monitoring.',
     href: MR.VENDOR_RISK_REPORTS,
     linkLabel: 'VIRA reports',
   },
 ];
 
 const REVIEW_BACKLOG_LINKS: { label: string; href: string }[] = [
-  { label: 'Portfolio reports', href: MR.VENDOR_RISK_REPORTS },
+  { label: 'Risk reports', href: MR.VENDOR_RISK_REPORTS },
   { label: 'Vendor requirements', href: MR.VENDOR_REQUIREMENTS },
   { label: 'Vendor assessments', href: MR.VENDOR_ASSESSMENTS },
   { label: 'VIRA due diligence program', href: MR.PROGRAM_VIRA_DUE_DILIGENCE },

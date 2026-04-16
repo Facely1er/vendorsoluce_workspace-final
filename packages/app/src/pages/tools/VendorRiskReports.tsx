@@ -54,7 +54,7 @@ const VendorRiskReports: React.FC = () => {
 
   return (
     <WorkspacePage
-      title="Portfolio reports"
+      title="Risk reports"
       subtitle="VIRA portfolio register, inherent-risk summary, and C-SCRM deliverables from your current vendor list."
       descriptionExtra={
         <p className="min-w-0 max-w-none text-sm leading-6 text-gray-600 dark:text-gray-300 sm:text-base">
@@ -75,7 +75,7 @@ const VendorRiskReports: React.FC = () => {
             </Link>
             <div className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <FileText className="h-4 w-4" aria-hidden />
-              Portfolio &amp; VIRA
+              Risk reports
             </div>
             <span className="ml-auto text-xs text-gray-500 dark:text-gray-400">
               {vendors.length} vendor{vendors.length === 1 ? '' : 's'} in portfolio

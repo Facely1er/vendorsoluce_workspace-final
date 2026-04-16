@@ -18,8 +18,8 @@ export const usePageContext = (): PageContext => {
       if (pathname.includes('vendor-risk-radar'))   return 'The user is on the Vendor Risk Radar page, which visualizes portfolio-wide risk scores.';
       if (pathname.includes('supply-chain'))        return 'The user is on the Supply Chain Assessment page.';
       if (pathname.includes('vendor-assessments'))  return 'The user is on the Vendor Security Assessments page, where they send and track assessments.';
-      if (pathname.includes('vendor-risk-reports')) return 'The user is on the Portfolio reports page (VIRA register and deliverables).';
-      if (pathname.includes('vira-reports'))        return 'The user is on the Portfolio reports page (redirect from legacy VIRA reports URL).';
+      if (pathname.includes('vendor-risk-reports')) return 'The user is on the Risk reports page (VIRA register and deliverables).';
+      if (pathname.includes('vira-reports'))        return 'The user is on the Risk reports page (redirect from legacy VIRA reports URL).';
       if (pathname.includes('fedramp'))             return 'The user is on the FedRAMP/FISMA Evidence collection page.';
       if (pathname.includes('compliance-roadmap'))  return 'The user is on the Compliance Roadmap page.';
       if (pathname.includes('program/nist'))        return 'The user is on the NIST C-SCRM implementation program page.';
@@ -56,7 +56,7 @@ export const usePageContext = (): PageContext => {
       '/tools/nist-checklist': { page: 'nist-checklist', feature: 'compliance-tool' },
       '/tools/sbom-quick-scan': { page: 'sbom-quick-scan', feature: 'quick-analysis' },
       '/vendor-risk-radar': { page: 'vendor-risk-radar', feature: 'risk-visualization' },
-      '/vendor-risk-reports': { page: 'vendor-risk-reports', feature: 'portfolio-reports' },
+      '/vendor-risk-reports': { page: 'vendor-risk-reports', feature: 'risk-reports' },
       '/tools/vendor-risk-calculator': { page: 'vendor-risk-calculator', feature: 'risk-calculation' }
     };
 
