@@ -80,4 +80,9 @@
     <priority>0.5</priority>
     <changefreq>yearly</changefreq>
   </url>
+  <url>
+    <loc>https://www.vendorsoluce.com/vendor-review</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
