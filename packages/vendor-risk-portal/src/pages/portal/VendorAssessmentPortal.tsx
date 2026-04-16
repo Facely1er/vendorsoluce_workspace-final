@@ -11,7 +11,6 @@ import {
   Download,
   Shield,
   ArrowLeft,
-  ExternalLink,
   Trophy,
   Info,
 } from 'lucide-react';
@@ -55,6 +54,8 @@ interface AssessmentData {
   portalAccess: boolean;
   customMessage?: string | null;
 }
+
+const PORTAL_PAGE_INNER_CLASS = 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8';
 
 const generateComplianceReport = async (
   assessment: AssessmentData,
@@ -919,7 +920,7 @@ const VendorAssessmentPortal: React.FC = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Secure Portal Header */}
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
+        <div className={`${PORTAL_PAGE_INNER_CLASS} py-4 sm:py-5`}>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 mb-4 border-b border-gray-100 dark:border-gray-700/80">
             <Link to="/" className="flex items-center min-w-0 group w-fit">
               <img
@@ -1012,7 +1013,7 @@ const VendorAssessmentPortal: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className={`${PORTAL_PAGE_INNER_CLASS} py-8`}>
         {isBuyerPreview && (
           <div className="mb-4 p-4 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20">
             <p className="text-sm text-amber-900 dark:text-amber-100">
@@ -1297,10 +1298,10 @@ const VendorAssessmentPortal: React.FC = () => {
                       <Trophy className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                      🎉 Journey Complete!
+                      Assessment complete
                     </h3>
                     <p className="text-base text-gray-600 dark:text-gray-400 mb-4">
-                      You've completed all 3 stages and have evidence-based proof of vendor compliance.
+                      All required stages are complete. Generate your compliance report and submit if requested.
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                       <div className="bg-white dark:bg-gray-800 p-4 rounded-lg">
@@ -1338,26 +1339,6 @@ const VendorAssessmentPortal: React.FC = () => {
                       </p>
                     </div>
                     
-                    {/* Navigation Options */}
-                    <div className="flex flex-wrap justify-center gap-3 mb-4">
-                      <Link to="/demo">
-                        <Button variant="outline" className="flex items-center gap-2">
-                          <ExternalLink className="w-4 h-4" />
-                          See Demo
-                        </Button>
-                      </Link>
-                      <a 
-                        href="https://www.vendorsoluce.com" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                      >
-                        <Button variant="outline" className="flex items-center gap-2">
-                          <ExternalLink className="w-4 h-4" />
-                          Back to Website
-                        </Button>
-                      </a>
-                    </div>
-                    
                     {/* Secondary Navigation */}
                     <div className="flex flex-wrap justify-center gap-2 text-sm">
                       <a href={stage1NavHref} className="text-vendorsoluce-green hover:text-vendorsoluce-dark-green font-medium flex items-center gap-1">
@@ -1374,45 +1355,6 @@ const VendorAssessmentPortal: React.FC = () => {
                 </CardContent>
               </Card>
             )}
-            
-            {/* Cross-Project Links */}
-            <Card className="mt-6">
-              <CardContent className="p-4">
-                <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
-                  <span className="text-gray-500 dark:text-gray-400">Also try:</span>
-                  <Link to="/demo" className="text-vendorsoluce-green hover:text-vendorsoluce-dark-green font-medium flex items-center gap-1">
-                    <ExternalLink className="w-3 h-3" />
-                    Interactive Demo
-                  </Link>
-                  <a href={stage1NavHref} className="text-vendorsoluce-green hover:text-vendorsoluce-dark-green font-medium flex items-center gap-1">
-                    <ArrowLeft className="w-3 h-3" />
-                    Back to Stage 1
-                  </a>
-                  <a href={stage2NavHref} className="text-vendorsoluce-green hover:text-vendorsoluce-dark-green font-medium flex items-center gap-1">
-                    <ArrowLeft className="w-3 h-3" />
-                    Back to Stage 2
-                  </a>
-                  <a 
-                    href="https://www.vendorsoluce.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-vendorsoluce-green hover:text-vendorsoluce-dark-green font-medium flex items-center gap-1"
-                  >
-                    <ExternalLink className="w-3 h-3" />
-                    Back to Website
-                  </a>
-                  <a 
-                    href="https://www.vendorsoluce.com/how-it-works.html" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-vendorsoluce-green hover:text-vendorsoluce-dark-green font-medium flex items-center gap-1"
-                  >
-                    <ExternalLink className="w-3 h-3" />
-                    Learn More
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>

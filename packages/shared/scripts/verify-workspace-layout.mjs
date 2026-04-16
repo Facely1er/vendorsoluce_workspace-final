@@ -1,7 +1,8 @@
 /**
- * Enforces workspace page layout consistency and blocks marketing component leakage.
+ * Enforces authenticated product surface layout consistency and blocks marketing component leakage.
  * - Workspace pages must use WorkspacePageShell (directly or via WorkspacePage) when using legacy container wrappers.
- * - Workspace pages must not import marketing home sections.
+ * - Vendor portal assessment page must use its canonical container constant.
+ * - Product task pages must not import marketing home sections.
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, join, relative } from 'node:path';
@@ -17,6 +18,7 @@ const SCAN_ROOTS = [
   'packages/app/src/pages/assessments',
   'packages/app/src/pages/admin',
   'packages/app/src/pages/public/LicensePage.tsx',
+  'packages/vendor-risk-portal/src/pages/portal/VendorAssessmentPortal.tsx',
 ];
 
 const ALLOWLIST = new Set([
@@ -47,12 +49,13 @@ function walk(dir, out) {
   }
 }
 
-function isWorkspaceShellFile(text) {
+function usesApprovedLayoutContract(text) {
   return (
     text.includes('components/vendorsoluce-intelligence/WorkspacePageShell') ||
     text.includes('<WorkspacePageShell') ||
     text.includes('components/workspace/WorkspacePage') ||
-    text.includes('<WorkspacePage ')
+    text.includes('<WorkspacePage ') ||
+    text.includes('PORTAL_PAGE_INNER_CLASS')
   );
 }
 
@@ -78,20 +81,20 @@ for (const rootRel of SCAN_ROOTS) {
       failures.push(`${rel}: imports marketing home component into workspace surface.`);
     }
 
-    const usesShell = isWorkspaceShellFile(text);
+    const usesShell = usesApprovedLayoutContract(text);
     if (usesShell) continue;
 
     for (const { regex, reason } of FORBIDDEN_CONTAINER_PATTERNS) {
       if (regex.test(text)) {
-        failures.push(`${rel}: ${reason} without WorkspacePageShell/WorkspacePage.`);
+        failures.push(`${rel}: ${reason} without approved workspace/portal layout contract.`);
       }
     }
   }
 }
 
 if (failures.length) {
-  console.error('Workspace layout governance failed:\n' + failures.join('\n'));
+  console.error('Workspace/portal layout governance failed:\n' + failures.join('\n'));
   process.exit(1);
 }
 
-console.log('Workspace layout governance: no forbidden workspace containers or marketing home imports in workspace pages.');
+console.log('Workspace/portal layout governance: no forbidden containers or marketing home imports in scoped product pages.');
