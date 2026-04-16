@@ -8,7 +8,6 @@ const WR = routes.workspace as Record<string, string>;
  */
 const MARKETING_ONLY_EXACT = new Set<string>([
   '/',
-  '/dashboard',
   '/pricing',
   '/checkout',
   '/contact',
