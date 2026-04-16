@@ -80,19 +80,6 @@ const renderWithRouter = (initialRoute: string, _isAuthenticated: boolean) => {
 describe('ProtectedRoute Integration', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
-    mockUseErmitsEntitlement.mockReturnValue({
-      result: {
-        access: true,
-        isTrial: false,
-        productRole: 'viewer',
-        trialEndsAt: null,
-        usageRemaining: null,
-        organizationId: '',
-        organizationSlug: '',
-        productId: '',
-      },
-      loading: false,
-    });
     const { supabase } = await import('../../lib/supabase');
     vi.mocked(supabase.auth.onAuthStateChange).mockReturnValue({
       data: { subscription: { unsubscribe: vi.fn() } },
