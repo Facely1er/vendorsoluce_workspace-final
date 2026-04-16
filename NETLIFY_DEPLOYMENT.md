@@ -2,6 +2,8 @@
 
 Use **separate Netlify sites** (each with its own custom domain) connected to **this repository**. Unless noted, paths are relative to the **repo root** and **Base directory** is **empty** so `npm ci` uses the **root** `package-lock.json`.
 
+**Monorepo config discovery (important):** Netlify loads `netlify.toml` from the **package directory** first, then base, then **repo root**. If **Package directory** is left empty on the marketing site, Netlify uses the root **`netlify.toml`** (platform app) and you will deploy the **app** by mistake. For `www`, set **Package directory** to **`packages/website`** (see [Netlify monorepos](https://docs.netlify.com/build/configure-builds/monorepos/#how-netlify-finds-your-configuration-files)).
+
 Shared checklist: **`docs/NETLIFY_MONOREPO_TEMPLATE.md`** in **CyberCorrect** (`PrivacyWorkspace-byERMITS`). CyberCaution uses the same multi-file pattern; see **`NETLIFY_DEPLOYMENT.md`** in **`CyberCaution-RiskWorkspace-byERMITS`**.
 
 ---
@@ -15,12 +17,12 @@ Shared checklist: **`docs/NETLIFY_MONOREPO_TEMPLATE.md`** in **CyberCorrect** (`
 
 ## Domain map (recommended)
 
-| Custom domain | Surface | Base directory | Netlify configuration file |
-|---------------|---------|----------------|----------------------------|
-| **`www.vendorsoluce.com`** (marketing) | Static website | *(empty)* | `packages/website/netlify.toml` |
-| **`app.vendorsoluce.com`** | Main React app — **demo** build (`dist-demo`, Vite `--mode demo`) | *(empty)* | `packages/app/netlify.app-demo.toml` |
-| **`platform.vendorsoluce.com`** | Main React app — **production** (`packages/app/dist`) | *(empty)* | `netlify.platform.toml` or `netlify.toml` |
-| **`portal.vendorsoluce.com`** | Vendor risk portal | *(empty)* | `packages/vendor-risk-portal/netlify.toml` |
+| Custom domain | Surface | Base directory | Package directory | Netlify configuration file |
+|---------------|---------|----------------|-------------------|----------------------------|
+| **`www.vendorsoluce.com`** (marketing) | Static website | *(empty)* | **`packages/website`** | `packages/website/netlify.toml` (same folder; set package dir so it is found before root) |
+| **`app.vendorsoluce.com`** | Main React app — **demo** build (`dist-demo`, Vite `--mode demo`) | *(empty)* | **`packages/app`** | `packages/app/netlify.app-demo.toml` |
+| **`platform.vendorsoluce.com`** | Main React app — **production** (`packages/app/dist`) | *(empty)* | *(empty)* | `netlify.platform.toml` or `netlify.toml` (root) |
+| **`portal.vendorsoluce.com`** | Vendor risk portal | *(empty)* | **`packages/vendor-risk-portal`** | `packages/vendor-risk-portal/netlify.toml` |
 
 **`netlify.toml`** and **`netlify.platform.toml`** at the repo root are kept **in sync** for the platform site. Prefer **`netlify.platform.toml`** in the Netlify UI for naming consistency with other ERMITS repos.
 
@@ -31,7 +33,8 @@ Shared checklist: **`docs/NETLIFY_MONOREPO_TEMPLATE.md`** in **CyberCorrect** (`
 | Field | Value |
 |-------|--------|
 | Base directory | *(empty)* |
-| Config file | `packages/website/netlify.toml` |
+| Package directory | **`packages/website`** |
+| Config file | Not required if package directory is set (Netlify reads `packages/website/netlify.toml` first). You may still set **Config file path** to the same path in the UI if your team uses that field. |
 | Publish | *(from file)* `packages/website` |
 
 Apex → `www` is handled by **`packages/website/_redirects`** where configured.

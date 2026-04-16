@@ -1,5 +1,6 @@
 # VendorSoluce marketing website
-# In Netlify: set Base directory = EMPTY (or keep it unset), Config file path = packages/website/netlify.toml
+# In Netlify: Base directory = EMPTY. Set Package directory = packages/website so this file is used
+# before the repo-root netlify.toml (platform app). Optional: also set Config file path to this file.
 # See NETLIFY_DEPLOYMENT.md at the repo root for the full www / app / platform / portal map.
 # Build runs from repo root so npm ci uses the committed root lockfile, then builds the website workspace.
 # Apex → www: see packages/website/_redirects (https://vendorsoluce.com/* → www).
