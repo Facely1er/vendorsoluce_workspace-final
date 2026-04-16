@@ -2642,7 +2642,8 @@
     "vira": {
       "pageTitle": "VIRA™ Vendor Risk Assessment",
       "pageSubtitle": "Five-step VIRA™ operating model — inherent risk intake, requirements scoping, evidence collection, portfolio measurement, and remediation — aligned with Vendor Risk Radar and calculator methodology.",
-      "checklistHint": "Track vendor portfolio risk and evidence in the"
+      "checklistHint": "Track vendor portfolio risk and evidence in the",
+      "methodologyHint": "For the published framework (domains, tiers, and definitions), see the"
     }
   },
   "navigation": {
@@ -2667,6 +2668,7 @@
     "riskCalculator": "Risk calculator",
     "viraIntake": "VIRA intake",
     "nistChecklist": "NIST checklist",
+    "viraMethodology": "VIRA methodology",
     "sbomQuickScan": "SBOM quick scan",
     "assetManagement": "Asset management",
     "activityCatalog": "Activity catalog",

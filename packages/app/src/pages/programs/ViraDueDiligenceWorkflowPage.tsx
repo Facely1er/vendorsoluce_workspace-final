@@ -38,6 +38,19 @@ const ViraDueDiligenceWorkflowPage: React.FC = () => {
     <WorkspacePageShell
       title={t('vendorProgramWorkflow.vira.pageTitle')}
       description={t('vendorProgramWorkflow.vira.pageSubtitle')}
+      descriptionExtra={
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          {t('vendorProgramWorkflow.vira.methodologyHint')}{' '}
+          <a
+            href="https://www.vendorsoluce.com/vira-methodology"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-vendorsoluce-green hover:underline dark:text-vendorsoluce-light-green"
+          >
+            {t('navigation.viraMethodology')}
+          </a>
+        </p>
+      }
     >
       <Link
         to="/"

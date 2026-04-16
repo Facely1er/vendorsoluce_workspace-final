@@ -2390,7 +2390,8 @@
     "vira": {
       "pageTitle": "Évaluation des risques fournisseurs VIRA™",
       "pageSubtitle": "Modèle opérationnel VIRA™ en cinq étapes — intake du risque inhérent, cadrage des exigences, collecte de preuves, mesure de portefeuille et remédiation — aligné sur le Radar et le calculateur.",
-      "checklistHint": "Suivez le risque et les preuves du portefeuille fournisseurs dans le"
+      "checklistHint": "Suivez le risque et les preuves du portefeuille fournisseurs dans le",
+      "methodologyHint": "Pour le référentiel publié (domaines, niveaux et définitions), consultez la"
     }
   },
   "navigation": {
@@ -2415,6 +2416,7 @@
     "riskCalculator": "Calculateur de risque",
     "viraIntake": "Saisie VIRA",
     "nistChecklist": "Liste de contrôle NIST",
+    "viraMethodology": "méthodologie VIRA",
     "sbomQuickScan": "Analyse SBOM rapide",
     "assetManagement": "Gestion des actifs",
     "activityCatalog": "Catalogue d'activités",

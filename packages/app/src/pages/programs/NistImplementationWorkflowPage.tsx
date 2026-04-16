@@ -4,6 +4,7 @@ import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import { ImplementationWorkflowTimeline } from '../../components/program/ImplementationWorkflowTimeline';
+import { MR } from 'shared/constants/routes';
 import { NIST_IMPLEMENTATION_WORKFLOW, nistWorkflowStepActivityCount } from '../../catalog/nistImplementationWorkflow';
 
 const NIST_CHECKLIST_KEY = 'nist-checklist-progress-v1';
@@ -112,7 +113,7 @@ const NistImplementationWorkflowPage: React.FC = () => {
         steps={NIST_IMPLEMENTATION_WORKFLOW.steps}
         activityCountForStep={nistWorkflowStepActivityCount}
         labels={labels}
-        alternateProgramHref="/program/vira-due-diligence"
+        alternateProgramHref={MR.PROGRAM_VIRA_DUE_DILIGENCE}
         alternateProgramLabel={t('navigation.viraDueDiligenceWorkflow')}
         stepHint={(step) => <ChecklistStepHint stepId={step.id} doneIds={checklistDone} />}
       />
