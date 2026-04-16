@@ -15,14 +15,14 @@
   --vira-txt3: #6b7280;
   --vira-muted: #9ca3af;
   --vira-hero-ink: #0f172a;
-  --vira-gold: #b8860b;
-  --vira-accent: #33691e;
+  --vira-gold: var(--vendorsoluce-green, #15803d);
+  --vira-accent: var(--vendorsoluce-green, #33691e);
   --c-crit: #b91c1c;
   --c-high: #c2410c;
   --c-med: #ca8a04;
   --c-low: #15803d;
   --vira-code-bg: #f1f5f9;
-  font-family: "Epilogue", ui-sans-serif, system-ui, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--vira-txt);
   background: var(--vira-bg);
 }
@@ -146,18 +146,22 @@ html.dark .vira-doc .hero-badge {
 }
 
 .vira-doc .hero-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+  font-family: inherit;
+  font-size: clamp(2rem, 4.5vw, 3rem);
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.12;
   color: var(--vira-hero-ink);
-  margin: 0 0 1.25rem;
+  margin: 0 0 1rem;
   letter-spacing: -0.02em;
 }
 
 .vira-doc .hero-title .gold {
-  color: var(--vira-gold);
-  font-weight: 600;
+  color: var(--vendorsoluce-green, var(--vira-accent));
+  font-weight: 700;
+}
+
+html.dark .vira-doc .hero-title .gold {
+  color: var(--vendorsoluce-light-green, #86efac);
 }
 
 .vira-doc .hero-title .accent {
@@ -169,11 +173,11 @@ html.dark .vira-doc .hero-title .accent {
 }
 
 .vira-doc .hero-subtitle {
-  max-width: 42rem;
-  font-size: 1.05rem;
-  line-height: 1.65;
+  max-width: 40rem;
+  font-size: 1rem;
+  line-height: 1.55;
   color: var(--vira-txt2);
-  margin: 0 0 1.75rem;
+  margin: 0 0 1.25rem;
 }
 
 .vira-doc .hero-meta {
@@ -186,10 +190,10 @@ html.dark .vira-doc .hero-title .accent {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 500;
   color: var(--vira-txt3);
-  font-family: "DM Mono", ui-monospace, monospace;
+  font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
 }
 
 .vira-doc .hero-meta-item svg {
@@ -199,9 +203,9 @@ html.dark .vira-doc .hero-title .accent {
 
 /* --- Page shell --- */
 .vira-doc .page {
-  max-width: 72rem;
+  max-width: 56rem;
   margin: 0 auto;
-  padding: 2rem 1.5rem 3rem;
+  padding: 1.75rem 1.5rem 2.5rem;
 }
 
 @media (min-width: 640px) {
@@ -217,7 +221,7 @@ html.dark .vira-doc .hero-title .accent {
 }
 
 .vira-doc .section {
-  margin-bottom: 3.5rem;
+  margin-bottom: 2.5rem;
   scroll-margin-top: 6rem;
 }
 
@@ -235,12 +239,12 @@ html.dark .vira-doc .section-label {
 }
 
 .vira-doc .section-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-family: inherit;
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
   font-weight: 700;
   color: var(--vira-txt);
-  margin: 0 0 1.25rem;
-  line-height: 1.2;
+  margin: 0 0 0.75rem;
+  line-height: 1.25;
   letter-spacing: -0.02em;
 }
 
@@ -258,9 +262,9 @@ html.dark .vira-doc .section-title em {
 }
 
 .vira-doc .section-body p {
-  margin: 0 0 1rem;
-  font-size: 1rem;
-  line-height: 1.7;
+  margin: 0 0 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
   color: var(--vira-txt2);
 }
 
@@ -270,8 +274,8 @@ html.dark .vira-doc .section-title em {
 
 /* --- Cards & columns --- */
 .vira-doc .principle-card {
-  margin-top: 1.75rem;
-  padding: 1.25rem 1.5rem;
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
   border-radius: 0.75rem;
   border: 1px solid var(--vira-border);
   background: linear-gradient(
@@ -304,10 +308,62 @@ html.dark .vira-doc .principle-card-label {
 }
 
 .vira-doc .principle-card-text {
-  font-size: 1.05rem;
-  line-height: 1.65;
-  font-style: italic;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  font-style: normal;
   color: var(--vira-txt);
+}
+
+/* Compact bullet list (replaces verbose multi-card grids) */
+.vira-doc .vira-tight-list {
+  margin: 1rem 0 0;
+  padding-left: 1.15rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--vira-txt2);
+}
+
+.vira-doc .vira-tight-list li {
+  margin-bottom: 0.45rem;
+}
+
+.vira-doc .vira-tight-list li:last-child {
+  margin-bottom: 0;
+}
+
+.vira-doc .framework-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--vira-border);
+}
+
+.vira-doc .framework-table th,
+.vira-doc .framework-table td {
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid var(--vira-border);
+  vertical-align: top;
+}
+
+.vira-doc .framework-table thead th {
+  background: rgba(51, 105, 30, 0.1);
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vira-txt);
+}
+
+html.dark .vira-doc .framework-table thead th {
+  background: rgba(102, 187, 106, 0.15);
+}
+
+.vira-doc .framework-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .vira-doc .two-col {
@@ -387,7 +443,7 @@ html.dark .vira-doc .info-box {
 }
 
 .vira-doc .domain-num {
-  font-family: "DM Mono", monospace;
+  font-family: ui-monospace, "Cascadia Code", monospace;
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.35rem 0.55rem;
@@ -446,7 +502,7 @@ html.dark .vira-doc .df {
 }
 
 .vira-doc .domain-weight {
-  font-family: "DM Mono", monospace;
+  font-family: ui-monospace, "Cascadia Code", monospace;
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--vira-accent);
@@ -463,12 +519,12 @@ html.dark .vira-doc .domain-weight {
 
 /* --- Formula --- */
 .vira-doc .formula-block {
-  margin-top: 1.5rem;
-  padding: 1.25rem 1.5rem;
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
   border-radius: 0.75rem;
   background: var(--vira-code-bg);
   border: 1px solid var(--vira-border);
-  font-family: "DM Mono", ui-monospace, monospace;
+  font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
   font-size: 0.8rem;
   line-height: 1.65;
   overflow-x: auto;
@@ -611,7 +667,7 @@ html.dark .vira-doc .compare-table tbody tr:nth-child(even) {
 }
 
 .vira-doc .tier-range {
-  font-family: "DM Mono", monospace;
+  font-family: ui-monospace, "Cascadia Code", monospace;
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--vira-txt3);
@@ -755,7 +811,7 @@ html.dark .vira-doc .dd-req {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "DM Mono", monospace;
+  font-family: ui-monospace, "Cascadia Code", monospace;
   font-size: 0.75rem;
   font-weight: 700;
   background: var(--vira-accent);
@@ -789,21 +845,21 @@ html.dark .vira-doc .process-connector {
 }
 
 .vira-doc .process-step-body {
-  padding-bottom: 1.75rem;
+  padding-bottom: 1.35rem;
 }
 
 .vira-doc .process-step-title {
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--vira-txt);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
 
 .vira-doc .process-step-desc {
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 0.85rem;
+  line-height: 1.5;
   color: var(--vira-txt2);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.45rem;
 }
 
 .vira-doc .process-step-output {
@@ -813,7 +869,7 @@ html.dark .vira-doc .process-connector {
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--vira-accent);
-  font-family: "DM Mono", monospace;
+  font-family: ui-monospace, "Cascadia Code", monospace;
 }
 
 html.dark .vira-doc .process-step-output {
@@ -881,11 +937,11 @@ html.dark .cta-section .cta-eyebrow {
 }
 
 .cta-section .cta-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
   font-weight: 700;
   color: #111827;
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.5rem;
 }
 
 html.dark .cta-section .cta-title {
@@ -893,10 +949,10 @@ html.dark .cta-section .cta-title {
 }
 
 .cta-section .cta-desc {
-  max-width: 36rem;
-  margin: 0 auto 1.5rem;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  max-width: 32rem;
+  margin: 0 auto 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
   color: #4b5563;
 }
 
@@ -920,7 +976,7 @@ html.dark .cta-section .cta-desc {
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;
-  background: #33691e;
+  background: var(--vendorsoluce-green, #33691e);
   color: #fff;
   text-decoration: none;
   transition: background 0.2s ease, transform 0.15s ease;
@@ -939,8 +995,8 @@ html.dark .cta-section .cta-desc {
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;
-  border: 2px solid #33691e;
-  color: #33691e;
+  border: 2px solid var(--vendorsoluce-green, #33691e);
+  color: var(--vendorsoluce-green, #33691e);
   text-decoration: none;
   transition: background 0.2s ease;
 }

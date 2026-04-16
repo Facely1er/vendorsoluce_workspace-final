@@ -15,7 +15,6 @@
   <link href="assets/css/components.css" rel="stylesheet"/>
   <link href="assets/css/product.css" rel="stylesheet"/>
   <link href="assets/css/vira-methodology.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
   <style>
 
@@ -174,7 +173,7 @@
 
 
     <body>
-    <div id="root"><div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col"><!-- CANONICAL HEADER — Nav below; mobile drawer fragment: includes/mobile-menu-panel.html (npm run sync:mobile-menu). JS: assets/js/navigation.js -->
+    <div id="root"><div class="min-h-screen bg-white dark:bg-gray-900 flex flex-col"><!-- CANONICAL HEADER — Nav below; mobile drawer fragment: includes/mobile-menu-panel.html (npm run sync:mobile-menu). JS: assets/js/navigation.js -->
 <style>
   .tagline-text { letter-spacing: -0.02em; margin-top: -3px; }
 #root, #root > div { pointer-events: auto !important; }
@@ -420,15 +419,14 @@
   <div class="hero-inner">
     <div class="hero-badge">
       <div class="hero-badge-dot"></div>
-      Methodology Documentation
+      Methodology
     </div>
-    <div class="hero-eyebrow">VendorSoluce&trade; · NIST SP 800-161 Aligned</div>
+    <div class="hero-eyebrow">VendorSoluce&trade; · NIST SP 800-161</div>
     <h1 class="hero-title">
-      VIRA<span class="gold">™</span><br>
-      <span class="accent">Vendor Inherent Risk</span><br>Assessment
+      VIRA<span class="gold">™</span> <span class="accent">Vendor Inherent Risk Assessment</span>
     </h1>
     <p class="hero-subtitle">
-      The structured methodology for determining a vendor's risk level before any controls or mitigations are considered — using observable relationship characteristics only.
+      Observable relationship facts only — before questionnaires, certifications, or controls. Outputs a defensible inherent tier (Critical / High / Medium / Low).
     </p>
     <div class="hero-meta">
       <div class="hero-meta-item">
@@ -436,16 +434,12 @@
         NIST SP 800-161 Rev 1
       </div>
       <div class="hero-meta-item">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
-        International applicability
-      </div>
-      <div class="hero-meta-item">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
         Version 1.0 · 2026
       </div>
       <div class="hero-meta-item">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        ERMITS LLC · Proprietary
+        ERMITS LLC
       </div>
     </div>
   </div>
@@ -459,25 +453,24 @@
     <div class="section-label">01 — Overview</div>
     <h2 class="section-title">What <em>VIRA</em> is</h2>
     <div class="section-body">
-      <p>VIRA™ — Vendor Inherent Risk Assessment — is the proprietary methodology that powers VendorSoluce&trade; inherent risk scoring. It is the structured process for determining how much risk a vendor relationship represents to your organization, evaluated entirely from observable facts about the relationship itself.</p>
-      <p>VIRA produces a scored inherent risk tier — <strong>Critical, High, Medium, or Low</strong> — that tells your procurement and security teams what level of due diligence is required before onboarding or renewing a vendor. It is not a security assessment. It does not evaluate what the vendor has done to protect themselves. It evaluates what they represent to you.</p>
+      <p>VIRA™ (Vendor Inherent Risk Assessment) is the methodology behind VendorSoluce&trade; inherent scoring. It scores the <strong>relationship</strong> from observable facts — not vendor marketing — and yields a tier: <strong>Critical, High, Medium, or Low</strong>. It is not a security audit; it sets how much diligence you owe before and during residual-risk work.</p>
     </div>
 
     <div class="principle-card">
       <div class="principle-card-label">Core principle</div>
-      <div class="principle-card-text">"Inherent risk is a property of the relationship, not the vendor. It is determined entirely from observable facts about what the vendor does, what data they touch, and what happens to your organization if they fail — not from what they claim about their own security."</div>
+      <div class="principle-card-text">Inherent risk is a property of the relationship: what the vendor can touch, how critical they are, and what breaks if they fail — not what they claim about controls.</div>
     </div>
 
     <div class="two-col">
       <div class="info-box">
         <div class="info-box-label">VIRA answers</div>
-        <div class="info-box-title">How much risk are we potentially taking on?</div>
-        <div class="info-box-body">Before any questionnaire, before any certification review, before any evidence collection. This is your baseline exposure — the worst case if this vendor has no controls at all.</div>
+        <div class="info-box-title">How much exposure are we taking on?</div>
+        <div class="info-box-body">Baseline before questionnaires or evidence: worst-case if the vendor had no mitigations.</div>
       </div>
       <div class="info-box">
         <div class="info-box-label">VIRA does not answer</div>
-        <div class="info-box-title">How well has the vendor mitigated that risk?</div>
-        <div class="info-box-body">That is a residual risk question — answered by reviewing certifications, questionnaire responses, evidence, and controls. VIRA always precedes residual risk assessment.</div>
+        <div class="info-box-title">How well did they mitigate?</div>
+        <div class="info-box-body">That is <em>residual</em> risk (certifications, questionnaires, evidence). VIRA comes first.</div>
       </div>
     </div>
   </section>
@@ -487,31 +480,17 @@
     <div class="section-label">02 — Rationale</div>
     <h2 class="section-title">Why inherent risk must be assessed <em>first</em></h2>
     <div class="section-body">
-      <p>Most organizations send the same 200-question security questionnaire to every vendor regardless of risk level. This wastes resources on low-risk vendors and — more critically — fails to calibrate effort toward the relationships that actually matter.</p>
-      <p>VIRA solves this by establishing the risk baseline before any vendor interaction begins. A vendor cannot influence their inherent risk score by presenting certifications or pointing to controls. The score reflects structural facts: what data they process, how deeply they're integrated, how critical their service is, and what regulatory obligations attach. These facts are determined by your organization, not self-reported by the vendor.</p>
-      <p>This matters for three specific reasons when a regulator, auditor, or customer asks about your third-party risk program:</p>
+      <p>VIRA sets the baseline <em>before</em> vendor engagement. Tier reflects structural facts your org defines — data, criticality, access, regulation — so effort and questionnaires scale to real exposure.</p>
     </div>
-    <div class="two-col" style="margin-top:1.5rem">
-      <div class="info-box">
-        <div class="info-box-label">Defensibility</div>
-        <div class="info-box-title">Auditable rationale for every decision</div>
-        <div class="info-box-body">Every tier assignment traces to specific, observable inputs — not judgment calls. "This vendor is High because they process 50,000+ customer records, have production API access, and require a DPA under GDPR."</div>
-      </div>
-      <div class="info-box">
-        <div class="info-box-label">Proportionality</div>
-        <div class="info-box-title">Due diligence scaled to actual exposure</div>
-        <div class="info-box-body">Low-risk vendors get a lightweight self-attestation process. Critical vendors get full questionnaires, evidence review, and executive sign-off. Resources follow risk.</div>
-      </div>
-      <div class="info-box">
-        <div class="info-box-label">Independence</div>
-        <div class="info-box-title">Score is not influenced by vendor claims</div>
-        <div class="info-box-body">A vendor cannot improve their inherent risk score by presenting a SOC 2 report or an ISO 27001 certificate. Those reduce residual risk. Inherent risk reflects the nature of the relationship.</div>
-      </div>
-      <div class="info-box">
-        <div class="info-box-label">Consistency</div>
-        <div class="info-box-title">Same methodology across every vendor</div>
-        <div class="info-box-body">VIRA produces comparable scores across your entire portfolio — new vendors, legacy vendors, and renewals. Historical comparisons are meaningful because the methodology doesn't change.</div>
-      </div>
+    <div class="info-box" style="margin-top:1rem">
+      <div class="info-box-label">Why assess inherent risk first</div>
+      <div class="info-box-title">Defensible · Proportional · Independent · Consistent</div>
+      <ul class="vira-tight-list" style="margin-top:0.5rem">
+        <li><strong>Defensibility</strong> — Tiers map to stated inputs (e.g. record volume + production access + DPA).</li>
+        <li><strong>Proportionality</strong> — Light process for Low; full diligence path for Critical.</li>
+        <li><strong>Independence</strong> — SOC 2 / ISO do not raise inherent tier; they inform residual risk later.</li>
+        <li><strong>Consistency</strong> — Same rules across new, legacy, and renewal relationships.</li>
+      </ul>
     </div>
   </section>
 
@@ -520,7 +499,7 @@
     <div class="section-label">03 — Assessment domains</div>
     <h2 class="section-title">The <em>five domains</em> of inherent risk</h2>
     <div class="section-body">
-      <p>VIRA evaluates inherent risk across five domains, each scored 0–100 and combined using a weighted formula. Domains are weighted to reflect their empirical contribution to third-party breach impact, grounded in NIST SP 800-161 Rev 1 (C-SCRM) guidance.</p>
+      <p>Five domains (0–100 each), weighted and combined per NIST SP 800-161 C-SCRM guidance.</p>
     </div>
 
     <div class="domain-grid">
@@ -528,7 +507,7 @@
         <div class="domain-num d1">D1</div>
         <div class="domain-content">
           <div class="domain-name">Data sensitivity</div>
-          <div class="domain-desc">The regulatory and operational consequences of a breach, determined by which categories of data the vendor accesses or processes, how many records are involved, whether data crosses borders, and the vendor's processing role (processor vs. sub-processor).</div>
+          <div class="domain-desc">Breach impact from data categories, volume, cross-border flow, and processor vs. sub-processor role.</div>
           <div class="domain-factors">
             <span class="df">Biometric</span><span class="df">Health / PHI</span><span class="df">Children's data</span>
             <span class="df">Credentials</span><span class="df">Financial</span><span class="df">PII</span>
@@ -541,7 +520,7 @@
         <div class="domain-num d2">D2</div>
         <div class="domain-content">
           <div class="domain-name">Operational criticality</div>
-          <div class="domain-desc">The business impact if this vendor's service is interrupted or compromised — ranging from mission-critical (the organization cannot operate without it) to peripheral (the organization continues normally). Factors include recovery time objective and whether alternatives exist.</div>
+          <div class="domain-desc">Business impact if the service stops or is compromised; RTO and substitute providers.</div>
           <div class="domain-factors">
             <span class="df">Business impact tier</span><span class="df">Recovery time objective</span>
             <span class="df">Availability of alternatives</span><span class="df">User scope</span>
@@ -553,7 +532,7 @@
         <div class="domain-num d3">D3</div>
         <div class="domain-content">
           <div class="domain-name">Access & integration scope</div>
-          <div class="domain-desc">The depth of technical exposure — how embedded the vendor is in your environment. Privileged access and production system access carry the heaviest weights because they represent the greatest lateral movement potential in a compromise.</div>
+          <div class="domain-desc">How deeply the vendor is embedded; privileged and production access weigh highest.</div>
           <div class="domain-factors">
             <span class="df">Privileged / admin access</span><span class="df">Production system access</span>
             <span class="df">Network access</span><span class="df">Physical access</span><span class="df">Integration depth</span>
@@ -565,7 +544,7 @@
         <div class="domain-num d4">D4</div>
         <div class="domain-content">
           <div class="domain-name">Regulatory surface</div>
-          <div class="domain-desc">Which regulatory frameworks attach because of this vendor relationship — determining the contractual, evidentiary, and penalty consequences of a breach or non-compliance event. HIPAA, CMMC, and FedRAMP carry the greatest weights due to mandatory contractual obligations and enforcement mechanisms.</div>
+          <div class="domain-desc">Frameworks triggered by the relationship (HIPAA, GDPR, CMMC, FedRAMP, PCI, SOX, export controls, etc.).</div>
           <div class="domain-factors">
             <span class="df">HIPAA / BAA required</span><span class="df">GDPR / DPA required</span>
             <span class="df">MODPA</span><span class="df">CMMC</span><span class="df">FedRAMP</span>
@@ -578,7 +557,7 @@
         <div class="domain-num d5">D5</div>
         <div class="domain-content">
           <div class="domain-name">Concentration & 4th-party risk</div>
-          <div class="domain-desc">Single-source dependency and sub-processor visibility. A sole provider of a mission-critical function creates systemic risk regardless of their security posture. Unknown sub-processors represent uncharacterized exposure that cannot be assessed until mapped.</div>
+          <div class="domain-desc">Sole-source critical functions and sub-processor visibility / jurisdictional concentration.</div>
           <div class="domain-factors">
             <span class="df">Sole provider status</span><span class="df">Sub-processor count</span>
             <span class="df">Geographic / jurisdictional risk</span><span class="df">Vendor maturity</span>
@@ -594,7 +573,7 @@
     <div class="section-label">04 — Scoring</div>
     <h2 class="section-title">The <em>scoring formula</em></h2>
     <div class="section-body">
-      <p>Each domain is scored independently on a 0–100 scale using observable inputs. Domain scores are then combined using a weighted formula to produce a raw inherent score. Non-negotiable override conditions may elevate the final tier above the weighted result.</p>
+      <p>Domains score 0–100 from discrete inputs; weighted sum yields a raw score; overrides may raise the minimum tier.</p>
     </div>
 
     <div class="formula-block">
@@ -618,9 +597,8 @@
       </div>
     </div>
 
-    <div class="section-body" style="margin-top:1.25rem;">
-      <p><strong>All domain inputs are capped at 100.</strong> Within each domain, factors are individually weighted and summed, then capped. This prevents any single factor from producing an artificially extreme domain score while still reflecting the compounding effect of multiple high-risk inputs.</p>
-      <p><strong>Partial scores are not interpolated.</strong> Each observable input produces a discrete point value — there are no fuzzy or probabilistic inputs. This keeps the methodology auditable: every point in the score traces to a specific observed characteristic.</p>
+    <div class="section-body" style="margin-top:1rem;">
+      <p><strong>Capped at 100 per domain.</strong> Factors are weighted and summed, then capped. <strong>Discrete inputs only</strong> — no interpolation — so every point traces to an observed characteristic.</p>
     </div>
   </section>
 
@@ -629,8 +607,7 @@
     <div class="section-label">05 — Override conditions</div>
     <h2 class="section-title">Non-negotiable <em>overrides</em></h2>
     <div class="section-body">
-      <p>Four conditions force a minimum tier regardless of the weighted score. These exist because the domain-weighted average can mask a single catastrophic risk factor. A vendor with a 20/100 weighted score who has privileged access to your production database should never be classified as Low risk.</p>
-      <p>Overrides are evaluated after the weighted score is calculated. If the calculated tier is already at or above the override minimum, no change is made. If it is below, the score is elevated to the minimum value for the required tier.</p>
+      <p>Four conditions set a <strong>floor</strong> tier so a low average cannot hide one catastrophic factor. Evaluated after the weighted score; elevate only if below the minimum.</p>
     </div>
 
     <table class="override-table">
@@ -640,22 +617,22 @@
       <tbody>
         <tr>
           <td>Tier 1 sensitive data processing<br><span style="font-size:.72rem;color:var(--txt3);font-weight:400">(Health, Biometric, Children's data)</span></td>
-          <td style="color:var(--txt2)">Regulatory penalties and reputational consequences of a breach involving these categories are disproportionately severe. HIPAA, COPPA, and GDPR Art. 9 impose significantly elevated obligations.</td>
+          <td style="color:var(--txt2)">Elevated legal and reputational impact for health, biometric, or children’s data.</td>
           <td><span class="min-tier mt-high">High</span></td>
         </tr>
         <tr>
           <td>Privileged or admin system access</td>
-          <td style="color:var(--txt2)">Privileged access enables lateral movement, credential harvesting, and complete environment compromise. A vendor with admin credentials represents a standing threat actor if their own systems are compromised.</td>
+          <td style="color:var(--txt2)">Admin or privileged access implies lateral movement if the vendor is compromised.</td>
           <td><span class="min-tier mt-high">High</span></td>
         </tr>
         <tr>
           <td>Sole provider of a mission-critical function<br><span style="font-size:.72rem;color:var(--txt3);font-weight:400">(no documented alternative)</span></td>
-          <td style="color:var(--txt2)">Single-source dependency on a mission-critical function creates systemic risk that cannot be mitigated through vendor controls alone. The organization's resilience is structurally dependent on this vendor's continuity.</td>
+          <td style="color:var(--txt2)">No practical substitute for a mission-critical sole provider.</td>
           <td><span class="min-tier mt-high">High</span></td>
         </tr>
         <tr>
           <td>Regulated processing requiring a BAA<br><span style="font-size:.72rem;color:var(--txt3);font-weight:400">(HIPAA Business Associate Agreement)</span></td>
-          <td style="color:var(--txt2)">HIPAA mandates a signed BAA before any PHI sharing. The legal obligation and downstream liability exposure — regardless of the vendor's security posture — requires at minimum standard due diligence.</td>
+          <td style="color:var(--txt2)">PHI under HIPAA requires a BAA and baseline diligence regardless of vendor claims.</td>
           <td><span class="min-tier mt-med">Medium</span></td>
         </tr>
       </tbody>
@@ -667,32 +644,32 @@
     <div class="section-label">06 — Risk tiers</div>
     <h2 class="section-title">The four <em>risk tiers</em></h2>
     <div class="section-body">
-      <p>VIRA produces four output tiers. The tier determines the required due diligence level before onboarding approval — not just a label, but a prescribed process depth.</p>
+      <p>Four tiers drive minimum diligence depth before approval.</p>
     </div>
 
     <div class="tier-grid">
       <div class="tier-cell tc-crit">
         <div class="tier-range">75–100</div>
         <div class="tier-name">Critical</div>
-        <div class="tier-desc">Severe structural exposure. Multiple high-weight factors converge — typically privileged access, Tier 1 data, and mission-critical function combined.</div>
+        <div class="tier-desc">Severe structural exposure: often Tier 1 data + privileged access + mission-critical role.</div>
         <div class="tier-dd">Enhanced due diligence required</div>
       </div>
       <div class="tier-cell tc-high">
         <div class="tier-range">50–74</div>
         <div class="tier-name">High</div>
-        <div class="tier-desc">Significant exposure from one or more domains. Often: production access + significant data volume, or sole provider of an important function.</div>
+        <div class="tier-desc">Strong exposure in one or more domains (e.g. production access + material data, or critical sole source).</div>
         <div class="tier-dd">Standard-plus due diligence</div>
       </div>
       <div class="tier-cell tc-med">
         <div class="tier-range">25–49</div>
         <div class="tier-name">Medium</div>
-        <div class="tier-desc">Moderate exposure. Vendor processes personal data or has system integration, but neither the data sensitivity nor the operational criticality reaches the higher threshold.</div>
+        <div class="tier-desc">Moderate: personal data or integrations without crossing Critical/High thresholds.</div>
         <div class="tier-dd">Standard due diligence</div>
       </div>
       <div class="tier-cell tc-low">
         <div class="tier-range">0–24</div>
         <div class="tier-name">Low</div>
-        <div class="tier-desc">Limited structural exposure. Minimal data access, peripheral operational role, no privileged access, no significant regulatory surface.</div>
+        <div class="tier-desc">Limited: peripheral role, minimal data, no privileged access, light regulatory surface.</div>
         <div class="tier-dd">Lightweight due diligence</div>
       </div>
     </div>
@@ -703,7 +680,7 @@
     <div class="section-label">07 — Due diligence</div>
     <h2 class="section-title">Required due diligence <em>by tier</em></h2>
     <div class="section-body">
-      <p>The inherent risk tier determines the minimum due diligence process required before onboarding approval. These requirements are prescribed — they are not negotiable based on vendor size, relationship history, or contract value. The tier reflects structural risk; due diligence requirements follow from the tier.</p>
+      <p>Minimum diligence is prescribed by tier (not by vendor size or contract value).</p>
     </div>
 
     <div class="dd-grid">
@@ -713,7 +690,7 @@
           <div class="dd-level">Enhanced</div>
         </div>
         <div>
-          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.55;">Full security questionnaire (150+ controls), independent evidence review, on-site or virtual technical assessment, executive sign-off, legal review of all contract terms, and annual mandatory reassessment.</div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.45;">Full questionnaire (150+), evidence review, technical assessment as needed, exec and legal sign-off, mandatory reassessment cadence.</div>
           <div class="dd-requirements">
             <span class="dd-req">Full questionnaire (150+)</span>
             <span class="dd-req">Evidence vault review</span>
@@ -732,7 +709,7 @@
           <div class="dd-level">Standard-plus</div>
         </div>
         <div>
-          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.55;">Standard security questionnaire (80+ controls), evidence review for key controls, certification verification, execution of required legal agreements (DPA, BAA where applicable), bi-annual reassessment.</div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.45;">Questionnaire (80+), key-control evidence, certification checks, required agreements (DPA/BAA), periodic reassessment.</div>
           <div class="dd-requirements">
             <span class="dd-req">Security questionnaire (80+)</span>
             <span class="dd-req">SOC 2 Type II or equivalent</span>
@@ -749,7 +726,7 @@
           <div class="dd-level">Standard</div>
         </div>
         <div>
-          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.55;">Standard security questionnaire, self-attestation acceptable for some controls, certification review, privacy notice review. Annual reassessment.</div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.45;">Standard questionnaire with selective self-attestation, certification and privacy review, annual reassessment.</div>
           <div class="dd-requirements">
             <span class="dd-req">Security questionnaire</span>
             <span class="dd-req">Certification attestation</span>
@@ -764,7 +741,7 @@
           <div class="dd-level">Lightweight</div>
         </div>
         <div>
-          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.55;">Simplified self-attestation form covering basic security hygiene. Periodic monitoring. Annual review or upon material change to the relationship.</div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.45;">Light self-attestation, basic checks, annual or change-triggered review.</div>
           <div class="dd-requirements">
             <span class="dd-req">Self-attestation form</span>
             <span class="dd-req">Basic security check</span>
@@ -780,7 +757,7 @@
     <div class="section-label">08 — Process</div>
     <h2 class="section-title">The VIRA <em>assessment process</em></h2>
     <div class="section-body">
-      <p>VIRA is conducted as the first step in the VendorSoluce&trade; vendor lifecycle — before any vendor interaction, questionnaire, or evidence collection. The process is completed by the organization's risk or procurement team, not by the vendor.</p>
+      <p>Owned by your risk or procurement team, before vendor questionnaires or evidence.</p>
     </div>
 
     <div class="process-flow" style="margin-top:1.75rem">
@@ -791,7 +768,7 @@
         </div>
         <div class="process-step-body">
           <div class="process-step-title">Vendor intake — relationship characterization</div>
-          <div class="process-step-desc">Complete the VIRA intake form covering all five domains. Inputs are based on your organization's knowledge of the proposed relationship — service scope, data access rights, integration depth, and applicable regulatory frameworks. The vendor does not participate in this step.</div>
+          <div class="process-step-desc">Intake across five domains from your org’s facts (scope, data, integration, regulation). Vendor does not participate.</div>
           <div class="process-step-output">
             <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             Output: Five domain scores
@@ -805,7 +782,7 @@
         </div>
         <div class="process-step-body">
           <div class="process-step-title">Weighted score calculation</div>
-          <div class="process-step-desc">Domain scores are combined using VIRA's weighted formula (D1×0.30 + D2×0.25 + D3×0.20 + D4×0.15 + D5×0.10) to produce a raw inherent score. Override conditions are then evaluated — if any apply, the score is elevated to the minimum for the required tier.</div>
+          <div class="process-step-desc">Apply weighted formula; then apply any tier floors from overrides.</div>
           <div class="process-step-output">
             <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             Output: Final inherent risk score (0–100)
@@ -819,7 +796,7 @@
         </div>
         <div class="process-step-body">
           <div class="process-step-title">Tier assignment and report generation</div>
-          <div class="process-step-desc">The final score maps to an inherent risk tier. The VIRA report is generated — documenting the score, domain breakdown, factor chips, override conditions, applicable regulations, and the prescribed due diligence requirements. This report becomes part of the vendor file.</div>
+          <div class="process-step-desc">Map score to tier; issue report (domains, factors, overrides, diligence path) for the vendor file.</div>
           <div class="process-step-output">
             <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             Output: VIRA Inherent Risk Report
@@ -833,7 +810,7 @@
         </div>
         <div class="process-step-body">
           <div class="process-step-title">Due diligence — residual risk assessment</div>
-          <div class="process-step-desc">Based on the tier, the prescribed due diligence process begins. The vendor receives a security questionnaire calibrated to their tier. Evidence is collected, certifications are verified, and required legal agreements are executed. This produces the residual risk assessment.</div>
+          <div class="process-step-desc">Run tier-calibrated questionnaire, evidence, and agreements → residual risk view.</div>
           <div class="process-step-output">
             <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             Output: Residual risk assessment + evidence vault
@@ -847,7 +824,7 @@
         </div>
         <div class="process-step-body">
           <div class="process-step-title">Onboarding decision and ongoing monitoring</div>
-          <div class="process-step-desc">The combination of inherent risk tier and residual risk assessment drives the onboarding decision. Approved vendors enter the portfolio. VIRA scores are reassessed annually, or upon any material change to the relationship (expanded data access, new integration, service scope change).</div>
+          <div class="process-step-desc">Decide onboarding from inherent + residual; reassess annually or on material change.</div>
           <div class="process-step-output">
             <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             Output: Approved vendor record in portfolio
@@ -862,7 +839,7 @@
     <div class="section-label">09 — Scope boundary</div>
     <h2 class="section-title">Inherent vs. <em>residual risk</em></h2>
     <div class="section-body">
-      <p>VIRA's scope ends at the inherent risk score. Understanding what falls inside and outside that boundary is essential to using the methodology correctly.</p>
+      <p>VIRA stops at inherent tier; residual work follows.</p>
     </div>
 
     <table class="compare-table" style="margin-top:1.5rem">
@@ -872,33 +849,33 @@
       <tbody>
         <tr>
           <td>Who determines it</td>
-          <td>Your organization — from observed relationship facts</td>
-          <td>Evaluated jointly — questionnaire responses, certifications, evidence</td>
+          <td>Your org from observed facts</td>
+          <td>Questionnaires, certifications, verified evidence</td>
         </tr>
         <tr>
           <td>Vendor certifications</td>
-          <td>Not considered — SOC 2, ISO 27001 do not affect inherent score</td>
-          <td>Primary inputs — reviewed and verified during due diligence</td>
+          <td>Not in scope for inherent score</td>
+          <td>Core inputs in diligence</td>
         </tr>
         <tr>
           <td>Security questionnaire</td>
-          <td>Not used — inherent risk precedes vendor interaction</td>
-          <td>Required — depth calibrated to inherent risk tier</td>
+          <td>Not used beforehand</td>
+          <td>Depth follows tier</td>
         </tr>
         <tr>
           <td>When it changes</td>
-          <td>When the nature of the relationship changes — new data access, new integration, expanded scope</td>
-          <td>When vendor controls improve or deteriorate — new certifications, findings, incidents</td>
+          <td>Relationship change (data, integration, scope)</td>
+          <td>Control posture change (certs, findings, incidents)</td>
         </tr>
         <tr>
           <td>Can vendor improve it?</td>
-          <td>No — inherent risk reflects the relationship, not vendor actions</td>
-          <td>Yes — better controls, evidence, and certifications reduce residual risk</td>
+          <td>No</td>
+          <td>Yes</td>
         </tr>
         <tr>
           <td>Audit defensibility</td>
-          <td>Fully auditable — every point traces to an observable input</td>
-          <td>Depends on evidence quality and documentation discipline</td>
+          <td>Auditable to discrete inputs</td>
+          <td>Depends on evidence quality</td>
         </tr>
       </tbody>
     </table>
@@ -909,46 +886,47 @@
     <div class="section-label">10 — Framework alignment</div>
     <h2 class="section-title"><em>Standards alignment</em></h2>
     <div class="section-body">
-      <p>VIRA is grounded in established third-party risk management standards. The five-domain structure and weighting rationale draw directly from the following frameworks:</p>
+      <p>Domains and weighting align to common TPRM references; primary anchors are NIST C-SCRM and CSF.</p>
     </div>
-    <div class="two-col" style="margin-top:1.5rem">
-      <div class="info-box">
-        <div class="info-box-label"><span class="tag tag-mint">Primary</span></div>
-        <div class="info-box-title">NIST SP 800-161 Rev 1<br>C-SCRM for Systems and Organizations</div>
-        <div class="info-box-body">Provides the foundational supply chain risk management framework — including the concept of inherent vs. residual risk, supplier criticality tiering, and the requirement to assess risk before supplier interaction. Domain 2 (operational criticality) and Domain 5 (concentration) map directly to NIST 800-161 supply chain risk categories.</div>
-      </div>
-      <div class="info-box">
-        <div class="info-box-label"><span class="tag tag-mint">Primary</span></div>
-        <div class="info-box-title">NIST CSF 2.0<br>Cybersecurity Framework</div>
-        <div class="info-box-body">Governs the Govern and Identify functions, including third-party risk identification and supplier risk management. VIRA's domain structure reflects the CSF's emphasis on understanding the organizational context of risk before implementing controls.</div>
-      </div>
-      <div class="info-box">
-        <div class="info-box-label"><span class="tag tag-gold">Regulatory</span></div>
-        <div class="info-box-title">ISO/IEC 27036<br>Information Security for Supplier Relationships</div>
-        <div class="info-box-body">Provides specific guidance on supplier risk assessment — including the principle that risk assessment precedes supplier engagement, and the requirement for documented risk criteria. VIRA's tier-to-due-diligence mapping aligns with ISO 27036-3 acquisition process requirements.</div>
-      </div>
-      <div class="info-box">
-        <div class="info-box-label"><span class="tag tag-gold">Regulatory</span></div>
-        <div class="info-box-title">GDPR Article 28<br>Processor obligations</div>
-        <div class="info-box-body">Requires controllers to use only processors that provide sufficient guarantees — implying a documented assessment of processor risk before engagement. Domain 4 (regulatory surface) incorporates GDPR's DPA requirement and data transfer obligations as explicit risk factors.</div>
-      </div>
-    </div>
+    <table class="framework-table">
+      <thead>
+        <tr><th>Standard</th><th>Role in VIRA</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>NIST SP 800-161 Rev 1</strong> (C-SCRM)</td>
+          <td>Primary — inherent vs residual, criticality, assess before supplier engagement; maps to D2/D5.</td>
+        </tr>
+        <tr>
+          <td><strong>NIST CSF 2.0</strong></td>
+          <td>Primary — Identify / Govern and third-party risk context.</td>
+        </tr>
+        <tr>
+          <td><strong>ISO/IEC 27036</strong></td>
+          <td>Supporting — supplier assessment before engagement; documented criteria.</td>
+        </tr>
+        <tr>
+          <td><strong>GDPR Art. 28</strong></td>
+          <td>Regulatory — processor guarantees and DPA surface in D4.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
 </div><!-- /page -->
 
 <!-- CTA -->
 <section class="cta-section">
-  <div class="cta-eyebrow">Ready to apply VIRA™</div>
-  <h2 class="cta-title">Start your first inherent risk assessment</h2>
-  <p class="cta-desc">The VIRA assessment takes approximately 15 minutes per vendor. Results feed directly into your vendor portfolio — no backend required.</p>
+  <div class="cta-eyebrow">Try it on this site</div>
+  <h2 class="cta-title">Run an inherent risk view</h2>
+  <p class="cta-desc">Open the local exposure report (~15 minutes per vendor). For the full map → radar journey, continue from Vendor Review.</p>
   <div class="cta-actions">
     <a href="/radar/vendor-inherent-risk-report.html" class="cta-btn-primary">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect width="8" height="4" x="8" y="3" rx="1"/></svg>
-      Run VIRA assessment →
+      Open exposure report
     </a>
-    <a href="/radar/vendor-inherent-risk-report.html" class="cta-btn-outline">
-      View portfolio report →
+    <a href="/vendor-review.html" class="cta-btn-outline">
+      Vendor Review →
     </a>
   </div>
 </section>
