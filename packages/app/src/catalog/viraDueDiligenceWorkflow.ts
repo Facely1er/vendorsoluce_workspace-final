@@ -95,13 +95,13 @@ const steps: VendorProgramWorkflowStep[] = [
       {
         id: 'v7-vira',
         label: 'VIRA portfolio reports (summary, print/PDF, audit trail)',
-        href: MR.VIRA_REPORTS,
+        href: MR.VENDOR_RISK_REPORTS,
       },
       { id: 'v8', label: 'Vendor compliance evidence', href: MR.VENDOR_ASSESSMENTS },
     ],
     tools: [
       { label: 'Vendor Risk Radar', href: MR.VENDOR_RISK_RADAR },
-      { label: 'VIRA portfolio reports', href: MR.VIRA_REPORTS },
+      { label: 'VIRA portfolio reports', href: MR.VENDOR_RISK_REPORTS },
       { label: 'Asset management', href: WR.ASSET_MANAGEMENT },
     ],
   },
@@ -120,7 +120,7 @@ const steps: VendorProgramWorkflowStep[] = [
     ],
     deliverables: [
       { id: 'v9', label: 'Action plan & recommendations', href: MR.SUPPLY_CHAIN_ASSESSMENT },
-      { id: 'v10', label: 'Management readout (VIRA summary)', href: MR.VIRA_REPORTS },
+      { id: 'v10', label: 'Management readout (VIRA summary)', href: MR.VENDOR_RISK_REPORTS },
       {
         id: 'v10-rpt',
         label: 'Portfolio C-SCRM report (HTML export)',
@@ -129,7 +129,7 @@ const steps: VendorProgramWorkflowStep[] = [
     ],
     tools: [
       { label: 'Supply chain assessment', href: MR.SUPPLY_CHAIN_ASSESSMENT },
-      { label: 'VIRA portfolio reports', href: MR.VIRA_REPORTS },
+      { label: 'VIRA portfolio reports', href: MR.VENDOR_RISK_REPORTS },
       { label: 'Downloads', href: MR.DOWNLOAD },
       { label: 'Vendor dashboard', href: MR.VENDORS },
     ],

@@ -47,7 +47,6 @@ const HREF_ICON: Record<string, React.ReactNode> = {
   '/vendor-assessments': <FileSearch className="h-4 w-4 flex-shrink-0" />,
   '/vendor-risk-radar': <Radar className="h-4 w-4 flex-shrink-0" />,
   '/vendor-risk-reports': <FileText className="h-4 w-4 flex-shrink-0" />,
-  '/vira-reports': <FileText className="h-4 w-4 flex-shrink-0" />,
   '/tools/vendor-risk-calculator': <Calculator className="h-4 w-4 flex-shrink-0" />,
   '/tools/nist-checklist': <Shield className="h-4 w-4 flex-shrink-0" />,
   '/asset-management': <FolderOpen className="h-4 w-4 flex-shrink-0" />,

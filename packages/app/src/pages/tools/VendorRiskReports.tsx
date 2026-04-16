@@ -58,8 +58,8 @@ const VendorRiskReports: React.FC = () => {
       subtitle="VIRA portfolio register, inherent-risk summary, and C-SCRM deliverables from your current vendor list."
       descriptionExtra={
         <p className="min-w-0 max-w-none text-sm leading-6 text-gray-600 dark:text-gray-300 sm:text-base">
-          This page replaces the separate VIRA reports and risk reports views: use the register below for
-          portfolio posture, and Reports &amp; exports for leadership-ready outputs.
+          Use Reports &amp; exports for summary and C-SCRM dossier; use the register for sortable VIRA posture and
+          recommendations.
         </p>
       }
       stats={headerStats}
