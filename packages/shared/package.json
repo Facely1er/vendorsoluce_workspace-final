@@ -16,7 +16,7 @@
     "verify:runtime-dedup": "node scripts/verify-runtime-dedup.mjs",
     "verify:ui-tokens": "node scripts/verify-ui-tokens.mjs",
     "verify:ui-inline": "node scripts/verify-ui-inline.mjs",
-    "verify:ui": "node scripts/verify-ui-tokens.mjs && node scripts/verify-ui-inline.mjs && node scripts/verify-static-radar-design.mjs && node scripts/verify-website-tokens-css.mjs && node scripts/verify-website-html-loads-tokens.mjs"
+    "verify:ui": "node scripts/verify-ui-tokens.mjs && node scripts/verify-ui-inline.mjs && node scripts/verify-workspace-layout.mjs && node scripts/verify-static-radar-design.mjs && node scripts/verify-website-tokens-css.mjs && node scripts/verify-website-html-loads-tokens.mjs"
   },
   "dependencies": {
     "@ermits/dependency-graph": "file:../dependency-graph"

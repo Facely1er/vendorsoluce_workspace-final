@@ -14,7 +14,7 @@ import {
   type VendorSupplyProgramTrack,
   type VendorSupplySipocRow,
 } from '../../catalog/vendorSupplyChainSipocCatalog';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_STACK_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 // ── Persistence ────────────────────────────────────────────────────────────────
 
@@ -222,7 +222,7 @@ const VendorActivityCatalogPage: React.FC = () => {
   return (
     <WorkspacePageShell
       title="Vendor Program Activity Catalog"
-      description={`Full platform process catalog with phase-by-phase traceability. ${phases.length} phases · ${total} predefined activities · src/catalog/vendorSupplyChainSipocCatalog.ts. Tagged for NIST and VIRA program tracks.`}
+      description={`Track and complete catalog activities across ${phases.length} phases (${total} total rows).`}
       stats={[
         { label: 'Phases', value: phases.length, hint: 'In current program filter' },
         { label: 'Activities', value: total, hint: 'Predefined SIPOC rows' },
@@ -234,69 +234,69 @@ const VendorActivityCatalogPage: React.FC = () => {
         },
       ]}
     >
-      <div className="space-y-6">
-      <div className="rounded-xl border border-vendorsoluce-green/25 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4">
-        <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">
-          {t('vendorProgramWorkflow.common.programBanner')}
-        </p>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-          {t('vendorProgramWorkflow.common.programBannerBody')}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <Link
-            to="/program/nist-implementation"
-            className="inline-flex items-center rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-sm font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:bg-gray-50 dark:hover:bg-gray-800"
-          >
-            {t('navigation.nistImplementationWorkflow')} →
-          </Link>
-          <Link
-            to="/program/vira-due-diligence"
-            className="inline-flex items-center rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-sm font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:bg-gray-50 dark:hover:bg-gray-800"
-          >
-            {t('navigation.viraDueDiligenceWorkflow')} →
-          </Link>
+      <div className={WORKSPACE_PAGE_BODY_STACK_CLASS}>
+        <div className="rounded-xl border border-vendorsoluce-green/25 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4">
+          <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">
+            {t('vendorProgramWorkflow.common.programBanner')}
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+            {t('vendorProgramWorkflow.common.programBannerBody')}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              to="/program/nist-implementation"
+              className="inline-flex items-center rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-sm font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+              {t('navigation.nistImplementationWorkflow')} →
+            </Link>
+            <Link
+              to="/program/vira-due-diligence"
+              className="inline-flex items-center rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-sm font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+              {t('navigation.viraDueDiligenceWorkflow')} →
+            </Link>
+          </div>
         </div>
-      </div>
 
-      <div className="flex flex-wrap items-center gap-1.5 mb-4" role="group" aria-label="Filter by program">
-        <span className="text-xs text-gray-500 dark:text-gray-400 shrink-0">Program:</span>
-        <button
-          type="button"
-          onClick={() => setProgramTrack('all')}
-          aria-pressed={programTrack === 'all' ? "true" : "false"}
-          className={`text-xs px-2.5 py-0.5 rounded-full border transition-colors ${
-            programTrack === 'all'
-              ? 'bg-vendorsoluce-green text-white border-vendorsoluce-green'
-              : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
-          }`}
-        >
-          {t('vendorProgramWorkflow.common.filterAll')}
-        </button>
-        <button
-          type="button"
-          onClick={() => setProgramTrack('nist')}
-          aria-pressed={programTrack === 'nist' ? "true" : "false"}
-          className={`text-xs px-2.5 py-0.5 rounded-full border transition-colors ${
-            programTrack === 'nist'
-              ? 'bg-vendorsoluce-green text-white border-vendorsoluce-green'
-              : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
-          }`}
-        >
-          {t('vendorProgramWorkflow.common.filterNist')}
-        </button>
-        <button
-          type="button"
-          onClick={() => setProgramTrack('vira')}
-          aria-pressed={programTrack === 'vira' ? "true" : "false"}
-          className={`text-xs px-2.5 py-0.5 rounded-full border transition-colors ${
-            programTrack === 'vira'
-              ? 'bg-vendorsoluce-green text-white border-vendorsoluce-green'
-              : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
-          }`}
-        >
-          {t('vendorProgramWorkflow.common.filterVira')}
-        </button>
-      </div>
+        <div className="flex flex-wrap items-center gap-1.5 mb-4" role="group" aria-label="Filter by program">
+          <span className="text-xs text-gray-500 dark:text-gray-400 shrink-0">Program:</span>
+          <button
+            type="button"
+            onClick={() => setProgramTrack('all')}
+            aria-pressed={programTrack === 'all' ? "true" : "false"}
+            className={`text-xs px-2.5 py-0.5 rounded-full border transition-colors ${
+              programTrack === 'all'
+                ? 'bg-vendorsoluce-green text-white border-vendorsoluce-green'
+                : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+            }`}
+          >
+            {t('vendorProgramWorkflow.common.filterAll')}
+          </button>
+          <button
+            type="button"
+            onClick={() => setProgramTrack('nist')}
+            aria-pressed={programTrack === 'nist' ? "true" : "false"}
+            className={`text-xs px-2.5 py-0.5 rounded-full border transition-colors ${
+              programTrack === 'nist'
+                ? 'bg-vendorsoluce-green text-white border-vendorsoluce-green'
+                : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+            }`}
+          >
+            {t('vendorProgramWorkflow.common.filterNist')}
+          </button>
+          <button
+            type="button"
+            onClick={() => setProgramTrack('vira')}
+            aria-pressed={programTrack === 'vira' ? "true" : "false"}
+            className={`text-xs px-2.5 py-0.5 rounded-full border transition-colors ${
+              programTrack === 'vira'
+                ? 'bg-vendorsoluce-green text-white border-vendorsoluce-green'
+                : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+            }`}
+          >
+            {t('vendorProgramWorkflow.common.filterVira')}
+          </button>
+        </div>
 
       {/* Overall progress bar */}
       <div className="flex items-center gap-3 mb-5">
