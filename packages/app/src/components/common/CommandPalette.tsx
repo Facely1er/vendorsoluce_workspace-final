@@ -31,7 +31,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose }) => {
           { label: 'Vendor portfolio', href: WR.VENDORS_INTELLIGENCE, icon: <Users className="h-4 w-4" /> },
           { label: 'Assessments', href: MR.VENDOR_ASSESSMENTS, icon: <Shield className="h-4 w-4" /> },
           { label: 'Risk radar', href: MR.VENDOR_RISK_RADAR, icon: <Radar className="h-4 w-4" /> },
-          { label: 'VIRA reports', href: MR.VIRA_REPORTS, icon: <FileText className="h-4 w-4" /> },
+          { label: 'Portfolio reports', href: MR.VENDOR_RISK_REPORTS, icon: <FileText className="h-4 w-4" /> },
           { label: 'Compliance roadmap', href: WR.COMPLIANCE_ROADMAP, icon: <CalendarDays className="h-4 w-4" /> },
           { label: 'Activity catalog', href: MR.VENDOR_ACTIVITY_CATALOG, icon: <ListTree className="h-4 w-4" /> },
         ],
@@ -41,7 +41,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose }) => {
         items: [
           { label: 'Add vendor', href: WR.VENDOR_GRAPH_IMPORT, icon: <Users className="h-4 w-4" /> },
           { label: 'Start assessment', href: MR.SUPPLY_CHAIN_ASSESSMENT, icon: <Shield className="h-4 w-4" /> },
-          { label: 'New VIRA report', href: MR.VIRA_REPORTS, icon: <FileText className="h-4 w-4" /> },
+          { label: 'New portfolio report', href: MR.VENDOR_RISK_REPORTS, icon: <FileText className="h-4 w-4" /> },
         ],
       },
       {

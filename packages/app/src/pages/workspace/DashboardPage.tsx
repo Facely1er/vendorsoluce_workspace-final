@@ -179,7 +179,7 @@ const DashboardPage: React.FC = () => {
       icon: ClipboardList,
       title: 'Generate a VIRA report',
       description: 'Package current scores and posture into an executive-ready deliverable.',
-      href: MR.VIRA_REPORTS,
+      href: MR.VENDOR_RISK_REPORTS,
       cta: 'Open reports',
     },
   ] as const;

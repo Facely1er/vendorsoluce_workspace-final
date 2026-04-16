@@ -13,7 +13,7 @@ type Action = {
 const actions: Action[] = [
   { label: 'Add vendor', href: WR.VENDOR_GRAPH_IMPORT, icon: UserPlus },
   { label: 'Start assessment', href: MR.SUPPLY_CHAIN_ASSESSMENT, icon: FileCheck },
-  { label: 'New VIRA report', href: MR.VIRA_REPORTS, icon: FileText },
+  { label: 'Portfolio reports', href: MR.VENDOR_RISK_REPORTS, icon: FileText },
 ];
 
 const QuickCreateMenu: React.FC = () => {

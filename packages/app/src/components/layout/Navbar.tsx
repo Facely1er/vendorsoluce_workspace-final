@@ -153,7 +153,11 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
   /** Portfolio home only (not import, vendor detail, or other `/workspace/vendors/*` routes). */
   const isWorkspacePortfolioNavActive = (): boolean => {
     const p = location.pathname;
-    return p === MR.VENDORS || p === WR.VENDOR_INTELLIGENCE;
+    return p === MR.VENDORS || p.startsWith(`${MR.VENDORS}/`);
+  };
+
+  const isWorkspaceHomeActive = (): boolean => {
+    return location.pathname === MR.DASHBOARD;
   };
 
   // Define active and default link classes
@@ -187,7 +191,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
                     <Menu className="h-5 w-5" aria-hidden />
                   </button>
                 )}
-                <Link to={WR.VENDOR_INTELLIGENCE} className="flex items-center min-w-0 group" title={t('navigation.dashboard')}>
+                <Link to={MR.DASHBOARD} className="flex items-center min-w-0 group" title={t('navigation.dashboard')}>
                 <img
                   src="/homepage_files/vendorsoluce.png"
                   alt="VendorSoluce™ logo"
@@ -304,7 +308,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
                 {t('navigation.contact')}
               </Link>
               <Link
-                to={WR.VENDOR_INTELLIGENCE}
+                to={MR.VENDORS}
                 className={getActiveLinkClasses(isWorkspacePortfolioNavActive())}
                 title={t('navigation.vendorRiskDashboard')}
               >
@@ -380,7 +384,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
           {/* Mobile branding */}
           <div className="px-4 pt-4 pb-3 border-b border-gray-200 dark:border-gray-700">
             {workspaceChrome ? (
-              <Link to={WR.VENDOR_INTELLIGENCE} className="flex items-center group" onClick={() => setIsOpen(false)} title={t('navigation.dashboard')}>
+              <Link to={MR.DASHBOARD} className="flex items-center group" onClick={() => setIsOpen(false)} title={t('navigation.dashboard')}>
                 <img
                   src="/homepage_files/vendorsoluce.png"
                   alt="VendorSoluce™ logo"
@@ -414,9 +418,9 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
             {workspaceChrome ? (
               <>
                 <Link
-                  to={WR.VENDOR_INTELLIGENCE}
+                  to={MR.DASHBOARD}
                   className={`text-base font-medium flex items-center rounded-md ${
-                    isWorkspacePortfolioNavActive()
+                    isWorkspaceHomeActive()
                       ? 'px-3 py-2 text-vendorsoluce-green dark:text-white bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20'
                       : 'px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
@@ -538,7 +542,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
                   {t('navigation.contact')}
                 </Link>
                 <Link
-                  to={WR.VENDOR_INTELLIGENCE}
+                  to={MR.VENDORS}
                   className={`text-base font-medium flex items-center rounded-md ${
                     isWorkspacePortfolioNavActive()
                       ? 'px-3 py-2 text-vendorsoluce-green dark:text-white bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20'

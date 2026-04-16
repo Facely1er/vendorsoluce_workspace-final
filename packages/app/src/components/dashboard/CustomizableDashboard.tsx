@@ -298,7 +298,7 @@ const CustomizableDashboard: React.FC = () => {
             <Button 
               variant="outline" 
               className="justify-start"
-              onClick={() => navigate(MR.VIRA_REPORTS)}
+              onClick={() => navigate(MR.VENDOR_RISK_REPORTS)}
             >
               <TrendingUp className="h-4 w-4 mr-2" />
               Generate Report

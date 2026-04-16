@@ -41,7 +41,7 @@ const EXECUTION_STEPS: { n: number; title: string; body: string; href?: string; 
     n: 5,
     title: 'Reports & evidence',
     body: 'VIRA reports and evidence collection close the loop; roadmap milestones track due dates.',
-    href: MR.VIRA_REPORTS,
+    href: MR.VENDOR_RISK_REPORTS,
   },
 ];
 

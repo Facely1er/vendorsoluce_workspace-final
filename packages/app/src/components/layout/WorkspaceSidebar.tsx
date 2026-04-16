@@ -99,9 +99,8 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
     return false;
   };
 
-  /** Portfolio list only — not import, detail, or other `/workspace/vendors/*` tools. */
-  const isMainDashboardActive =
-    location.pathname === WR.VENDOR_INTELLIGENCE || location.pathname === MR.VENDORS;
+  /** Workspace home (`/dashboard`) */
+  const isMainDashboardActive = location.pathname === MR.DASHBOARD;
 
   const isParentActive = (hrefs: string[]) =>
     hrefs.some((h) => location.pathname === h || location.pathname.startsWith(`${h}/`));
@@ -128,7 +127,7 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
         <>
           <div className="flex items-center gap-1 px-2 pt-3 pb-2">
             <Link
-              to={WR.VENDOR_INTELLIGENCE}
+              to={MR.DASHBOARD}
               className={`flex min-w-0 flex-1 items-center gap-2 px-2 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 isMainDashboardActive
                   ? 'text-vendorsoluce-green bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20'
@@ -261,7 +260,7 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
               </button>
             )}
             <Link
-              to={WR.VENDOR_INTELLIGENCE}
+              to={MR.DASHBOARD}
               className={`flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
                 isMainDashboardActive
                   ? 'text-vendorsoluce-green bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20'

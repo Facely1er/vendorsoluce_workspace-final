@@ -96,7 +96,7 @@ const UserActivity: React.FC = () => {
       timestamp: '2025-01-11T15:30:00Z',
       type: 'compliance',
       status: 'success',
-      href: MR.VIRA_REPORTS,
+      href: MR.VENDOR_RISK_REPORTS,
     },
     {
       id: '8',

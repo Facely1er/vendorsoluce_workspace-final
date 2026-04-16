@@ -79,8 +79,12 @@ export const WorkspacePageShell: React.FC<WorkspacePageShellProps> = ({
         }`}
       >
         <div className={WORKSPACE_PAGE_SHELL_HERO_HEADER_CLASS}>
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl space-y-3">
+          {/*
+            Title + descriptions stay full-width (same as body). Header actions sit on their own row so
+            wide button groups (e.g. VIRA reports) do not shrink the heading column beside a flex sibling.
+          */}
+          <div className="flex min-w-0 flex-col gap-4 sm:gap-5">
+            <div className="min-w-0 space-y-3">
               {mode === 'guide' ? (
                 <div className="inline-flex max-w-full items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300">
                   <BookOpen className="h-3.5 w-3.5 shrink-0" aria-hidden />
@@ -94,17 +98,35 @@ export const WorkspacePageShell: React.FC<WorkspacePageShellProps> = ({
               ) : null}
               {eyebrow ? <div className={WORKSPACE_PAGE_SHELL_EYEBROW_CLASS}>{eyebrow}</div> : null}
               <div className="space-y-2">
-                <h1 className="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-4xl">{title}</h1>
+                <h1 className="min-w-0 text-balance text-3xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-4xl">
+                  {title}
+                </h1>
                 {description ? (
-                  <p className="max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-300 sm:text-base">{description}</p>
+                  <p className="min-w-0 max-w-none text-pretty text-sm leading-6 text-gray-600 dark:text-gray-300 sm:text-base">
+                    {description}
+                  </p>
                 ) : null}
-                {descriptionExtra ? <div className="max-w-2xl pt-1">{descriptionExtra}</div> : null}
+                {descriptionExtra ? <div className="min-w-0 max-w-none pt-1">{descriptionExtra}</div> : null}
               </div>
             </div>
             {headerActionsSlot ? (
-              <div className="flex flex-shrink-0 flex-wrap items-center gap-3">{headerActionsSlot}</div>
+              <div className="flex min-w-0 flex-wrap items-center justify-start gap-3 border-t border-gray-200/60 pt-4 dark:border-gray-800/80 sm:justify-end sm:pt-5">
+                {headerActionsSlot}
+              </div>
             ) : actions.length > 0 ? (
-              <div className="flex flex-shrink-0 flex-wrap items-center gap-3">{actions.map((action) => action.to ? <Link key={action.label} to={action.to}><Button variant={action.variant ?? 'outline'}>{action.label}</Button></Link> : <Button key={action.label} variant={action.variant ?? 'outline'} onClick={action.onClick}>{action.label}</Button>)}</div>
+              <div className="flex min-w-0 flex-wrap items-center justify-start gap-3 border-t border-gray-200/60 pt-4 dark:border-gray-800/80 sm:justify-end sm:pt-5">
+                {actions.map((action) =>
+                  action.to ? (
+                    <Link key={action.label} to={action.to}>
+                      <Button variant={action.variant ?? 'outline'}>{action.label}</Button>
+                    </Link>
+                  ) : (
+                    <Button key={action.label} variant={action.variant ?? 'outline'} onClick={action.onClick}>
+                      {action.label}
+                    </Button>
+                  ),
+                )}
+              </div>
             ) : null}
           </div>
         </div>

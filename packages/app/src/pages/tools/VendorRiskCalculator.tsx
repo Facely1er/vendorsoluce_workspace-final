@@ -280,7 +280,7 @@ const VendorRiskCalculator: React.FC = () => {
                 </div>
                 <ul className="space-y-1.5">
                   {[
-                    { to: MR.VIRA_REPORTS, label: t('quickTools.riskCalculator.linkViraReports', 'VIRA portfolio reports') },
+                    { to: MR.VENDOR_RISK_REPORTS, label: t('quickTools.riskCalculator.linkViraReports', 'Portfolio reports') },
                     { to: MR.PROGRAM_VIRA_DUE_DILIGENCE, label: t('quickTools.riskCalculator.linkViraProgram', 'VIRA program workflow') },
                     { to: MR.VENDOR_RISK_RADAR, label: t('quickTools.riskCalculator.linkRadar', 'Vendor Risk Radar') },
                     { to: MR.VENDOR_ASSESSMENTS, label: t('navigation.vendorAssessments', 'Vendor Security Assessments') },

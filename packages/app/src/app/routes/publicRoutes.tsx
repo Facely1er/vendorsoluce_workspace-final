@@ -10,7 +10,6 @@ const ResetPasswordPage = lazyWithRetry(() => import('../../pages/auth/ResetPass
 const VendorActivityCatalogPage = lazyWithRetry(() => import('../../pages/programs/VendorActivityCatalogPage'));
 const NistImplementationWorkflowPage = lazyWithRetry(() => import('../../pages/programs/NistImplementationWorkflowPage'));
 const ViraDueDiligenceWorkflowPage = lazyWithRetry(() => import('../../pages/programs/ViraDueDiligenceWorkflowPage'));
-const ViraReportsPage = lazyWithRetry(() => import('../../pages/programs/ViraReportsPage'));
 const NISTChecklist = lazyWithRetry(() => import('../../pages/tools/NISTChecklist'));
 const VendorRiskRadar = lazyWithRetry(() => import('../../pages/tools/VendorRiskRadar'));
 const VendorRiskReports = lazyWithRetry(() => import('../../pages/tools/VendorRiskReports'));
@@ -95,7 +94,7 @@ export const publicRoutes = (
       <Route path={MR.VENDOR_ACTIVITY_CATALOG} element={<RouteWrapper><VendorActivityCatalogPage /></RouteWrapper>} />
       <Route path={MR.PROGRAM_NIST_IMPLEMENTATION} element={<RouteWrapper><NistImplementationWorkflowPage /></RouteWrapper>} />
       <Route path={MR.PROGRAM_VIRA_DUE_DILIGENCE} element={<RouteWrapper><ViraDueDiligenceWorkflowPage /></RouteWrapper>} />
-      <Route path={MR.VIRA_REPORTS} element={<RouteWrapper><ViraReportsPage /></RouteWrapper>} />
+      <Route path={MR.VIRA_REPORTS} element={<Navigate to={MR.VENDOR_RISK_REPORTS} replace />} />
       <Route path={MR.API_DOCS} element={<WebsiteRedirect to={MR.API_DOCS} />} />
       <Route path={MR.INTEGRATION_GUIDES} element={<WebsiteRedirect to={MR.INTEGRATION_GUIDES} />} />
       <Route path={MR.HOSTING_OPTIONS} element={<WebsiteRedirect to={MR.HOSTING_OPTIONS} />} />
