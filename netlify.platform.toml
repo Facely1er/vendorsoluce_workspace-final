@@ -1,7 +1,7 @@
 # VendorSoluce – Platform production (Netlify)
 # Intended domain: e.g. https://platform.vendorsoluce.com
 # Netlify UI: Base directory = empty (repo root), Configuration file = netlify.platform.toml
-# Keep this file in sync with netlify.toml (same build, publish, redirects, headers).
+# Canonical platform Netlify config at repo root (there is no default netlify.toml).
 # See NETLIFY_DEPLOYMENT.md for the full www / app / platform / portal map.
 
 [build]

@@ -2,7 +2,7 @@
 
 Use **separate Netlify sites** (each with its own custom domain) connected to **this repository**. Unless noted, paths are relative to the **repo root** and **Base directory** is **empty** so `npm ci` uses the **root** `package-lock.json`.
 
-**Monorepo config discovery (important):** Netlify loads `netlify.toml` from the **package directory** first, then base, then **repo root**. If **Package directory** is left empty on the marketing site, Netlify uses the root **`netlify.toml`** (platform app) and you will deploy the **app** by mistake. For `www`, set **Package directory** to **`packages/website`** (see [Netlify monorepos](https://docs.netlify.com/build/configure-builds/monorepos/#how-netlify-finds-your-configuration-files)).
+**Repo-root Netlify files:** This repo **does not** ship a default **`netlify.toml`** at the root. That avoids Netlify auto-selecting the **platform Vite app** when the marketing site’s UI settings are incomplete. Use explicit configuration filenames instead: **`netlify.www.toml`** (marketing) and **`netlify.platform.toml`** (platform). Optional: for monorepos you can still use **Package directory** as in [Netlify’s monorepo docs](https://docs.netlify.com/build/configure-builds/monorepos/#how-netlify-finds-your-configuration-files).
 
 Shared checklist: **`docs/NETLIFY_MONOREPO_TEMPLATE.md`** in **CyberCorrect** (`PrivacyWorkspace-byERMITS`). CyberCaution uses the same multi-file pattern; see **`NETLIFY_DEPLOYMENT.md`** in **`CyberCaution-RiskWorkspace-byERMITS`**.
 
@@ -17,14 +17,14 @@ Shared checklist: **`docs/NETLIFY_MONOREPO_TEMPLATE.md`** in **CyberCorrect** (`
 
 ## Domain map (recommended)
 
-| Custom domain | Surface | Base directory | Package directory | Netlify configuration file |
-|---------------|---------|----------------|-------------------|----------------------------|
-| **`www.vendorsoluce.com`** (marketing) | Static website | *(empty)* | **`packages/website`** | `packages/website/netlify.toml` (same folder; set package dir so it is found before root) |
+| Custom domain | Surface | Base directory | Package directory (optional) | Netlify configuration file |
+|---------------|---------|----------------|------------------------------|------------------------------|
+| **`www.vendorsoluce.com`** (marketing) | Static website | *(empty)* | *(empty)* | **`netlify.www.toml`** (repo root) |
 | **`app.vendorsoluce.com`** | Main React app — **demo** build (`dist-demo`, Vite `--mode demo`) | *(empty)* | **`packages/app`** | `packages/app/netlify.app-demo.toml` |
-| **`platform.vendorsoluce.com`** | Main React app — **production** (`packages/app/dist`) | *(empty)* | *(empty)* | `netlify.platform.toml` or `netlify.toml` (root) |
+| **`platform.vendorsoluce.com`** | Main React app — **production** (`packages/app/dist`) | *(empty)* | *(empty)* | **`netlify.platform.toml`** (repo root) |
 | **`portal.vendorsoluce.com`** | Vendor risk portal | *(empty)* | **`packages/vendor-risk-portal`** | `packages/vendor-risk-portal/netlify.toml` |
 
-**`netlify.toml`** and **`netlify.platform.toml`** at the repo root are kept **in sync** for the platform site. Prefer **`netlify.platform.toml`** in the Netlify UI for naming consistency with other ERMITS repos.
+Platform settings live only in **`netlify.platform.toml`** (there is no duplicate `netlify.toml` at the repo root).
 
 ---
 
@@ -33,9 +33,11 @@ Shared checklist: **`docs/NETLIFY_MONOREPO_TEMPLATE.md`** in **CyberCorrect** (`
 | Field | Value |
 |-------|--------|
 | Base directory | *(empty)* |
-| Package directory | **`packages/website`** |
-| Config file | Not required if package directory is set (Netlify reads `packages/website/netlify.toml` first). You may still set **Config file path** to the same path in the UI if your team uses that field. |
+| Package directory | *(empty)* |
+| Configuration file | **`netlify.www.toml`** (repository root) |
 | Publish | *(from file)* `packages/website` |
+
+Clear any **Build command** / **Publish directory** overrides in the Netlify UI so this file controls the build.
 
 Apex → `www` is handled by **`packages/website/_redirects`** where configured.
 
@@ -61,8 +63,10 @@ This site is the **ungated** browser demo linked from marketing; do not point `w
 | Field | Value |
 |-------|--------|
 | Base directory | *(empty)* |
-| Config file | `netlify.platform.toml` (or `netlify.toml`) |
+| Configuration file | **`netlify.platform.toml`** (repository root) |
 | Publish | *(from file)* `packages/app/dist` |
+
+Clear any **Build command** / **Publish directory** overrides in the Netlify UI so this file controls the build.
 
 Set environment variables in Netlify (see repo `env.netlify.example`, `scripts/set-netlify-env.ps1`, and package READMEs). Do not commit secrets.
 

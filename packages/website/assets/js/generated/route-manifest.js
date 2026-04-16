@@ -73,7 +73,9 @@ window.VENDORSOLUCE_ROUTE_MANIFEST = {
   "auth": {
     "SIGNIN": "/signin",
     "SIGNUP": "/signup",
-    "RESET_PASSWORD": "/reset-password"
+    "RESET_PASSWORD": "/reset-password",
+    "CALLBACK": "/auth/callback",
+    "UPGRADE": "/upgrade"
   },
   "portal": {
     "HOME": "/",
