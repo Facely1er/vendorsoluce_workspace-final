@@ -578,8 +578,8 @@ export const healthCheck = async () => {
 # Example: UptimeRobot, Pingdom, or StatusCake
 
 # Monitor endpoints:
-# - https://vendorsoluce.com (main site)
-# - https://vendorsoluce.com/api/health (health check)
+# - https://www.vendorsoluce.com (main marketing site)
+# - https://www.platform.vendorsoluce.com/api/health (health check; adjust if your API host differs)
 # - https://your-project.supabase.co/rest/v1/ (API endpoint)
 ```
 

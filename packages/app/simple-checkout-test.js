@@ -45,8 +45,8 @@ async function testCheckoutFlow() {
         ],
         mode: 'subscription',
         customer_email: 'test@vendorsoluce.com',
-        success_url: 'https://vendorsoluce.com/test-success',
-        cancel_url: 'https://vendorsoluce.com/test-cancel',
+        success_url: 'https://www.vendorsoluce.com/test-success',
+        cancel_url: 'https://www.vendorsoluce.com/test-cancel',
         metadata: {
           productName: testPrice.name,
           testMode: 'true'

@@ -85,8 +85,8 @@ async function testCompleteStripeIntegration() {
         ],
         mode: 'subscription',
         customer_email: 'test@vendorsoluce.com',
-        success_url: 'https://vendorsoluce.com/test-success',
-        cancel_url: 'https://vendorsoluce.com/test-cancel',
+        success_url: 'https://www.vendorsoluce.com/test-success',
+        cancel_url: 'https://www.vendorsoluce.com/test-cancel',
         metadata: {
           productId: product.id,
           productName: product.name,
@@ -130,8 +130,8 @@ async function testCompleteStripeIntegration() {
         ],
         mode: 'subscription',
         customer_email: 'test@vendorsoluce.com',
-        success_url: 'https://vendorsoluce.com/test-success',
-        cancel_url: 'https://vendorsoluce.com/test-cancel',
+        success_url: 'https://www.vendorsoluce.com/test-success',
+        cancel_url: 'https://www.vendorsoluce.com/test-cancel',
         metadata: {
           productId: product.id,
           productType: 'addon',
@@ -175,8 +175,8 @@ async function testCompleteStripeIntegration() {
         ],
         mode: 'subscription',
         customer_email: 'test@vendorsoluce.com',
-        success_url: 'https://vendorsoluce.com/test-success',
-        cancel_url: 'https://vendorsoluce.com/test-cancel',
+        success_url: 'https://www.vendorsoluce.com/test-success',
+        cancel_url: 'https://www.vendorsoluce.com/test-cancel',
         metadata: {
           productId: product.id,
           productType: 'bundle',

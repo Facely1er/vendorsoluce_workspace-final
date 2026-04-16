@@ -3,7 +3,7 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "SBOM-example-application",
-  "documentNamespace": "https://vendorsoluce.com/sboms/example-app-1.0",
+  "documentNamespace": "https://www.vendorsoluce.com/sboms/example-app-1.0",
   "creationInfo": {
     "created": "2025-04-17T09:00:00Z",
     "creators": [

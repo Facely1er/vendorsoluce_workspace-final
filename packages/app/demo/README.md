@@ -122,9 +122,9 @@ All styles are in `demo/assets/css/demo.css`. The CSS uses CSS variables for eas
 ## Links
 
 All links to the full application point to:
-- `https://vendorsoluce.com/signin` - Sign in page
-- `https://vendorsoluce.com/pricing` - Pricing page
-- `https://vendorsoluce.com/how-it-works` - How it works page
+- `https://www.vendorsoluce.com/signin` - Sign in page
+- `https://www.vendorsoluce.com/pricing` - Pricing page
+- `https://www.vendorsoluce.com/how-it-works` - How it works page
 
 Update these in `index.html` if your production URLs differ.
 

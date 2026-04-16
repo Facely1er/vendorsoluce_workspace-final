@@ -8,7 +8,7 @@ This monorepo is set up for **two separate Netlify sites**: one for the **market
 
 ## Site 1: Marketing Website
 
-**Purpose:** Static marketing site (e.g. `vendorsoluce.com`). Build runs **inside** `packages/website` using the local `npm run build` (Tailwind CSS).
+**Purpose:** Static marketing site at **`https://www.vendorsoluce.com`** (apex redirects to `www` via `_redirects`). Build runs **inside** `packages/website` using the local `npm run build` (Tailwind CSS).
 
 | Setting | Value |
 |--------|--------|
@@ -80,7 +80,7 @@ From the repo root:
 | Publish | `.` (website package) | `packages/app/dist` |
 | Env vars | Optional | Optional (Supabase, Stripe, etc.) |
 
-After deployment, point your domains in Netlify (e.g. `vendorsoluce.com` → website site, `www.platform.vendorsoluce.com` → app site) and configure DNS as instructed by Netlify.
+After deployment, point your domains in Netlify (e.g. `vendorsoluce.com` / `www.vendorsoluce.com` → website site with **primary domain `www.vendorsoluce.com`**; `www.platform.vendorsoluce.com` → app site) and configure DNS as instructed by Netlify.
 
 ---
 

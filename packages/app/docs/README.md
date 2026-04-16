@@ -136,7 +136,7 @@ VendorSoluce is built on a modern, scalable architecture designed for supply cha
 ## 🚀 Quick Start
 
 ### For Users
-1. **[Sign Up](https://vendorsoluce.com/signin)** - Create your account
+1. **[Sign Up](https://www.vendorsoluce.com/signin)** - Create your account
 2. **[Complete Onboarding](USER_GUIDE.md#getting-started)** - Set up your organization
 3. **[Add Vendors](USER_GUIDE.md#vendor-management)** - Import your vendor ecosystem
 4. **[Start Assessments](USER_GUIDE.md#supply-chain-assessments)** - Begin risk evaluation

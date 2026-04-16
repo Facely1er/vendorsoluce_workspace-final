@@ -69,7 +69,7 @@ serve(async (req) => {
 
     const emailApiKey = Deno.env.get('RESEND_API_KEY') || Deno.env.get('EMAIL_API_KEY');
     const emailFrom = Deno.env.get('EMAIL_FROM') || 'VendorSoluce <noreply@vendorsoluce.com>';
-    const baseUrl = Deno.env.get('SITE_URL') || 'https://vendorsoluce.com';
+    const baseUrl = Deno.env.get('SITE_URL') || 'https://www.vendorsoluce.com';
 
     let processed = 0;
     let failed = 0;

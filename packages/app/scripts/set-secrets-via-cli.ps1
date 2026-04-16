@@ -28,14 +28,14 @@ Write-Host ""
 # Prompt for secrets
 $resendKey = Read-Host "Enter RESEND_API_KEY (or press Enter to skip)"
 $emailFrom = Read-Host "Enter EMAIL_FROM (default: VendorSoluce <noreply@vendorsoluce.com>)"
-$siteUrl = Read-Host "Enter SITE_URL (default: https://vendorsoluce.com)"
+$siteUrl = Read-Host "Enter SITE_URL (default: https://www.vendorsoluce.com)"
 
 if ([string]::IsNullOrWhiteSpace($emailFrom)) {
     $emailFrom = "VendorSoluce <noreply@vendorsoluce.com>"
 }
 
 if ([string]::IsNullOrWhiteSpace($siteUrl)) {
-    $siteUrl = "https://vendorsoluce.com"
+    $siteUrl = "https://www.vendorsoluce.com"
 }
 
 if (![string]::IsNullOrWhiteSpace($resendKey)) {

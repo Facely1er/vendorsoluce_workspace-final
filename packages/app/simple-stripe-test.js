@@ -92,8 +92,8 @@ async function testStripeIntegration() {
         ],
         mode: 'subscription',
         customer_email: 'test@vendorsoluce.com',
-        success_url: 'https://vendorsoluce.com/test-success',
-        cancel_url: 'https://vendorsoluce.com/test-cancel',
+        success_url: 'https://www.vendorsoluce.com/test-success',
+        cancel_url: 'https://www.vendorsoluce.com/test-cancel',
         metadata: {
           productName: product.name,
           testMode: 'true'
@@ -193,7 +193,7 @@ async function testStripeIntegration() {
     // Test customer portal session
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: customer.id,
-      return_url: 'https://vendorsoluce.com/dashboard'
+      return_url: 'https://www.vendorsoluce.com/dashboard'
     });
     
     console.log(`  ✅ Customer portal session created: ${portalSession.id}`);

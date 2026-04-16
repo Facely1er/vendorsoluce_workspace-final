@@ -1,13 +1,18 @@
 /**
- * Contact form handler — submits to Supabase contact-form edge function.
- * Messages are emailed to contact@ermits.com (with support@ermits.com fallback).
- * Works with both Netlify form structure (name, email, company, request_type, message) and platform fields.
+ * Contact form handler — optional JSON POST to window.CONTACT_API_URL (e.g. an edge function).
+ * If CONTACT_API_URL is unset, the browser performs a normal submit so Netlify Forms can handle it
+ * (data-netlify on the form). The marketing site does not require Supabase.
  */
 (function () {
   const form = document.getElementById('contact-form');
   if (!form || !form.hasAttribute('data-netlify')) return;
 
   form.addEventListener('submit', async function (e) {
+    const apiUrl = (typeof window.CONTACT_API_URL === 'string' ? window.CONTACT_API_URL : '').trim();
+    if (!apiUrl) {
+      return;
+    }
+
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
     const originalText = btn ? btn.innerHTML : '';
@@ -31,13 +36,6 @@
       request_type: request_type || null,
       message: String(message).trim(),
     };
-
-    const apiUrl = (window.CONTACT_API_URL || '').trim();
-    if (!apiUrl) {
-      showError(form, 'Contact form is not configured. Please email contact@ermits.com directly.');
-      if (btn) { btn.disabled = false; btn.innerHTML = originalText; }
-      return;
-    }
 
     try {
       const res = await fetch(apiUrl, {

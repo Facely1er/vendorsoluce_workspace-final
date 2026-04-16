@@ -19,7 +19,7 @@
 
 ### Creating Your Account
 
-1. **Sign Up**: Visit [vendorsoluce.com](https://vendorsoluce.com) and click "Get Started"
+1. **Sign Up**: Visit [www.vendorsoluce.com](https://www.vendorsoluce.com) and click "Get Started"
 2. **Complete Profile**: Fill in your company information and contact details
 3. **Verify Email**: Check your email and click the verification link
 4. **Onboarding Tour**: Complete the guided tour to familiarize yourself with the platform

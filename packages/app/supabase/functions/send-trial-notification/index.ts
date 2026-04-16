@@ -134,7 +134,7 @@ function generateEmailContent(
   _trialEnd?: string | null
 ): { subject: string; html: string } {
   const userName = name || 'there';
-  const baseUrl = Deno.env.get('SITE_URL') || 'https://vendorsoluce.com';
+  const baseUrl = Deno.env.get('SITE_URL') || 'https://www.vendorsoluce.com';
 
   switch (type) {
     case 'started':

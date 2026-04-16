@@ -50,7 +50,7 @@ Add to your `.env` or Supabase Edge Function secrets:
 ```bash
 RESEND_API_KEY=re_xxxxxxxxxxxxx
 EMAIL_FROM=VendorSoluce <noreply@vendorsoluce.com>
-SITE_URL=https://vendorsoluce.com
+SITE_URL=https://www.vendorsoluce.com
 ```
 
 ### 4. Deploy Edge Functions

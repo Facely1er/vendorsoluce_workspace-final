@@ -51,7 +51,7 @@ serve(async (req) => {
       throw new Error(`User not found: ${profileError?.message}`);
     }
 
-    const baseUrl = Deno.env.get('SITE_URL') || 'https://vendorsoluce.com';
+    const baseUrl = Deno.env.get('SITE_URL') || 'https://www.vendorsoluce.com';
     const userName = profile.full_name || 'there';
     const isTrialing = profile.subscription_tier === 'professional' || profile.subscription_tier === 'trialing';
 

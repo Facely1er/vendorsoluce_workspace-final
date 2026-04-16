@@ -32,7 +32,7 @@ console.log('   EMAIL_FROM');
 console.log('   Value: VendorSoluce <noreply@vendorsoluce.com>');
 console.log('');
 console.log('   SITE_URL');
-console.log('   Value: https://vendorsoluce.com');
+console.log('   Value: https://www.vendorsoluce.com');
 console.log('');
 console.log('4. Click "Save" for each secret');
 console.log('');

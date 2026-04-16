@@ -2,7 +2,7 @@
   "document": {
     "bomFormat": "SPDX",
     "specVersion": "SPDX-2.3",
-    "documentNamespace": "https://vendorsoluce.com/sboms/example-app-1.0",
+    "documentNamespace": "https://www.vendorsoluce.com/sboms/example-app-1.0",
     "created": "2025-04-17T09:00:00Z",
     "authors": [
       {

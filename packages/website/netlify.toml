@@ -1,0 +1,10 @@
+# Marketing website (packages/website) — see docs/archive/repo-root-notes/NETLIFY.md
+#
+# Canonical URL: https://www.vendorsoluce.com
+# In Netlify → Domain management: set the primary custom domain to www.vendorsoluce.com
+# so apex (vendorsoluce.com) only redirects one way. _redirects sends apex → www; if
+# Netlify also redirects www → apex, browsers hit a redirect loop.
+
+[build]
+  command = "npm run build"
+  publish = "."
