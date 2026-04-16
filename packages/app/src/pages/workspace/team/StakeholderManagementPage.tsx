@@ -73,6 +73,33 @@ const statusClasses: Record<TeamMember['status'], string> = {
   suspended: 'bg-red-100 text-red-800 dark:bg-red-950/40 dark:text-red-300',
 };
 
+const fieldClass =
+  'h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition focus:border-emerald-400 dark:border-gray-800 dark:bg-gray-950 dark:text-white';
+
+function defaultPermissionsForRole(role: TeamMember['role']): string[] {
+  switch (role) {
+    case 'vendor_risk_manager':
+      return ['view_vendors', 'manage_vendors', 'run_assessments', 'view_assessments', 'view_sbom', 'manage_sbom', 'view_reports', 'export_reports'];
+    case 'ciso':
+      return ['view_vendors', 'run_assessments', 'view_assessments', 'view_sbom', 'manage_sbom', 'view_reports', 'export_reports', 'admin_settings'];
+    case 'procurement':
+      return ['view_vendors', 'manage_vendors', 'view_assessments', 'manage_contracts'];
+    case 'legal':
+      return ['view_vendors', 'view_assessments', 'manage_contracts', 'view_reports'];
+    case 'business_owner':
+      return ['view_vendors', 'view_assessments', 'view_reports'];
+    case 'executive':
+      return ['view_vendors', 'view_reports', 'export_reports'];
+    case 'analyst':
+    default:
+      return ['view_vendors', 'run_assessments', 'view_assessments', 'view_sbom', 'view_reports'];
+  }
+}
+
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
 export default function StakeholderManagementPage() {
   const [activeTab, setActiveTab] = useState<'overview' | 'access' | 'permissions' | 'activity'>('overview');
   const [members, setMembers] = useState<TeamMember[]>(initialMembers);
@@ -80,6 +107,60 @@ export default function StakeholderManagementPage() {
   const [selectedRole, setSelectedRole] = useState('all');
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [newName, setNewName] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+  const [newRole, setNewRole] = useState<TeamMember['role']>('analyst');
+  const [newStatus, setNewStatus] = useState<TeamMember['status']>('pending');
+  const [addMemberError, setAddMemberError] = useState<string | null>(null);
+
+  const resetAddForm = () => {
+    setNewName('');
+    setNewEmail('');
+    setNewRole('analyst');
+    setNewStatus('pending');
+    setAddMemberError(null);
+  };
+
+  const openAddForm = () => {
+    resetAddForm();
+    setShowAddForm(true);
+  };
+
+  const closeAddForm = () => {
+    setShowAddForm(false);
+    resetAddForm();
+  };
+
+  const handleAddMember = (e: React.FormEvent) => {
+    e.preventDefault();
+    const name = newName.trim();
+    const email = newEmail.trim().toLowerCase();
+    if (!name) {
+      setAddMemberError("Enter the member's full name.");
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setAddMemberError('Enter a valid work email address.');
+      return;
+    }
+    if (members.some((m) => m.email.toLowerCase() === email)) {
+      setAddMemberError('A member with this email is already on the roster.');
+      return;
+    }
+    const id = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `m-${Date.now()}`;
+    const next: TeamMember = {
+      id,
+      name,
+      email: newEmail.trim(),
+      role: newRole,
+      permissions: defaultPermissionsForRole(newRole),
+      status: newStatus,
+      vendorCount: newStatus === 'active' ? 0 : undefined,
+      lastAccess: newStatus === 'active' ? new Date().toISOString().slice(0, 10) : undefined,
+    };
+    setMembers((prev) => [...prev, next]);
+    closeAddForm();
+  };
 
   const stats = useMemo(() => ({
     total: members.length,
@@ -117,7 +198,13 @@ export default function StakeholderManagementPage() {
     <WorkspacePageShell
       title="Stakeholder management"
       description="Manage workspace access and stakeholder roles."
-      actions={[{ label: showAddForm ? 'Close add member' : 'Add member', onClick: () => setShowAddForm((v) => !v), variant: showAddForm ? 'outline' : 'primary' }]}
+      actions={[
+        {
+          label: showAddForm ? 'Close add member' : 'Add member',
+          onClick: () => (showAddForm ? closeAddForm() : openAddForm()),
+          variant: showAddForm ? 'outline' : 'primary',
+        },
+      ]}
       stats={[
         { label: 'Total members', value: stats.total, hint: 'Current team roster' },
         { label: 'Active', value: stats.active, hint: 'Enabled workspace access' },
@@ -233,9 +320,79 @@ export default function StakeholderManagementPage() {
           <PanelCard title="Access workflow notes" description="Keep the team roster tight and role-based.">
             <div className="space-y-4 text-sm leading-6 text-gray-600 dark:text-gray-300">
               <p>Assign access based on a documented role, not convenience. The RACI matrix should justify each level of access granted here.</p>
-              <p>{showAddForm ? 'The add-member workflow is open. Use it only for users with a clear operating role.' : 'Open the add-member flow only when role ownership and required permissions are clear.'}</p>
-              {editingId ? <p className="rounded-xl border border-emerald-200 bg-emerald-50/70 px-4 py-3 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/20 dark:text-emerald-300">Editing member: {members.find((member) => member.id === editingId)?.name}</p> : null}
-              {showAddForm ? <div className="rounded-2xl border border-gray-200/70 p-4 dark:border-gray-800"><div className="text-sm font-medium text-gray-950 dark:text-white">Add-member flow opened</div><p className="mt-1 text-sm text-gray-500 dark:text-gray-400">This placeholder keeps the governance action visible while the detailed add-member form is normalized in a later pass.</p></div> : null}
+              {!showAddForm ? (
+                <p>Open <strong className="font-medium text-gray-800 dark:text-gray-200">Add member</strong> only when role ownership and required permissions are clear. Default permissions follow the role; refine them on the Permissions tab.</p>
+              ) : null}
+              {editingId ? (
+                <p className="rounded-xl border border-emerald-200 bg-emerald-50/70 px-4 py-3 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/20 dark:text-emerald-300">
+                  Editing member: {members.find((member) => member.id === editingId)?.name}
+                </p>
+              ) : null}
+              {showAddForm ? (
+                <form onSubmit={handleAddMember} className="rounded-2xl border border-gray-200/70 p-4 dark:border-gray-800">
+                  <div className="text-sm font-medium text-gray-950 dark:text-white">Invite team member</div>
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    New members receive default permissions for their role. Adjust checks on the Permissions tab after they are added.
+                  </p>
+                  <div className="mt-4 space-y-3">
+                    <label className="block">
+                      <span className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-400">Full name</span>
+                      <input
+                        value={newName}
+                        onChange={(e) => { setNewName(e.target.value); setAddMemberError(null); }}
+                        className={fieldClass}
+                        placeholder="e.g. Jamie Ortiz"
+                        autoComplete="name"
+                        aria-invalid={!!addMemberError && !newName.trim()}
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-400">Work email</span>
+                      <input
+                        type="email"
+                        value={newEmail}
+                        onChange={(e) => { setNewEmail(e.target.value); setAddMemberError(null); }}
+                        className={fieldClass}
+                        placeholder="name@company.com"
+                        autoComplete="email"
+                        aria-invalid={!!addMemberError}
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-400">Role</span>
+                      <select
+                        value={newRole}
+                        onChange={(e) => setNewRole(e.target.value as TeamMember['role'])}
+                        className={fieldClass}
+                        aria-label="Member role"
+                      >
+                        {Object.entries(roleLabels).map(([key, label]) => (
+                          <option key={key} value={key}>{label}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="block">
+                      <span className="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-400">Initial status</span>
+                      <select
+                        value={newStatus}
+                        onChange={(e) => setNewStatus(e.target.value as TeamMember['status'])}
+                        className={fieldClass}
+                        aria-label="Initial access status"
+                      >
+                        <option value="pending">Pending (invited)</option>
+                        <option value="active">Active</option>
+                      </select>
+                    </label>
+                  </div>
+                  {addMemberError ? (
+                    <p className="mt-3 text-xs font-medium text-red-600 dark:text-red-400" role="alert">{addMemberError}</p>
+                  ) : null}
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <Button type="submit" variant="primary" size="sm">Add to roster</Button>
+                    <Button type="button" variant="outline" size="sm" onClick={closeAddForm}>Cancel</Button>
+                  </div>
+                </form>
+              ) : null}
             </div>
           </PanelCard>
         </div>
