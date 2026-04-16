@@ -1298,7 +1298,7 @@ const VendorAssessmentPortal: React.FC = () => {
                       <Trophy className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                      Assessment complete
+                      Assessment Complete
                     </h3>
                     <p className="text-base text-gray-600 dark:text-gray-400 mb-4">
                       All required stages are complete. Generate your compliance report and submit if requested.
