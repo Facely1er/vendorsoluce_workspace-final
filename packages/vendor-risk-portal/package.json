@@ -12,7 +12,7 @@
     "type-check": "node ../../node_modules/typescript/bin/tsc --noEmit",
     "clean": "rm -rf dist node_modules",
     "verify:integration": "node scripts/verify-portal-integration.mjs",
-    "verify:ui": "node ../shared/scripts/verify-ui-tokens.mjs && node ../shared/scripts/verify-ui-inline.mjs && node ../shared/scripts/verify-static-radar-design.mjs"
+    "verify:ui": "node ../shared/scripts/verify-ui-tokens.mjs && node ../shared/scripts/verify-ui-inline.mjs && node ../shared/scripts/verify-workspace-layout.mjs && node ../shared/scripts/verify-static-radar-design.mjs"
   },
   "dependencies": {
     "shared": "file:../shared",

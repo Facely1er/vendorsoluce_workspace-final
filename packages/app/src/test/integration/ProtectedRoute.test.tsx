@@ -7,6 +7,24 @@ import { ThemeProvider } from '../../context/ThemeContext';
 import { I18nProvider } from '../../context/I18nContext';
 import ProtectedRoute from '../../components/auth/ProtectedRoute';
 
+const mockUseErmitsEntitlement = vi.fn(() => ({
+  result: {
+    access: true,
+    isTrial: false,
+    productRole: 'viewer',
+    trialEndsAt: null,
+    usageRemaining: null,
+    organizationId: '',
+    organizationSlug: '',
+    productId: '',
+  },
+  loading: false,
+}));
+
+vi.mock('../../hooks/useErmitsEntitlement', () => ({
+  useErmitsEntitlement: (...args: unknown[]) => mockUseErmitsEntitlement(...args),
+}));
+
 vi.mock('../../lib/supabase', () => {
   const mockSupabase = {
     auth: {

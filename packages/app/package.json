@@ -25,7 +25,7 @@
     "align-stripe-catalog": "node scripts/align-stripe-catalog.js",
     "rebuild-stripe-catalog": "node scripts/rebuild-stripe-catalog.js",
     "verify:shell": "node scripts/verify-shell-contract.mjs",
-    "verify:ui": "node ../shared/scripts/verify-ui-tokens.mjs && node ../shared/scripts/verify-ui-inline.mjs && node ../shared/scripts/verify-static-radar-design.mjs"
+    "verify:ui": "node ../shared/scripts/verify-ui-tokens.mjs && node ../shared/scripts/verify-ui-inline.mjs && node ../shared/scripts/verify-workspace-layout.mjs && node ../shared/scripts/verify-static-radar-design.mjs"
   },
   "dependencies": {
     "shared": "file:../shared",
