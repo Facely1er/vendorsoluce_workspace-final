@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type FormEvent } from 'react';
 import {
   Users, UserCheck, UserX, Clock, Search, Mail,
   Edit, X, ShieldCheck, BarChart3, AlertTriangle, CheckCircle, Filter
@@ -131,7 +131,7 @@ export default function StakeholderManagementPage() {
     resetAddForm();
   };
 
-  const handleAddMember = (e: React.FormEvent) => {
+  const handleAddMember = (e: FormEvent) => {
     e.preventDefault();
     const name = newName.trim();
     const email = newEmail.trim().toLowerCase();
