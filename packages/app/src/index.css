@@ -275,7 +275,8 @@
   nav.glass-nav-vs > div.max-w-7xl {
     overflow: visible !important;
   }
-  nav.glass-nav-vs > div.max-w-7xl > div.flex.h-16 {
+  nav.glass-nav-vs > div.max-w-7xl > div.flex.h-16,
+  nav.glass-nav-vs > div.max-w-7xl > div.relative.flex.h-16 {
     overflow: visible !important;
   }
 

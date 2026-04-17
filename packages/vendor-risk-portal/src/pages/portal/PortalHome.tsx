@@ -104,12 +104,16 @@ const MODE_COMPARISON = [
   { feature: 'Frameworks covered', light: 'NIST 800-161', full: 'NIST, CMMC, ISO, SOC 2', evidence: 'Any single control' },
 ];
 
+/** Viewport gutters + centered cap — same pattern as hero so lower sections align with cards (e.g. #assess). */
+const PORTAL_HOME_GUTTER_X = 'px-4 sm:px-6 lg:px-8';
+const PORTAL_HOME_MAX = 'max-w-7xl mx-auto w-full min-w-0';
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 const PortalHome: React.FC = () => {
   usePortalSEO({
     title: 'Vendor Risk Assessment Portal',
-    description: 'Framework-aligned vendor security assessments — proportionate to actual risk. Score vendors, send structured assessments, collect evidence, and track control gaps in one portal.',
+    description: 'Framework-aligned vendor assessments that scale with risk tier. Score vendors, send mapped questionnaires, collect evidence, and track gaps in one portal.',
     path: '/',
   });
 
@@ -121,39 +125,24 @@ const PortalHome: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-vendorsoluce-pale-green/40 dark:from-gray-900 dark:via-gray-900 dark:to-vendorsoluce-green/5" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-vendorsoluce-green/[0.03] dark:bg-vendorsoluce-green/[0.02] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
 
-        <div className={`relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 lg:pb-16 ${SHELL_CLASSES.heroTopSpacing}`}>
+        <div className={`relative ${PORTAL_HOME_GUTTER_X}`}>
+          <div className={`${PORTAL_HOME_MAX} pb-12 lg:pb-16 ${SHELL_CLASSES.heroTopSpacing}`}>
 
-          {/* Headline + subtitle */}
-          <div className="text-center max-w-3xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-vendorsoluce-pale-green/60 dark:bg-vendorsoluce-green/15 text-vendorsoluce-green dark:text-vendorsoluce-light-green text-xs font-semibold mb-5 ring-1 ring-vendorsoluce-green/10 dark:ring-vendorsoluce-green/20">
+          {/* Headline + lead — framework mapping lives in the following section */}
+          <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white leading-[1.15] tracking-tight mb-5 sm:mb-6">
+              Framework-aligned vendor<br className="hidden sm:block" /> due diligence
+            </h1>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-vendorsoluce-pale-green/60 dark:bg-vendorsoluce-green/15 text-vendorsoluce-green dark:text-vendorsoluce-light-green text-xs font-semibold mb-6 sm:mb-8 ring-1 ring-vendorsoluce-green/10 dark:ring-vendorsoluce-green/20">
               <ShieldCheck className="w-3.5 h-3.5" />
               Vendor Risk Assessment Portal
             </div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white leading-[1.15] tracking-tight mb-4">
-              Framework-aligned vendor<br className="hidden sm:block" /> due diligence
-            </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto mb-6">
-              Score vendors by actual risk. Generate proportionate assessments mapped to NIST, CMMC, ISO 27001, and SOC 2. Send portal links, track responses, and review evidence — all in one place.
+            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto mb-5 sm:mb-6">
+              Score vendors by risk tier, send assessments mapped to common frameworks, collect evidence, and track gaps — in one workflow.
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-500 max-w-xl mx-auto">
-              Not every vendor needs a 3-hour questionnaire. The portal derives assessment depth from the vendor's risk tier — so low-risk vendors aren't over-burdened and high-risk vendors are properly examined.
+            <p className="text-sm text-gray-500 dark:text-gray-400 max-w-lg mx-auto leading-relaxed">
+              Assessment depth scales with tier: lighter for low-risk vendors, fuller for critical suppliers.
             </p>
-          </div>
-
-          {/* Framework trust strip */}
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mb-12">
-            {[
-              { label: 'NIST SP 800-161', color: 'text-blue-700 dark:text-blue-400' },
-              { label: 'CMMC Level 2', color: 'text-indigo-700 dark:text-indigo-400' },
-              { label: 'ISO 27001:2022', color: 'text-emerald-700 dark:text-emerald-400' },
-              { label: 'SOC 2 Type II', color: 'text-purple-700 dark:text-purple-400' },
-              { label: 'NTIA SBOM', color: 'text-orange-700 dark:text-orange-400' },
-            ].map(fw => (
-              <div key={fw.label} className="flex items-center gap-1.5">
-                <Shield className={`w-3.5 h-3.5 ${fw.color}`} />
-                <span className={`text-xs font-semibold ${fw.color}`}>{fw.label}</span>
-              </div>
-            ))}
           </div>
 
           {/* Two cards side by side */}
@@ -221,12 +210,45 @@ const PortalHome: React.FC = () => {
             </div>
 
           </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Framework mapping (below hero band, same page gutters) ── */}
+      <section
+        className="border-b border-gray-100 dark:border-gray-800 bg-gray-50/80 dark:bg-gray-900/50"
+        aria-label="Framework mapping reference"
+      >
+        <div className={PORTAL_HOME_GUTTER_X}>
+          <div className={`${PORTAL_HOME_MAX} py-8 sm:py-10 text-center`}>
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
+              Assessment mapping (aligned)
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-500 mb-6 max-w-md mx-auto leading-relaxed">
+              Mapping labels only — not a certification claim for VendorSoluce or your org.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              {[
+                { label: 'NIST SP 800-161', color: 'text-blue-700 dark:text-blue-400' },
+                { label: 'CMMC Level 2', color: 'text-indigo-700 dark:text-indigo-400' },
+                { label: 'ISO 27001:2022', color: 'text-emerald-700 dark:text-emerald-400' },
+                { label: 'SOC 2 Type II', color: 'text-purple-700 dark:text-purple-400' },
+                { label: 'NTIA SBOM', color: 'text-orange-700 dark:text-orange-400' },
+              ].map(fw => (
+                <div key={fw.label} className="flex items-center gap-1.5">
+                  <Shield className={`w-3.5 h-3.5 ${fw.color}`} />
+                  <span className={`text-xs font-semibold ${fw.color}`}>{fw.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ── Social proof / data strip ── */}
       <section className="py-8 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={PORTAL_HOME_GUTTER_X}>
+          <div className={PORTAL_HOME_MAX}>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             {[
               { stat: '4', label: 'Compliance frameworks supported' },
@@ -240,12 +262,14 @@ const PortalHome: React.FC = () => {
               </div>
             ))}
           </div>
+          </div>
         </div>
       </section>
 
       {/* ── How it works strip ── */}
       <section className="py-14 bg-gray-50 dark:bg-gray-800/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={PORTAL_HOME_GUTTER_X}>
+          <div className={PORTAL_HOME_MAX}>
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">How it works</h2>
             <Link to="/how-it-works" className="text-sm text-vendorsoluce-green dark:text-vendorsoluce-light-green font-medium hover:underline flex items-center gap-1">
@@ -273,12 +297,14 @@ const PortalHome: React.FC = () => {
               </div>
             ))}
           </div>
+          </div>
         </div>
       </section>
 
       {/* ── Role CTAs ── */}
       <section className="py-14 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={PORTAL_HOME_GUTTER_X}>
+          <div className={PORTAL_HOME_MAX}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-8">
               <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-4">
@@ -305,12 +331,14 @@ const PortalHome: React.FC = () => {
               </Link>
             </div>
           </div>
+          </div>
         </div>
       </section>
 
       {/* ── Assessment mode comparison ── */}
       <section className="py-14 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={PORTAL_HOME_GUTTER_X}>
+          <div className={PORTAL_HOME_MAX}>
           <div className="text-center mb-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Three assessment modes — compared</h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
@@ -365,12 +393,14 @@ const PortalHome: React.FC = () => {
           <p className="text-center text-xs text-gray-500 dark:text-gray-400">
             Not every vendor needs a 3-hour questionnaire. Light mode generates a proportionate due diligence record without over-burdening low-risk vendors.
           </p>
+          </div>
         </div>
       </section>
 
       {/* ── Frameworks strip ── */}
       <section className="py-10 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={PORTAL_HOME_GUTTER_X}>
+          <div className={PORTAL_HOME_MAX}>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">Supported frameworks</h2>
             <Link to="/frameworks" className="text-sm text-vendorsoluce-green dark:text-vendorsoluce-light-green font-medium hover:underline flex items-center gap-1">
@@ -393,12 +423,14 @@ const PortalHome: React.FC = () => {
               </Link>
             ))}
           </div>
+          </div>
         </div>
       </section>
 
       {/* ── SBOM & Supply Chain Transparency (last before footer) ── */}
       <section className="py-14 pb-16 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={PORTAL_HOME_GUTTER_X}>
+          <div className={PORTAL_HOME_MAX}>
           <div className="flex items-center gap-3 mb-2">
             <div className="w-9 h-9 rounded-lg bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center">
               <Package className="w-5 h-5 text-orange-600 dark:text-orange-400" />
@@ -446,6 +478,7 @@ const PortalHome: React.FC = () => {
             >
               Sign in to platform <ArrowRight className="w-4 h-4" />
             </a>
+          </div>
           </div>
         </div>
       </section>

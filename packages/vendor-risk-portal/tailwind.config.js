@@ -6,6 +6,7 @@ export default {
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
     '../app/src/**/*.{js,ts,jsx,tsx}',
+    '../shared/src/**/*.{ts,tsx}',
   ],
   darkMode: 'class',
   theme: {
