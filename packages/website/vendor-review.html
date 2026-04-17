@@ -11,13 +11,6 @@
   <link href="assets/css/tokens.css" rel="stylesheet"/>
   <link href="assets/css/components.css" rel="stylesheet"/>
   <link href="assets/css/product.css" rel="stylesheet"/>
-  <style>
-    .review-card{border-radius:.75rem;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);transition:.25s ease;}
-    .review-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-    .dark .review-card{background:var(--card);border-color:var(--border)}
-    .mini-kicker{display:inline-flex;align-items:center;border-radius:999px;padding:2px 10px;font-size:.75rem;font-weight:700;background:rgb(var(--accent-rgb) / 0.1);color:var(--vendorsoluce-green)}
-    html.dark .mini-kicker{background:rgb(var(--accent-2-rgb) / 0.15);color:var(--vendorsoluce-light-green)}
-  </style>
   <link rel="canonical" href="https://www.vendorsoluce.com/vendor-review">
 
 <!-- ERMITS global SEO bundle: merged into each page <head> by embed-header-footer.js (npm run build). Idempotent via meta name="ermits-seo-bundle". JSON-LD lives per-page (homepage SoftwareApplication; inner WebPage hybrid). -->
@@ -265,7 +258,7 @@
       </div>
     </div>
   </div>
-</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 pt-[var(--nav-height,64px)]">
+</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 pt-[var(--nav-height,64px)] bg-gray-100 dark:bg-gray-800/70">
     <!-- Breadcrumb Navigation -->
     <nav aria-label="Breadcrumb" class="sticky top-[var(--nav-height,64px)] z-40 w-full min-h-10 flex items-center text-sm border-b border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm px-6 sm:px-8 lg:px-12" data-breadcrumb="true">
       <div class="max-w-7xl mx-auto w-full flex items-center">
@@ -291,77 +284,133 @@
       </div>
     </nav>
 
-    <!-- Hero -->
-    <section class="px-6 sm:px-8 lg:px-12 py-10 lg:py-14">
-      <div class="max-w-7xl mx-auto">
-        <div class="max-w-3xl">
-          <span class="mini-kicker">Vendor Review &middot; Data input &rarr; interactive radar &rarr; report</span>
-          <h1 class="mt-4 text-4xl md:text-5xl font-bold tracking-tight text-vendorsoluce-green dark:text-white">Know which vendors deserve attention first</h1>
-          <p class="mt-5 text-lg text-gray-700 dark:text-gray-300">Enter your vendor portfolio data to generate an interactive <span class="font-semibold text-gray-900 dark:text-white">Vendor Risk Radar</span>. See at a glance which relationships are exposed by structural criticality, data access, and external threat signals &mdash; then export a shareable report.</p>
-          <p class="mt-4 text-sm text-gray-600 dark:text-gray-500">Runs entirely in your browser. No account required.</p>
+    <!-- Page intro — inner page only (headline + context; CTAs live in the radar card below) -->
+    <section class="px-6 sm:px-8 lg:px-12 pt-8 sm:pt-10 pb-8 lg:pb-10 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900" aria-labelledby="vendor-review-heading">
+      <div class="max-w-7xl mx-auto flex justify-center">
+        <div class="max-w-3xl w-full text-center">
+          <h1 id="vendor-review-heading" class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
+            <span class="block">Know which vendors</span>
+            <span class="block text-vendorsoluce-green dark:text-vendorsoluce-light-green">deserve attention first</span>
+          </h1>
+          <p class="mt-4 text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">Enter your vendor portfolio data to generate an interactive <span class="font-semibold text-gray-900 dark:text-white">Vendor Risk Radar</span>.</p>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Runs in your browser. No account required to launch the radar from the card below.</p>
         </div>
       </div>
     </section>
 
-    <!-- Vendor Risk Radar — data input generates the interactive radar -->
-    <section class="px-6 sm:px-8 lg:px-12 pb-10" aria-labelledby="radar-heading">
+    <!-- Vendor Risk Radar — pre-onboarding: set expectations before the tool page -->
+    <section class="pt-6 md:pt-8 pb-8 md:pb-10 px-6 sm:px-8 lg:px-12 bg-gray-50 dark:bg-gray-900/80" aria-labelledby="radar-heading">
       <div class="max-w-7xl mx-auto">
-        <article id="vendor-risk-radar" class="review-card p-8 flex flex-col md:flex-row md:items-start gap-8">
-          <div class="flex-1">
-            <div class="mini-kicker">Vendor Risk Radar</div>
-            <h2 id="radar-heading" class="mt-4 text-2xl font-semibold text-gray-900 dark:text-white">Map exposure, generate your interactive radar</h2>
-            <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">Input your vendor details &mdash; concentration, data access, criticality, and sector context &mdash; to instantly visualize your portfolio on an interactive radar. Spot which relationships warrant escalation, deeper diligence, or a scoped evidence request, then export a PDF or CSV report.</p>
-            <ul class="mt-4 space-y-1.5 text-sm text-gray-600 dark:text-gray-400">
-              <li class="flex items-start gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0 text-vendorsoluce-green dark:text-vendorsoluce-light-green" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Structural exposure &amp; business criticality scoring</li>
-              <li class="flex items-start gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0 text-vendorsoluce-green dark:text-vendorsoluce-light-green" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>External threat signals and sector pressure overlay</li>
-              <li class="flex items-start gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0 text-vendorsoluce-green dark:text-vendorsoluce-light-green" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Interactive, exportable &mdash; PDF and CSV report generation</li>
-            </ul>
-            <div class="mt-6 flex flex-wrap gap-3">
-              <a href="/radar/vendor-threat-radar.html" class="inline-flex items-center justify-center rounded-lg bg-vendorsoluce-green px-5 py-3 text-sm font-semibold text-white hover:bg-[#2E5A1A] transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2" aria-hidden="true"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"/><circle cx="12" cy="12" r="2"/></svg>
-                Launch Vendor Risk Radar
-              </a>
-              <a href="/radar/vendor-inherent-risk-report.html" class="inline-flex items-center justify-center rounded-lg border-2 border-vendorsoluce-green text-vendorsoluce-green dark:text-vendorsoluce-light-green dark:border-vendorsoluce-light-green px-5 py-3 text-sm font-semibold hover:bg-vendorsoluce-green/5 dark:hover:bg-white/5 transition-colors">
-                View portfolio exposure report
-              </a>
+        <article id="vendor-risk-radar" class="vs-card rounded-xl shadow-lg overflow-hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-12 lg:min-h-0">
+            <div class="lg:col-span-8 flex flex-col items-center text-center lg:items-start lg:text-left p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-700">
+              <p class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Before the radar opens</p>
+              <h2 id="radar-heading" class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white leading-tight max-w-2xl lg:max-w-none">Vendor Risk Radar</h2>
+              <p class="mt-3 text-base text-gray-700 dark:text-gray-300 leading-relaxed max-w-2xl">The next page is the tool: add vendors, see exposure and threat context on an interactive map, then export a PDF or CSV if you want a shareable copy. Your work stays in this browser until you choose otherwise.</p>
+
+              <ol class="mt-8 grid w-full max-w-2xl lg:max-w-none grid-cols-1 sm:grid-cols-3 gap-4 text-left" aria-label="What happens first on the radar page">
+                <li class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/60 p-4">
+                  <span class="text-lg font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green">1</span>
+                  <p class="mt-1 text-sm font-semibold text-gray-900 dark:text-white">Land on the tool</p>
+                  <p class="mt-1 text-xs text-gray-600 dark:text-gray-400 leading-snug">No sign-up required to start exploring.</p>
+                </li>
+                <li class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/60 p-4">
+                  <span class="text-lg font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green">2</span>
+                  <p class="mt-1 text-sm font-semibold text-gray-900 dark:text-white">Add vendors</p>
+                  <p class="mt-1 text-xs text-gray-600 dark:text-gray-400 leading-snug">A few rows is enough to see the radar move.</p>
+                </li>
+                <li class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/60 p-4">
+                  <span class="text-lg font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green">3</span>
+                  <p class="mt-1 text-sm font-semibold text-gray-900 dark:text-white">Review &amp; export</p>
+                  <p class="mt-1 text-xs text-gray-600 dark:text-gray-400 leading-snug">Escalate what matters; export when ready.</p>
+                </li>
+              </ol>
+
+              <div class="mt-10 w-full max-w-md flex flex-col items-center lg:items-stretch gap-2">
+                <a href="/radar/vendor-threat-radar.html?from=vendor-review" class="vs-btn-primary group text-sm w-full justify-center px-6 py-3.5">
+                  Continue to Vendor Risk Radar
+                  <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <p class="text-center lg:text-left text-xs text-gray-500 dark:text-gray-400">Opens the browser-based radar in this window. You can return here anytime.</p>
+              </div>
             </div>
-          </div>
-          <div class="hidden md:flex flex-col items-center justify-center flex-shrink-0 w-40 gap-3 opacity-80">
-            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-vendorsoluce-green dark:text-vendorsoluce-light-green" aria-hidden="true"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"/><circle cx="12" cy="12" r="2"/></svg>
-            <span class="text-xs text-center text-gray-500 dark:text-gray-400 leading-snug">Interactive &middot; Browser-based &middot; No account needed</span>
+            <aside class="lg:col-span-4 flex flex-col justify-center gap-5 px-6 py-8 md:px-8 lg:py-10 bg-gray-50 dark:bg-gray-800/55 border-t lg:border-t-0 lg:border-l border-gray-200 dark:border-gray-700" aria-label="On the next screen">
+              <p class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 text-center lg:text-left">On the next screen</p>
+              <ul class="space-y-4 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex gap-3">
+                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-xs font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green" aria-hidden="true">A</span>
+                  <span><strong class="text-gray-900 dark:text-white">Toolbar first.</strong> Add or import vendors from the controls at the top of the radar page.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-xs font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green" aria-hidden="true">B</span>
+                  <span><strong class="text-gray-900 dark:text-white">Map updates live.</strong> Criticality, data access, and threat overlays build the picture as you edit.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-xs font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green" aria-hidden="true">C</span>
+                  <span><strong class="text-gray-900 dark:text-white">Export is optional.</strong> PDF or CSV when you need a snapshot for others.</span>
+                </li>
+              </ul>
+              <p class="text-center lg:text-left text-xs text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-600 pt-4">Browser-based &middot; No VendorSoluce account required for this radar</p>
+            </aside>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- Final CTA: Baseline vendor assessment -->
-    <section class="px-6 sm:px-8 lg:px-12 pb-10" aria-labelledby="assessment-heading">
+    <!-- After the radar: three-column flow + separate CTA strip -->
+    <section id="workspace" class="pt-8 pb-6 px-6 sm:px-8 lg:px-12 bg-gray-100/80 dark:bg-gray-800/50 backdrop-blur-sm" aria-labelledby="workspace-heading">
       <div class="max-w-7xl mx-auto">
-        <div class="review-card p-8 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 flex flex-col sm:flex-row sm:items-center gap-6">
-          <div class="flex-1">
-            <div class="mini-kicker">When you need more depth</div>
-            <h2 id="assessment-heading" class="mt-3 text-xl font-semibold text-gray-900 dark:text-white">Baseline vendor assessment</h2>
-            <p class="mt-2 text-sm text-gray-700 dark:text-gray-300 max-w-xl">When the radar surfaces a relationship that justifies a closer look, score its baseline exposure with a structured assessment &mdash; no account required.</p>
-          </div>
-          <div class="flex-shrink-0">
-            <a href="/assessment/index.html" class="inline-flex items-center justify-center rounded-lg border-2 border-vendorsoluce-green text-vendorsoluce-green dark:text-vendorsoluce-light-green dark:border-vendorsoluce-light-green px-5 py-3 text-sm font-semibold hover:bg-vendorsoluce-green/5 dark:hover:bg-white/5 transition-colors whitespace-nowrap">Open free assessment</a>
-          </div>
+        <header class="text-center mb-8 md:mb-10 max-w-3xl mx-auto">
+          <h2 id="workspace-heading" class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white leading-tight">After the radar: assessments, saved work, and vendors</h2>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Pick the path that matches where you are in the workflow—each option opens in the right surface.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+          <article class="vs-card vs-step-card rounded-xl p-6 flex flex-col h-full text-center md:text-left">
+            <p class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Assess</p>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Baseline assessment</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex-1">When one relationship needs structured scoring beyond the radar snapshot, run the free baseline assessment—still no account.</p>
+            <a href="/assessment/index.html" class="mt-5 inline-flex items-center justify-center gap-1.5 text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">
+              Open free assessment
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
+          <article class="vs-card vs-step-card rounded-xl p-6 flex flex-col h-full text-center md:text-left ring-1 ring-vendorsoluce-green/25 dark:ring-vendorsoluce-green/20">
+            <p class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Workspace</p>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">VendorSoluce app</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex-1">Portfolio history, saved radar sessions, and team collaboration live in the app—same radar logic, with sign-in.</p>
+            <p class="mt-4 text-xs text-gray-500 dark:text-gray-400">Use the actions bar below to open the app in one click.</p>
+          </article>
+          <article class="vs-card vs-step-card rounded-xl p-6 flex flex-col h-full text-center md:text-left">
+            <p class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Vendors</p>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Portal &amp; demos</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex-1">Vendor-facing questionnaires and evidence exchange run in the Vendor Assurance Portal. <a href="/contact.html" class="font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">Contact us</a> for a demo.</p>
+            <a href="https://www.portal.vendorsoluce.com/?utm_source=vendorsoluce&amp;utm_medium=website&amp;utm_campaign=vendor-review" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center justify-center gap-1.5 text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">
+              Vendor Assurance Portal
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- Continue with saved data -->
-    <section id="workspace" class="px-6 sm:px-8 lg:px-12 pb-16" aria-labelledby="workspace-heading">
-      <div class="max-w-7xl mx-auto review-card p-8">
-        <h2 id="workspace-heading" class="text-xl font-semibold text-gray-900 dark:text-white">Continue with saved data</h2>
-        <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 max-w-2xl">The Vendor Risk Radar and exposure report run locally in your browser. When you need portfolio history, saved sessions, and team collaboration, the same capabilities are available inside the VendorSoluce app.</p>
-
-        <div class="mt-6 flex flex-wrap gap-4 items-center">
-          <a href="https://app.vendorsoluce.com/?utm_source=vendorsoluce&amp;utm_medium=website&amp;utm_campaign=vendor-review" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-lg bg-vendorsoluce-green px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#2E5A1A] transition-colors">Open VendorSoluce app</a>
-          <span class="text-xs text-gray-500 dark:text-gray-400">Sign-in required &middot; Saves radar sessions and assessments</span>
+    <section class="pt-2 pb-16 px-6 sm:px-8 lg:px-12 bg-gray-100/80 dark:bg-gray-800/50" aria-label="Next steps actions">
+      <div class="max-w-7xl mx-auto">
+        <div id="workspace-actions" class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-lg px-6 py-8 md:px-10 md:py-9">
+          <p class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-6">Actions</p>
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-center gap-6 lg:gap-10">
+            <a href="https://app.vendorsoluce.com/?utm_source=vendorsoluce&amp;utm_medium=website&amp;utm_campaign=vendor-review" target="_blank" rel="noopener noreferrer" class="vs-btn-primary group justify-center shrink-0">
+              Open VendorSoluce app
+              <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <nav class="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-x-8 text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green border-t border-gray-200 dark:border-gray-700 lg:border-0 lg:border-l lg:border-gray-200 lg:dark:border-gray-700 lg:pl-10 pt-6 lg:pt-0" aria-label="More entry points">
+              <a href="/assessment/index.html" class="hover:underline py-1">Baseline assessment</a>
+              <a href="https://www.portal.vendorsoluce.com/?utm_source=vendorsoluce&amp;utm_medium=website&amp;utm_campaign=vendor-review" target="_blank" rel="noopener noreferrer" class="hover:underline py-1">Vendor Assurance Portal</a>
+              <a href="/contact.html" class="hover:underline py-1">Contact / demo</a>
+            </nav>
+          </div>
+          <p class="mt-6 text-center text-xs text-gray-500 dark:text-gray-400">Sign-in is required in the app for saved radar sessions and shared work.</p>
         </div>
-
-        <p class="mt-6 pt-5 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-400 max-w-2xl">For vendor-facing questionnaires and evidence exchange, use the <a href="https://www.portal.vendorsoluce.com/?utm_source=vendorsoluce&amp;utm_medium=website&amp;utm_campaign=vendor-review" target="_blank" rel="noopener noreferrer" class="font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">Vendor Assurance Portal</a>. Questions? <a href="/contact.html" class="font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">Contact us</a> to request a demo.</p>
       </div>
     </section>
   </main>

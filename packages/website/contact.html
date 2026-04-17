@@ -383,7 +383,7 @@
       </div>
     </div>
   </div>
-</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 pt-[var(--nav-height,64px)]">
+</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 pt-[var(--nav-height,64px)] bg-gray-50 dark:bg-gray-900">
     <!-- Breadcrumb Navigation -->
     <nav aria-label="Breadcrumb" class="sticky top-[var(--nav-height,64px)] z-40 w-full min-h-10 flex items-center text-sm border-b border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm px-6 sm:px-8 lg:px-12" data-breadcrumb="true">
         <div class="max-w-7xl mx-auto w-full">
@@ -413,7 +413,8 @@
         </div>
         
         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 md:p-8 shadow-md max-w-4xl mx-auto">
-            <form id="contact-form" name="vendorsoluce-contact" method="POST" action="/contact" data-netlify="true" netlify-honeypot="website">
+            <!-- Netlify Forms: keep name + form-name in sync; POST to this page (empty action) so deploys work with /contact.html or pretty URLs -->
+            <form id="contact-form" name="vendorsoluce-contact" method="POST" action="" netlify data-netlify="true" netlify-honeypot="website">
                 <input type="hidden" name="form-name" value="vendorsoluce-contact" />
                 <p hidden>
                     <label>Do not fill this out: <input name="website" /></label>
@@ -465,7 +466,7 @@
                     ></textarea>
                 </div>
                 
-                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                <div class="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 mb-4">
                     <button 
                         type="submit" 
                         class="group inline-flex items-center justify-center px-8 py-4 bg-vendorsoluce-green hover:bg-vendorsoluce-dark-green text-white font-bold text-lg rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:scale-105 transition-all duration-300"

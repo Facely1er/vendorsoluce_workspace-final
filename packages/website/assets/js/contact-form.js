@@ -1,7 +1,7 @@
 /**
  * Contact form handler — optional JSON POST to window.CONTACT_API_URL (e.g. an edge function).
- * If CONTACT_API_URL is unset, the browser performs a normal submit so Netlify Forms can handle it
- * (data-netlify on the form). The marketing site does not require Supabase.
+ * If CONTACT_API_URL is unset, the browser performs a normal POST to the same page (form action "")
+ * so Netlify Forms can handle it (netlify + data-netlify on the form). The marketing site does not require Supabase.
  */
 (function () {
   const form = document.getElementById('contact-form');
