@@ -9,7 +9,6 @@ import { isSupabaseEnabled } from '../../lib/supabase';
 import { fetchPortalAssessmentBundle } from '../../services/portalAssessmentService';
 import { logger } from '../../utils/logger';
 import { usePortalSEO } from '../../hooks/usePortalSEO';
-import { SHELL_CLASSES } from '../../layout/shell';
 
 // ─── Assessment ID entry form ─────────────────────────────────────────────────
 
@@ -134,7 +133,7 @@ const PortalHome: React.FC = () => {
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-vendorsoluce-green/[0.03] dark:bg-vendorsoluce-green/[0.02] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
 
         <div className={`relative ${PORTAL_HOME_GUTTER_X}`}>
-          <div className={`${PORTAL_HOME_MAX} pb-12 lg:pb-16 ${SHELL_CLASSES.heroTopSpacing}`}>
+          <div className={`${PORTAL_HOME_MAX} pb-12 lg:pb-16 pt-16 sm:pt-20 lg:pt-24`}>
 
           {/* Headline + lead */}
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
@@ -156,11 +155,8 @@ const PortalHome: React.FC = () => {
             role="group"
             aria-label="Assessment framework mapping reference"
           >
-            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-5 sm:mb-6">
               Assessment mapping (aligned)
-            </p>
-            <p className="text-xs text-gray-500 dark:text-gray-500 mb-6 max-w-md mx-auto leading-relaxed">
-              Mapping labels only — not a certification claim for VendorSoluce or your org.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
               {HERO_FRAMEWORK_BADGE_STRIP.map(fw => (
