@@ -108,6 +108,14 @@ const MODE_COMPARISON = [
 const PORTAL_HOME_GUTTER_X = 'px-4 sm:px-6 lg:px-8';
 const PORTAL_HOME_MAX = 'max-w-7xl mx-auto w-full min-w-0';
 
+const HERO_FRAMEWORK_BADGE_STRIP: { label: string; color: string }[] = [
+  { label: 'NIST SP 800-161', color: 'text-blue-700 dark:text-blue-400' },
+  { label: 'CMMC Level 2', color: 'text-indigo-700 dark:text-indigo-400' },
+  { label: 'ISO 27001:2022', color: 'text-emerald-700 dark:text-emerald-400' },
+  { label: 'SOC 2 Type II', color: 'text-purple-700 dark:text-purple-400' },
+  { label: 'NTIA SBOM', color: 'text-orange-700 dark:text-orange-400' },
+];
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 const PortalHome: React.FC = () => {
@@ -128,8 +136,8 @@ const PortalHome: React.FC = () => {
         <div className={`relative ${PORTAL_HOME_GUTTER_X}`}>
           <div className={`${PORTAL_HOME_MAX} pb-12 lg:pb-16 ${SHELL_CLASSES.heroTopSpacing}`}>
 
-          {/* Headline + lead — framework mapping lives in the following section */}
-          <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
+          {/* Headline + lead */}
+          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
             <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white leading-[1.15] tracking-tight mb-5 sm:mb-6">
               Framework-aligned vendor<br className="hidden sm:block" /> due diligence
             </h1>
@@ -137,12 +145,31 @@ const PortalHome: React.FC = () => {
               <ShieldCheck className="w-3.5 h-3.5" />
               Vendor Risk Assessment Portal
             </div>
-            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto mb-5 sm:mb-6">
+            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto">
               Score vendors by risk tier, send assessments mapped to common frameworks, collect evidence, and track gaps — in one workflow.
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 max-w-lg mx-auto leading-relaxed">
-              Assessment depth scales with tier: lighter for low-risk vendors, fuller for critical suppliers.
+          </div>
+
+          {/* Framework mapping — directly under headline, before buyer/vendor cards */}
+          <div
+            className="mb-12 sm:mb-14 max-w-3xl mx-auto text-center pt-8 sm:pt-10 border-t border-gray-200/80 dark:border-gray-700/80"
+            role="group"
+            aria-label="Assessment framework mapping reference"
+          >
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
+              Assessment mapping (aligned)
             </p>
+            <p className="text-xs text-gray-500 dark:text-gray-500 mb-6 max-w-md mx-auto leading-relaxed">
+              Mapping labels only — not a certification claim for VendorSoluce or your org.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              {HERO_FRAMEWORK_BADGE_STRIP.map(fw => (
+                <div key={fw.label} className="flex items-center gap-1.5">
+                  <Shield className={`w-3.5 h-3.5 ${fw.color}`} />
+                  <span className={`text-xs font-semibold ${fw.color}`}>{fw.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Two cards side by side */}
@@ -214,39 +241,8 @@ const PortalHome: React.FC = () => {
         </div>
       </section>
 
-      {/* ── Framework mapping (below hero band, same page gutters) ── */}
-      <section
-        className="border-b border-gray-100 dark:border-gray-800 bg-gray-50/80 dark:bg-gray-900/50"
-        aria-label="Framework mapping reference"
-      >
-        <div className={PORTAL_HOME_GUTTER_X}>
-          <div className={`${PORTAL_HOME_MAX} py-8 sm:py-10 text-center`}>
-            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
-              Assessment mapping (aligned)
-            </p>
-            <p className="text-xs text-gray-500 dark:text-gray-500 mb-6 max-w-md mx-auto leading-relaxed">
-              Mapping labels only — not a certification claim for VendorSoluce or your org.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-              {[
-                { label: 'NIST SP 800-161', color: 'text-blue-700 dark:text-blue-400' },
-                { label: 'CMMC Level 2', color: 'text-indigo-700 dark:text-indigo-400' },
-                { label: 'ISO 27001:2022', color: 'text-emerald-700 dark:text-emerald-400' },
-                { label: 'SOC 2 Type II', color: 'text-purple-700 dark:text-purple-400' },
-                { label: 'NTIA SBOM', color: 'text-orange-700 dark:text-orange-400' },
-              ].map(fw => (
-                <div key={fw.label} className="flex items-center gap-1.5">
-                  <Shield className={`w-3.5 h-3.5 ${fw.color}`} />
-                  <span className={`text-xs font-semibold ${fw.color}`}>{fw.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── Social proof / data strip ── */}
-      <section className="py-8 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/30">
+      <section className="py-8 sm:py-10 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/30">
         <div className={PORTAL_HOME_GUTTER_X}>
           <div className={PORTAL_HOME_MAX}>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
@@ -261,6 +257,11 @@ const PortalHome: React.FC = () => {
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{label}</p>
               </div>
             ))}
+          </div>
+          <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-gray-200/70 dark:border-gray-700/50">
+            <p className="text-center text-sm text-gray-500 dark:text-gray-400 max-w-lg mx-auto leading-relaxed">
+              Assessment depth scales with tier: lighter for low-risk vendors, fuller for critical suppliers.
+            </p>
           </div>
           </div>
         </div>
