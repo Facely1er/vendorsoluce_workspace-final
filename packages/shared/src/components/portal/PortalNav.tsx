@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Workflow, Users, Shield, Menu, X } from 'lucide-react';
+import { Workflow, Users, Shield, Menu, X, User } from 'lucide-react';
 import ThemeToggle from '../layout/ThemeToggle';
 import { PORTAL_LOGO_SRC } from './portalBrand';
 
@@ -18,6 +18,11 @@ const NAV_LINKS: NavLink[] = [
 
 const desktopLinkBase =
   'nav-link inline-flex items-center gap-1.5 px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200';
+
+const PLATFORM_ACCOUNT_HREF = 'https://www.platform.vendorsoluce.com/signin';
+
+const accountIconButtonClass =
+  'inline-flex w-9 h-9 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green focus:ring-offset-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 items-center justify-center flex-shrink-0';
 
 const PortalNav: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -58,9 +63,9 @@ const PortalNav: React.FC = () => {
             </Link>
           </div>
 
-          {/* Desktop nav — geometric center of the bar (avoids grid middle-column offset when logo wider than right controls) */}
-          <div className="pointer-events-none absolute inset-0 hidden md:flex items-center justify-center z-[61] px-10 md:px-14 lg:px-20">
-            <div className="pointer-events-auto flex max-w-full items-center justify-center gap-1 flex-wrap">
+          {/* Desktop nav — centered cluster (w-max so flex justify-center aligns true content width) */}
+          <div className="pointer-events-none absolute inset-0 hidden md:flex items-center justify-center z-[61] px-4 sm:px-6">
+            <div className="pointer-events-auto flex w-max max-w-[min(100%,calc(100vw-14rem))] items-center justify-center gap-1 flex-wrap">
               {NAV_LINKS.map(({ label, to, icon: Icon }) => (
                 <Link
                   key={to}
@@ -78,18 +83,38 @@ const PortalNav: React.FC = () => {
             </div>
           </div>
 
-          {/* Desktop: theme */}
+          {/* Desktop: theme + platform account */}
           <div className="hidden md:flex items-center justify-end gap-2 flex-shrink-0 relative z-[62]">
             <div data-tour="theme-toggle">
               <ThemeToggle />
             </div>
+            <div data-tour="user-menu">
+              <a
+                href={PLATFORM_ACCOUNT_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={accountIconButtonClass}
+                aria-label="Platform account — sign in"
+              >
+                <User className="w-5 h-5" strokeWidth={2} />
+              </a>
+            </div>
           </div>
 
-          {/* Mobile: theme + menu */}
+          {/* Mobile: theme + account + menu */}
           <div className="flex md:hidden items-center justify-end gap-1.5 flex-shrink-0 relative z-[62]">
             <div data-tour="theme-toggle">
               <ThemeToggle />
             </div>
+            <a
+              href={PLATFORM_ACCOUNT_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={accountIconButtonClass}
+              aria-label="Platform account — sign in"
+            >
+              <User className="w-5 h-5" strokeWidth={2} />
+            </a>
             <button
               type="button"
               className="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none flex-shrink-0 w-9 h-9"
@@ -106,6 +131,16 @@ const PortalNav: React.FC = () => {
       {mobileOpen && (
         <div className="md:hidden border-t border-gray-200/60 dark:border-gray-700/60 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 space-y-1">
+            <a
+              href={PLATFORM_ACCOUNT_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
+              <User className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
+              Platform account
+            </a>
             {NAV_LINKS.map(({ label, to, icon: Icon }) => (
               <Link
                 key={to}
