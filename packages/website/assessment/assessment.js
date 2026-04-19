@@ -54,6 +54,13 @@ export async function init() {
   render();
 }
 
+function syncAssessmentProgressBar(root) {
+  const fill = root.querySelector('[data-section-progress-pct]');
+  if (!fill) return;
+  const pct = fill.getAttribute('data-section-progress-pct');
+  if (pct != null && pct !== '') fill.style.width = pct + '%';
+}
+
 // Render functions
 function render() {
   const app = document.getElementById('app');
@@ -68,6 +75,7 @@ function render() {
       break;
     case 'assessment':
       app.innerHTML = renderAssessment();
+      syncAssessmentProgressBar(app);
       break;
     case 'results':
       app.innerHTML = renderResults();
@@ -190,6 +198,9 @@ function renderAssessment() {
   const overallScore = getOverallScore(sections, state.answers);
   const totalQuestions = sections.flatMap(s => s.questions).length;
   const answeredCount = Object.keys(state.answers).length;
+  const sectionProgressPct = currentSectionData.questions.length
+    ? (currentSectionData.questions.filter(q => state.answers[q.id]).length / currentSectionData.questions.length) * 100
+    : 0;
 
   return `
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -255,9 +266,9 @@ function renderAssessment() {
                 })}</span>
               </div>
               <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                <div 
-                  class="bg-vendorsoluce-green h-2 rounded-full transition-all duration-300"
-                  style="width: ${(currentSectionData.questions.filter(q => state.answers[q.id]).length / currentSectionData.questions.length) * 100}%"
+                <div
+                  class="bg-vendorsoluce-green h-2 rounded-full transition-all duration-300 section-progress-fill"
+                  data-section-progress-pct="${sectionProgressPct}"
                 ></div>
               </div>
             </div>

@@ -25,6 +25,7 @@
         .pending { background: #f5f5f5; }
         .pending .status { background: #9ca3af; color: white; }
         .summary { display: flex; gap: 16px; margin-bottom: 24px; }
+        .summary.is-hidden { display: none !important; }
         .summary-card { flex: 1; background: white; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .summary-card .value { font-size: 2rem; font-weight: 700; }
         .summary-card .label { font-size: 0.8rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -39,6 +40,7 @@
         .log-fail { color: #f87171; }
         .log-info { color: #60a5fa; }
         .iframe-container { width: 100%; height: 0; overflow: hidden; }
+        #radarFrame { width: 1280px; height: 900px; border: none; }
     </style>
 
 <!-- ERMITS global SEO bundle: merged into each page <head> by embed-header-footer.js (npm run build). Idempotent via meta name="ermits-seo-bundle". -->
@@ -74,7 +76,7 @@
     
     <button class="run-btn" id="runBtn" onclick="runTests()">Run All Tests</button>
     
-    <div class="summary" id="summary" style="display:none;">
+    <div class="summary is-hidden" id="summary">
         <div class="summary-card pass-card"><div class="value" id="passCount">0</div><div class="label">Passed</div></div>
         <div class="summary-card fail-card"><div class="value" id="failCount">0</div><div class="label">Failed</div></div>
         <div class="summary-card total-card"><div class="value" id="totalCount">0</div><div class="label">Total</div></div>
@@ -84,7 +86,7 @@
     <div id="log"></div>
     
     <div class="iframe-container">
-        <iframe id="radarFrame" src="vendor-threat-radar.html" style="width:1280px;height:900px;border:none;"></iframe>
+        <iframe id="radarFrame" src="vendor-threat-radar.html" title="Vendor threat radar embedded for functional tests"></iframe>
     </div>
 
 <script>
@@ -126,7 +128,7 @@ function renderResults() {
     document.getElementById('passCount').textContent = passed;
     document.getElementById('failCount').textContent = failed;
     document.getElementById('totalCount').textContent = passed + failed;
-    document.getElementById('summary').style.display = 'flex';
+    document.getElementById('summary').classList.remove('is-hidden');
 }
 
 function runTests() {

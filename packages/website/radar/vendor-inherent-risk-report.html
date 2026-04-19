@@ -70,6 +70,9 @@
   .report-list li { padding: 0.35rem 0; padding-left: 1.25rem; position: relative; }
   .report-list li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 5px; height: 5px; background: var(--vendorsoluce-green); border-radius: 50%; }
   footer { margin-top: auto; }
+  .report-brief-lead { margin-top: 1rem; }
+  .report-brief-lead a { color: var(--vendorsoluce-green); font-weight: 600; }
+  html.dark .report-brief-lead a { color: var(--vendorsoluce-light-green); }
 </style>
 <!-- VSS static SEO: canonical + Open Graph + Twitter + JSON-LD (ERMITS baseline) -->
 <link rel="canonical" href="https://www.vendorsoluce.com/radar/vendor-inherent-risk-report">
@@ -356,7 +359,7 @@
         <h1 id="report-title">Portfolio report &amp; Vendor Exposure Brief</h1>
         <span class="badge">NIST SP 800-161 Rev. 1 · C-SCRM</span>
         <p><strong>Portfolio C-SCRM report</strong> — one HTML export (or print-to-PDF) for <strong>all vendors</strong> in your radar: register, posture, dependencies, and appendix. Generated in <strong>Vendor Threat Radar</strong> after you add vendors. <strong>Per-vendor Details</strong> on a row is only an on-screen summary; it is not the portfolio document.</p>
-        <p style="margin-top:1rem"><strong>Vendor Exposure Brief</strong> — a scoped paid deliverable (ordering via <a href="../pricing.html#starter-brief" style="color:var(--vendorsoluce-green);font-weight:600">pricing</a> or <a href="../contact.html" style="color:var(--vendorsoluce-green);font-weight:600">contact</a>). It is not auto-generated on this page.</p>
+        <p class="report-brief-lead"><strong>Vendor Exposure Brief</strong> — a scoped paid deliverable (ordering via <a href="../pricing.html#starter-brief">pricing</a> or <a href="../contact.html">contact</a>). It is not auto-generated on this page.</p>
         <div class="report-cta">
           <a class="primary" href="sample-portfolio-cscrm-report.html">Open illustrative portfolio report (HTML)</a>
           <a class="secondary" href="vendor-threat-radar.html#vendor-inherent-risk-report">Generate report from your portfolio</a>

@@ -16,6 +16,7 @@
   .pass { color: #a6e3a1; } .fail { color: #f38ba8; } .warn { color: #fab387; }
   .layout { display: flex; gap: 12px; height: calc(100vh - 80px); }
   .sidebar { width: 380px; flex-shrink: 0; overflow-y: auto; }
+  .sidebar-toolbar { margin-bottom: 8px; }
   iframe { flex: 1; border: 2px solid #45475a; border-radius: 4px; }
 </style>
 
@@ -49,8 +50,8 @@
 <body>
 <h1>CSV Import Test Harness v3 — Direct Function Injection</h1>
 <div class="layout">
-  <div class="sidebar">
-    <div style="margin-bottom:8px">
+    <div class="sidebar">
+    <div class="sidebar-toolbar">
       <button class="btn run" onclick="runTest('legacy')">A1: Legacy</button>
       <button class="btn run" onclick="runTest('extended')">A2: Extended</button>
       <button class="btn run" onclick="runTest('fulldep')">A3: Full Dep</button>
@@ -60,7 +61,7 @@
     </div>
     <div id="results"></div>
   </div>
-  <iframe id="rf" src="/radar/vendor-threat-radar" onload="onLoad()"></iframe>
+  <iframe id="rf" title="Vendor threat radar (test preview)" src="/radar/vendor-threat-radar" onload="onLoad()"></iframe>
 </div>
 <script>
 const CSVS = {

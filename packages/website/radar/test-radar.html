@@ -55,7 +55,9 @@
         .test-name { flex: 1; }
         .test-detail { color: #6b7280; font-size: 0.8rem; margin-left: 4px; }
         .progress-bar { height: 6px; background: #e5e7eb; border-radius: 3px; margin-bottom: 20px; overflow: hidden; }
-        .progress-fill { height: 100%; background: #2e7d32; border-radius: 3px; transition: width 0.3s; }
+        .progress-fill { height: 100%; width: 0%; background: #2e7d32; border-radius: 3px; transition: width 0.3s; }
+        .section--log { margin-top: 16px; }
+        .radar-test-frame { display: none; width: 1280px; height: 900px; border: none; }
         #log { font-family: 'Fira Code', monospace; font-size: 0.75rem; background: #111827; color: #d1d5db; padding: 12px; border-radius: 6px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; }
         @media (max-width: 640px) { .summary { grid-template-columns: repeat(2, 1fr); } }
     </style>
@@ -96,7 +98,7 @@
         <button class="btn-reset" onclick="resetTests()">Reset</button>
     </div>
 
-    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
     <div class="summary">
         <div class="summary-card total"><div class="num" id="totalCount">0</div><div class="label">Total</div></div>
@@ -107,12 +109,12 @@
 
     <div id="results"></div>
 
-    <div class="section" style="margin-top: 16px;">
+    <div class="section section--log">
         <div class="section-title">Console Log</div>
         <div id="log"></div>
     </div>
 
-    <iframe id="radarFrame" src="vendor-threat-radar.html" style="display:none; width: 1280px; height: 900px; border: none;"></iframe>
+    <iframe id="radarFrame" class="radar-test-frame" src="vendor-threat-radar.html"></iframe>
 
 <script>
 const results = { pass: 0, fail: 0, skip: 0, total: 0 };

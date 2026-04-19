@@ -1066,19 +1066,21 @@
 
     var sorted = vendorData.slice().sort(function (a, b) { return (b.inherentRisk || 0) - (a.inherentRisk || 0); });
 
+    var riskTierClass = { critical: 'risk-critical', high: 'risk-high', medium: 'risk-medium', low: 'risk-low' };
     var registerRows = sorted.map(function (v) {
       var score = v.residualRisk !== undefined ? v.residualRisk : (v.inherentRisk || 0);
       var tier = getRiskTier(score);
-      return '<tr style="border-bottom:1px solid #ddd">' +
-        '<td style="padding:6px 8px">' + escHtml(v.name) + '</td>' +
-        '<td style="padding:6px 8px">' + escHtml(v.category || '—') + '</td>' +
-        '<td style="padding:6px 8px">' + escHtml(v.sector || '—') + '</td>' +
-        '<td style="padding:6px 8px">' + escHtml(v.location || '—') + '</td>' +
-        '<td style="padding:6px 8px;font-weight:600">' + (v.inherentRisk || 0) + '</td>' +
-        '<td style="padding:6px 8px">' + (v.residualRisk || 0) + '</td>' +
-        '<td style="padding:6px 8px;color:' + { critical: '#DC2626', high: '#D97706', medium: '#2563EB', low: '#16A34A' }[tier] + ';font-weight:600">' + riskLabelForTier(tier) + '</td>' +
-        '<td style="padding:6px 8px">' + escHtml((v.dataTypes || []).join(', ') || '—') + '</td>' +
-        '<td style="padding:6px 8px">Vendor Risk Radar</td>' +
+      var rc = riskTierClass[tier] || 'risk-low';
+      return '<tr>' +
+        '<td>' + escHtml(v.name) + '</td>' +
+        '<td>' + escHtml(v.category || '—') + '</td>' +
+        '<td>' + escHtml(v.sector || '—') + '</td>' +
+        '<td>' + escHtml(v.location || '—') + '</td>' +
+        '<td class="cell-num">' + (v.inherentRisk || 0) + '</td>' +
+        '<td>' + (v.residualRisk || 0) + '</td>' +
+        '<td class="' + rc + '">' + riskLabelForTier(tier) + '</td>' +
+        '<td>' + escHtml((v.dataTypes || []).join(', ') || '—') + '</td>' +
+        '<td>Vendor Risk Radar</td>' +
         '</tr>';
     }).join('');
 
@@ -1116,6 +1118,13 @@
       'th{padding:8px;text-align:left;font-weight:600;border-bottom:2px solid #d1d5db}\n' +
       '.report-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid #e5e7eb;font-size:.75rem;color:#9ca3af;display:flex;justify-content:space-between}\n' +
       'ul{margin:.5rem 0;padding-left:1.5rem}\n' +
+      '.sample-vendor-register tbody tr{border-bottom:1px solid #ddd}\n' +
+      '.sample-vendor-register tbody td{padding:6px 8px}\n' +
+      '.sample-vendor-register .cell-num{font-weight:600}\n' +
+      '.sample-vendor-register .risk-critical{color:#DC2626;font-weight:600}\n' +
+      '.sample-vendor-register .risk-high{color:#D97706;font-weight:600}\n' +
+      '.sample-vendor-register .risk-medium{color:#2563EB;font-weight:600}\n' +
+      '.sample-vendor-register .risk-low{color:#16A34A;font-weight:600}\n' +
       '@media print{body{padding:.5rem} h1{font-size:1.4rem}}\n' +
       '</style>\n</head>\n<body>\n' +
       '<h1>Portfolio C-SCRM Report</h1>\n' +
@@ -1159,7 +1168,7 @@
       '<p>5. Supply Chain Visibility — tier and upstream mappings available for ' + mappedDepsCount + ' vendor' + (mappedDepsCount !== 1 ? 's' : '') + '.</p>\n' +
       '<p>6. Portfolio Risk Posture Statement — inherent risk scores may influence procurement and monitoring decisions. This assessment does not assess control effectiveness or residual risk beyond SBOM availability signals.</p>\n' +
       '<h2>Section 2  -  Vendor Risk Register</h2>\n' +
-      '<table>\n<thead><tr>' +
+      '<table class="sample-vendor-register">\n<thead><tr>' +
         '<th>Vendor</th><th>Category</th><th>Sector</th><th>Location</th>' +
         '<th>Inherent</th><th>Residual</th><th>Risk Level</th><th>Data Types</th><th>Source</th>' +
       '</tr></thead>\n<tbody>' + registerRows + '</tbody>\n</table>\n' +

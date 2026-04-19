@@ -262,75 +262,70 @@ function showDataOnboarding() {
     const html = `
         <div class="vs-modal show" id="onboardingModal">
             <div class="vs-modal__backdrop"></div>
-            <div class="vs-modal__panel" style="max-width: 700px;">
+            <div class="vs-modal__panel vs-modal__panel--max700">
                 <div class="vs-modal__header">
                     <div class="vs-modal__title">🎉 Welcome to Your VendorSoluce Trial!</div>
                 </div>
                 <div class="vs-modal__body">
-                    <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                    <p class="vs-lead">
                         You're now ready to import your actual vendor data. Choose how to get started:
                     </p>
                     
-                    <div class="vs-grid2" style="gap: 20px; margin-bottom: 30px;">
+                    <div class="vs-grid2 vs-grid2--onboarding">
                         <!-- Option 1: Import CSV -->
-                        <div class="vs-card" style="cursor: pointer; border: 2px solid var(--border); padding: 20px;"
+                        <div class="vs-card vs-card--pick"
                              onclick="selectOnboardingOption('import')">
-                            <div style="font-size: 2rem; margin-bottom: 10px;">📊</div>
+                            <div class="vs-card__emoji">📊</div>
                             <div class="vs-card__title">Import Your Vendors</div>
-                            <p style="margin-top: 10px; color: var(--muted);">
+                            <p class="vs-card__desc">
                                 Upload a CSV/Excel file with your existing vendor list
                             </p>
-                            <div style="margin-top: 15px; padding: 10px; background: var(--vs-green-pale); 
-                                        border-radius: 8px; font-size: 0.9rem;">
+                            <div class="vs-card__hint vs-card__hint--green">
                                 <strong>Recommended</strong> if you have an existing vendor inventory
                             </div>
                         </div>
                         
                         <!-- Option 2: Start Fresh -->
-                        <div class="vs-card" style="cursor: pointer; border: 2px solid var(--border); padding: 20px;"
+                        <div class="vs-card vs-card--pick"
                              onclick="selectOnboardingOption('fresh')">
-                            <div style="font-size: 2rem; margin-bottom: 10px;">➕</div>
+                            <div class="vs-card__emoji">➕</div>
                             <div class="vs-card__title">Start Fresh</div>
-                            <p style="margin-top: 10px; color: var(--muted);">
+                            <p class="vs-card__desc">
                                 Manually add vendors one by one as you identify them
                             </p>
-                            <div style="margin-top: 15px; padding: 10px; background: var(--bg-2); 
-                                        border-radius: 8px; font-size: 0.9rem;">
+                            <div class="vs-card__hint vs-card__hint--neutral">
                                 Best for smaller organizations or new TPRM programs
                             </div>
                         </div>
                         
                         <!-- Option 3: Use Industry Template -->
-                        <div class="vs-card" style="cursor: pointer; border: 2px solid var(--border); padding: 20px;"
+                        <div class="vs-card vs-card--pick"
                              onclick="selectOnboardingOption('industry')">
-                            <div style="font-size: 2rem; margin-bottom: 10px;">🏢</div>
+                            <div class="vs-card__emoji">🏢</div>
                             <div class="vs-card__title">Industry Template</div>
-                            <p style="margin-top: 10px; color: var(--muted);">
+                            <p class="vs-card__desc">
                                 Pre-load common vendors for your industry vertical
                             </p>
-                            <div style="margin-top: 15px; padding: 10px; background: var(--bg-2); 
-                                        border-radius: 8px; font-size: 0.9rem;">
+                            <div class="vs-card__hint vs-card__hint--neutral">
                                 Quick start with industry-specific vendor lists
                             </div>
                         </div>
                         
                         <!-- Option 4: Continue Demo Data -->
-                        <div class="vs-card" style="cursor: pointer; border: 2px solid var(--border); padding: 20px;"
+                        <div class="vs-card vs-card--pick"
                              onclick="selectOnboardingOption('demo')">
-                            <div style="font-size: 2rem; margin-bottom: 10px;">🎯</div>
+                            <div class="vs-card__emoji">🎯</div>
                             <div class="vs-card__title">Continue with Demo Data</div>
-                            <p style="margin-top: 10px; color: var(--muted);">
+                            <p class="vs-card__desc">
                                 Keep exploring with sample vendors, replace later
                             </p>
-                            <div style="margin-top: 15px; padding: 10px; background: var(--bg-2); 
-                                        border-radius: 8px; font-size: 0.9rem;">
+                            <div class="vs-card__hint vs-card__hint--neutral">
                                 Useful for learning the platform before importing
                             </div>
                         </div>
                     </div>
                     
-                    <div style="padding: 15px; background: var(--bg-2); border-radius: 8px; 
-                                border-left: 4px solid var(--vs-green);">
+                    <div class="vs-trial-tip">
                         <strong>💡 Trial Info:</strong> Your 14-day trial includes up to 100 vendors, 
                         full risk analytics, PDF exports, and all Trial features.
                     </div>
@@ -413,11 +408,9 @@ function migrateDemoDataToTrial() {
 
 function showMigrationSuccess() {
     const notification = `
-        <div class="vs-notification" style="position: fixed; top: 80px; right: 20px; 
-             background: var(--vs-green); color: white; padding: 20px; border-radius: 12px; 
-             box-shadow: var(--shadow-lg); z-index: 10000; max-width: 400px;">
-            <div style="font-weight: 700; margin-bottom: 5px;">✅ Demo Data Migrated</div>
-            <div style="font-size: 0.9rem;">
+        <div class="vs-notification vs-notification--toast vs-notification--success">
+            <div class="vs-notification__title">✅ Demo Data Migrated</div>
+            <div class="vs-notification__body">
                 Your demo vendors are now in your trial account. You can edit, delete, 
                 or add more vendors up to your 100-vendor trial limit.
             </div>
@@ -450,26 +443,25 @@ function showIndustrySelector() {
             <div class="vs-modal__panel">
                 <div class="vs-modal__header">
                     <div class="vs-modal__title">Select Your Industry</div>
-                    <button class="secondary" onclick="closeIndustryModal()" style="position: absolute; right: 16px; top: 16px; padding: 8px 12px; min-width: auto;">✕</button>
+                    <button class="secondary vs-modal__close-corner" onclick="closeIndustryModal()">✕</button>
                 </div>
                 <div class="vs-modal__body">
-                    <p style="margin-bottom: 20px;">
+                    <p class="vs-industry-lead">
                         We'll pre-load common vendors for your industry to get you started quickly.
                     </p>
                     <div class="vs-grid2">
                         ${industries.map(ind => `
-                            <div class="vs-card" style="cursor: pointer; border: 2px solid var(--border); 
-                                 text-align: center; padding: 30px;"
+                            <div class="vs-card vs-card--industry"
                                  onclick="loadIndustryTemplate('${ind.key}')">
-                                <div style="font-size: 3rem; margin-bottom: 10px;">${ind.icon}</div>
+                                <div class="vs-card__icon-xl">${ind.icon}</div>
                                 <div class="vs-card__title">${ind.name}</div>
-                                <div style="margin-top: 10px; color: var(--muted);">
+                                <div class="vs-card__meta">
                                     ~${ind.vendors} common vendors
                                 </div>
                             </div>
                         `).join('')}
                     </div>
-                    <div style="text-align: center; margin-top: 20px;">
+                    <div class="vs-actions-center">
                         <button class="secondary" onclick="closeIndustryModal()">
                             Never mind, I'll add manually
                         </button>
@@ -655,8 +647,7 @@ function showTrialCountdown() {
     if (!trialData) return;
     
     const banner = `
-        <div class="alert-banner" style="background: var(--vs-green-pale); 
-             border-left: 6px solid var(--vs-green); margin-bottom: 16px;">
+        <div class="alert-banner alert-banner--trial">
             <div class="alert-icon">⏱️</div>
             <div class="alert-content">
                 <div class="alert-title">Trial Active</div>
@@ -684,7 +675,7 @@ function handleTrialExpiration() {
                     <div class="vs-modal__title">Trial Expired</div>
                 </div>
                 <div class="vs-modal__body">
-                    <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                    <p class="vs-lead">
                         Your 14-day trial has ended. Your vendor data is safely stored.
                     </p>
                     <div class="vs-card">
@@ -695,13 +686,13 @@ function handleTrialExpiration() {
                             <li>API access</li>
                             <li>Priority support</li>
                         </ul>
-                        <div style="margin-top: 20px;">
+                        <div class="vs-mt-20">
                             <button class="primary" onclick="upgradeToProfessional()">
                                 Upgrade to Professional
                             </button>
                         </div>
                     </div>
-                    <p style="margin-top: 20px; color: var(--muted); font-size: 0.9rem;">
+                    <p class="vs-muted-note">
                         Your data will remain accessible in read-only mode until you upgrade.
                     </p>
                 </div>
@@ -723,23 +714,22 @@ function startTrial() {
             <div class="vs-modal__panel">
                 <div class="vs-modal__header">
                     <div class="vs-modal__title">Start Your Free Trial</div>
-                    <button class="secondary" onclick="closeTrialSignup()" style="position: absolute; right: 16px; top: 16px; padding: 8px 12px; min-width: auto;">✕</button>
+                    <button class="secondary vs-modal__close-corner" onclick="closeTrialSignup()">✕</button>
                 </div>
                 <div class="vs-modal__body">
                     <form onsubmit="submitTrialSignup(event)">
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">
+                        <div class="vs-form-field">
+                            <label class="vs-label-block" for="trialEmail">
                                 Work Email
                             </label>
                             <input type="email" id="trialEmail" required
-                                   style="width: 100%; padding: 12px; border: 1px solid var(--border); 
-                                          border-radius: 8px; font-size: 1rem;"
+                                   class="vs-input-email"
                                    placeholder="you@company.com">
                         </div>
                         
-                        <div class="vs-card" style="background: var(--vs-green-pale); margin-bottom: 20px;">
+                        <div class="vs-card vs-card--highlight-green">
                             <strong>14-Day Trial Includes:</strong>
-                            <ul class="vs-bullets" style="margin-top: 10px;">
+                            <ul class="vs-bullets vs-bullets--mt">
                                 <li>Up to 100 vendors</li>
                                 <li>Full risk analytics</li>
                                 <li>PDF report generation</li>
@@ -748,11 +738,11 @@ function startTrial() {
                             </ul>
                         </div>
                         
-                        <button type="submit" class="primary" style="width: 100%;">
+                        <button type="submit" class="primary vs-btn-block">
                             Start Free Trial
                         </button>
                         
-                        <p style="margin-top: 15px; font-size: 0.85rem; color: var(--muted); text-align: center;">
+                        <p class="vs-fine-print">
                             No credit card required • Full access for 14 days
                         </p>
                     </form>
@@ -783,17 +773,15 @@ function closeTrialSignup() {
 
 function showTrialWelcome(email) {
     const notification = `
-        <div class="vs-notification" style="position: fixed; top: 80px; right: 20px; 
-             background: var(--vs-green); color: white; padding: 25px; border-radius: 12px; 
-             box-shadow: var(--shadow-lg); z-index: 10000; max-width: 450px;">
-            <div style="font-size: 1.5rem; margin-bottom: 10px;">🎉</div>
-            <div style="font-weight: 700; font-size: 1.2rem; margin-bottom: 8px;">
+        <div class="vs-notification vs-notification--welcome vs-notification--success">
+            <div class="vs-notification__emoji">🎉</div>
+            <div class="vs-notification__headline">
                 Trial Activated!
             </div>
-            <div style="font-size: 0.95rem; margin-bottom: 15px;">
+            <div class="vs-notification__text">
                 Welcome to VendorSoluce, ${email.split('@')[0]}! Your 14-day trial starts now.
             </div>
-            <button class="btn" style="background: white; color: var(--vs-green);" 
+            <button class="btn vs-btn--on-green" 
                     onclick="this.closest('.vs-notification').remove(); showDataOnboarding();">
                 Import Your Vendors →
             </button>
@@ -808,17 +796,15 @@ function showTrialWelcome(email) {
 // ============================================================================
 
 function showNotification(message, type = 'info') {
-    const colors = {
-        success: 'var(--vs-green)',
-        error: 'var(--risk-critical)',
-        warning: 'var(--risk-high)',
-        info: 'var(--vs-green-dark)'
-    };
+    const typeClass = {
+        success: 'vs-notification--success',
+        error: 'vs-notification--error',
+        warning: 'vs-notification--warning',
+        info: 'vs-notification--info'
+    }[type] || 'vs-notification--info';
     
     const notification = `
-        <div class="vs-notification" style="position: fixed; top: 80px; right: 20px; 
-             background: ${colors[type]}; color: white; padding: 20px; border-radius: 12px; 
-             box-shadow: var(--shadow-lg); z-index: 10000; max-width: 400px;">
+        <div class="vs-notification vs-notification--toast ${typeClass}">
             ${message}
         </div>
     `;

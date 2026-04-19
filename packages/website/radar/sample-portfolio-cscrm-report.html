@@ -24,6 +24,12 @@ th{padding:8px;text-align:left;font-weight:600;border-bottom:2px solid #d1d5db}
 .report-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid #e5e7eb;font-size:.75rem;color:#9ca3af;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
 ul{margin:.5rem 0;padding-left:1.5rem}
 @media print{body{padding:.5rem} h1{font-size:1.4rem} .sample-banner{display:none}}
+.sample-vendor-register tbody tr{border-bottom:1px solid #ddd}
+.sample-vendor-register tbody td{padding:6px 8px}
+.sample-vendor-register .cell-num{font-weight:600}
+.sample-vendor-register .risk-critical{color:#DC2626;font-weight:600}
+.sample-vendor-register .risk-high{color:#D97706;font-weight:600}
+.sample-vendor-register .risk-medium{color:#2563EB;font-weight:600}
 </style>
 </head>
 <body>
@@ -63,44 +69,44 @@ Generated: April 18, 2026 &nbsp;|&nbsp;
 <p>5. Supply Chain Visibility — tier and upstream mappings available for 2 vendors.</p>
 <p>6. Portfolio Risk Posture Statement — inherent risk scores may influence procurement and monitoring decisions. This assessment does not assess control effectiveness or residual risk beyond SBOM availability signals.</p>
 <h2>Section 2  -  Vendor Risk Register</h2>
-<table>
+<table class="sample-vendor-register">
 <thead><tr>
 <th>Vendor</th><th>Category</th><th>Sector</th><th>Location</th>
 <th>Inherent</th><th>Residual</th><th>Risk Level</th><th>Data Types</th><th>Source</th>
 </tr></thead>
 <tbody>
-<tr style="border-bottom:1px solid #ddd">
-<td style="padding:6px 8px">Contoso Identity Services</td>
-<td style="padding:6px 8px">Critical</td>
-<td style="padding:6px 8px">Technology</td>
-<td style="padding:6px 8px">United States</td>
-<td style="padding:6px 8px;font-weight:600">88</td>
-<td style="padding:6px 8px">72</td>
-<td style="padding:6px 8px;color:#DC2626;font-weight:600">Critical</td>
-<td style="padding:6px 8px">PII, Credentials</td>
-<td style="padding:6px 8px">Vendor Risk Radar</td>
+<tr>
+<td>Contoso Identity Services</td>
+<td>Critical</td>
+<td>Technology</td>
+<td>United States</td>
+<td class="cell-num">88</td>
+<td>72</td>
+<td class="risk-critical">Critical</td>
+<td>PII, Credentials</td>
+<td>Vendor Risk Radar</td>
 </tr>
-<tr style="border-bottom:1px solid #ddd">
-<td style="padding:6px 8px">Fabrikam Payroll LLC</td>
-<td style="padding:6px 8px">Strategic</td>
-<td style="padding:6px 8px">Finance</td>
-<td style="padding:6px 8px">United States</td>
-<td style="padding:6px 8px;font-weight:600">71</td>
-<td style="padding:6px 8px">65</td>
-<td style="padding:6px 8px;color:#D97706;font-weight:600">High</td>
-<td style="padding:6px 8px">PII, Financial</td>
-<td style="padding:6px 8px">Vendor Risk Radar</td>
+<tr>
+<td>Fabrikam Payroll LLC</td>
+<td>Strategic</td>
+<td>Finance</td>
+<td>United States</td>
+<td class="cell-num">71</td>
+<td>65</td>
+<td class="risk-high">High</td>
+<td>PII, Financial</td>
+<td>Vendor Risk Radar</td>
 </tr>
-<tr style="border-bottom:1px solid #ddd">
-<td style="padding:6px 8px">Northwind Clinical Analytics</td>
-<td style="padding:6px 8px">Tactical</td>
-<td style="padding:6px 8px">Healthcare</td>
-<td style="padding:6px 8px">European Union</td>
-<td style="padding:6px 8px;font-weight:600">54</td>
-<td style="padding:6px 8px">48</td>
-<td style="padding:6px 8px;color:#2563EB;font-weight:600">Medium</td>
-<td style="padding:6px 8px">PHI</td>
-<td style="padding:6px 8px">Vendor Risk Radar</td>
+<tr>
+<td>Northwind Clinical Analytics</td>
+<td>Tactical</td>
+<td>Healthcare</td>
+<td>European Union</td>
+<td class="cell-num">54</td>
+<td>48</td>
+<td class="risk-medium">Medium</td>
+<td>PHI</td>
+<td>Vendor Risk Radar</td>
 </tr>
 </tbody>
 </table>
