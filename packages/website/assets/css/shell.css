@@ -68,7 +68,7 @@ nav button{
   top:var(--nav-height);
 }
 
-/* Canonical theme toggle */
+/* Canonical theme toggle — design tokens (matches per-page inline overrides; avoids hardcoded gray/yellow drift) */
 nav [data-tour="theme-toggle"] button,
 nav button[data-theme-toggle]{
   width:2.25rem !important;
@@ -76,8 +76,8 @@ nav button[data-theme-toggle]{
   min-width:2.25rem !important;
   min-height:2.25rem !important;
   border-radius:.5rem !important;
-  background-color:rgb(243 244 246) !important;
-  color:rgb(55 65 81) !important;
+  background-color:var(--bg-2) !important;
+  color:var(--text-secondary) !important;
   display:inline-flex !important;
   align-items:center !important;
   justify-content:center !important;
@@ -87,18 +87,18 @@ nav button[data-theme-toggle]{
 
 html.dark nav [data-tour="theme-toggle"] button,
 html.dark nav button[data-theme-toggle]{
-  background-color:rgb(55 65 81) !important;
-  color:rgb(250 204 21) !important;
+  background-color:var(--border) !important;
+  color:var(--risk-medium) !important;
 }
 
 nav [data-tour="theme-toggle"] button:hover,
 nav button[data-theme-toggle]:hover{
-  background-color:rgb(229 231 235) !important;
+  background-color:var(--border) !important;
 }
 
 html.dark nav [data-tour="theme-toggle"] button:hover,
 html.dark nav button[data-theme-toggle]:hover{
-  background-color:rgb(75 85 99) !important;
+  background-color:var(--border) !important;
 }
 
 nav [data-tour="theme-toggle"] button svg,
@@ -106,6 +106,11 @@ nav button[data-theme-toggle] svg{
   width:1.25rem !important;
   height:1.25rem !important;
   color:inherit !important;
+}
+
+nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
+nav button[data-theme-toggle] .lucide-sun.hidden-icon{
+  color:var(--risk-medium) !important;
 }
 
 /* Protect brand lockup from active-nav styles */

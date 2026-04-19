@@ -44,6 +44,7 @@ const APP_INDEX = path.join(WEBSITE_DIR, '..', 'app', 'index.html');
 
 const EXCLUDED = [
   'steel/index.html',
+  'radar/sample-portfolio-cscrm-report.html',
   'radar/test-radar.html',
   'radar/test-radar-functional.html',
   'radar/verify-radar.html',

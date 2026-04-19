@@ -46,6 +46,34 @@
     <link href="assets/css/components.css" rel="stylesheet"/>
     <link href="assets/css/product.css" rel="stylesheet"/>
   <style>
+    .bg-vendorsoluce-green { background-color: var(--vendorsoluce-green); }
+    .text-vendorsoluce-green {
+      color: var(--vendorsoluce-green) !important;
+    }
+    html:not(.dark) .text-vendorsoluce-green,
+    :not(.dark) .text-vendorsoluce-green {
+      color: var(--vendorsoluce-green) !important;
+    }
+    html:not(.dark) span[class*="text-vendorsoluce-green/80"],
+    :not(.dark) span[class*="text-vendorsoluce-green/80"] {
+      color: var(--text-secondary) !important;
+    }
+    html.dark .text-vendorsoluce-green,
+    .dark .text-vendorsoluce-green,
+    html[class*="dark"] .text-vendorsoluce-green,
+    [class*="dark"] .text-vendorsoluce-green {
+      color: white !important;
+    }
+    html.dark .text-vendorsoluce-light-green,
+    .dark .text-vendorsoluce-light-green {
+      color: var(--vendorsoluce-light-green) !important;
+    }
+    html.dark span[class*="text-vendorsoluce-green/80"],
+    .dark span[class*="text-vendorsoluce-green/80"],
+    html[class*="dark"] span[class*="text-vendorsoluce-green/80"],
+    [class*="dark"] span[class*="text-vendorsoluce-green/80"] {
+      color: var(--vendorsoluce-light-green) !important;
+    }
     /* Navigation link styles - consistent with CyberCaution pattern */
     .nav-link {
       color: var(--muted);
@@ -209,6 +237,8 @@
     }
     .vs-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 6px;font-size:0.65em;background:rgb(var(--accent-rgb) / 0.12);color:var(--vendorsoluce-green);font-weight:600;vertical-align:middle;border:none}
     html.dark .vs-badge{background:rgb(var(--accent-2-rgb) / 0.18);color:var(--vendorsoluce-light-green)}
+    nav.sticky.top-0 { z-index: 99999 !important; pointer-events: auto !important; isolation: isolate; }
+    nav.sticky.top-0 a[href] { pointer-events: auto !important; cursor: pointer; }
   </style>
   <!-- VSS static SEO: canonical + Open Graph + Twitter + JSON-LD (ERMITS baseline) -->
 <link rel="canonical" href="https://www.vendorsoluce.com/">
@@ -249,50 +279,11 @@
   <link href="assets/css/shell.css" rel="stylesheet"/>
 </head>
   <body>
+    <div id="root" class="min-w-0"><div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col min-w-0 w-full">
     <!-- CANONICAL HEADER — Nav below; mobile drawer fragment: includes/mobile-menu-panel.html (npm run sync:mobile-menu). JS: assets/js/navigation.js -->
 <style>
   .tagline-text { letter-spacing: -0.02em; margin-top: -3px; }
 #root, #root > div { pointer-events: auto !important; }
-  /* Theme toggle: match homepage header (fixed shape, color, contrast) on all pages */
-  nav [data-tour="theme-toggle"] button,
-  nav button[data-theme-toggle] {
-    width: 2.25rem !important;
-    height: 2.25rem !important;
-    min-width: 2.25rem !important;
-    min-height: 2.25rem !important;
-    border-radius: 0.5rem !important;
-    background-color: var(--bg-2) !important;
-    color: var(--text-secondary) !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-shrink: 0 !important;
-    transition: all 0.2s ease !important;
-  }
-  html.dark nav [data-tour="theme-toggle"] button,
-  html.dark nav button[data-theme-toggle] {
-    background-color: var(--border) !important;
-    color: var(--risk-medium) !important;
-  }
-  nav [data-tour="theme-toggle"] button:hover,
-  nav button[data-theme-toggle]:hover {
-    background-color: var(--border) !important;
-  }
-  html.dark nav [data-tour="theme-toggle"] button:hover,
-  html.dark nav button[data-theme-toggle]:hover {
-    background-color: var(--border) !important;
-  }
-  /* Theme toggle icons: same size and color on all pages */
-  nav [data-tour="theme-toggle"] button svg,
-  nav button[data-theme-toggle] svg {
-    width: 1.25rem !important;
-    height: 1.25rem !important;
-    color: inherit !important;
-  }
-  nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
-  nav button[data-theme-toggle] .lucide-sun.hidden-icon {
-    color: var(--risk-medium) !important;
-  }
 </style>
 <nav class="glass-nav-vs fixed top-0 left-0 right-0 z-[99999] w-full max-w-[100vw]" aria-label="Main navigation">
   <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 w-full min-w-0">
@@ -474,7 +465,7 @@
       </div>
     </div>
   </div>
-</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 pt-[var(--nav-height,64px)] bg-gray-100 dark:bg-gray-800/70">
+</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 min-w-0 w-full pt-[var(--nav-height,64px)]">
 
 
 <section id="hero" class="relative text-white pt-4 sm:pt-6 pb-10 sm:pb-16 px-6 sm:px-8 lg:px-12 overflow-hidden">
@@ -497,8 +488,8 @@
           Run Vendor Exposure Check
           <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
-        <a href="radar/vendor-inherent-risk-report.html" class="vs-btn-outline group text-sm">
-          See View Sample Brief
+        <a href="radar/sample-portfolio-cscrm-report.html" class="vs-btn-outline group text-sm">
+          View sample report
           <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
       </div>
@@ -507,55 +498,47 @@
   </div>
 </section>
 <section id="what-you-get" class="relative z-10 -mt-2 pb-6 md:pb-8 px-6 sm:px-8 lg:px-12">
-  <div class="max-w-5xl mx-auto">
-    <div class="vs-card rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5 md:p-6 shadow-lg">
-      <div class="text-center mb-5">
-        <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2">What you get fast</h2>
-        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">A practical starting point for vendor exposure triage before you move into a fuller due diligence workflow.</p>
+  <div class="max-w-3xl mx-auto text-center">
+    <div class="vs-card rounded-2xl border border-gray-200/90 dark:border-gray-700/90 bg-white dark:bg-gray-900 px-5 py-6 md:px-8 md:py-8 shadow-lg shadow-gray-200/40 dark:shadow-none">
+      <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white tracking-tight">What you get fast</h2>
+      <p class="text-sm text-gray-600 dark:text-gray-300 mt-2 max-w-xl mx-auto leading-relaxed">A quick read on vendor exposure so security and procurement can agree what to review first—not a full diligence program.</p>
+
+      <div class="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+        <div class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/80 dark:bg-gray-800/40 px-4 py-4 md:px-5 md:py-5 transition-colors hover:border-vendorsoluce-green/35 dark:hover:border-vendorsoluce-light-green/25">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-xs font-bold text-vendorsoluce-green dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green mx-auto mb-2">1</span>
+          <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Exposure snapshot</h3>
+          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1.5 leading-snug max-w-[16rem] mx-auto">Which vendors need attention first.</p>
+        </div>
+        <div class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/80 dark:bg-gray-800/40 px-4 py-4 md:px-5 md:py-5 transition-colors hover:border-vendorsoluce-green/35 dark:hover:border-vendorsoluce-light-green/25">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-xs font-bold text-vendorsoluce-green dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green mx-auto mb-2">2</span>
+          <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Priority order</h3>
+          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1.5 leading-snug max-w-[16rem] mx-auto">Who to dig into before you spread effort across the list.</p>
+        </div>
+        <div class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/80 dark:bg-gray-800/40 px-4 py-4 md:px-5 md:py-5 transition-colors hover:border-vendorsoluce-green/35 dark:hover:border-vendorsoluce-light-green/25">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-xs font-bold text-vendorsoluce-green dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green mx-auto mb-2">3</span>
+          <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Risk signals</h3>
+          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1.5 leading-snug max-w-[16rem] mx-auto">Concentration, critical dependencies, and evidence gaps.</p>
+        </div>
+        <div class="group rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/80 dark:bg-gray-800/40 px-4 py-4 md:px-5 md:py-5 transition-colors hover:border-vendorsoluce-green/35 dark:hover:border-vendorsoluce-light-green/25">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-xs font-bold text-vendorsoluce-green dark:bg-vendorsoluce-green/20 dark:text-vendorsoluce-light-green mx-auto mb-2">4</span>
+          <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Stakeholder-ready output</h3>
+          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1.5 leading-snug max-w-[16rem] mx-auto">Clear enough for leadership and audit—not slide-deck opinions.</p>
+        </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div class="rounded-lg border border-vendorsoluce-green/25 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4">
-          <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Exposure snapshot</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-300">See which vendors create the highest initial concern.</p>
-        </div>
-        <div class="rounded-lg border border-vendorsoluce-green/25 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4">
-          <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Priority ranking</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-300">Identify who needs deeper review first instead of reviewing everyone equally.</p>
-        </div>
-        <div class="rounded-lg border border-vendorsoluce-green/25 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4">
-          <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Decision signals</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-300">Get practical flags for concentration, dependency, and evidence gaps.</p>
-        </div>
-        <div class="rounded-lg border border-vendorsoluce-green/25 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-4">
-          <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Sample executive brief</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-300">Show stakeholders what a defensible vendor exposure report looks like.</p>
-        </div>
-      </div>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6">
-        <a href="radar/vendor-threat-radar.html" class="vs-btn-primary group">
+
+      <div class="mt-8 flex justify-center">
+        <a href="radar/vendor-threat-radar.html" class="vs-btn-primary group text-sm py-2.5 px-6 inline-flex items-center justify-center gap-2">
           Open Vendor Threat Radar
           <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
-        <a href="radar/vendor-inherent-risk-report.html" class="vs-btn-outline group text-sm">
-          Review Sample Exposure Brief
-          <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
       </div>
-      <div class="mt-6 rounded-xl border border-vendorsoluce-green/25 bg-vendorsoluce-green/5 dark:bg-vendorsoluce-green/10 p-5 md:p-6">
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-1">Monetize the first decision</p>
-            <h3 class="text-lg md:text-xl font-bold text-gray-900 dark:text-white">Buy the Vendor Exposure Brief before you commit to a larger rollout</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-300 mt-2 max-w-2xl">Start with a defensible brief for one vendor set: ranked exposure, decision summary, immediate actions, and an executive-ready artifact you can use internally.</p>
-          </div>
-          <div class="flex flex-col sm:flex-row gap-3 lg:justify-end">
-            <a href="pricing.html#starter-brief" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-vendorsoluce-green hover:bg-[#2A5618] text-white font-semibold transition-colors shadow-md">Buy the Brief
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
-            <a href="radar/vendor-inherent-risk-report.html" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg border border-vendorsoluce-green text-vendorsoluce-green dark:text-vendorsoluce-light-green dark:border-vendorsoluce-light-green font-semibold hover:bg-vendorsoluce-green/5 transition-colors">See what is included</a>
-          </div>
-        </div>
-      </div>
+      <p class="mt-5 text-xs text-gray-500 dark:text-gray-400 max-w-md mx-auto leading-relaxed">
+        <a href="radar/sample-portfolio-cscrm-report.html" class="text-vendorsoluce-green dark:text-vendorsoluce-light-green font-medium hover:underline">Sample portfolio report</a>
+        <span class="text-gray-300 dark:text-gray-600 mx-2" aria-hidden="true">·</span>
+        <a href="pricing.html#starter-brief" class="text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green dark:hover:text-vendorsoluce-light-green hover:underline">Vendor Exposure Brief pricing</a>
+        <span class="text-gray-300 dark:text-gray-600 mx-2" aria-hidden="true">·</span>
+        <a href="radar/vendor-inherent-risk-report.html" class="text-gray-600 dark:text-gray-400 hover:text-vendorsoluce-green dark:hover:text-vendorsoluce-light-green hover:underline">Reports overview</a>
+      </p>
     </div>
   </div>
 </section>
@@ -989,6 +972,7 @@ html.dark footer > div > div:last-child {
     </div>
   </div>
 </footer>
+    </div></div>
 
 
 
@@ -1013,18 +997,6 @@ html.dark footer > div > div:last-child {
 
 
 
-
-
-
-
-
-
-
-
-
-
-      </div>
-    </div>
 
 
 

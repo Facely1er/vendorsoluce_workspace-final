@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Illustrative portfolio C-SCRM report (sample) | VendorSoluce&trade;</title>
+<meta name="robots" content="noindex, follow">
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;line-height:1.6;color:#1a1a2e;max-width:1100px;margin:0 auto;padding:2rem}
+h1{color:#33691E;font-size:1.8rem;margin-bottom:.25rem}
+h2{color:#1e3a5f;font-size:1.15rem;margin-top:2rem;border-bottom:2px solid #e5e7eb;padding-bottom:.35rem}
+h3{color:#374151;font-size:1rem;margin-top:1.25rem}
+.sample-banner{background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:.75rem 1rem;margin-bottom:1.5rem;font-size:.875rem;color:#92400e}
+.sample-banner strong{color:#78350f}
+.cover-meta{color:#6b7280;font-size:.875rem;margin-bottom:2rem}
+.cover-risk-summary{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1.5rem 0}
+.risk-kpi{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:.75rem 1.25rem;min-width:100px;text-align:center}
+.risk-kpi .num{font-size:1.75rem;font-weight:700}
+.risk-kpi .lbl{font-size:.75rem;color:#6b7280}
+.critical .num{color:#DC2626} .high .num{color:#D97706} .medium .num{color:#2563EB} .low .num{color:#16A34A}
+table{width:100%;border-collapse:collapse;font-size:.875rem;margin-top:.75rem}
+thead tr{background:#f3f4f6}
+th{padding:8px;text-align:left;font-weight:600;border-bottom:2px solid #d1d5db}
+.report-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid #e5e7eb;font-size:.75rem;color:#9ca3af;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+ul{margin:.5rem 0;padding-left:1.5rem}
+@media print{body{padding:.5rem} h1{font-size:1.4rem} .sample-banner{display:none}}
+</style>
+</head>
+<body>
+<p class="sample-banner"><strong>Illustrative sample only.</strong> Fictional vendors and scores for layout review. <a href="vendor-threat-radar.html#vendor-inherent-risk-report">Generate a report from your portfolio</a> in Vendor Threat Radar.</p>
+<h1>Portfolio C-SCRM Report</h1>
+<div class="cover-meta">
+Prepared for: <strong>Example Health System</strong> &nbsp;|&nbsp;
+Generated: April 18, 2026 &nbsp;|&nbsp;
+<span id="reportId">Report ID: VS-RPT-SAMPLE-ILLUSTRATIVE</span>
+</div>
+<div class="cover-risk-summary">
+<div class="risk-kpi critical"><div class="num">1</div><div class="lbl">Critical</div></div>
+<div class="risk-kpi high"><div class="num">1</div><div class="lbl">High</div></div>
+<div class="risk-kpi medium"><div class="num">1</div><div class="lbl">Medium</div></div>
+<div class="risk-kpi low"><div class="num">0</div><div class="lbl">Low</div></div>
+<div class="risk-kpi"><div class="num">3</div><div class="lbl">Total</div></div>
+<div class="risk-kpi"><div class="num">71</div><div class="lbl">Avg Score</div></div>
+</div>
+<ol>
+<li>Section 1  -  Executive Summary</li>
+<li>Section 1b  -  Portfolio Risk Posture</li>
+<li>Section 2  -  Vendor Risk Register</li>
+<li>Section 5b  -  Dependency &amp; Cascade</li>
+<li>Section 5  -  Recommended Actions</li>
+<li>Appendix  -  Methodology</li>
+</ol>
+<h2>Section 1  -  Executive Summary</h2>
+<p><strong>Purpose &amp; Scope</strong></p>
+<p>This C-SCRM portfolio report covers <strong>3 vendors</strong> managed by <strong>Example Health System</strong>, aligned to NIST SP 800-161 Rev. 1. It provides an inherent risk register, sector and geographic analysis, dependency intelligence, and prioritised recommendations.</p>
+<p>Portfolio Risk Overview</p>
+<p>Risk Distribution Breakdown</p>
+<h2>Section 1b  -  Portfolio Risk Posture</h2>
+<p>1. Vendor Risk Distribution — 1 critical, 1 high, 1 medium, 0 low.</p>
+<p>2. Dependency Concentration — 2 vendors with mapped dependencies.</p>
+<p>3. Operational Exposure — based on population impacted and service criticality across the portfolio.</p>
+<p>4. Data Exposure Overview — data types handled include: PII, Financial, PHI, Credentials.</p>
+<p>5. Supply Chain Visibility — tier and upstream mappings available for 2 vendors.</p>
+<p>6. Portfolio Risk Posture Statement — inherent risk scores may influence procurement and monitoring decisions. This assessment does not assess control effectiveness or residual risk beyond SBOM availability signals.</p>
+<h2>Section 2  -  Vendor Risk Register</h2>
+<table>
+<thead><tr>
+<th>Vendor</th><th>Category</th><th>Sector</th><th>Location</th>
+<th>Inherent</th><th>Residual</th><th>Risk Level</th><th>Data Types</th><th>Source</th>
+</tr></thead>
+<tbody>
+<tr style="border-bottom:1px solid #ddd">
+<td style="padding:6px 8px">Contoso Identity Services</td>
+<td style="padding:6px 8px">Critical</td>
+<td style="padding:6px 8px">Technology</td>
+<td style="padding:6px 8px">United States</td>
+<td style="padding:6px 8px;font-weight:600">88</td>
+<td style="padding:6px 8px">72</td>
+<td style="padding:6px 8px;color:#DC2626;font-weight:600">Critical</td>
+<td style="padding:6px 8px">PII, Credentials</td>
+<td style="padding:6px 8px">Vendor Risk Radar</td>
+</tr>
+<tr style="border-bottom:1px solid #ddd">
+<td style="padding:6px 8px">Fabrikam Payroll LLC</td>
+<td style="padding:6px 8px">Strategic</td>
+<td style="padding:6px 8px">Finance</td>
+<td style="padding:6px 8px">United States</td>
+<td style="padding:6px 8px;font-weight:600">71</td>
+<td style="padding:6px 8px">65</td>
+<td style="padding:6px 8px;color:#D97706;font-weight:600">High</td>
+<td style="padding:6px 8px">PII, Financial</td>
+<td style="padding:6px 8px">Vendor Risk Radar</td>
+</tr>
+<tr style="border-bottom:1px solid #ddd">
+<td style="padding:6px 8px">Northwind Clinical Analytics</td>
+<td style="padding:6px 8px">Tactical</td>
+<td style="padding:6px 8px">Healthcare</td>
+<td style="padding:6px 8px">European Union</td>
+<td style="padding:6px 8px;font-weight:600">54</td>
+<td style="padding:6px 8px">48</td>
+<td style="padding:6px 8px;color:#2563EB;font-weight:600">Medium</td>
+<td style="padding:6px 8px">PHI</td>
+<td style="padding:6px 8px">Vendor Risk Radar</td>
+</tr>
+</tbody>
+</table>
+<h2>Section 5b  -  Dependency &amp; Cascade</h2>
+<p>2 vendors with mapped dependencies.</p>
+<p>Shared dependency concentration:</p>
+<ul>
+<li><strong>Example Cloud Provider</strong> — shared by 2 vendors</li>
+</ul>
+<h2>Section 5  -  Recommended Actions</h2>
+<ul>
+<li>Conduct immediate risk review for 1 critical-risk vendor.</li>
+<li>Schedule remediation planning for 1 high-risk vendor within 30 days.</li>
+<li>Review shared dependency concentration: Example Cloud Provider (2 vendors).</li>
+</ul>
+<h2>Appendix  -  Methodology</h2>
+<p>Inherent Risk Methodology</p>
+<p><strong>Inherent risk:</strong> scored 0–100 based on vendor criticality category (critical/strategic/tactical/commodity), data types handled (PII, PHI, Financial, IP, etc.), SBOM availability, sector, geography, service type, and population impacted. Aligned with NIST SP 800-161 Rev. 1 C-SCRM principles.</p>
+<p><strong>Residual risk:</strong> inherent risk minus applicable control credits (e.g. SBOM on file). Does not reflect full control effectiveness; use full VIRA assessment for comprehensive residual analysis.</p>
+<p>NIST SP 800-161 Rev. 1 · FIPS 199 · EO 14028 alignment</p>
+<div class="report-footer">
+<span>Generated by VendorSoluce&trade; Vendor Threat Radar &mdash; illustrative sample</span>
+<span>Report ID: VS-RPT-SAMPLE-ILLUSTRATIVE</span>
+</div>
+</body>
+</html>
