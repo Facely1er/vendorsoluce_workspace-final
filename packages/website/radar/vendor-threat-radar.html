@@ -1889,6 +1889,12 @@ Export portfolio
 <option value="medium">Medium</option>
 <option value="low">Low</option>
 </select>
+<button type="button" class="secondary" onclick="if(typeof startTrial==='function')startTrial();" id="startTrialBtn" title="Start your free 14-day trial for up to 100 vendors and full report exports" style="background:var(--vendorsoluce-green);color:#fff;border:none;">
+<svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+Start Free Trial
+</button>
 <button class="secondary" onclick="scanVendors()">
 <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
@@ -2784,12 +2790,26 @@ html.dark footer > div > div:last-child {
 </div>
   <script src="./radar-first-run.js"></script>
   <script src="./radar-interactions.js"></script>
+  <script src="./data-management-strategy.js"></script>
   <script src="./radar-runtime.js"></script>
   <script>
     initRadarModeSelector();
     window.openAddVendor = openAddVendor;
     window.downloadVendorCsvTemplate = downloadVendorCsvTemplate;
     window.importVendors = importVendors;
+    // Hide "Start Free Trial" button when trial is already active
+    (function() {
+      try {
+        var raw = localStorage.getItem('vendorsoluce_trial');
+        if (raw) {
+          var d = JSON.parse(raw);
+          if (!d.expired && new Date() < new Date(d.expiresAt)) {
+            var btn = document.getElementById('startTrialBtn');
+            if (btn) btn.style.display = 'none';
+          }
+        }
+      } catch (e) {}
+    })();
   </script>
   <script src="../includes/analytics.js" defer></script>
 </body>
