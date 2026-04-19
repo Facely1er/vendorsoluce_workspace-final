@@ -1013,3 +1013,61 @@ html.dark .cta-section .cta-btn-outline {
 html.dark .cta-section .cta-btn-outline:hover {
   background: rgba(102, 187, 106, 0.12);
 }
+
+/* --- Page-local utilities (replaces former inline styles) --- */
+.vira-doc .info-box--mt1 {
+  margin-top: 1rem;
+}
+
+.vira-doc .vira-tight-list--mt {
+  margin-top: 0.5rem;
+}
+
+.vira-doc .formula-line--mt {
+  margin-top: 0.5rem;
+}
+
+.vira-doc .section-body--mt1 {
+  margin-top: 1rem;
+}
+
+.vira-doc .override-note {
+  font-size: 0.72rem;
+  color: var(--txt3);
+  font-weight: 400;
+}
+
+.vira-doc .override-table td.override-rationale {
+  color: var(--txt2);
+}
+
+.vira-doc .dd-tier-name.dd-tier-crit {
+  color: var(--c-crit);
+}
+
+.vira-doc .dd-tier-name.dd-tier-high {
+  color: var(--c-high);
+}
+
+.vira-doc .dd-tier-name.dd-tier-med {
+  color: var(--c-med);
+}
+
+.vira-doc .dd-tier-name.dd-tier-low {
+  color: var(--c-low);
+}
+
+.vira-doc .dd-tier-desc {
+  font-size: 0.8rem;
+  color: var(--txt2);
+  margin-bottom: 0.625rem;
+  line-height: 1.45;
+}
+
+.vira-doc .process-flow--mt {
+  margin-top: 1.75rem;
+}
+
+.vira-doc .compare-table.compare-table--mt15 {
+  margin-top: 1.5rem;
+}
