@@ -608,7 +608,13 @@ function activateTrial(email) {
     
     // Switch to trial mode
     currentMode = 'trial';
-    initializeApp();
+
+    // Notify radar-runtime so it migrates session data to localStorage and shows banner
+    if (typeof window.onTrialActivated === 'function') {
+        window.onTrialActivated();
+    } else {
+        initializeApp();
+    }
     
     return trialData;
 }

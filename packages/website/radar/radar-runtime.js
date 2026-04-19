@@ -3,6 +3,7 @@
  *
  * Implements all interactive functions for vendor-threat-radar.html.
  * Depends on: Chart.js 4 (loaded globally), radar-first-run.js, radar-interactions.js.
+ * Optional: data-management-strategy.js (trial/upgrade flows).
  *
  * All public functions are assigned to `window` so the inline init script
  * (and onclick handlers in the HTML) can resolve them without a module system.
@@ -11,7 +12,9 @@
   'use strict';
 
   // ─────────────────────────────────────────────────────────────────────────
-  // Storage
+  // Storage — mode-aware
+  //   Demo (default) : sessionStorage — data clears when browser closes
+  //   Trial active   : localStorage   — data persists across sessions
   // ─────────────────────────────────────────────────────────────────────────
   var STORAGE_KEY = 'vendorsoluce_vendors';
   var RADAR_PORTFOLIO_FORMAT = 'vendorsoluce-radar-portfolio';
@@ -22,6 +25,23 @@
   var filterLevel = 'all';
   var chartInstances = { inherent: null, sector: null, geo: null };
   var sonarAnimFrame = null;
+
+  /** Returns true when a non-expired trial entry exists in localStorage. */
+  function isTrialActive() {
+    try {
+      var raw = localStorage.getItem('vendorsoluce_trial');
+      if (!raw) return false;
+      var d = JSON.parse(raw);
+      return !d.expired && new Date() < new Date(d.expiresAt);
+    } catch (e) { return false; }
+  }
+
+  /** Returns the correct storage object for the current mode. */
+  function getStorage() {
+    return isTrialActive() ? localStorage : sessionStorage;
+  }
+
+  var MS_PER_DAY = 86400000;
 
   // ─────────────────────────────────────────────────────────────────────────
   // Risk calculation (ported from packages/app/src/utils/riskCalculations.ts)
@@ -161,7 +181,8 @@
   // ─────────────────────────────────────────────────────────────────────────
   function loadVendors() {
     try {
-      var stored = localStorage.getItem(STORAGE_KEY);
+      var storage = getStorage();
+      var stored = storage.getItem(STORAGE_KEY);
       if (stored) {
         var parsed = JSON.parse(stored);
         vendorData = Array.isArray(parsed) ? parsed : [];
@@ -173,7 +194,7 @@
 
   function saveVendors() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(vendorData));
+      getStorage().setItem(STORAGE_KEY, JSON.stringify(vendorData));
     } catch (e) {}
   }
 
@@ -448,7 +469,7 @@
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    // Risk-level ring labels
+    // Risk-level ring labels (numeric scores on the right)
     var labelColor = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.3)';
     ctx.fillStyle = labelColor;
     ctx.font = '10px sans-serif';
@@ -458,7 +479,35 @@
       ctx.fillText(lbl, cx + 4, cy - r * frac + 3);
     });
 
-    // Dots
+    // Risk-zone band labels inside rings (top-left quadrant)
+    var zoneMeta = [
+      { label: 'Critical', from: 0.75, to: 1,    color: isDark ? 'rgba(252,165,165,0.55)' : 'rgba(220,38,38,0.35)' },
+      { label: 'High',     from: 0.50, to: 0.75,  color: isDark ? 'rgba(253,186,116,0.45)' : 'rgba(217,119,6,0.3)' },
+      { label: 'Medium',   from: 0.25, to: 0.50,  color: isDark ? 'rgba(147,197,253,0.4)'  : 'rgba(37,99,235,0.25)' },
+      { label: 'Low',      from: 0,    to: 0.25,  color: isDark ? 'rgba(134,239,172,0.4)'  : 'rgba(22,163,74,0.25)' },
+    ];
+    ctx.font = 'bold 9px sans-serif';
+    ctx.textAlign = 'right';
+    zoneMeta.forEach(function (z) {
+      var midFrac = (z.from + z.to) / 2;
+      var midR = midFrac * r;
+      // Place label at 315° (upper-left diagonal) for each zone
+      var angle = -Math.PI * 3 / 4;
+      var lx = cx + midR * Math.cos(angle) - 3;
+      var ly = cy + midR * Math.sin(angle) + 4;
+      ctx.fillStyle = z.color;
+      ctx.fillText(z.label, lx, ly);
+    });
+    ctx.textAlign = 'left';
+
+    // Axis direction hint along the bottom of the canvas
+    ctx.font = '9px sans-serif';
+    ctx.fillStyle = labelColor;
+    ctx.textAlign = 'center';
+    ctx.fillText('Risk score (distance from centre)', cx, h - 4);
+    ctx.textAlign = 'left';
+
+    // Dots — dim blips that don't match the active filter
     var colorMap = { critical: '#DC2626', high: '#D97706', medium: '#2563EB', low: '#16A34A' };
     if (vendorData.length === 0) return;
     vendorData.forEach(function (v, i) {
@@ -468,13 +517,16 @@
       var x = cx + dist * Math.cos(angle);
       var y = cy + dist * Math.sin(angle);
       var tier = getRiskTier(score);
+      var matched = filterLevel === 'all' || tier === filterLevel;
       ctx.beginPath();
-      ctx.arc(x, y, 5, 0, Math.PI * 2);
-      ctx.fillStyle = colorMap[tier];
+      ctx.arc(x, y, matched ? 5 : 3, 0, Math.PI * 2);
+      ctx.fillStyle = matched ? colorMap[tier] : (isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)');
       ctx.fill();
-      ctx.strokeStyle = isDark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.7)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
+      if (matched) {
+        ctx.strokeStyle = isDark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.7)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
     });
   }
 
@@ -750,6 +802,7 @@
     var sel = document.getElementById('riskFilter');
     filterLevel = sel ? sel.value : 'all';
     updateVendorList();
+    updateSonarCanvas(); // keep exposure map in sync with filter
   }
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -1273,12 +1326,59 @@
   window.addEventListener('resize', function () { updateSonarCanvas(); });
 
   // ─────────────────────────────────────────────────────────────────────────
+  // Trial countdown banner
+  // ─────────────────────────────────────────────────────────────────────────
+  function showTrialBannerIfActive() {
+    try {
+      var raw = localStorage.getItem('vendorsoluce_trial');
+      if (!raw) return;
+      var d = JSON.parse(raw);
+      if (d.expired || new Date() >= new Date(d.expiresAt)) return;
+      var daysLeft = Math.max(0, Math.ceil((new Date(d.expiresAt) - Date.now()) / MS_PER_DAY));
+      // Don't inject more than once
+      if (document.getElementById('trialCountdownBanner')) return;
+      var container = document.querySelector('.radar-container');
+      if (!container) return;
+      var banner = document.createElement('div');
+      banner.id = 'trialCountdownBanner';
+      banner.className = 'alert-banner warning';
+      banner.style.cssText = 'margin-bottom:16px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border-left:4px solid var(--risk-medium);';
+      banner.innerHTML =
+        '<div class="alert-content" style="flex:1;">' +
+          '<div class="alert-title">Free Trial Active \u2014 ' + daysLeft + ' day' + (daysLeft !== 1 ? 's' : '') + ' remaining</div>' +
+          '<div style="font-size:.8125rem;">' + vendorData.length + ' / 100 vendors used \u00b7 Upgrade for unlimited access</div>' +
+        '</div>' +
+        '<a href="https://app.vendorsoluce.com/pricing?from=radar-trial" target="_blank" rel="noopener noreferrer" ' +
+          'style="background:var(--risk-medium);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:.8125rem;font-weight:600;text-decoration:none;white-space:nowrap;">Upgrade</a>';
+      container.insertBefore(banner, container.firstChild);
+    } catch (e) {}
+  }
+
+  /**
+   * Called by data-management-strategy.js after trial is activated.
+   * Migrates any existing sessionStorage data to localStorage so the user
+   * doesn't lose vendors they already added in demo mode.
+   */
+  function onTrialActivated() {
+    try {
+      var sessionVendors = sessionStorage.getItem(STORAGE_KEY);
+      if (sessionVendors && localStorage.getItem(STORAGE_KEY) === null) {
+        localStorage.setItem(STORAGE_KEY, sessionVendors);
+        vendorData = JSON.parse(sessionVendors) || [];
+      }
+    } catch (e) {}
+    showTrialBannerIfActive();
+    updateAllDisplays();
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
   // Initialisation
   // ─────────────────────────────────────────────────────────────────────────
   function init() {
     loadVendors();
     setupFormSubmit();
     updateAllDisplays();
+    showTrialBannerIfActive();
   }
 
   if (document.readyState === 'loading') {
@@ -1310,4 +1410,7 @@
   window.initRadarModeSelector = initRadarModeSelector;
   window.updateAllDisplays = updateAllDisplays;
   window.addVendorsToWorkingList = addVendorsToWorkingList;
+  window.showTrialBannerIfActive = showTrialBannerIfActive;
+  window.onTrialActivated = onTrialActivated;
+  window.isTrialActive = isTrialActive;
 })();
