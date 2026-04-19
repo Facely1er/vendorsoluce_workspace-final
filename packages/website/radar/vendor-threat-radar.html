@@ -2800,13 +2800,9 @@ html.dark footer > div > div:last-child {
     // Hide "Start Free Trial" button when trial is already active
     (function() {
       try {
-        var raw = localStorage.getItem('vendorsoluce_trial');
-        if (raw) {
-          var d = JSON.parse(raw);
-          if (!d.expired && new Date() < new Date(d.expiresAt)) {
-            var btn = document.getElementById('startTrialBtn');
-            if (btn) btn.style.display = 'none';
-          }
+        if (typeof isTrialActive === 'function' && isTrialActive()) {
+          var btn = document.getElementById('startTrialBtn');
+          if (btn) btn.style.display = 'none';
         }
       } catch (e) {}
     })();

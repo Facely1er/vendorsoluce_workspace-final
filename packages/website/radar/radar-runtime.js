@@ -41,6 +41,8 @@
     return isTrialActive() ? localStorage : sessionStorage;
   }
 
+  var MS_PER_DAY = 86400000;
+
   // ─────────────────────────────────────────────────────────────────────────
   // Risk calculation (ported from packages/app/src/utils/riskCalculations.ts)
   // ─────────────────────────────────────────────────────────────────────────
@@ -1332,7 +1334,7 @@
       if (!raw) return;
       var d = JSON.parse(raw);
       if (d.expired || new Date() >= new Date(d.expiresAt)) return;
-      var daysLeft = Math.max(0, Math.ceil((new Date(d.expiresAt) - Date.now()) / 86400000));
+      var daysLeft = Math.max(0, Math.ceil((new Date(d.expiresAt) - Date.now()) / MS_PER_DAY));
       // Don't inject more than once
       if (document.getElementById('trialCountdownBanner')) return;
       var container = document.querySelector('.radar-container');
@@ -1343,8 +1345,8 @@
       banner.style.cssText = 'margin-bottom:16px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border-left:4px solid var(--risk-medium);';
       banner.innerHTML =
         '<div class="alert-content" style="flex:1;">' +
-          '<div class="alert-title">Free Trial Active &mdash; ' + daysLeft + ' day' + (daysLeft !== 1 ? 's' : '') + ' remaining</div>' +
-          '<div style="font-size:.8125rem;">' + vendorData.length + ' / 100 vendors used &middot; Upgrade for unlimited access</div>' +
+          '<div class="alert-title">Free Trial Active \u2014 ' + daysLeft + ' day' + (daysLeft !== 1 ? 's' : '') + ' remaining</div>' +
+          '<div style="font-size:.8125rem;">' + vendorData.length + ' / 100 vendors used \u00b7 Upgrade for unlimited access</div>' +
         '</div>' +
         '<a href="https://app.vendorsoluce.com/pricing?from=radar-trial" target="_blank" rel="noopener noreferrer" ' +
           'style="background:var(--risk-medium);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:.8125rem;font-weight:600;text-decoration:none;white-space:nowrap;">Upgrade</a>';
@@ -1360,7 +1362,7 @@
   function onTrialActivated() {
     try {
       var sessionVendors = sessionStorage.getItem(STORAGE_KEY);
-      if (sessionVendors && !localStorage.getItem(STORAGE_KEY)) {
+      if (sessionVendors && localStorage.getItem(STORAGE_KEY) === null) {
         localStorage.setItem(STORAGE_KEY, sessionVendors);
         vendorData = JSON.parse(sessionVendors) || [];
       }
@@ -1410,4 +1412,5 @@
   window.addVendorsToWorkingList = addVendorsToWorkingList;
   window.showTrialBannerIfActive = showTrialBannerIfActive;
   window.onTrialActivated = onTrialActivated;
+  window.isTrialActive = isTrialActive;
 })();
