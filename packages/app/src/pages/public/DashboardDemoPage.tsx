@@ -281,7 +281,7 @@ const DashboardDemoPage: React.FC = () => {
                   <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
                     Save vendors, assessments, and SBOM history to your tenant. Same navigation—real persistence.
                   </p>
-                  <div className="mt-5 space-y-2">
+                  <div className="mt-5 flex flex-col gap-4">
                     <Link to="/signin" className="block">
                       <Button variant="primary" size="sm" className="w-full justify-center gap-2">
                         <User className="h-4 w-4" aria-hidden />
