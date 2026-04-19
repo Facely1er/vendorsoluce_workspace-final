@@ -551,7 +551,18 @@
       "newHere": "Nouveau ?",
       "learnMore": "Découvrir VendorSoluce™",
       "logoAlt": "VendorSoluce™",
-      "tryAssessment": "Essayer l'évaluation chaîne d'approvisionnement sans compte"
+      "tryAssessment": "Essayer l'évaluation chaîne d'approvisionnement sans compte",
+      "demoEyebrow": "Aperçu",
+      "demoTitle": "Aperçu du tableau de bord",
+      "demoSubtitle": "Indicateurs illustratifs—ouvrez la démo complète pour graphiques, activité et prochaines étapes.",
+      "demoDisclaimer": "Les chiffres ci-dessous sont illustratifs.",
+      "demoMetricVendors": "Fournisseurs suivis",
+      "demoMetricElevated": "Risque élevé",
+      "demoMetricAssessments": "Évaluations",
+      "demoMetricSbom": "Revues SBOM",
+      "demoPortfolioTitle": "Répartition du portefeuille (échantillon)",
+      "demoPortfolioHint": "Répartition par niveau de risque—données de démo.",
+      "demoOpenFull": "Ouvrir la démo complète du tableau de bord"
     },
     "hero": {
       "title_line1": "Risques Fournisseurs Rendus Défendables.",

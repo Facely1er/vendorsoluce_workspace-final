@@ -551,7 +551,18 @@
       "newHere": "New here?",
       "learnMore": "Learn about VendorSoluce™",
       "logoAlt": "VendorSoluce™",
-      "tryAssessment": "Try Supply Chain Assessment without an account"
+      "tryAssessment": "Try Supply Chain Assessment without an account",
+      "demoEyebrow": "Preview",
+      "demoTitle": "Dashboard snapshot",
+      "demoSubtitle": "Illustrative metrics—open the full demo for charts, activity, and next actions.",
+      "demoDisclaimer": "Figures below are illustrative.",
+      "demoMetricVendors": "Vendors tracked",
+      "demoMetricElevated": "Elevated risk",
+      "demoMetricAssessments": "Assessments",
+      "demoMetricSbom": "SBOM reviews",
+      "demoPortfolioTitle": "Portfolio mix (sample)",
+      "demoPortfolioHint": "Risk tier distribution—demo data.",
+      "demoOpenFull": "Open full dashboard demo"
     },
     "hero": {
       "title_line1": "Vendor Risk Made Defensible.",

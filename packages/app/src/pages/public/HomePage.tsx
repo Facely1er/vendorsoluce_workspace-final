@@ -7,7 +7,7 @@ import PlatformLanding from '../../components/home/PlatformLanding';
 /**
  * Platform root. Continuation from the website (no duplicate content):
  * - Authenticated: redirect to dashboard.
- * - Not authenticated: minimal landing — sign in, get started, try assessment; learn more on website.
+ * - Not authenticated: landing — sign in, get started, try assessment, shortened dashboard preview; learn more on website.
  */
 const HomePage: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
