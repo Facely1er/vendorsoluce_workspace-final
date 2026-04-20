@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { Plus, RefreshCw, AlertCircle, ArrowRight, X, Info, Radar } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
-import { Card, CardContent } from '../../components/ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
+import LoadingState from '../../components/ui/LoadingState';
+import { PageNavTabs } from '../../components/ui/PageNavTabs';
 import { useVendorPortfolio } from './VendorRiskRadar/hooks/useVendorPortfolio';
 import VendorDashboard from './VendorRiskRadar/components/VendorDashboard';
 import VendorCatalog from './VendorRiskRadar/components/VendorCatalog';
@@ -144,10 +146,6 @@ const VendorRiskRadar: React.FC = () => {
     document.getElementById('vendor-risk-radar-import-file')?.click();
   };
 
-  const isActiveRoute = (path: string) => {
-    return location.pathname === path;
-  };
-
   // `panel` and journey guidance moved to dedicated pages to reduce cognitive load.
 
   return (
@@ -166,52 +164,15 @@ const VendorRiskRadar: React.FC = () => {
         ) : (
           <>
         {/* Related flows: keep the radar focused; link out to reports + intake + assessments. */}
-        <div className="mb-6">
-          <div className="border-b border-gray-200 dark:border-gray-700">
-            <nav className="flex flex-wrap gap-4 sm:gap-6" aria-label="Vendor Risk related pages">
-              <Link
-                to="/vendor-risk-radar"
-                className={`border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
-                  isActiveRoute('/vendor-risk-radar')
-                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                }`}
-              >
-                Radar
-              </Link>
-              <Link
-                to="/vendor-risk-reports"
-                className={`border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
-                  isActiveRoute('/vendor-risk-reports')
-                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                }`}
-              >
-                Reports
-              </Link>
-              <Link
-                to="/vendor-onboarding"
-                className={`border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
-                  isActiveRoute('/vendor-onboarding')
-                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                }`}
-              >
-                Intake
-              </Link>
-              <Link
-                to="/vendor-assessments"
-                className={`border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
-                  isActiveRoute('/vendor-assessments')
-                    ? 'border-vendorsoluce-green text-vendorsoluce-green'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                }`}
-              >
-                Assessments
-              </Link>
-            </nav>
-          </div>
-        </div>
+        <PageNavTabs
+          aria-label="Vendor Risk related pages"
+          tabs={[
+            { label: 'Radar', to: '/vendor-risk-radar' },
+            { label: 'Reports', to: '/vendor-risk-reports' },
+            { label: 'Intake', to: '/vendor-onboarding' },
+            { label: 'Assessments', to: '/vendor-assessments' }
+          ]}
+        />
 
         {/* Error Display — always visible regardless of panel */}
         {error && (
@@ -273,9 +234,7 @@ const VendorRiskRadar: React.FC = () => {
 
         {/* Initialization Status */}
         {loading && (
-          <div className="mb-4 text-center text-gray-600 dark:text-gray-400">
-            INITIALIZING TPRM SYSTEM...
-          </div>
+          <LoadingState message="Loading vendor portfolio…" className="mb-4" />
         )}
 
         {/* Toolbar */}
@@ -293,7 +252,7 @@ const VendorRiskRadar: React.FC = () => {
             <Button
               variant="primary"
               onClick={() => setShowCatalog(true)}
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
+              className="flex items-center gap-2"
             >
               <Plus className="w-4 h-4" />
               Add Vendor
@@ -399,27 +358,29 @@ const VendorRiskRadar: React.FC = () => {
         {selectedVendor && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
             <Card className="max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                      {selectedVendor.name}
-                    </h2>
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <span>{selectedVendor.sector}</span>
-                      <span>•</span>
-                      <span>{selectedVendor.location}</span>
-                    </div>
+              <CardHeader className="flex flex-row items-start justify-between gap-2 pb-2">
+                <div>
+                  <CardTitle>{selectedVendor.name}</CardTitle>
+                  <div className="mt-1 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                    <span>{selectedVendor.sector}</span>
+                    {selectedVendor.location && (
+                      <>
+                        <span aria-hidden>•</span>
+                        <span>{selectedVendor.location}</span>
+                      </>
+                    )}
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedVendor(null)}
-                  >
-                    ×
-                  </Button>
                 </div>
-                
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSelectedVendor(null)}
+                  aria-label="Close"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </CardHeader>
+              <CardContent className="pt-0">
                 <div className="space-y-4">
                   <div>
                     <h3 className="font-semibold mb-2">Risk Information</h3>
