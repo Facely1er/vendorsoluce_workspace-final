@@ -227,6 +227,7 @@
       starters = starters.slice(0, MAX_STARTER_VENDORS);
       vendorData = starters.map(function (row) {
         var v = normalizeCatalogVendorForRadar(row);
+        v = applyStarterDependencyDemo(v);
         var risks = calculateVendorRisk(v);
         return Object.assign({}, v, risks, {
           id: v.id || generateId(),
@@ -580,20 +581,66 @@
   // ─────────────────────────────────────────────────────────────────────────
   // Dependency Intelligence
   // ─────────────────────────────────────────────────────────────────────────
+  /** Normalize list fields that may be arrays, comma strings, or missing (legacy / JSON). */
+  function coerceDependencyStringArray(val) {
+    if (Array.isArray(val)) {
+      return val.map(function (s) { return String(s).trim(); }).filter(Boolean);
+    }
+    if (val == null || val === '') return [];
+    if (typeof val === 'string') {
+      return val.split(/[,;]/).map(function (s) { return s.trim(); }).filter(Boolean);
+    }
+    return [];
+  }
+
+  function getTierLevelNumeric(v) {
+    var t = v && v.tierLevel;
+    if (t === null || t === undefined || t === '') return NaN;
+    var n = typeof t === 'number' ? t : parseInt(String(t), 10);
+    return isNaN(n) ? NaN : n;
+  }
+
+  function vendorHasMappedDependencies(v) {
+    return (
+      coerceDependencyStringArray(v.dependentSystems).length > 0 ||
+      coerceDependencyStringArray(v.upstreamProviders).length > 0 ||
+      coerceDependencyStringArray(v.subProcessors).length > 0
+    );
+  }
+
+  /** First-time seed: catalog rows omit dependency fields — add minimal demo data so KPIs are non-zero. */
+  function applyStarterDependencyDemo(row) {
+    var o = Object.assign({}, row);
+    if (!vendorHasMappedDependencies(o)) {
+      o.dependentSystems = ['Core integrations', 'IAM / SSO'];
+      o.upstreamProviders = ['Shared telecom & DNS fabric'];
+      o.criticalOperations = ['Business-critical workloads'];
+    }
+    var n = getTierLevelNumeric(o);
+    if (isNaN(n) || n < 1) o.tierLevel = 2;
+    return o;
+  }
+
   function updateDependencyIntelligence() {
-    var mappedDeps = vendorData.filter(function (v) {
-      return v.dependentSystems && v.dependentSystems.length > 0;
+    var mappedDeps = vendorData.filter(vendorHasMappedDependencies).length;
+    var tier2 = vendorData.filter(function (v) {
+      var n = getTierLevelNumeric(v);
+      return !isNaN(n) && n >= 2;
     }).length;
-    var tier2 = vendorData.filter(function (v) { return v.tierLevel >= 2; }).length;
     var criticalOps = vendorData.filter(function (v) {
-      return v.criticalOperations && v.criticalOperations.length > 0;
+      return coerceDependencyStringArray(v.criticalOperations).length > 0;
     }).length;
 
-    // Count shared upstream providers
+    // Shared upstream providers (case-insensitive merge for counting)
     var upstreamCount = {};
+    var upstreamLabel = {};
     vendorData.forEach(function (v) {
-      (v.upstreamProviders || []).forEach(function (p) {
-        upstreamCount[p] = (upstreamCount[p] || 0) + 1;
+      coerceDependencyStringArray(v.upstreamProviders).forEach(function (p) {
+        var raw = p.trim();
+        if (!raw) return;
+        var norm = raw.toLowerCase();
+        if (!upstreamLabel[norm]) upstreamLabel[norm] = raw;
+        upstreamCount[norm] = (upstreamCount[norm] || 0) + 1;
       });
     });
     var hotspots = Object.keys(upstreamCount).filter(function (k) { return upstreamCount[k] > 1; }).length;
@@ -633,7 +680,8 @@
           hotspotsPanel.innerHTML = '<p class="dependency-empty">No shared dependencies identified across vendors.</p>';
         } else {
           hotspotsPanel.innerHTML = hotspotEntries.map(function (e) {
-            return '<div class="hotspot-item"><span class="hotspot-name">' + escHtml(e[0]) + '</span><span class="hotspot-count">' + e[1] + ' vendors</span></div>';
+            var label = upstreamLabel[e[0]] || e[0];
+            return '<div class="hotspot-item"><span class="hotspot-name">' + escHtml(label) + '</span><span class="hotspot-count">' + e[1] + ' vendors</span></div>';
           }).join('');
         }
       }
@@ -648,19 +696,22 @@
     if (!v) { box.innerHTML = ''; return; }
     var score = v.residualRisk !== undefined ? v.residualRisk : (v.inherentRisk || 0);
     var html = '<strong>' + escHtml(v.name) + '</strong> <span class="' + riskBadgeClass(getRiskTier(score)) + '">' + score + '</span><br>';
-    if (v.dependentSystems && v.dependentSystems.length) {
+    var ds = coerceDependencyStringArray(v.dependentSystems);
+    var up = coerceDependencyStringArray(v.upstreamProviders);
+    var co = coerceDependencyStringArray(v.criticalOperations);
+    if (ds.length) {
       html += '<p class="cascade-label">Dependent systems:</p><ul class="cascade-list">' +
-        v.dependentSystems.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
+        ds.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
     }
-    if (v.upstreamProviders && v.upstreamProviders.length) {
+    if (up.length) {
       html += '<p class="cascade-label">Upstream providers:</p><ul class="cascade-list">' +
-        v.upstreamProviders.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
+        up.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
     }
-    if (v.criticalOperations && v.criticalOperations.length) {
+    if (co.length) {
       html += '<p class="cascade-label">Critical operations:</p><ul class="cascade-list">' +
-        v.criticalOperations.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
+        co.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
     }
-    if (!v.dependentSystems && !v.upstreamProviders && !v.criticalOperations) {
+    if (!ds.length && !up.length && !co.length) {
       html += '<p class="dependency-empty">No dependency data for this vendor.</p>';
     }
     box.innerHTML = html;
@@ -723,14 +774,17 @@
     setVal('vendorPopulationImpacted', v.populationImpacted);
     setVal('vendorContact', v.contact);
     setVal('vendorNotes', v.notes);
-    setVal('vendorDependentSystems', (v.dependentSystems || []).join(', '));
-    setVal('vendorBusinessFunctions', (v.businessFunctions || []).join(', '));
-    setVal('vendorUpstreamProviders', (v.upstreamProviders || []).join(', '));
-    setVal('vendorSubProcessors', (v.subProcessors || []).join(', '));
-    setVal('vendorCriticalOperations', (v.criticalOperations || []).join(', '));
-    setVal('vendorRegulations', (v.regulations || []).join(', '));
-    setVal('vendorTierLevel', v.tierLevel || '');
-    setVal('vendorParentVendorIds', (v.parentVendorIds || []).join(', '));
+    setVal('vendorDependentSystems', coerceDependencyStringArray(v.dependentSystems).join(', '));
+    setVal('vendorBusinessFunctions', coerceDependencyStringArray(v.businessFunctions).join(', '));
+    setVal('vendorUpstreamProviders', coerceDependencyStringArray(v.upstreamProviders).join(', '));
+    setVal('vendorSubProcessors', coerceDependencyStringArray(v.subProcessors).join(', '));
+    setVal('vendorCriticalOperations', coerceDependencyStringArray(v.criticalOperations).join(', '));
+    setVal('vendorRegulations', coerceDependencyStringArray(v.regulations).join(', '));
+    setVal('vendorTierLevel', (function () {
+      var n = getTierLevelNumeric(v);
+      return isNaN(n) ? '' : String(n);
+    })());
+    setVal('vendorParentVendorIds', coerceDependencyStringArray(v.parentVendorIds).join(', '));
     setVal('vendorDependencyNotes', v.dependencyNotes);
 
     // Check data type checkboxes
@@ -1087,13 +1141,18 @@
             serviceType: v.serviceType ? String(v.serviceType) : undefined,
             populationImpacted: v.populationImpacted ? String(v.populationImpacted) : undefined,
             sbomProfile: (v.sbomProfile && typeof v.sbomProfile === 'object') ? v.sbomProfile : undefined,
-            dependentSystems: Array.isArray(v.dependentSystems) ? v.dependentSystems : undefined,
-            businessFunctions: Array.isArray(v.businessFunctions) ? v.businessFunctions : undefined,
-            upstreamProviders: Array.isArray(v.upstreamProviders) ? v.upstreamProviders : undefined,
-            subProcessors: Array.isArray(v.subProcessors) ? v.subProcessors : undefined,
-            criticalOperations: Array.isArray(v.criticalOperations) ? v.criticalOperations : undefined,
-            regulations: Array.isArray(v.regulations) ? v.regulations : undefined,
-            tierLevel: typeof v.tierLevel === 'number' ? v.tierLevel : undefined,
+            dependentSystems: (function () { var a = coerceDependencyStringArray(v.dependentSystems); return a.length ? a : undefined; })(),
+            businessFunctions: (function () { var a = coerceDependencyStringArray(v.businessFunctions); return a.length ? a : undefined; })(),
+            upstreamProviders: (function () { var a = coerceDependencyStringArray(v.upstreamProviders); return a.length ? a : undefined; })(),
+            subProcessors: (function () { var a = coerceDependencyStringArray(v.subProcessors); return a.length ? a : undefined; })(),
+            criticalOperations: (function () { var a = coerceDependencyStringArray(v.criticalOperations); return a.length ? a : undefined; })(),
+            regulations: (function () { var a = coerceDependencyStringArray(v.regulations); return a.length ? a : undefined; })(),
+            tierLevel: (function () {
+              var t = v.tierLevel;
+              if (t === null || t === undefined || t === '') return undefined;
+              var n = typeof t === 'number' ? t : parseInt(String(t), 10);
+              return isNaN(n) ? undefined : n;
+            })(),
             createdAt: v.createdAt || new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           };
@@ -1179,10 +1238,17 @@
         '</tr>';
     }).join('');
 
-    // Build dependency KPI section
-    var mappedDepsCount = vendorData.filter(function (v) { return v.dependentSystems && v.dependentSystems.length > 0; }).length;
+    // Build dependency KPI section (same rules as dashboard KPIs)
+    var mappedDepsCount = vendorData.filter(vendorHasMappedDependencies).length;
     var upstreamMap = {};
-    vendorData.forEach(function (v) { (v.upstreamProviders || []).forEach(function (p) { upstreamMap[p] = (upstreamMap[p] || 0) + 1; }); });
+    vendorData.forEach(function (v) {
+      coerceDependencyStringArray(v.upstreamProviders).forEach(function (p) {
+        var raw = p.trim();
+        if (!raw) return;
+        var norm = raw.toLowerCase();
+        upstreamMap[norm] = (upstreamMap[norm] || 0) + 1;
+      });
+    });
     var sharedDeps = Object.keys(upstreamMap).map(function (k) { return [k, upstreamMap[k]]; }).filter(function (e) { return e[1] > 1; });
 
     // Recommendations
