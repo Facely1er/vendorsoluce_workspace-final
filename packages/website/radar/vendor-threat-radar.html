@@ -2388,9 +2388,9 @@ Dependency Intelligence
 <div class="card-header">
 <div class="card-title" id="report-heading">
 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="icon icon--title"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-Portfolio C-SCRM report
+Portfolio C-SCRM report (Vendor Exposure Map™)
 </div>
-<p class="report-section-subtitle">All vendors currently in your radar — one NIST-aligned export. This is not a single-vendor report.</p>
+<p class="report-section-subtitle">All vendors currently in your radar — one NIST-aligned HTML export (same layout as the illustrative sample). This is not a single-vendor report.</p>
 <span class="report-premium-badge">NIST SP 800-161 Rev. 1 · portfolio</span>
 </div>
 <div class="card-content">
@@ -2398,7 +2398,7 @@ Portfolio C-SCRM report
 <p class="report-description-secondary"><strong>Single vendor</strong> — For a read-out of <em>one</em> vendor only, use <strong>Details</strong> on that row. That opens an on-screen summary and is <em>not</em> the same as this portfolio document.</p>
 <div class="report-actions">
 <input type="text" id="reportClientName" placeholder="Organization name (optional, for cover)" maxlength="120" title="Shown as &quot;Prepared for&quot; on the report cover" />
-<button class="secondary" onclick="generateComprehensiveReport()" title="Saves one HTML file including every vendor in the radar">
+<button class="secondary" onclick="generateComprehensiveReport()" title="Saves vendorsoluce-vendor-exposure-map-report.html — full portfolio from your radar data">
 <svg class="icon icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 Download portfolio as HTML
 </button>
@@ -3121,6 +3121,7 @@ html.dark footer > div > div:last-child {
   <script src="./radar-interactions.js"></script>
   <script src="./data-management-strategy.js"></script>
   <script src="./vendor-catalog-enhanced.js"></script>
+  <script src="./report-vendor-exposure-map.js"></script>
   <script src="./radar-runtime.js"></script>
   <script>
     initRadarModeSelector();

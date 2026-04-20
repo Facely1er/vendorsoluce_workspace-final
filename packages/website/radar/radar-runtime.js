@@ -1206,158 +1206,22 @@
     var reportId = 'VS-RPT-' + Date.now().toString(36).toUpperCase();
     var now = new Date();
     var dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-    var critical = 0, high = 0, medium = 0, low = 0, totalRisk = 0;
-    vendorData.forEach(function (v) {
-      var s = v.residualRisk !== undefined ? v.residualRisk : (v.inherentRisk || 0);
-      totalRisk += v.inherentRisk || 0;
-      var t = getRiskTier(s);
-      if (t === 'critical') critical++; else if (t === 'high') high++;
-      else if (t === 'medium') medium++; else low++;
+    if (typeof window.buildVendorExposureMapReportHtml !== 'function') {
+      alert('Report module missing: reload the page. If this persists, contact support.');
+      return '';
+    }
+    return window.buildVendorExposureMapReportHtml(vendorData, {
+      clientName: clientName,
+      reportId: reportId,
+      dateStr: dateStr,
+      illustrative: false,
     });
-    var total = vendorData.length;
-    var avg = total > 0 ? Math.round(totalRisk / total) : 0;
-
-    var sorted = vendorData.slice().sort(function (a, b) { return (b.inherentRisk || 0) - (a.inherentRisk || 0); });
-
-    var riskTierClass = { critical: 'risk-critical', high: 'risk-high', medium: 'risk-medium', low: 'risk-low' };
-    var registerRows = sorted.map(function (v) {
-      var score = v.residualRisk !== undefined ? v.residualRisk : (v.inherentRisk || 0);
-      var tier = getRiskTier(score);
-      var rc = riskTierClass[tier] || 'risk-low';
-      return '<tr>' +
-        '<td>' + escHtml(v.name) + '</td>' +
-        '<td>' + escHtml(v.category || '—') + '</td>' +
-        '<td>' + escHtml(v.sector || '—') + '</td>' +
-        '<td>' + escHtml(v.location || '—') + '</td>' +
-        '<td class="cell-num">' + (v.inherentRisk || 0) + '</td>' +
-        '<td>' + (v.residualRisk || 0) + '</td>' +
-        '<td class="' + rc + '">' + riskLabelForTier(tier) + '</td>' +
-        '<td>' + escHtml((v.dataTypes || []).join(', ') || '—') + '</td>' +
-        '<td>Vendor Risk Radar</td>' +
-        '</tr>';
-    }).join('');
-
-    // Build dependency KPI section (same rules as dashboard KPIs)
-    var mappedDepsCount = vendorData.filter(vendorHasMappedDependencies).length;
-    var upstreamMap = {};
-    vendorData.forEach(function (v) {
-      coerceDependencyStringArray(v.upstreamProviders).forEach(function (p) {
-        var raw = p.trim();
-        if (!raw) return;
-        var norm = raw.toLowerCase();
-        upstreamMap[norm] = (upstreamMap[norm] || 0) + 1;
-      });
-    });
-    var sharedDeps = Object.keys(upstreamMap).map(function (k) { return [k, upstreamMap[k]]; }).filter(function (e) { return e[1] > 1; });
-
-    // Recommendations
-    var recs = [];
-    if (critical > 0) recs.push('Conduct immediate risk review for ' + critical + ' critical-risk vendor' + (critical > 1 ? 's' : '') + '.');
-    if (high > 0) recs.push('Schedule remediation planning for ' + high + ' high-risk vendor' + (high > 1 ? 's' : '') + ' within 30 days.');
-    var sbomGaps = vendorData.filter(function (v) { return v.sbomProfile && v.sbomProfile.providesSoftware && !v.sbomProfile.sbomAvailable; }).length;
-    if (sbomGaps > 0) recs.push('Request SBOMs from ' + sbomGaps + ' software-providing vendor' + (sbomGaps > 1 ? 's' : '') + ' (NIST SP 800-161).');
-    if (sharedDeps.length > 0) recs.push('Review shared dependency concentration: ' + sharedDeps.map(function (e) { return e[0] + ' (' + e[1] + ' vendors)'; }).join(', ') + '.');
-    if (recs.length === 0) recs.push('Maintain current vendor monitoring cadence and review annually.');
-
-    return '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8"/>\n' +
-      '<meta name="viewport" content="width=device-width,initial-scale=1"/>\n' +
-      '<title>Portfolio C-SCRM Report' + (clientName ? ' — ' + clientName : '') + '</title>\n' +
-      '<style>\n' +
-      'body{font-family:\'Segoe UI\',Arial,sans-serif;font-size:14px;line-height:1.6;color:#1a1a2e;max-width:1100px;margin:0 auto;padding:2rem}\n' +
-      'h1{color:#33691E;font-size:1.8rem;margin-bottom:.25rem}\n' +
-      'h2{color:#1e3a5f;font-size:1.15rem;margin-top:2rem;border-bottom:2px solid #e5e7eb;padding-bottom:.35rem}\n' +
-      'h3{color:#374151;font-size:1rem;margin-top:1.25rem}\n' +
-      '.cover-meta{color:#6b7280;font-size:.875rem;margin-bottom:2rem}\n' +
-      '.cover-risk-summary{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1.5rem 0}\n' +
-      '.risk-kpi{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:.75rem 1.25rem;min-width:100px;text-align:center}\n' +
-      '.risk-kpi .num{font-size:1.75rem;font-weight:700}\n' +
-      '.risk-kpi .lbl{font-size:.75rem;color:#6b7280}\n' +
-      '.critical .num{color:#DC2626} .high .num{color:#D97706} .medium .num{color:#2563EB} .low .num{color:#16A34A}\n' +
-      'table{width:100%;border-collapse:collapse;font-size:.875rem;margin-top:.75rem}\n' +
-      'thead tr{background:#f3f4f6}\n' +
-      'th{padding:8px;text-align:left;font-weight:600;border-bottom:2px solid #d1d5db}\n' +
-      '.report-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid #e5e7eb;font-size:.75rem;color:#9ca3af;display:flex;justify-content:space-between}\n' +
-      'ul{margin:.5rem 0;padding-left:1.5rem}\n' +
-      '.sample-vendor-register tbody tr{border-bottom:1px solid #ddd}\n' +
-      '.sample-vendor-register tbody td{padding:6px 8px}\n' +
-      '.sample-vendor-register .cell-num{font-weight:600}\n' +
-      '.sample-vendor-register .risk-critical{color:#DC2626;font-weight:600}\n' +
-      '.sample-vendor-register .risk-high{color:#D97706;font-weight:600}\n' +
-      '.sample-vendor-register .risk-medium{color:#2563EB;font-weight:600}\n' +
-      '.sample-vendor-register .risk-low{color:#16A34A;font-weight:600}\n' +
-      '@media print{body{padding:.5rem} h1{font-size:1.4rem}}\n' +
-      '</style>\n</head>\n<body>\n' +
-      '<h1>Portfolio C-SCRM Report</h1>\n' +
-      '<div class="cover-meta">' +
-      (clientName ? 'Prepared for: <strong>' + escHtml(clientName) + '</strong> &nbsp;|&nbsp; ' : '') +
-      'Generated: ' + escHtml(dateStr) + ' &nbsp;|&nbsp; ' +
-      '<span id="reportId">Report ID: ' + reportId + '</span>' +
-      '</div>\n' +
-      '<div class="cover-risk-summary">\n' +
-      '<div class="risk-kpi critical"><div class="num">' + critical + '</div><div class="lbl">Critical</div></div>\n' +
-      '<div class="risk-kpi high"><div class="num">' + high + '</div><div class="lbl">High</div></div>\n' +
-      '<div class="risk-kpi medium"><div class="num">' + medium + '</div><div class="lbl">Medium</div></div>\n' +
-      '<div class="risk-kpi low"><div class="num">' + low + '</div><div class="lbl">Low</div></div>\n' +
-      '<div class="risk-kpi"><div class="num">' + total + '</div><div class="lbl">Total</div></div>\n' +
-      '<div class="risk-kpi"><div class="num">' + avg + '</div><div class="lbl">Avg Score</div></div>\n' +
-      '</div>\n' +
-      '<ol>\n' +
-      '<li>Section 1  -  Executive Summary</li>\n' +
-      '<li>Section 1b  -  Portfolio Risk Posture</li>\n' +
-      '<li>Section 2  -  Vendor Risk Register</li>\n' +
-      '<li>Section 5b  -  Dependency &amp; Cascade</li>\n' +
-      '<li>Section 5  -  Recommended Actions</li>\n' +
-      '<li>Appendix  -  Methodology</li>\n' +
-      '</ol>\n' +
-      '<h2>Section 1  -  Executive Summary</h2>\n' +
-      '<p><strong>Purpose &amp; Scope</strong></p>\n' +
-      '<p>This C-SCRM portfolio report covers <strong>' + total + ' vendor' + (total !== 1 ? 's' : '') + '</strong>' +
-        (clientName ? ' managed by <strong>' + escHtml(clientName) + '</strong>' : '') +
-        ', aligned to NIST SP 800-161 Rev. 1. It provides an inherent risk register, sector and geographic analysis, dependency intelligence, and prioritised recommendations.</p>\n' +
-      '<p>Portfolio Risk Overview</p>\n' +
-      '<p>Risk Distribution Breakdown</p>\n' +
-      '<h2>Section 1b  -  Portfolio Risk Posture</h2>\n' +
-      '<p>1. Vendor Risk Distribution — ' + critical + ' critical, ' + high + ' high, ' + medium + ' medium, ' + low + ' low.</p>\n' +
-      '<p>2. Dependency Concentration — ' + mappedDepsCount + ' vendor' + (mappedDepsCount !== 1 ? 's' : '') + ' with mapped dependencies.</p>\n' +
-      '<p>3. Operational Exposure — based on population impacted and service criticality across the portfolio.</p>\n' +
-      '<p>4. Data Exposure Overview — data types handled include: ' +
-        escHtml(vendorData.reduce(function (acc, v) {
-          (v.dataTypes || []).forEach(function (dt) { if (acc.indexOf(dt) === -1) acc.push(dt); });
-          return acc;
-        }, []).join(', ') || 'not specified') + '.</p>\n' +
-      '<p>5. Supply Chain Visibility — tier and upstream mappings available for ' + mappedDepsCount + ' vendor' + (mappedDepsCount !== 1 ? 's' : '') + '.</p>\n' +
-      '<p>6. Portfolio Risk Posture Statement — inherent risk scores may influence procurement and monitoring decisions. This assessment does not assess control effectiveness or residual risk beyond SBOM availability signals.</p>\n' +
-      '<h2>Section 2  -  Vendor Risk Register</h2>\n' +
-      '<table class="sample-vendor-register">\n<thead><tr>' +
-        '<th>Vendor</th><th>Category</th><th>Sector</th><th>Location</th>' +
-        '<th>Inherent</th><th>Residual</th><th>Risk Level</th><th>Data Types</th><th>Source</th>' +
-      '</tr></thead>\n<tbody>' + registerRows + '</tbody>\n</table>\n' +
-      '<h2>Section 5b  -  Dependency &amp; Cascade</h2>\n' +
-      '<p>' + mappedDepsCount + ' vendor' + (mappedDepsCount !== 1 ? 's' : '') + ' with mapped dependencies.</p>\n' +
-      (sharedDeps.length > 0
-        ? '<p>Shared dependency concentration:</p><ul>' +
-          sharedDeps.map(function (e) { return '<li><strong>' + escHtml(e[0]) + '</strong> — shared by ' + e[1] + ' vendors</li>'; }).join('') +
-          '</ul>\n'
-        : '<p>No shared dependency hotspots identified.</p>\n') +
-      '<h2>Section 5  -  Recommended Actions</h2>\n' +
-      '<ul>' + recs.map(function (r) { return '<li>' + escHtml(r) + '</li>'; }).join('') + '</ul>\n' +
-      '<h2>Appendix  -  Methodology</h2>\n' +
-      '<p>Inherent Risk Methodology</p>\n' +
-      '<p><strong>Inherent risk:</strong> scored 0–100 based on vendor criticality category (critical/strategic/tactical/commodity), data types handled (PII, PHI, Financial, IP, etc.), SBOM availability, sector, geography, service type, and population impacted. Aligned with NIST SP 800-161 Rev. 1 C-SCRM principles.</p>\n' +
-      '<p><strong>Residual risk:</strong> inherent risk minus applicable control credits (e.g. SBOM on file). Does not reflect full control effectiveness; use full VIRA assessment for comprehensive residual analysis.</p>\n' +
-      '<p>NIST SP 800-161 Rev. 1 · FIPS 199 · EO 14028 alignment</p>\n' +
-      '<div class="report-footer">' +
-      '<span>Generated by VendorSoluce&trade; Vendor Threat Radar &mdash; ' + escHtml(dateStr) + '</span>' +
-      '<span>Report ID: ' + reportId + '</span>' +
-      '</div>\n' +
-      '</body>\n</html>';
   }
 
   function generateComprehensiveReport() {
     if (vendorData.length === 0) { alert('Add vendors to the radar before generating a report.'); return; }
     var html = buildReportHtml();
-    triggerDownload(html, 'vendorsoluce-portfolio-cscrm-report.html', 'text/html');
+    triggerDownload(html, 'vendorsoluce-vendor-exposure-map-report.html', 'text/html');
   }
 
   function openReportForPDF() {
