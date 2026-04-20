@@ -150,3 +150,50 @@ nav[aria-label="Breadcrumb"] .w-full{
 .hidden-icon{
   display:none;
 }
+
+/* Brand greens — same behavior as index/features inline <style> blocks, so footer
+   link icons (classes text-vendorsoluce-green + dark:text-vendorsoluce-light-green)
+   resolve in dark mode on every page that loads shell.css without duplicating rules. */
+.bg-vendorsoluce-green{
+  background-color:var(--vendorsoluce-green);
+}
+
+.text-vendorsoluce-green{
+  color:var(--vendorsoluce-green) !important;
+}
+
+html:not(.dark) .text-vendorsoluce-green,
+:not(.dark) .text-vendorsoluce-green{
+  color:var(--vendorsoluce-green) !important;
+}
+
+html:not(.dark) span[class*="text-vendorsoluce-green/80"],
+:not(.dark) span[class*="text-vendorsoluce-green/80"]{
+  color:var(--text-secondary) !important;
+}
+
+.text-vendorsoluce-light-green{
+  color:var(--vendorsoluce-light-green);
+}
+
+/* Dark: wordmarks use white; elements with BOTH green + light-green keep accent-2 (footer icons) — order matters. */
+html.dark .text-vendorsoluce-green,
+.dark .text-vendorsoluce-green,
+html[class*="dark"] .text-vendorsoluce-green,
+[class*="dark"] .text-vendorsoluce-green{
+  color:#fff !important;
+}
+
+html.dark .text-vendorsoluce-light-green,
+.dark .text-vendorsoluce-light-green,
+html[class*="dark"] .text-vendorsoluce-light-green,
+[class*="dark"] .text-vendorsoluce-light-green{
+  color:var(--vendorsoluce-light-green) !important;
+}
+
+html.dark span[class*="text-vendorsoluce-green/80"],
+.dark span[class*="text-vendorsoluce-green/80"],
+html[class*="dark"] span[class*="text-vendorsoluce-green/80"],
+[class*="dark"] span[class*="text-vendorsoluce-green/80"]{
+  color:var(--vendorsoluce-light-green) !important;
+}
