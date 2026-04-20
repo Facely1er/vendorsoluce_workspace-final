@@ -86,7 +86,7 @@ const NISTChecklist: React.FC = () => {
   const complianceLevel = getComplianceLevel(compliancePercentage);
   
   const getComplianceColor = (level: string) => {
-    if (level === 'High') return 'text-green-600 dark:text-green-400';
+    if (level === 'High') return 'text-vendorsoluce-green dark:text-vendorsoluce-light-green';
     if (level === 'Moderate') return 'text-yellow-600 dark:text-yellow-400';
     return 'text-red-600 dark:text-red-400';
   };
@@ -136,7 +136,7 @@ const NISTChecklist: React.FC = () => {
                 {checklistItems.map((item) => (
                   <div 
                     key={item.id} 
-                    className="border border-gray-200 dark:border-gray-700 rounded-md p-4 hover:border-vendortal-navy dark:hover:border-trust-blue transition-colors"
+                    className="border border-gray-200 dark:border-gray-700 rounded-md p-4 hover:border-vendorsoluce-navy dark:hover:border-vendorsoluce-blue transition-colors"
                   >
                     <div className="flex items-start">
                       <div>
@@ -206,7 +206,7 @@ const NISTChecklist: React.FC = () => {
                     <ProgressBarFill
                       percent={compliancePercentage}
                       heightClassName="h-2.5"
-                      fillClassName="fill-vendorsoluce-navy"
+                      fillClassName="fill-vendorsoluce-green"
                     />
                   </div>
                 </div>
@@ -214,19 +214,19 @@ const NISTChecklist: React.FC = () => {
                 <div className="space-y-3">
                   <div className={`p-3 rounded-md ${
                     compliancePercentage >= 80 
-                    ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
+                    ? 'bg-vendorsoluce-pale-green dark:bg-vendorsoluce-green/10 border border-vendorsoluce-green/30 dark:border-vendorsoluce-green/40'
                     : 'bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800'
                   }`}>
                     <div className="flex items-start">
                       {compliancePercentage >= 80 ? (
-                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
+                        <CheckCircle className="h-5 w-5 text-vendorsoluce-green dark:text-vendorsoluce-light-green mr-2 flex-shrink-0 mt-0.5" />
                       ) : (
                         <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400 mr-2 flex-shrink-0 mt-0.5" />
                       )}
                       <div>
                         <p className={`text-sm font-medium ${
                           compliancePercentage >= 80 
-                          ? 'text-green-800 dark:text-green-300' 
+                            ? 'text-vendorsoluce-dark-green dark:text-vendorsoluce-light-green' 
                           : 'text-yellow-800 dark:text-yellow-300'
                         }`}>
                           {compliancePercentage >= 80 
@@ -236,7 +236,7 @@ const NISTChecklist: React.FC = () => {
                         </p>
                         <p className={`text-xs ${
                           compliancePercentage >= 80 
-                          ? 'text-green-700 dark:text-green-400' 
+                            ? 'text-vendorsoluce-green dark:text-vendorsoluce-light-green' 
                           : 'text-yellow-700 dark:text-yellow-400'
                         }`}>
                           {compliancePercentage >= 80 
