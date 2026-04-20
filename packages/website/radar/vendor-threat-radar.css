@@ -199,15 +199,67 @@ html.dark .dependency-kpi { background: rgb(var(--accent-rgb) / 0.15); border-co
 html.dark .dependency-kpi-num { color: var(--accent-2); }
 html.dark .dependency-hotspots-panel { border-top-color: var(--border); }
 
-/* Radar mode selector - ensure fully interactive and visible */
-.radar-mode-selector { margin-top: 1rem; padding: 1rem 1.25rem; background: var(--bg-2); border-radius: 10px; border: 1px solid var(--border); pointer-events: auto; position: relative; z-index: 1; }
-.mode-fieldset { border: none; margin: 0; padding: 0; pointer-events: auto; }
-.mode-legend { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; pointer-events: none; }
-.mode-options { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem; pointer-events: auto; }
-.mode-option { font-size: 0.875rem; color: var(--text-secondary); cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; pointer-events: auto; -webkit-user-select: none; user-select: none; }
+/* Radar mode selector - centered layout */
+.radar-mode-selector {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-2);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.mode-fieldset {
+  border: none;
+  margin: 0 auto;
+  padding: 0;
+  pointer-events: auto;
+  max-width: 56rem;
+  text-align: center;
+}
+.mode-legend {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 auto 0.5rem;
+  padding: 0;
+  pointer-events: none;
+  width: 100%;
+  text-align: center;
+}
+.mode-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  pointer-events: auto;
+  justify-content: center;
+  align-items: center;
+}
+.mode-option {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: auto;
+  -webkit-user-select: none;
+  user-select: none;
+}
 .mode-option input { margin: 0; cursor: pointer; min-width: 1.25rem; min-height: 1.25rem; flex-shrink: 0; pointer-events: auto; }
 .mode-option span { pointer-events: none; }
-.mode-helper { font-size: 0.8125rem; color: var(--muted); margin: 0; pointer-events: none; }
+.mode-helper {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin: 0 auto;
+  max-width: 40rem;
+  pointer-events: none;
+  text-align: center;
+  line-height: 1.45;
+}
 html.dark .radar-mode-selector { background: var(--card); border-color: var(--border); }
 html.dark .mode-legend, html.dark .mode-option { color: var(--text-secondary); }
 html.dark .mode-helper { color: var(--muted); }

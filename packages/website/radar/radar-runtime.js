@@ -198,6 +198,46 @@
     } catch (e) {}
   }
 
+  /** Map catalog rows (sbom) to runtime shape (sbomProfile) for risk scoring. */
+  function normalizeCatalogVendorForRadar(v) {
+    var o = Object.assign({}, v);
+    if (o.sbom && !o.sbomProfile) {
+      o.sbomProfile = {
+        providesSoftware: !!o.sbom.providesSoftware,
+        sbomAvailable: !!o.sbom.sbomAvailable,
+        sbomFormat: o.sbom.sbomFormat || 'none',
+      };
+    }
+    return o;
+  }
+
+  var MAX_STARTER_VENDORS = 20;
+
+  /**
+   * First visit only: storage key absent → populate from getStarterVendorSet() (vendor-catalog-enhanced.js).
+   * If key exists (including "[]" after clear), do nothing.
+   */
+  function seedInitialPortfolioIfEmpty() {
+    try {
+      var storage = getStorage();
+      if (storage.getItem(STORAGE_KEY) !== null) return;
+      if (typeof getStarterVendorSet !== 'function') return;
+      var starters = getStarterVendorSet();
+      if (!Array.isArray(starters) || starters.length === 0) return;
+      starters = starters.slice(0, MAX_STARTER_VENDORS);
+      vendorData = starters.map(function (row) {
+        var v = normalizeCatalogVendorForRadar(row);
+        var risks = calculateVendorRisk(v);
+        return Object.assign({}, v, risks, {
+          id: v.id || generateId(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+      });
+      saveVendors();
+    } catch (e) {}
+  }
+
   function generateId() {
     return 'v-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
   }
@@ -331,20 +371,22 @@
       var label = riskLabelForTier(tier);
       var dataTypesText = (v.dataTypes || []).join(', ') || '—';
       html += '<div class="vendor-item vendor-item-' + escHtml(tier) + '" data-id="' + escHtml(v.id) + '">' +
-        '<div class="vendor-item-header">' +
+        '<div class="vendor-item-left">' +
         '<div class="vendor-item-name">' + escHtml(v.name) + '</div>' +
         '<span class="' + riskBadgeClass(tier) + '">' + escHtml(label) + ' (' + score + ')</span>' +
         '</div>' +
+        '<div class="vendor-item-center">' +
         '<div class="vendor-item-meta">' +
         '<span>' + escHtml(v.category || '—') + '</span>' +
         (v.sector ? ' &bull; ' + escHtml(v.sector) : '') +
         (v.location ? ' &bull; ' + escHtml(v.location) : '') +
         '</div>' +
         '<div class="vendor-item-data">' + escHtml(dataTypesText) + '</div>' +
+        '</div>' +
         '<div class="vendor-item-actions">' +
-        '<button class="secondary" onclick="editVendor(\'' + escHtml(v.id) + '\')">Edit</button> ' +
-        '<button class="secondary" onclick="viewVendorDetails(\'' + escHtml(v.id) + '\')">Details</button> ' +
-        '<button class="danger" onclick="deleteVendor(\'' + escHtml(v.id) + '\')">Delete</button>' +
+        '<button type="button" class="secondary btn-small" onclick="editVendor(\'' + escHtml(v.id) + '\')">Edit</button>' +
+        '<button type="button" class="secondary btn-small" onclick="viewVendorDetails(\'' + escHtml(v.id) + '\')">Details</button>' +
+        '<button type="button" class="danger btn-small" onclick="deleteVendor(\'' + escHtml(v.id) + '\')">Delete</button>' +
         '</div>' +
         '</div>';
     });
@@ -1376,6 +1418,7 @@
   // ─────────────────────────────────────────────────────────────────────────
   function init() {
     loadVendors();
+    seedInitialPortfolioIfEmpty();
     setupFormSubmit();
     updateAllDisplays();
     showTrialBannerIfActive();

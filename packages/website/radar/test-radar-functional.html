@@ -279,11 +279,11 @@ function runElementTests(doc) {
     const toolbar = doc.querySelector('.toolbar');
     addResult(group, 'Toolbar (.toolbar)', !!toolbar);
     
-    const statsGrid = doc.querySelector('.stats-grid');
-    addResult(group, 'Stats grid (.stats-grid)', !!statsGrid);
+    const statsGrids = doc.querySelectorAll('.stats-grid');
+    addResult(group, 'Stats grids (.stats-grid)', statsGrids.length >= 1);
     
-    const contentGrid = doc.querySelector('.content-grid');
-    addResult(group, 'Content grid (.content-grid)', !!contentGrid);
+    const radarDashboard = doc.querySelector('.radar-dashboard');
+    addResult(group, 'Radar dashboard (.radar-dashboard)', !!radarDashboard);
     
     const chartsGrid = doc.querySelector('.charts-grid');
     addResult(group, 'Charts grid (.charts-grid)', !!chartsGrid);

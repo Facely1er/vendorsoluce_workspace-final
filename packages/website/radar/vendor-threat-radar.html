@@ -403,25 +403,89 @@
             color: var(--muted);
         }
         
-        /* Toolbar */
+        /* Toolbar — two rows: build/import vs filter/actions */
         .toolbar {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 14px;
             padding: 16px;
             background: var(--card);
             border-radius: 8px;
             margin-bottom: 20px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            flex-wrap: wrap;
-            gap: 12px;
         }
         
         html.dark .toolbar {
             background: var(--card);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
+
+        .toolbar-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 12px 16px;
+            justify-content: space-between;
+        }
+
+        .toolbar-row--primary {
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        html.dark .toolbar-row--primary {
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .toolbar-row--secondary {
+            align-items: center;
+        }
         
+        .toolbar-cluster {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            min-width: 0;
+        }
+
+        .toolbar-cluster--vendors {
+            flex: 1 1 280px;
+        }
+
+        .toolbar-cluster--portfolio {
+            flex: 1 1 260px;
+            justify-content: flex-end;
+        }
+
+        .toolbar-cluster--filter {
+            flex: 0 1 auto;
+        }
+
+        .toolbar-cluster--maintain {
+            flex: 1 1 auto;
+            justify-content: center;
+            min-width: min(100%, 220px);
+        }
+
+        .toolbar-cluster--trial {
+            flex: 0 0 auto;
+            margin-left: auto;
+        }
+
+        .toolbar-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        html.dark .toolbar-label {
+            color: var(--muted);
+        }
+
+        /* Legacy — any old markup */
         .toolbar-group {
             display: flex;
             gap: 8px;
@@ -647,12 +711,25 @@
         html.dark .alert-banner-repeat.warning { background: #78350f; color: var(--warn-fg); }
         html.dark .alert-banner-repeat.clear { background: var(--vendorsoluce-dark-green); color: var(--accent-2); }
         
-        /* Stats Grid */
+        /* Stats Grid — full width or split columns (.stats-grid--risk / .stats-grid--summary) */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
-            margin-bottom: 20px;
+            margin-bottom: 0;
+        }
+
+        .stats-grid--risk,
+        .stats-grid--summary {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .stats-grid--risk,
+            .stats-grid--summary {
+                gap: 14px;
+            }
         }
         
         .stat-card {
@@ -734,16 +811,91 @@
             color: var(--text);
         }
         
-        /* Main Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        /* Main dashboard: stacked rows — radar row, then charts row, then vendor list (full width) */
+        .radar-dashboard {
+            display: flex;
+            flex-direction: column;
             gap: 20px;
             margin-bottom: 20px;
+            min-width: 0;
         }
-        
+
+        /* Side-by-side: KPI strip + main panel (not stacked) */
+        .dashboard-pair {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            gap: 16px;
+            min-width: 0;
+        }
+
+        .dashboard-pair .stats-grid--side {
+            flex: 0 0 min(220px, 38%);
+            max-width: 260px;
+            grid-template-columns: 1fr;
+            grid-auto-rows: minmax(0, 1fr);
+            align-content: stretch;
+        }
+
+        .dashboard-pair .stats-grid--side .stat-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 0;
+            padding: 14px 12px;
+        }
+
+        .dashboard-pair .stats-grid--side .stat-value {
+            font-size: 1.5rem;
+        }
+
+        .dashboard-pair--radar .card {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-pair--radar .sonar-container {
+            flex: 1;
+            min-height: 480px;
+            height: 520px;
+        }
+
+        .dashboard-pair--charts {
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .dashboard-pair--charts .charts-grid {
+            flex: 1;
+            min-width: 0;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+
         @media (max-width: 1024px) {
-            .content-grid {
+            .dashboard-pair {
+                flex-direction: column;
+            }
+
+            .dashboard-pair--radar .sonar-container {
+                height: 480px;
+            }
+
+            .dashboard-pair .stats-grid--side {
+                flex: none;
+                max-width: none;
+                width: 100%;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .dashboard-pair--charts .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .dashboard-pair .stats-grid--side {
                 grid-template-columns: 1fr;
             }
         }
@@ -798,14 +950,14 @@
             color: var(--vendorsoluce-light-green);
         }
         
-        /* Sonar Radar */
+        /* Sonar Radar — grid so canvas fills (flex + align-items:center kept canvas at default 300×150) */
         .sonar-container {
             position: relative;
             width: 100%;
-            height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 560px;
+            min-height: 320px;
+            display: grid;
+            place-items: stretch;
             background: #0a1628;
             border-radius: 12px;
             overflow: hidden;
@@ -816,8 +968,12 @@
         }
         
         #sonarCanvas {
+            width: 100%;
+            height: 100%;
             max-width: 100%;
             max-height: 100%;
+            display: block;
+            box-sizing: border-box;
         }
         
         .radar-legend {
@@ -886,13 +1042,141 @@
         }
         
         .vendor-item {
-            padding: 16px;
+            display: grid;
+            grid-template-columns: minmax(140px, min(22%, 220px)) minmax(0, 1fr) auto;
+            gap: 16px 20px;
+            align-items: center;
+            padding: 14px 18px;
             border-radius: 8px;
             margin-bottom: 12px;
             border: 1px solid var(--border);
             background: var(--bg-2);
             transition: all 0.2s;
             cursor: pointer;
+        }
+
+        .vendor-item-left {
+            min-width: 0;
+            text-align: left;
+        }
+
+        .vendor-item-name {
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.3;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        html.dark .vendor-item-name {
+            color: var(--text);
+        }
+
+        .vendor-item .risk-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .risk-badge-critical {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        html.dark .risk-badge-critical {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+
+        .risk-badge-high {
+            background: var(--warn-bg);
+            color: var(--warn-fg);
+        }
+
+        html.dark .risk-badge-high {
+            background: #78350f;
+            color: var(--warn-fg);
+        }
+
+        .risk-badge-medium {
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        html.dark .risk-badge-medium {
+            background: #1e3a8a;
+            color: #93c5fd;
+        }
+
+        .risk-badge-low {
+            background: var(--vendorsoluce-pale-green);
+            color: var(--vendorsoluce-dark-green);
+        }
+
+        html.dark .risk-badge-low {
+            background: var(--vendorsoluce-dark-green);
+            color: var(--accent-2);
+        }
+
+        .vendor-item-center {
+            min-width: 0;
+            text-align: center;
+            padding: 0 8px;
+        }
+
+        .vendor-item-meta {
+            font-size: 0.8125rem;
+            color: var(--muted);
+            line-height: 1.45;
+            margin-bottom: 4px;
+        }
+
+        .vendor-item-data {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        html.dark .vendor-item-data {
+            color: var(--muted);
+        }
+
+        .vendor-item-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: flex-end;
+            align-items: center;
+            align-self: center;
+        }
+
+        @media (max-width: 900px) {
+            .vendor-item {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .vendor-item-center {
+                text-align: left;
+                padding: 0;
+                border-top: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            html.dark .vendor-item-center {
+                border-color: var(--muted);
+            }
+
+            .vendor-item-actions {
+                justify-content: flex-start;
+            }
         }
         
         html.dark .vendor-item {
@@ -905,19 +1189,19 @@
             box-shadow: 0 2px 4px rgb(var(--accent-rgb) / 0.1);
         }
         
-        .vendor-item.critical {
+        .vendor-item-critical {
             border-left: 4px solid var(--risk-critical);
         }
         
-        .vendor-item.high {
+        .vendor-item-high {
             border-left: 4px solid var(--risk-medium);
         }
         
-        .vendor-item.medium {
+        .vendor-item-medium {
             border-left: 4px solid var(--vendorsoluce-blue);
         }
         
-        .vendor-item.low {
+        .vendor-item-low {
             border-left: 4px solid var(--vendorsoluce-green);
         }
         
@@ -1026,12 +1310,12 @@
         /* Charts */
         .charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-top: 0;
+            margin-bottom: 0;
         }
-        
+
         .report-section {
             margin-top: 24px;
             margin-bottom: 24px;
@@ -1365,23 +1649,52 @@
                 grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             }
             
-            .toolbar {
+            .toolbar-row--primary {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
-            .toolbar-group {
-                width: 100%;
-                justify-content: stretch;
+
+            .toolbar-cluster--vendors {
+                flex: 1 1 auto;
             }
-            
-            .toolbar-group button,
-            .toolbar-group select {
+
+            .toolbar-cluster--portfolio {
+                justify-content: flex-start;
+                padding-top: 4px;
+            }
+
+            .toolbar-cluster--trial {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .toolbar-cluster--trial button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .toolbar-cluster--maintain {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .toolbar-cluster--maintain button {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+
+            .toolbar-cluster--filter {
+                width: 100%;
+            }
+
+            .toolbar-cluster--filter select {
                 flex: 1;
+                min-width: 0;
             }
             
             .sonar-container {
-                height: 400px;
+                height: 420px;
+                min-height: 260px;
             }
         }
         
@@ -1832,9 +2145,11 @@
 </div>
 </div>
 <!-- Toolbar -->
-<div class="toolbar">
-<div class="toolbar-group">
-<button onclick="openAddVendor()">
+<div class="toolbar" role="region" aria-label="Vendor list and portfolio actions">
+<div class="toolbar-row toolbar-row--primary">
+<div class="toolbar-cluster toolbar-cluster--vendors" aria-label="Add vendors or import spreadsheet">
+<span class="toolbar-label" id="toolbar-vendors-label">Build list</span>
+<button onclick="openAddVendor()" aria-describedby="toolbar-vendors-label">
 <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
 </svg>
@@ -1863,10 +2178,13 @@ Import CSV
 <summary class="csv-format-advanced-summary">Exact column titles (for power users)</summary>
 <p class="csv-format-body csv-format-advanced-body">If you build the file yourself, these header names work in any order: <code>Name</code>, <code>Category</code>, <code>Data Types</code> (<code>;</code>-separated list), <code>Sector</code>, <code>Location</code>, <code>Contact</code>, <code>Notes</code>, <code>Service Type</code>, <code>Population Impacted</code>, <code>Inherent Risk</code>, <code>Residual Risk</code>, <code>Risk Level</code>. Service type, population, and risk fields stay optional.</p>
 </details>
-<p class="csv-format-body csv-format-json-note"><strong>Same list in the VendorSoluce app?</strong> Use <strong>Import portfolio</strong> and <strong>Export portfolio</strong> below to move the full vendor list as one portable file—no need to copy column names by hand. Or use <strong>Continue in app</strong> in the welcome banner or toolbar to open the platform with import guidance.</p>
+<p class="csv-format-body csv-format-json-note"><strong>Same list in the VendorSoluce app?</strong> Use <strong>Import portfolio</strong> and <strong>Export portfolio</strong> in this toolbar to move the full vendor list as one portable file—no need to copy column names by hand. Or use <strong>Continue in app</strong> in the welcome banner or toolbar to open the platform with import guidance.</p>
 </div>
 </details>
-<button type="button" class="secondary" onclick="document.getElementById('portfolioJsonImport').click()" title="JSON from Vendor Risk Radar app or another export from this page">
+</div>
+<div class="toolbar-cluster toolbar-cluster--portfolio" aria-label="Portfolio JSON for backup or VendorSoluce app">
+<span class="toolbar-label" id="toolbar-portfolio-label">Portfolio</span>
+<button type="button" class="secondary" onclick="document.getElementById('portfolioJsonImport').click()" title="JSON from Vendor Risk Radar app or another export from this page" aria-describedby="toolbar-portfolio-label">
 <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
 </svg>
@@ -1881,67 +2199,41 @@ Export portfolio
 </button>
 <a href="https://app.vendorsoluce.com/vendor-risk-radar?from=website&amp;handoff=import" class="toolbar-continue-app" target="_blank" rel="noopener noreferrer" title="Open Vendor Risk Radar in the platform—import your portfolio JSON there">Continue in app →</a>
 </div>
-<div class="toolbar-group">
-<select aria-label="Filter vendors by risk level" id="riskFilter" onchange="filterVendors()" title="Filter vendors by risk level">
-<option value="all">All Risk Levels</option>
+</div>
+<div class="toolbar-row toolbar-row--secondary">
+<div class="toolbar-cluster toolbar-cluster--filter" aria-label="Filter by risk">
+<label class="toolbar-label" for="riskFilter">Risk level</label>
+<select id="riskFilter" onchange="filterVendors()" title="Filter vendors by risk level">
+<option value="all">All risk levels</option>
 <option value="critical">Critical</option>
 <option value="high">High</option>
 <option value="medium">Medium</option>
 <option value="low">Low</option>
 </select>
-<button type="button" class="secondary" onclick="if(typeof startTrial==='function')startTrial();" id="startTrialBtn" title="Start your free 14-day trial for up to 100 vendors and full report exports" style="background:var(--vendorsoluce-green);color:#fff;border:none;">
-<svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-Start Free Trial
-</button>
+</div>
+<div class="toolbar-cluster toolbar-cluster--maintain" aria-label="Recalculate scores and clear list">
 <button class="secondary" onclick="scanVendors()">
 <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
 </svg>
-Refresh Scan
+Refresh scan
 </button>
-<button class="danger" onclick="clearAllVendors()">Clear All</button>
+<button class="danger" onclick="clearAllVendors()">Clear all</button>
+</div>
+<div class="toolbar-cluster toolbar-cluster--trial">
+<button type="button" class="secondary" onclick="if(typeof startTrial==='function')startTrial();" id="startTrialBtn" title="Start your free 14-day trial for up to 100 vendors and full report exports" style="background:var(--vendorsoluce-green);color:#fff;border:none;">
+<svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+Start free trial
+</button>
 </div>
 </div>
-<!-- Stats Grid -->
-<div class="stats-grid">
-<div class="stat-card critical">
-<div class="stat-label">Critical Risk</div>
-<div class="stat-value" id="criticalCount">0</div>
 </div>
-<div class="stat-card warning">
-<div class="stat-label">High Risk</div>
-<div class="stat-value" id="highCount">0</div>
-</div>
-<div class="stat-card">
-<div class="stat-label">Medium Risk</div>
-<div class="stat-value" id="mediumCount">0</div>
-</div>
-<div class="stat-card success">
-<div class="stat-label">Low Risk</div>
-<div class="stat-value" id="lowCount">0</div>
-</div>
-<div class="stat-card">
-<div class="stat-label">Total Vendors</div>
-<div class="stat-value" id="totalCount">0</div>
-</div>
-<div class="stat-card">
-<div class="stat-label">Avg Risk Score</div>
-<div class="stat-value" id="avgRisk">0</div>
-</div>
-<div class="stat-card stat-card-threats">
-<div class="stat-label stat-label-white">Active Threats</div>
-<div class="stat-value stat-value-white" id="activeThreats">0</div>
-</div>
-<div class="stat-card stat-card-alerts">
-<div class="stat-label stat-label-white">Predictive Alerts</div>
-<div class="stat-value stat-value-white" id="predictiveAlerts">0</div>
-</div>
-</div>
-<!-- Main Content -->
-<div class="content-grid">
-<!-- Sonar Radar -->
+<!-- Dashboard: stacked — [radar | risk KPIs], then [summary KPIs | charts], then vendor list -->
+<div class="radar-dashboard">
+<div class="dashboard-pair dashboard-pair--radar">
+<!-- Sonar Radar (left) -->
 <div class="card">
 <div class="card-header">
 <div class="card-title">
@@ -1975,7 +2267,66 @@ Risk Radar
 </div>
 </div>
 </div>
-<!-- Vendor List -->
+<div class="stats-grid stats-grid--risk stats-grid--side" aria-label="Risk tier counts">
+<div class="stat-card critical">
+<div class="stat-label">Critical Risk</div>
+<div class="stat-value" id="criticalCount">0</div>
+</div>
+<div class="stat-card warning">
+<div class="stat-label">High Risk</div>
+<div class="stat-value" id="highCount">0</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">Medium Risk</div>
+<div class="stat-value" id="mediumCount">0</div>
+</div>
+<div class="stat-card success">
+<div class="stat-label">Low Risk</div>
+<div class="stat-value" id="lowCount">0</div>
+</div>
+</div>
+</div>
+<div class="dashboard-pair dashboard-pair--charts">
+<div class="stats-grid stats-grid--summary stats-grid--side" aria-label="Portfolio summary">
+<div class="stat-card">
+<div class="stat-label">Total Vendors</div>
+<div class="stat-value" id="totalCount">0</div>
+</div>
+<div class="stat-card">
+<div class="stat-label">Avg Risk Score</div>
+<div class="stat-value" id="avgRisk">0</div>
+</div>
+<div class="stat-card stat-card-threats">
+<div class="stat-label stat-label-white">Active Threats</div>
+<div class="stat-value stat-value-white" id="activeThreats">0</div>
+</div>
+<div class="stat-card stat-card-alerts">
+<div class="stat-label stat-label-white">Predictive Alerts</div>
+<div class="stat-value stat-value-white" id="predictiveAlerts">0</div>
+</div>
+</div>
+<div class="charts-grid" aria-label="Distribution charts">
+<div class="chart-card">
+<div class="chart-title">Risk Distribution</div>
+<div class="chart-container">
+<canvas id="inherentChart"></canvas>
+</div>
+</div>
+<div class="chart-card">
+<div class="chart-title">Sector Distribution</div>
+<div class="chart-container">
+<canvas id="sectorChart"></canvas>
+</div>
+</div>
+<div class="chart-card">
+<div class="chart-title">Geographic Distribution</div>
+<div class="chart-container">
+<canvas id="geoChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+<!-- Vendor Portfolio — full width below analytics row -->
 <div class="card">
 <div class="card-header">
 <div class="card-title">
@@ -2000,28 +2351,6 @@ Vendor Portfolio
 <div class="alert-banner-repeat clear" id="alertBannerRepeat" aria-hidden="true">
 <div class="alert-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
 <div class="alert-content"><div class="alert-title">System Status: All Clear</div><div>No critical vendor risks detected</div></div>
-</div>
-<!-- Analytics Charts -->
-<div class="charts-grid">
-<div class="chart-card">
-<div class="chart-title">Risk Distribution</div>
-<div class="chart-container">
-<canvas id="inherentChart"></canvas>
-</div>
-</div>
-<div class="chart-card">
-<div class="chart-title">Sector Distribution</div>
-<div class="chart-container">
-<canvas id="sectorChart"></canvas>
-</div>
-</div>
-<div class="chart-card">
-<div class="chart-title">Geographic Distribution</div>
-<div class="chart-container">
-<canvas id="geoChart"></canvas>
-</div>
-</div>
-</div>
 </div>
 <!-- Dependency Intelligence -->
 <section id="dependency-intelligence" class="report-section" aria-labelledby="dependency-intelligence-heading">
@@ -2791,6 +3120,7 @@ html.dark footer > div > div:last-child {
   <script src="./radar-first-run.js"></script>
   <script src="./radar-interactions.js"></script>
   <script src="./data-management-strategy.js"></script>
+  <script src="./vendor-catalog-enhanced.js"></script>
   <script src="./radar-runtime.js"></script>
   <script>
     initRadarModeSelector();

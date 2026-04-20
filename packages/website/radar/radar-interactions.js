@@ -19,28 +19,35 @@
   }
 
   function initStatsGridReveal() {
+    var grids = document.querySelectorAll('.stats-grid');
+    if (!grids.length) return;
+
+    function revealAll() {
+      grids.forEach(function (grid) {
+        grid.classList.add('stats-grid--in-view');
+      });
+    }
+
     if (REDUCED) {
-      var grid = document.querySelector('.stats-grid');
-      if (grid) grid.classList.add('stats-grid--in-view');
+      revealAll();
       return;
     }
-    var grid = document.querySelector('.stats-grid');
-    if (!grid || typeof IntersectionObserver === 'undefined') {
-      if (grid) grid.classList.add('stats-grid--in-view');
+    if (typeof IntersectionObserver === 'undefined') {
+      revealAll();
       return;
     }
     var obs = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (e) {
           if (e.isIntersecting) {
-            grid.classList.add('stats-grid--in-view');
+            revealAll();
             obs.disconnect();
           }
         });
       },
       { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
     );
-    obs.observe(grid);
+    obs.observe(grids[0]);
   }
 
   function pulseStatValue(el) {
