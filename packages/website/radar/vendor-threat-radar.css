@@ -411,6 +411,28 @@ html.dark .radar-container--engage .card:hover {
 }
 
 /* data-management-strategy.js — modals, toasts, trial UI (no inline styles) */
+
+/* Toolbar: primary CTA while keeping .secondary for shared sizing (replaces former inline style) */
+#startTrialBtn {
+  background: var(--vendorsoluce-green);
+  color: #fff;
+  border: none;
+}
+
+#startTrialBtn:hover:not(:disabled) {
+  background: var(--vendorsoluce-dark-green);
+}
+
+html.dark #startTrialBtn {
+  background: var(--vendorsoluce-green);
+  color: #fff;
+  border: none;
+}
+
+html.dark #startTrialBtn:hover:not(:disabled) {
+  background: var(--vendorsoluce-dark-green);
+}
+
 .vs-modal__header {
   position: relative;
 }
