@@ -13,10 +13,9 @@ import {
   Lock,
   X,
 } from 'lucide-react';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import StatusBanner from '../../components/vendorsoluce-intelligence/StatusBanner';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useI18n } from '../../context/I18nContext';
@@ -114,7 +113,7 @@ const AccountPage: React.FC = () => {
         { label: 'Visibility', value: privacy.profileVisibility, hint: 'Current privacy mode' },
       ]}
     >
-      <div className="grid gap-6 xl:grid-cols-2">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} xl:grid-cols-2`}>
         <PanelCard title={<span className="flex items-center"><Settings className="mr-2 h-5 w-5" />Appearance & language</span>} description="Control the base workspace experience, including theme and interface language.">
           <div className="space-y-6">
             <div className="flex items-center justify-between gap-4">
@@ -206,12 +205,12 @@ const AccountPage: React.FC = () => {
 
       {showPasswordModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <Card className="w-full max-w-md">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="flex items-center"><Lock className="mr-2 h-5 w-5" />Change password</CardTitle>
+        <div className="w-full max-w-md rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex items-center font-semibold text-gray-900 dark:text-white"><Lock className="mr-2 h-5 w-5" />Change password</div>
               <button onClick={closePasswordModal} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Close password change modal"><X className="h-5 w-5" /></button>
-            </CardHeader>
-            <CardContent>
+            </div>
+            <div>
               {passwordError ? <StatusBanner className="mb-4" tone="error">{passwordError}</StatusBanner> : null}
               {passwordSuccess ? <StatusBanner className="mb-4" tone="success">{passwordSuccess}</StatusBanner> : null}
               <form onSubmit={handlePasswordChange}>
@@ -235,8 +234,8 @@ const AccountPage: React.FC = () => {
                   <Button type="submit" variant="primary" className="flex-1" disabled={isUpdatingPassword}>{isUpdatingPassword ? 'Updating…' : 'Update password'}</Button>
                 </div>
               </form>
-            </CardContent>
-          </Card>
+            </div>
+        </div>
         </div>
       ) : null}
     </WorkspacePageShell>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '../../components/ui/Button';
 import { User, Mail, Building, Save, Shield } from 'lucide-react';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import StatusBanner from '../../components/vendorsoluce-intelligence/StatusBanner';
 import { useAuth } from '../../context/AuthContext';
@@ -82,7 +82,7 @@ const ProfilePage: React.FC = () => {
     >
       {saveMessage ? <StatusBanner tone={saveMessage.type === 'success' ? 'success' : 'error'}>{saveMessage.text}</StatusBanner> : null}
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} grid-cols-1 lg:grid-cols-3`}>
         <PanelCard title={<span className="flex items-center gap-2"><User className="h-5 w-5" /> Profile picture</span>} description="Keep identity details, avatar presentation, and role context aligned with the rest of the workspace.">
           <div className="text-center">
             <div className="mb-6">

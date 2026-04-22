@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import {
   Activity,
   Clock,
@@ -13,7 +12,7 @@ import {
   CheckCircle,
   BarChart3,
 } from 'lucide-react';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import { MR, WR } from 'shared/constants/routes';
 // import { useAuth } from '../../context/AuthContext';
 
@@ -170,8 +169,7 @@ const UserActivity: React.FC = () => {
 
   return (
     <WorkspacePageShell title="Activity history" description="Review workspace activity across vendors and assessments." actions={[{ label: 'Export activity log', onClick: () => {}, variant: 'outline' }]} stats={[{ label: 'Total activities', value: activities.length, hint: 'Across current log view' }, { label: 'Filtered', value: filteredActivities.length, hint: 'Current search/filter result' }]}>{/* Filters */}
-      <Card className="mb-6">
-        <CardContent className="p-4">
+      <div className="mb-6 rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
               <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -197,54 +195,43 @@ const UserActivity: React.FC = () => {
               ))}
             </select>
           </div>
-        </CardContent>
-      </Card>
+      </div>
 
       {/* Activity Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <Card>
-          <CardContent className="p-4 text-center">
+        <div className="rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm text-center dark:border-gray-800 dark:bg-gray-900">
             <div className="text-2xl font-bold text-gray-900 dark:text-white">
               {activities.length}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Total Activities</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
+        </div>
+        <div className="rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm text-center dark:border-gray-800 dark:bg-gray-900">
             <div className="text-2xl font-bold text-green-600 dark:text-green-400">
               {activities.filter(a => a.status === 'success').length}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Successful Actions</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
+        </div>
+        <div className="rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm text-center dark:border-gray-800 dark:bg-gray-900">
             <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
               {activities.filter(a => a.status === 'warning').length}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Warnings</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
+        </div>
+        <div className="rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm text-center dark:border-gray-800 dark:bg-gray-900">
             <div className="text-2xl font-bold text-red-600 dark:text-red-400">
               {activities.filter(a => a.status === 'error').length}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Errors</div>
-          </CardContent>
-        </Card>
+        </div>
       </div>
 
       {/* Activity Timeline */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Activity className="h-5 w-5 mr-2 text-vendorsoluce-green" />
-            Activity Timeline
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div className="flex items-center p-6 pb-3">
+          <Activity className="h-5 w-5 mr-2 text-vendorsoluce-green" />
+          <span className="font-semibold text-gray-900 dark:text-white">Activity Timeline</span>
+        </div>
+        <div className="px-6 pb-6">
           {filteredActivities.length === 0 ? (
             <div className="text-center py-12">
               <Activity className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -304,16 +291,16 @@ const UserActivity: React.FC = () => {
               })}
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Activity Insights */}
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle>Activity Insights</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="mt-6 rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div className="p-6 pb-3">
+          <span className="font-semibold text-gray-900 dark:text-white">Activity Insights</span>
+        </div>
+        <div className="px-6 pb-6">
+          <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} md:grid-cols-3`}>
             <div className="text-center">
               <div className="text-2xl font-bold text-vendorsoluce-green mb-2">
                 {activities.filter(a => a.type === 'vendor').length}
@@ -333,8 +320,8 @@ const UserActivity: React.FC = () => {
               <div className="text-sm text-gray-600 dark:text-gray-400">SBOM Analyses</div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </WorkspacePageShell>
   );
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, CardContent } from '../../../../components/ui/Card';
 import { AlertTriangle, Shield, TrendingUp, Database, Target, Info } from 'lucide-react';
 import type { PortfolioStats } from '../../../../types/vendorRadar';
 
@@ -69,8 +68,8 @@ const StatsOverview: React.FC<StatsOverviewProps> = ({ stats }) => {
         {statCards.map((stat, index) => {
           const IconComponent = stat.icon;
           return (
-            <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-4">
+            <div key={index} className="rounded-xl border border-gray-200/70 bg-white hover:shadow-md transition-shadow shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="p-4">
                 <div className="mb-2 flex items-center gap-2">
                   <IconComponent className="w-4 h-4 text-gray-500 flex-shrink-0" />
                   <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
@@ -86,8 +85,8 @@ const StatsOverview: React.FC<StatsOverviewProps> = ({ stats }) => {
                 {!stat.showBar && (
                   <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           );
         })}
       </div>

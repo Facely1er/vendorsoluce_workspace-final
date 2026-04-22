@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { Search, ChevronDown, ChevronUp, Printer } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import {
   getRiskLevel,
   suggestedNextReviewIsoDate,
@@ -164,15 +163,15 @@ const PortfolioViraRegister: React.FC<PortfolioViraRegisterProps> = ({ vendors, 
 
   return (
     <>
-      <Card className="border-gray-200/70 shadow-sm dark:border-gray-800">
-        <CardHeader className="border-b border-gray-100 dark:border-gray-700">
+      <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div className="p-4 pb-2 border-b border-gray-100 dark:border-gray-700">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <CardTitle className="text-base">
+            <div className="text-base font-semibold text-gray-900 dark:text-white">
               Vendor risk register (VIRA)
               <span className="ml-2 text-sm font-normal text-gray-400">
                 ({filtered.length} of {vendors.length})
               </span>
-            </CardTitle>
+            </div>
             <div className="flex flex-col sm:flex-row gap-2">
               <div className="relative">
                 <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
@@ -198,8 +197,8 @@ const PortfolioViraRegister: React.FC<PortfolioViraRegisterProps> = ({ vendors, 
               </select>
             </div>
           </div>
-        </CardHeader>
-        <CardContent className="p-0">
+        </div>
+        <div className="p-0">
           {filtered.length === 0 ? (
             <div className="py-12 text-center text-gray-400 dark:text-gray-600 text-sm">
               No vendors match the current filters.
@@ -280,15 +279,15 @@ const PortfolioViraRegister: React.FC<PortfolioViraRegisterProps> = ({ vendors, 
               </table>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {recommendations.length > 0 && (
-        <Card className="border-gray-200/70 shadow-sm dark:border-gray-800">
-          <CardHeader className="border-b border-gray-100 dark:border-gray-700">
-            <CardTitle className="text-base">Recommended actions</CardTitle>
-          </CardHeader>
-          <CardContent className="p-4">
+        <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <div className="p-4 pb-2 border-b border-gray-100 dark:border-gray-700">
+            <div className="text-base font-semibold text-gray-900 dark:text-white">Recommended actions</div>
+          </div>
+          <div className="p-4">
             <ol className="space-y-2">
               {recommendations.map((rec, i) => (
                 <li key={i} className="flex gap-3 text-sm text-gray-700 dark:text-gray-300">
@@ -297,8 +296,8 @@ const PortfolioViraRegister: React.FC<PortfolioViraRegisterProps> = ({ vendors, 
                 </li>
               ))}
             </ol>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       )}
 
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gray-200/70 bg-gray-50 px-4 py-3 text-sm text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-400">

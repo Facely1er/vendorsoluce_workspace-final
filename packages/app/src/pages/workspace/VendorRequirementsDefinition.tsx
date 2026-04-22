@@ -12,7 +12,6 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
@@ -160,8 +159,7 @@ const VendorRequirementsDefinition: React.FC = () => {
   if (vendors.length === 0) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Card>
-          <CardContent className="p-8 text-center">
+        <div className="rounded-xl border border-gray-200/70 bg-white p-8 shadow-sm text-center dark:border-gray-800 dark:bg-gray-900">
             <AlertTriangle className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               No Vendors Found
@@ -186,8 +184,7 @@ const VendorRequirementsDefinition: React.FC = () => {
                 Go to Vendor Risk Radar
               </Button>
             </div>
-          </CardContent>
-        </Card>
+      </div>
       </div>
     );
   }
@@ -233,14 +230,14 @@ const VendorRequirementsDefinition: React.FC = () => {
           const requirementCount = getRequirementCountForTier(tier);
 
           return (
-            <Card key={tier} className={tier === 'Critical' ? 'border-l-4 border-l-red-500' : ''}>
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center justify-between">
+            <div key={tier} className={`rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900${tier === 'Critical' ? ' border-l-4 border-l-red-500' : ''}`}>
+              <div className="p-4 pb-2">
+                <div className="text-lg font-semibold flex items-center justify-between">
                   <span>{tier} Risk</span>
                   <Badge variant="outline">{tierVendors.length} vendors</Badge>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
+                </div>
+              </div>
+              <div className="px-4 pb-4">
                 <div className="space-y-2">
                   <div className="text-sm text-gray-600 dark:text-gray-400">
                     {requirementCount} requirements per vendor
@@ -256,8 +253,8 @@ const VendorRequirementsDefinition: React.FC = () => {
                     </div>
                   )}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           );
         })}
       </div>
@@ -268,10 +265,10 @@ const VendorRequirementsDefinition: React.FC = () => {
       )}
 
       {/* Vendor Requirements List */}
-      <PanelCard title="Vendor requirements" description="Review generated requirements, validate coverage, and prepare the evidence collection stage."><Card className="border-0 bg-transparent shadow-none">
-        <CardHeader>
+      <PanelCard title="Vendor requirements" description="Review generated requirements, validate coverage, and prepare the evidence collection stage."><div>
+        <div className="p-4 pb-2">
           <div className="flex items-center justify-between">
-            <CardTitle>Vendor Requirements</CardTitle>
+            <span className="font-semibold text-gray-900 dark:text-white">Vendor Requirements</span>
             {!hasGenerated && (
               <Button
                 variant="outline"
@@ -284,8 +281,8 @@ const VendorRequirementsDefinition: React.FC = () => {
               </Button>
             )}
           </div>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div className="px-4 pb-4">
           {requirements.length === 0 ? (
             <div className="text-center py-8">
               <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -315,19 +312,17 @@ const VendorRequirementsDefinition: React.FC = () => {
               showRequirementDetails={true}
             />
           )}
-        </CardContent>
-      </Card></PanelCard>
+        </div>
+      </div></PanelCard>
 
       {/* Error Display */}
       {requirementsError && (
-        <Card className="mb-6 border-l-4 border-l-red-500">
-          <CardContent className="p-4">
+        <div className="mb-6 rounded-xl border-l-4 border-l-red-500 border border-gray-200/70 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <div className="flex items-center gap-2 text-red-600 dark:text-red-400">
               <AlertTriangle className="w-5 h-5" />
               <span>{requirementsError}</span>
             </div>
-          </CardContent>
-        </Card>
+        </div>
       )}
 
     </WorkspacePageBody>

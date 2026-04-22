@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../../../components/ui/Card';
 import { Button } from '../../../../components/ui/Button';
+import { WORKSPACE_PAGE_BODY_STACK_CLASS } from '../../../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import RiskBadge from '../../../../components/ui/RiskBadge';
 import { AlertTriangle, Target, Filter } from 'lucide-react';
 import type { VendorRadar } from '../../../../types/vendorRadar';
@@ -54,11 +54,11 @@ const VendorDashboard: React.FC<VendorDashboardProps> = ({
   const VendorCard = ({ vendor }: { vendor: VendorRadar }) => {
     const risk = vendor.residualRisk || vendor.inherentRisk || 0;
     return (
-      <Card
-        className="hover:shadow-md transition-all cursor-pointer"
+      <div
+        className="rounded-xl border border-gray-200/70 bg-white hover:shadow-md transition-all cursor-pointer shadow-sm dark:border-gray-800 dark:bg-gray-900"
         onClick={() => onVendorSelect(vendor)}
       >
-        <CardContent className="p-4">
+        <div className="p-4">
           <div className="flex justify-between items-start mb-2">
             <div className="flex-1">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
@@ -106,16 +106,16 @@ const VendorDashboard: React.FC<VendorDashboardProps> = ({
               SBOM Gap
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   };
 
   return (
-    <div className="space-y-6">
+    <div className={WORKSPACE_PAGE_BODY_STACK_CLASS}>
       {/* Filters */}
-      <Card>
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div className="p-4">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-2">
               <Filter className="w-4 h-4 text-gray-600 dark:text-gray-400" />
@@ -145,16 +145,16 @@ const VendorDashboard: React.FC<VendorDashboardProps> = ({
               <option value="medium">Medium Risk (40+)</option>
             </select>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* High Risk Vendors */}
-      <Card>
-        <CardHeader>
+      <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div className="p-4 pb-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-orange-600" />
-              <CardTitle>High Risk Vendors</CardTitle>
+              <div className="font-semibold text-gray-900 dark:text-white">High Risk Vendors</div>
               <span className="text-sm text-gray-600 dark:text-gray-400">
                 ({highRiskVendors.length})
               </span>
@@ -167,9 +167,9 @@ const VendorDashboard: React.FC<VendorDashboardProps> = ({
               {expandedSection === 'high-risk' ? 'Collapse' : 'Expand'}
             </Button>
           </div>
-        </CardHeader>
+        </div>
         {expandedSection === 'high-risk' && (
-          <CardContent>
+          <div>
             {highRiskVendors.length === 0 ? (
               <p className="text-gray-600 dark:text-gray-400 text-center py-4">
                 No high-risk vendors found.
@@ -181,17 +181,17 @@ const VendorDashboard: React.FC<VendorDashboardProps> = ({
                 ))}
               </div>
             )}
-          </CardContent>
+          </div>
         )}
-      </Card>
+      </div>
 
       {/* Critical Category Vendors */}
-      <Card>
-        <CardHeader>
+      <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div className="p-4 pb-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Target className="w-5 h-5 text-red-600" />
-              <CardTitle>Critical Category Vendors</CardTitle>
+              <div className="font-semibold text-gray-900 dark:text-white">Critical Category Vendors</div>
               <span className="text-sm text-gray-600 dark:text-gray-400">
                 ({criticalCategoryVendors.length})
               </span>
@@ -204,9 +204,9 @@ const VendorDashboard: React.FC<VendorDashboardProps> = ({
               {expandedSection === 'critical' ? 'Collapse' : 'Expand'}
             </Button>
           </div>
-        </CardHeader>
+        </div>
         {expandedSection === 'critical' && (
-          <CardContent>
+          <div>
             {criticalCategoryVendors.length === 0 ? (
               <p className="text-gray-600 dark:text-gray-400 text-center py-4">
                 No critical category vendors found.
@@ -218,15 +218,15 @@ const VendorDashboard: React.FC<VendorDashboardProps> = ({
                 ))}
               </div>
             )}
-          </CardContent>
+          </div>
         )}
-      </Card>
+      </div>
 
       {/* All Vendors */}
-      <Card>
-        <CardHeader>
+      <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div className="p-4 pb-2">
           <div className="flex items-center justify-between">
-            <CardTitle>All Vendors ({filteredVendors.length})</CardTitle>
+            <div className="font-semibold text-gray-900 dark:text-white">All Vendors ({filteredVendors.length})</div>
             <Button
               variant="ghost"
               size="sm"
@@ -235,9 +235,9 @@ const VendorDashboard: React.FC<VendorDashboardProps> = ({
               {expandedSection === 'all' ? 'Collapse' : 'Expand'}
             </Button>
           </div>
-        </CardHeader>
+        </div>
         {expandedSection === 'all' && (
-          <CardContent>
+          <div>
             {filteredVendors.length === 0 ? (
               <p className="text-gray-600 dark:text-gray-400 text-center py-4">
                 No vendors found matching the filters.
@@ -249,9 +249,9 @@ const VendorDashboard: React.FC<VendorDashboardProps> = ({
                 ))}
               </div>
             )}
-          </CardContent>
+          </div>
         )}
-      </Card>
+      </div>
     </div>
   );
 };

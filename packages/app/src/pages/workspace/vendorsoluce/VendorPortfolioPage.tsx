@@ -7,7 +7,7 @@ import { canManageClientPortfolio } from '../../../config/tiers';
 import { vendorOrgService } from '../../../services/vendorOrgService';
 import { attestationVerificationService } from '../../../services/attestationVerificationService';
 import { FeatureGate } from '../../../components/billing/FeatureGate';
-import WorkspacePageShell from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../../components/vendorsoluce-intelligence/PanelCard';
 import OrgSwitcher from '../../../components/workspace/OrgSwitcher';
 import type { ActiveOrg } from '../../../services/vendorOrgService';
@@ -221,7 +221,7 @@ const VendorPortfolioPage: React.FC = () => {
             title="Attestation Coverage"
             description="Proportion of vendors in this org context with at least one linked attestation."
           >
-            <div className="grid gap-6 sm:grid-cols-2">
+            <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} sm:grid-cols-2`}>
               <div>
                 <div className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-500 dark:text-gray-400">
                   Attested

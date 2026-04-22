@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../../../components/ui/Card';
 import LazyChart from '../../../../components/charts/LazyChart';
 import type { VendorRadar } from '../../../../types/vendorRadar';
 
@@ -47,28 +46,28 @@ const RadarVisualization: React.FC<RadarVisualizationProps> = ({ vendors }) => {
 
   if (vendors.length === 0) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Vendor Risk Radar</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div className="p-4 pb-2">
+          <div className="font-semibold text-gray-900 dark:text-white">Vendor Risk Radar</div>
+        </div>
+        <div>
           <p className="text-gray-600 dark:text-gray-400 text-center py-8">
             Add vendors to see the risk radar visualization
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Vendor Risk Radar</CardTitle>
+    <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <div className="p-4 pb-2">
+        <div className="font-semibold text-gray-900 dark:text-white">Vendor Risk Radar</div>
         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
           Portfolio risk distribution across risk levels
         </p>
-      </CardHeader>
-      <CardContent>
+      </div>
+      <div>
         <div className="h-80">
           <LazyChart
             type="radar"
@@ -95,8 +94,8 @@ const RadarVisualization: React.FC<RadarVisualizationProps> = ({ vendors }) => {
             <span>Low Risk (0-39)</span>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

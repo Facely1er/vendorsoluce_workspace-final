@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { Badge } from '../../components/ui/Badge';
@@ -382,9 +381,11 @@ const VendorSecurityAssessments: React.FC = () => {
       <AssessmentProgressTracker assessments={assessments} />
 
       {/* Filters and Search */}
-      <Card className="mb-6">
-        <CardContent className="p-4">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <PanelCard
+        title="Search and Filter"
+        description="Find assessments by vendor name, framework, or status."
+      >
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-col md:flex-row gap-4 flex-1">
               <div className="relative">
                 <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -454,20 +455,20 @@ const VendorSecurityAssessments: React.FC = () => {
               {t('vendorAssessments.actions.exportReport')}
             </Button>
           </div>
-        </CardContent>
-      </Card>
+      </PanelCard>
 
       {/* Assessments Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
+      <PanelCard
+        title={
+          <div className="flex items-center justify-between">
             <span>{t('vendorAssessments.table.title')}</span>
             <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
               {t('vendorAssessments.table.count', { count: filteredAssessments.length })}
             </span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+          </div>
+        }
+        description="View and manage all vendor security assessments and their portal links."
+      >
           {assessments.length === 0 ? (
             <WorkspaceEmptyState
               icon={<FileCheck className="h-6 w-6" />}
@@ -631,16 +632,14 @@ const VendorSecurityAssessments: React.FC = () => {
               </table>
             </div>
           )}
-        </CardContent>
-      </Card>
+      </PanelCard>
 
       {/* Past results */}
       {completedSupplyChainAssessments.length > 0 && (
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle>Past results</CardTitle>
-          </CardHeader>
-          <CardContent>
+        <PanelCard
+          title="Past results"
+          description="Previously completed supply chain assessments from your workspace."
+        >
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
@@ -696,8 +695,7 @@ const VendorSecurityAssessments: React.FC = () => {
                 </tbody>
               </table>
             </div>
-          </CardContent>
-        </Card>
+        </PanelCard>
       )}
 
       {/* Create Assessment Modal */}

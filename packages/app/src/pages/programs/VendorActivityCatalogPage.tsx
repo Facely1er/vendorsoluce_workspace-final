@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Card, CardContent } from '../../components/ui/Card';
 import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import { Search, X, CheckCircle2, Circle, Users } from 'lucide-react';
 import {
@@ -435,8 +434,8 @@ const VendorActivityCatalogPage: React.FC = () => {
 
           return (
             <section key={phaseId} id={`phase-${phaseId}`}>
-              <Card className="border border-gray-200 dark:border-gray-700">
-                <CardContent className="p-6">
+              <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
+                
                   {/* Phase header */}
                   <div className="flex flex-wrap items-start justify-between gap-3 mb-1">
                     <div className="flex items-center gap-2 min-w-0">
@@ -490,8 +489,8 @@ const VendorActivityCatalogPage: React.FC = () => {
                   {rows.map((row) => (
                     <SipocActivityCard key={row.id} row={row} done={done} onToggle={toggle} />
                   ))}
-                </CardContent>
-              </Card>
+                
+              </div>
             </section>
           );
         })}

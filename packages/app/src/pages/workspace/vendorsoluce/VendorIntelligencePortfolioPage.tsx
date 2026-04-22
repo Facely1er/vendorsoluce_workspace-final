@@ -6,7 +6,7 @@ import { useVendorStore } from '../../../stores/vendorStore';
 import { WR } from 'shared/constants/routes';
 import { Button } from '../../../components/ui/Button';
 import { Badge } from '../../../components/ui/Badge';
-import WorkspacePageShell from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../../components/vendorsoluce-intelligence/PanelCard';
 import { MetricPill } from '../../../components/vendorsoluce-intelligence/MetricPill';
 import VendorPortfolioDependencyGraph from '../../../components/vendorsoluce-intelligence/VendorPortfolioDependencyGraph';
@@ -70,7 +70,7 @@ const VendorIntelligencePortfolioPage: React.FC = () => {
         <VendorPortfolioDependencyGraph orgId={orgId} integratedRiskRecords={integratedRiskRecords} />
       </PanelCard>
 
-      <div className="grid gap-6 xl:grid-cols-[1.6fr,1fr]">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} xl:grid-cols-[1.6fr,1fr]`}>
         <PanelCard
           title="Portfolio view"
           description="Consistent vendor ranking using the integrated risk record. Click a vendor to open detail and scenario analysis."

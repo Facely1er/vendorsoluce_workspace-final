@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import Card, { CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import VendorRiskTable from '../../components/vendor/VendorRiskTable';
 import { VendorRisk } from '../../types';
 import Button from '../../components/ui/Button';
@@ -24,7 +23,7 @@ import { getRiskLevel, getComplianceStatus } from '../../utils/riskCalculations'
 import RadarWidget from '../../components/dashboard/RadarWidget';
 import PortalStatusWidget from '../../components/dashboard/PortalStatusWidget';
 import UnifiedQuickActions from '../../components/dashboard/UnifiedQuickActions';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_STACK_LOOSE_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkspaceEmptyState from '../../components/common/WorkspaceEmptyState';
 import LoadingSkeleton from '../../components/common/LoadingSkeleton';
 import { MR, WR } from 'shared/constants/routes';
@@ -302,10 +301,10 @@ const VendorRiskDashboard: React.FC = () => {
       </div>
 
       {/* Content Sections with consistent spacing */}
-      <div className="space-y-8">
+      <div className={WORKSPACE_PAGE_BODY_STACK_LOOSE_CLASS}>
         {/* Dashboard View */}
         {activeView === 'dashboard' && (
-          <div id="dashboard-panel" role="tabpanel" aria-labelledby="dashboard-tab" className="space-y-8">
+          <div id="dashboard-panel" role="tabpanel" aria-labelledby="dashboard-tab" className={WORKSPACE_PAGE_BODY_STACK_LOOSE_CLASS}>
             <GetStartedWidget 
               vendorCount={vendors.length}
               assessmentCount={assessments.length}
@@ -313,7 +312,7 @@ const VendorRiskDashboard: React.FC = () => {
 
             {/* Enhanced Dashboard Widget */}
             {(vendors.length > 3 || assessments.length > 2 || analyses.length > 2) && (
-              <Card className="p-6">
+              <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white">Advanced Dashboard</h2>
                   <div className="flex space-x-2">
@@ -327,13 +326,13 @@ const VendorRiskDashboard: React.FC = () => {
                   </div>
                 </div>
                 <CustomizableDashboard />
-              </Card>
+              </div>
             )}
 
             {/* KPI-style Statistics Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-200">
-                <CardContent className="px-6 py-5">
+              <div className="rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 dark:border-gray-700 dark:bg-gray-800">
+                <div className="px-6 py-5">
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400 leading-snug min-w-0 pr-2">
@@ -350,10 +349,10 @@ const VendorRiskDashboard: React.FC = () => {
                       {t('vendorRisk.monitoredVendors')}
                     </p>
                   </div>
-                </CardContent>
-              </Card>
-              <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-200">
-                <CardContent className="px-6 py-5">
+                </div>
+              </div>
+              <div className="rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 dark:border-gray-700 dark:bg-gray-800">
+                <div className="px-6 py-5">
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400 leading-snug min-w-0 pr-2">
@@ -375,10 +374,10 @@ const VendorRiskDashboard: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-              <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-200">
-                <CardContent className="px-6 py-5">
+                </div>
+              </div>
+              <div className="rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 dark:border-gray-700 dark:bg-gray-800">
+                <div className="px-6 py-5">
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400 leading-snug min-w-0 pr-2">
@@ -400,8 +399,8 @@ const VendorRiskDashboard: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
 
             {/* Unified Integration Section: Radar + Portal + Quick Actions */}
@@ -434,28 +433,28 @@ const VendorRiskDashboard: React.FC = () => {
                   onCreateAssessment={() => navigate('/vendor-assessments?action=create')}
                 />
                 {/* Inherent risk — same weighted factors as radar / VIRA intake */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-base font-semibold">{t('vendorRisk.dashboard.inherentRisk.title')}</CardTitle>
+                <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                  <div className="p-4 pb-2">
+                    <div className="text-base font-semibold text-gray-900 dark:text-white">{t('vendorRisk.dashboard.inherentRisk.title')}</div>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                       {t('vendorRisk.dashboard.inherentRisk.methodologyNote')}{' '}
                       <Link to="/tools/vendor-risk-calculator" className="text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">
                         {t('vendorRisk.dashboard.inherentRisk.learnMore')}
                       </Link>
                     </p>
-                  </CardHeader>
-                  <CardContent className="pt-0">
+                  </div>
+                  <div className="pt-0">
                     <Button variant="outline" className="w-full" onClick={() => setShowScoreModal(true)}>
                       {t('vendorRisk.dashboard.inherentRisk.scoreVendor')}
                     </Button>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-base font-semibold">Recent activity</CardTitle>
+                  </div>
+                </div>
+                <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                  <div className="p-4 pb-2">
+                    <div className="text-base font-semibold text-gray-900 dark:text-white">Recent activity</div>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Latest assessments and updates</p>
-                  </CardHeader>
-                  <CardContent className="pt-0">
+                  </div>
+                  <div className="pt-0">
                     <ul className="space-y-2">
                       {recentActivity.map((item, i) => (
                         <li key={i} className="text-sm text-gray-600 dark:text-gray-400 flex justify-between gap-2">
@@ -464,13 +463,13 @@ const VendorRiskDashboard: React.FC = () => {
                         </li>
                       ))}
                     </ul>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </div>
             </div>
             
             {/* Vendor Table Section with Enhanced Integration */}
-            <Card className="overflow-hidden">
+            <div className="rounded-xl border border-gray-200/70 bg-white overflow-hidden shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4">
                   <div className="min-w-0">
@@ -533,11 +532,11 @@ const VendorRiskDashboard: React.FC = () => {
                   secondaryAction={{ label: 'Learn about vendor onboarding', href: MR.VENDOR_ONBOARDING }}
                 />
               )}
-            </Card>
+            </div>
             
             {/* Risk Information Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <Card className="p-6">
+              <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                 <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">{t('vendorRisk.riskScoring.title')}</h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
                   {t('vendorRisk.riskScoring.description')}
@@ -566,9 +565,9 @@ const VendorRiskDashboard: React.FC = () => {
                     </div>
                   ))}
                 </div>
-              </Card>
+              </div>
               
-              <Card className="p-6">
+              <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                 <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">{t('vendorRisk.actions.title')}</h2>
                 <div className="space-y-4">
                   {(
@@ -594,7 +593,7 @@ const VendorRiskDashboard: React.FC = () => {
                     </div>
                   ))}
                 </div>
-              </Card>
+              </div>
             </div>
           </div>
         )}
@@ -602,7 +601,7 @@ const VendorRiskDashboard: React.FC = () => {
         {/* Workflow Automation View */}
         {activeView === 'workflows' && (
           <div id="workflows-panel" role="tabpanel" aria-labelledby="workflows-tab" className="space-y-6">
-            <Card className="p-6">
+            <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Workflow Automation</h2>
@@ -640,14 +639,14 @@ const VendorRiskDashboard: React.FC = () => {
                 </div>
               </div>
               <WorkflowAutomation />
-            </Card>
+            </div>
           </div>
         )}
 
         {/* Threat Intelligence View */}
         {activeView === 'intelligence' && (
           <div id="intelligence-panel" role="tabpanel" aria-labelledby="intelligence-tab" className="space-y-6">
-            <Card className="p-6">
+            <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -692,13 +691,13 @@ const VendorRiskDashboard: React.FC = () => {
                 </div>
               </div>
               <ThreatIntelligenceFeed vendorIds={vendorRiskData.map(v => v.id)} />
-            </Card>
+            </div>
             
-            <Card>
-              <CardHeader>
-                <CardTitle>Threat Intelligence Sources</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="p-4 pb-2">
+                <div className="font-semibold text-gray-900 dark:text-white">Threat Intelligence Sources</div>
+              </div>
+              <div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center p-6 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow">
                     <div className="text-2xl font-bold text-gray-900 dark:text-white">{threatStats.activeSources}</div>
@@ -722,24 +721,24 @@ const VendorRiskDashboard: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         )}
 
         {/* Predictive Analytics View */}
         {activeView === 'analytics' && (
           <div id="analytics-panel" role="tabpanel" aria-labelledby="analytics-tab" className="space-y-6">
-            <Card className="p-6">
+            <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Predictive Analytics</h2>
                 <p className="text-gray-600 dark:text-gray-300 mt-1">AI-powered insights and risk predictions</p>
               </div>
               <PredictiveAnalytics />
-            </Card>
+            </div>
             
             {/* Export Dashboard Button */}
-            <Card className="p-6">
+            <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">Export Analytics Report</h3>
@@ -750,7 +749,7 @@ const VendorRiskDashboard: React.FC = () => {
                   Export Report
                 </Button>
               </div>
-            </Card>
+            </div>
           </div>
         )}
       </div>

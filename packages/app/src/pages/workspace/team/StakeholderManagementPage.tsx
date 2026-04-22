@@ -5,7 +5,7 @@ import {
   Edit, X, ShieldCheck, BarChart3, AlertTriangle, CheckCircle, Filter
 } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
-import WorkspacePageShell from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import { ProgressBarFill } from '../../../components/ui/ProgressBarFill';
 import PanelCard from '../../../components/vendorsoluce-intelligence/PanelCard';
 
@@ -228,7 +228,7 @@ export default function StakeholderManagementPage() {
       </PanelCard>
 
       {activeTab === 'overview' && (
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+        <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} xl:grid-cols-[minmax(0,1fr)_320px]`}>
           <PanelCard title="Role distribution" description="Check whether the vendor-risk program is staffed with the right balance of operating roles.">
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {[
@@ -273,7 +273,7 @@ export default function StakeholderManagementPage() {
       )}
 
       {activeTab === 'access' && (
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+        <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} xl:grid-cols-[minmax(0,1fr)_320px]`}>
           <PanelCard title="Team access control" description="Search, filter, and operate the roster from one controlled view.">
             <div className="space-y-5">
               <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_220px]">
@@ -401,7 +401,7 @@ export default function StakeholderManagementPage() {
 
       {activeTab === 'permissions' && (
         <PanelCard title="Permission coverage" description="Review permission distribution by person and by control family.">
-          <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+          <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} xl:grid-cols-[minmax(0,1fr)_320px]`}>
             <div className="space-y-4">
               {members.map((member) => (
                 <div key={member.id} className="rounded-2xl border border-gray-200/70 p-5 dark:border-gray-800">
