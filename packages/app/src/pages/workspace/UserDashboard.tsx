@@ -1,20 +1,19 @@
 import React, { useMemo } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import {
-  User, 
-  Activity, 
-  Clock, 
-  Award, 
+  User,
+  Activity,
+  Clock,
+  Award,
   Target,
   BarChart3,
-  TrendingUp,
   CheckCircle,
   AlertTriangle,
   Calendar,
   Shield
 } from 'lucide-react';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import { Link } from 'react-router-dom';
 import { WR } from 'shared/constants/routes';
@@ -121,74 +120,57 @@ const UserDashboard: React.FC = () => {
   ];
 
   return (
-    <WorkspacePageShell title={`Welcome back, ${profile?.full_name || 'User'}!`} description={`${profile?.role || 'Security Professional'} at ${profile?.company || 'Your Organization'}`} actions={[{ label: 'Edit profile', to: WR.PROFILE, variant: 'outline' }, { label: 'Account settings', to: WR.ACCOUNT, variant: 'outline' }]} stats={quickStats.map((s)=>({label:s.label,value:s.value,hint:s.change}))}>{/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {quickStats.map((stat, index) => (
-          <Card key={index}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
-                </div>
-                <div className="flex items-center text-sm text-green-600 dark:text-green-400">
-                  <TrendingUp className="h-4 w-4 mr-1" />
-                  {stat.change}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Recent Activity */}
-        <div className="lg:col-span-2">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Activity className="h-5 w-5 mr-2 text-vendorsoluce-green" />
-                Recent Activity
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+    <WorkspacePageShell
+      title={`Welcome back, ${profile?.full_name || 'User'}!`}
+      description={`${profile?.role || 'Security Professional'} at ${profile?.company || 'Your Organization'}`}
+      actions={[
+        { label: 'Edit profile', to: WR.PROFILE, variant: 'outline' },
+        { label: 'Account settings', to: WR.ACCOUNT, variant: 'outline' }
+      ]}
+      stats={quickStats.map((s)=>({label:s.label,value:s.value,hint:s.change}))}
+    >
+      <div className={WORKSPACE_PAGE_BODY_GRID_CLASS}>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {/* Recent Activity & Quick Actions */}
+          <div className="space-y-6 lg:col-span-2">
+            <PanelCard
+              title={<span className="flex items-center gap-2"><Activity className="h-5 w-5 text-vendorsoluce-green" />Recent Activity</span>}
+              description="Track your latest actions and workspace events."
+            >
               <div className="space-y-4">
                 {recentActivity.map((activity) => (
-                  <div key={activity.id} className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <div className="flex-shrink-0 mt-1">
+                  <div key={activity.id} className="flex items-start gap-3 rounded-xl border border-gray-200/70 p-3 dark:border-gray-800">
+                    <div className="mt-1 flex-shrink-0">
                       {activity.icon}
                     </div>
-                    <div className="flex-1">
+                    <div className="min-w-0 flex-1">
                       <p className="font-medium text-gray-900 dark:text-white">{activity.action}</p>
-                      <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                        <Clock className="h-3 w-3 mr-1" />
+                      <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+                        <Clock className="h-3 w-3" />
                         {activity.timestamp}
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="mt-6">
+              <div className="mt-6 border-t border-gray-200 pt-4 dark:border-gray-800">
                 <Link to={WR.USER_ACTIVITY}>
                   <Button variant="outline" className="w-full">
                     View All Activity
                   </Button>
                 </Link>
               </div>
-            </CardContent>
-          </Card>
+            </PanelCard>
 
-          {/* Quick Actions */}
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <PanelCard
+              title="Quick Actions"
+              description="Jump to common tasks and workflows."
+            >
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <Link to={WR.VENDOR_INTELLIGENCE}>
-                  <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-vendorsoluce-green transition-colors cursor-pointer">
-                    <div className="flex items-center">
-                      <Target className="h-6 w-6 text-vendorsoluce-green mr-3" />
+                  <div className="rounded-xl border border-gray-200/70 p-4 transition-colors hover:border-vendorsoluce-green hover:bg-emerald-50/60 dark:border-gray-800 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/20">
+                    <div className="flex items-center gap-3">
+                      <Target className="h-6 w-6 text-vendorsoluce-green" />
                       <div>
                         <h3 className="font-medium text-gray-900 dark:text-white">Add Vendor</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400">Add a new vendor to your portfolio</p>
@@ -196,11 +178,11 @@ const UserDashboard: React.FC = () => {
                     </div>
                   </div>
                 </Link>
-                
+
                 <Link to="/supply-chain-assessment">
-                  <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-vendorsoluce-green transition-colors cursor-pointer">
-                    <div className="flex items-center">
-                      <BarChart3 className="h-6 w-6 text-vendorsoluce-green mr-3" />
+                  <div className="rounded-xl border border-gray-200/70 p-4 transition-colors hover:border-vendorsoluce-green hover:bg-emerald-50/60 dark:border-gray-800 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/20">
+                    <div className="flex items-center gap-3">
+                      <BarChart3 className="h-6 w-6 text-vendorsoluce-green" />
                       <div>
                         <h3 className="font-medium text-gray-900 dark:text-white">Run Assessment</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400">Start a new risk assessment</p>
@@ -208,11 +190,11 @@ const UserDashboard: React.FC = () => {
                     </div>
                   </div>
                 </Link>
-                
+
                 <Link to="/tools/nist-checklist">
-                  <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-vendorsoluce-green transition-colors cursor-pointer">
-                    <div className="flex items-center">
-                      <Shield className="h-6 w-6 text-vendorsoluce-green mr-3" />
+                  <div className="rounded-xl border border-gray-200/70 p-4 transition-colors hover:border-vendorsoluce-green hover:bg-emerald-50/60 dark:border-gray-800 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/20">
+                    <div className="flex items-center gap-3">
+                      <Shield className="h-6 w-6 text-vendorsoluce-green" />
                       <div>
                         <h3 className="font-medium text-gray-900 dark:text-white">NIST Checklist</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400">Run NIST SP 800-161 compliance check</p>
@@ -220,11 +202,11 @@ const UserDashboard: React.FC = () => {
                     </div>
                   </div>
                 </Link>
-                
+
                 <Link to="/templates">
-                  <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-vendorsoluce-green transition-colors cursor-pointer">
-                    <div className="flex items-center">
-                      <Calendar className="h-6 w-6 text-vendorsoluce-green mr-3" />
+                  <div className="rounded-xl border border-gray-200/70 p-4 transition-colors hover:border-vendorsoluce-green hover:bg-emerald-50/60 dark:border-gray-800 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/20">
+                    <div className="flex items-center gap-3">
+                      <Calendar className="h-6 w-6 text-vendorsoluce-green" />
                       <div>
                         <h3 className="font-medium text-gray-900 dark:text-white">Download Templates</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400">Get assessment templates</p>
@@ -233,66 +215,58 @@ const UserDashboard: React.FC = () => {
                   </div>
                 </Link>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </PanelCard>
+          </div>
 
-        {/* Achievements */}
-        <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Award className="h-5 w-5 mr-2 text-yellow-500" />
-                Achievements
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+          {/* Sidebar: Achievements & Profile Completion */}
+          <div className="space-y-6">
+            <PanelCard
+              title={<span className="flex items-center gap-2"><Award className="h-5 w-5 text-yellow-500" />Achievements</span>}
+              description="Track your progress and milestones."
+            >
               <div className="space-y-4">
                 {achievements.map((achievement) => (
                   <div
                     key={achievement.id}
-                    className={`p-3 rounded-lg border ${
+                    className={`rounded-xl border p-3 ${
                       achievement.earned
-                        ? 'border-yellow-200 bg-yellow-50 dark:bg-yellow-900/20 dark:border-yellow-800'
-                        : 'border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700'
+                        ? 'border-yellow-200 bg-yellow-50 dark:border-yellow-800 dark:bg-yellow-900/20'
+                        : 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800'
                     }`}
                   >
-                    <div className="flex items-start space-x-3">
+                    <div className="flex items-start gap-3">
                       <div className={achievement.earned ? 'text-yellow-500' : 'text-gray-400'}>
                         {achievement.icon}
                       </div>
-                      <div className="flex-1">
+                      <div className="min-w-0 flex-1">
                         <h4 className={`font-medium ${
-                          achievement.earned 
-                            ? 'text-yellow-800 dark:text-yellow-300' 
+                          achievement.earned
+                            ? 'text-yellow-800 dark:text-yellow-300'
                             : 'text-gray-600 dark:text-gray-400'
                         }`}>
                           {achievement.title}
                         </h4>
                         <p className={`text-sm ${
-                          achievement.earned 
-                            ? 'text-yellow-700 dark:text-yellow-400' 
+                          achievement.earned
+                            ? 'text-yellow-700 dark:text-yellow-400'
                             : 'text-gray-500 dark:text-gray-500'
                         }`}>
                           {achievement.description}
                         </p>
                       </div>
                       {achievement.earned && (
-                        <CheckCircle className="h-4 w-4 text-yellow-500" />
+                        <CheckCircle className="h-4 w-4 flex-shrink-0 text-yellow-500" />
                       )}
                     </div>
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
+            </PanelCard>
 
-          {/* Profile Completion */}
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle>Profile Completion</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <PanelCard
+              title="Profile Completion"
+              description="Complete your profile to unlock all features."
+            >
               <div className="space-y-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600 dark:text-gray-400">Profile completed</span>
@@ -300,16 +274,16 @@ const UserDashboard: React.FC = () => {
                 </div>
                 <ProgressBarFill percent={85} fillClassName="fill-vendorsoluce-green" />
                 <div className="space-y-2 text-sm">
-                  <div className="flex items-center text-green-600 dark:text-green-400">
-                    <CheckCircle className="h-4 w-4 mr-2" />
+                  <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                    <CheckCircle className="h-4 w-4" />
                     <span>Basic information completed</span>
                   </div>
-                  <div className="flex items-center text-green-600 dark:text-green-400">
-                    <CheckCircle className="h-4 w-4 mr-2" />
+                  <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                    <CheckCircle className="h-4 w-4" />
                     <span>Security preferences set</span>
                   </div>
-                  <div className="flex items-center text-yellow-600 dark:text-yellow-400">
-                    <AlertTriangle className="h-4 w-4 mr-2" />
+                  <div className="flex items-center gap-2 text-yellow-600 dark:text-yellow-400">
+                    <AlertTriangle className="h-4 w-4" />
                     <span>Add profile picture</span>
                   </div>
                 </div>
@@ -319,8 +293,8 @@ const UserDashboard: React.FC = () => {
                   </Button>
                 </Link>
               </div>
-            </CardContent>
-          </Card>
+            </PanelCard>
+          </div>
         </div>
       </div>
     </WorkspacePageShell>
