@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { logger } from '../../utils/logger';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import {
   Plus,
-  Search, 
-  Eye, 
-  Edit, 
-  Trash2, 
+  Search,
+  Eye,
+  Edit,
+  Trash2,
   RefreshCw,
 } from 'lucide-react';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { Asset, AssetWithVendors } from '../types';
 import { assetService } from '../../services/assetService';
 import { useAuth } from '../../context/AuthContext';
@@ -296,11 +296,13 @@ const AssetManagementPage: React.FC = () => {
         { label: 'High risk', value: highRiskCount, hint: 'Risk score ≥ 70' },
       ]}
     >
-      <div className="space-y-6">
+      <div className={WORKSPACE_PAGE_BODY_GRID_CLASS}>
         {/* Filters */}
-        <Card className="mb-8">
-          <CardContent className="p-6">
-            <div className="flex flex-col sm:flex-row gap-4">
+        <PanelCard
+          title="Filter Assets"
+          description="Search and filter your asset inventory by type, criticality, and status."
+        >
+          <div className="flex flex-col gap-4 sm:flex-row">
               <div className="flex-1">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -356,15 +358,13 @@ const AssetManagementPage: React.FC = () => {
                 <option value="under_review">Under Review</option>
               </select>
             </div>
-          </CardContent>
-        </Card>
+        </PanelCard>
 
         {/* Assets Table */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Assets ({filteredAssets.length})</CardTitle>
-          </CardHeader>
-          <CardContent>
+        <PanelCard
+          title={`Assets (${filteredAssets.length})`}
+          description="Manage and review your complete asset inventory."
+        >
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -476,8 +476,7 @@ const AssetManagementPage: React.FC = () => {
                 </div>
               </div>
             )}
-          </CardContent>
-        </Card>
+        </PanelCard>
       </div>
 
       {/* Add/Edit Modal */}
