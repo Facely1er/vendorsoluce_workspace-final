@@ -7,7 +7,7 @@ import { useVendorStore } from '../../../stores/vendorStore';
 import { supabase, isSupabaseEnabled } from '../../../lib/supabase';
 import { exportVendorCascadeHtml, recomputeVendorCriticalPaths, recomputeVendorMetrics, runVendorScenario } from '../../../services/vendorsoluce';
 import { Button } from '../../../components/ui/Button';
-import WorkspacePageShell from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../../components/vendorsoluce-intelligence/PanelCard';
 import { MetricPill } from '../../../components/vendorsoluce-intelligence/MetricPill';
 import { formatPercent, resolveOrgId, riskTone } from './utils';
@@ -213,7 +213,7 @@ const VendorIntelligenceDetailPage: React.FC = () => {
           {error}
         </div>
       ) : null}
-      <div className="grid gap-6 xl:grid-cols-[1.3fr,1fr]">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} xl:grid-cols-[1.3fr,1fr]`}>
         <div className="grid gap-6">
           <PanelCard
             title="Integrated risk profile"

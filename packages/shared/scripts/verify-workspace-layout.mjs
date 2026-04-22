@@ -36,35 +36,6 @@ const ALLOWLIST = new Set([
  * Remove entries as each file is migrated. Do NOT add new entries — fix the file instead.
  */
 const WORKSPACE_CHECKS_LEGACY = new Set([
-  'packages/app/src/pages/workspace/AccountPage.tsx',
-  'packages/app/src/pages/workspace/BillingPage.tsx',
-  'packages/app/src/pages/workspace/ComplianceRoadmapPage.tsx',
-  'packages/app/src/pages/workspace/DashboardPage.tsx',
-  'packages/app/src/pages/workspace/ProfilePage.tsx',
-  'packages/app/src/pages/workspace/UserActivity.tsx',
-  'packages/app/src/pages/workspace/VendorManagementPage.tsx',
-  'packages/app/src/pages/workspace/VendorOnboardingPage.tsx',
-  'packages/app/src/pages/workspace/VendorRequirementsDefinition.tsx',
-  'packages/app/src/pages/workspace/VendorRiskDashboard.tsx',
-  'packages/app/src/pages/workspace/VendorRiskDashboardDemo.tsx',
-  'packages/app/src/pages/workspace/team/CollaborativeAssessmentPage.tsx',
-  'packages/app/src/pages/workspace/team/StakeholderManagementPage.tsx',
-  'packages/app/src/pages/workspace/vendorsoluce/VendorIntelligenceDetailPage.tsx',
-  'packages/app/src/pages/workspace/vendorsoluce/VendorIntelligenceImportPage.tsx',
-  'packages/app/src/pages/workspace/vendorsoluce/VendorIntelligencePortfolioPage.tsx',
-  'packages/app/src/pages/workspace/vendorsoluce/VendorPortfolioPage.tsx',
-  'packages/app/src/pages/programs/VendorActivityCatalogPage.tsx',
-  'packages/app/src/pages/tools/NISTChecklist.tsx',
-  'packages/app/src/pages/tools/PortfolioViraRegister.tsx',
-  'packages/app/src/pages/tools/SBOMQuickScan.tsx',
-  'packages/app/src/pages/tools/VendorRiskCalculator.tsx',
-  'packages/app/src/pages/tools/VendorRiskRadar/components/RadarVisualization.tsx',
-  'packages/app/src/pages/tools/VendorRiskRadar/components/StatsOverview.tsx',
-  'packages/app/src/pages/tools/VendorRiskRadar/components/VendorCatalog.tsx',
-  'packages/app/src/pages/tools/VendorRiskRadar/components/VendorDashboard.tsx',
-  'packages/app/src/pages/tools/VendorRiskRadar/components/VendorInherentRiskReport.tsx',
-  'packages/app/src/pages/tools/VendorRiskRadar.tsx',
-  'packages/app/src/pages/tools/VendorRiskReports.tsx',
 ]);
 
 const EXTENSIONS = new Set(['.ts', '.tsx', '.js', '.jsx']);

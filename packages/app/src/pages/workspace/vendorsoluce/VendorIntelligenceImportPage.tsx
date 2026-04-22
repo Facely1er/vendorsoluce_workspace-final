@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CheckCircle2, DatabaseZap, ListTodo, UploadCloud, Users } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import { importVendorGraphCsv } from '../../../services/vendorsoluce';
-import WorkspacePageShell from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../../components/vendorsoluce-intelligence/PanelCard';
 import { Button } from '../../../components/ui/Button';
 import { resolveOrgId } from './utils';
@@ -76,7 +76,7 @@ const VendorIntelligenceImportPage: React.FC = () => {
           {status}
         </div>
       ) : null}
-      <div className="grid gap-6 xl:grid-cols-[1.4fr,1fr]">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} xl:grid-cols-[1.4fr,1fr]`}>
         <div className="grid gap-6">
           {(
             [

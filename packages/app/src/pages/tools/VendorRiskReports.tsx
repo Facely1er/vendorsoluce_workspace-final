@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import { FileText, Radar as RadarIcon, Settings2, Radar } from 'lucide-react';
 import { MR } from 'shared/constants/routes';
 import WorkspacePage from '../../components/workspace/WorkspacePage';
-import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
+import { WORKSPACE_PAGE_BODY_STACK_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import { Button } from '../../components/ui/Button';
-import { Card, CardContent } from '../../components/ui/Card';
 import { useVendorPortfolio } from './VendorRiskRadar/hooks/useVendorPortfolio';
 import RadarDeliverablesSection from './VendorRiskRadar/components/RadarDeliverablesSection';
 import VendorInherentRiskReport from './VendorRiskRadar/components/VendorInherentRiskReport';
@@ -107,12 +106,12 @@ const VendorRiskReports: React.FC = () => {
               <RadarVisualization vendors={vendors} />
             </div>
 
-            <div className="mb-6 space-y-6">
+            <div className={`mb-6 ${WORKSPACE_PAGE_BODY_STACK_CLASS}`}>
               <PortfolioViraRegister vendors={vendors} stats={stats} />
             </div>
 
-            <Card className="mb-6">
-              <CardContent className="p-4 sm:p-5">
+            <div className="mb-6 rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="p-4 sm:p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
@@ -132,8 +131,8 @@ const VendorRiskReports: React.FC = () => {
                     vendorsCount={vendors.length}
                   />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {showReport && (
               <VendorInherentRiskReport vendors={vendors} stats={stats} onClose={() => setShowReport(false)} />

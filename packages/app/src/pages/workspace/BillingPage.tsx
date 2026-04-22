@@ -9,7 +9,7 @@ import { useSubscription } from '../../hooks/useSubscription';
 import { PRODUCTS } from '../../config/stripe';
 import { Button } from '../../components/ui/Button';
 import { Link } from 'react-router-dom';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import LoadingBlock from '../../components/vendorsoluce-intelligence/LoadingBlock';
@@ -36,7 +36,7 @@ const BillingPage: React.FC = () => {
         { label: 'Billing ops', value: 'Centralized', hint: 'Invoices + refunds + usage' },
       ]}
     >
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} grid-cols-1 lg:grid-cols-3`}>
         <div className="space-y-6 lg:col-span-2">
           <SubscriptionManager />
           <InvoiceList />

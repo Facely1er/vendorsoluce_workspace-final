@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { Plus, RefreshCw, AlertCircle, ArrowRight, X, Info, Radar } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import LoadingState from '../../components/ui/LoadingState';
 import { PageNavTabs } from '../../components/ui/PageNavTabs';
 import { useVendorPortfolio } from './VendorRiskRadar/hooks/useVendorPortfolio';
@@ -176,14 +175,14 @@ const VendorRiskRadar: React.FC = () => {
 
         {/* Error Display — always visible regardless of panel */}
         {error && (
-          <Card className="mb-6 border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
-            <CardContent className="p-4">
+          <div className="mb-6 rounded-xl border border-red-200 bg-red-50 shadow-sm dark:border-red-800 dark:bg-red-900/20">
+            <div className="p-4">
               <div className="flex items-center gap-2 text-red-700 dark:text-red-400">
                 <AlertCircle className="w-5 h-5" />
                 <span>{error}</span>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         )}
 
         <div id="radar-panel-analyze-panel">
@@ -357,10 +356,10 @@ const VendorRiskRadar: React.FC = () => {
         {/* Vendor Detail Modal (simplified - can be expanded) */}
         {selectedVendor && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-              <CardHeader className="flex flex-row items-start justify-between gap-2 pb-2">
+            <div className="rounded-xl border border-gray-200/70 bg-white max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="flex flex-row items-start justify-between gap-2 p-4 pb-2">
                 <div>
-                  <CardTitle>{selectedVendor.name}</CardTitle>
+                  <div className="font-semibold text-gray-900 dark:text-white">{selectedVendor.name}</div>
                   <div className="mt-1 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                     <span>{selectedVendor.sector}</span>
                     {selectedVendor.location && (
@@ -379,8 +378,8 @@ const VendorRiskRadar: React.FC = () => {
                 >
                   <X className="h-4 w-4" />
                 </Button>
-              </CardHeader>
-              <CardContent className="pt-0">
+              </div>
+              <div className="pt-0 px-4 pb-4">
                 <div className="space-y-4">
                   <div>
                     <h3 className="font-semibold mb-2">Risk Information</h3>
@@ -432,8 +431,8 @@ const VendorRiskRadar: React.FC = () => {
                     </div>
                   )}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         )}
 

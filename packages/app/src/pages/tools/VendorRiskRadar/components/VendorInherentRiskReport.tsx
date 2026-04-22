@@ -1,6 +1,7 @@
 import React, { useMemo, useRef } from 'react';
 import { X, Printer, AlertTriangle, Shield, TrendingUp, Database, FileText, MapPin, Building2, Check } from 'lucide-react';
 import { Button } from '../../../../components/ui/Button';
+import { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import {
   getRiskLevel,
   buildInherentRiskAssessment,
@@ -308,7 +309,7 @@ const VendorInherentRiskReport: React.FC<VendorInherentRiskReportProps> = ({
             )}
 
             {/* Sector & geography */}
-            <section className="grid md:grid-cols-2 gap-6 print:break-inside-avoid">
+            <section className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} md:grid-cols-2 print:break-inside-avoid`}>
               <div>
                 <h2 className="text-sm font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-2">
                   <Building2 className="w-4 h-4" />

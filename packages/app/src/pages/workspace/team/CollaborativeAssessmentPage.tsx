@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { Users, PlayCircle, ShieldCheck } from "lucide-react";
 import { CollaborationSetup } from "../../../components/collaboration/CollaborationSetup";
-import WorkspacePageShell from "../../../components/vendorsoluce-intelligence/WorkspacePageShell";
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from "../../../components/vendorsoluce-intelligence/WorkspacePageShell";
 import PanelCard from "../../../components/vendorsoluce-intelligence/PanelCard";
 import { WR } from "shared/constants/routes";
 
@@ -23,7 +23,7 @@ export default function CollaborativeAssessmentPage() {
         { label: "Primary outcome", value: "Aligned decisions", hint: "Reduce fragmented vendor review workflows" },
       ]}
     >
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} xl:grid-cols-[minmax(0,1fr)_320px]`}>
         <PanelCard title="Assessment session setup" description="Create the session, invite contributors, and move into a live collaborative review from one consistent workflow.">
           <CollaborationSetup onStart={handleStart} />
         </PanelCard>

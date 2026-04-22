@@ -18,7 +18,7 @@ import {
 } from 'date-fns';
 import { ChevronLeft, ChevronRight, Plus, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { Button } from '../../components/ui/Button';
 import { MR, WR } from 'shared/constants/routes';
@@ -237,7 +237,7 @@ const ComplianceRoadmapPage: React.FC = () => {
         </PanelCard>
       ) : null}
 
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} lg:grid-cols-2`}>
         <PanelCard
           title={t('workspace.roadmapPage.programTitle', 'Program roadmap')}
           description={t(

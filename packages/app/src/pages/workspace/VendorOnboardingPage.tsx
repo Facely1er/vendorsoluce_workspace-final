@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ClipboardList, GitBranch, HelpCircle, Layers, ListChecks, MessageCircle } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import VendorOnboardingWizard from '../../components/vendor/VendorOnboardingWizard';
 import VendorDashboard from '../../components/vendor/VendorDashboard';
@@ -74,7 +74,7 @@ const VendorOnboardingPage: React.FC = () => {
         { label: 'After intake', value: 'Requirements', hint: 'Scope before evidence' },
       ]}
     >
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px]">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} xl:grid-cols-[minmax(0,1fr)_300px]`}>
         <div className="flex min-w-0 flex-col gap-6">
           <PanelCard
             title="Execution path (order of operations)"

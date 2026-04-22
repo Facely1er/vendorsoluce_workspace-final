@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { CheckCircle, AlertCircle, HelpCircle, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import { Button } from '../../components/ui/Button';
 import { useTranslation } from 'react-i18next';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 
 interface ChecklistItem {
   id: string;
@@ -104,12 +103,12 @@ const NISTChecklist: React.FC = () => {
         </p>
       }
     >
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} lg:grid-cols-3`}>
         <div className="lg:col-span-2">
-          <Card>
-            <CardHeader>
+          <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="p-4 pb-2">
               <div className="flex items-center justify-between">
-                <CardTitle>{t('quickTools.nistChecklist.checklistTitle')}</CardTitle>
+                <div className="font-semibold text-gray-900 dark:text-white">{t('quickTools.nistChecklist.checklistTitle')}</div>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -123,8 +122,8 @@ const NISTChecklist: React.FC = () => {
                   {t('quickTools.nistChecklist.reset', 'Reset')}
                 </Button>
               </div>
-            </CardHeader>
-            <CardContent>
+            </div>
+            <div>
               <div className="mb-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-4 text-sm text-blue-800 dark:text-blue-300">
                 <div className="flex items-start">
                   <HelpCircle className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
@@ -175,17 +174,17 @@ const NISTChecklist: React.FC = () => {
                   {t('quickTools.nistChecklist.checkCompliance')}
                 </Button>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
         
         <div className="lg:col-span-1">
           {showResults ? (
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('quickTools.nistChecklist.complianceResults')}</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="p-4 pb-2">
+                <div className="font-semibold text-gray-900 dark:text-white">{t('quickTools.nistChecklist.complianceResults')}</div>
+              </div>
+              <div>
                 <div className="text-center mb-4">
                   <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gray-100 dark:bg-gray-800 mb-2">
                     <span className="text-3xl font-bold text-gray-900 dark:text-white">{compliancePercentage}%</span>
@@ -259,14 +258,14 @@ const NISTChecklist: React.FC = () => {
                     {t('quickTools.nistChecklist.downloadReport')}
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ) : (
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('quickTools.nistChecklist.aboutTitle')}</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="p-4 pb-2">
+                <div className="font-semibold text-gray-900 dark:text-white">{t('quickTools.nistChecklist.aboutTitle')}</div>
+              </div>
+              <div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
                   {t('quickTools.nistChecklist.aboutText1')}
                 </p>
@@ -283,8 +282,8 @@ const NISTChecklist: React.FC = () => {
                     <li>• {t('quickTools.nistChecklist.areas.informationSharing')}</li>
                   </ul>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           )}
         </div>
       </div>

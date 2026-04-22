@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ClipboardList, Shield, Users } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
-import { Card, CardContent } from '../../components/ui/Card';
 import { useAuth } from '../../context/AuthContext';
 import { useVendors } from '../../hooks/useVendors';
 import { useSupplyChainAssessments } from '../../hooks/useSupplyChainAssessments';
@@ -204,12 +203,9 @@ const DashboardPage: React.FC = () => {
             {stepCards.map((step) => {
               const Icon = step.icon;
               return (
-                <Card
-                  key={step.title}
-                  className="group relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
-                >
+                <div key={step.title} className="group relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-vendorsoluce-green via-vendorsoluce-light-green to-vendorsoluce-teal opacity-95" />
-                  <CardContent className="p-6">
+                  <div className="p-6">
                     <div className="flex flex-col gap-4">
                       <div className="flex items-start gap-4">
                         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-vendorsoluce-pale-green text-vendorsoluce-green ring-1 ring-vendorsoluce-green/20 dark:bg-vendorsoluce-green/10 dark:text-vendorsoluce-light-green dark:ring-vendorsoluce-green/25">
@@ -227,8 +223,8 @@ const DashboardPage: React.FC = () => {
                         </Button>
                       </Link>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               );
             })}
           </div>

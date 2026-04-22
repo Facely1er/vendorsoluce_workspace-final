@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { X, Search, Plus } from 'lucide-react';
 import { Button } from '../../../../components/ui/Button';
-import { Card, CardContent } from '../../../../components/ui/Card';
 import { ENTERPRISE_VENDOR_CATALOG, searchVendors, getVendorsByCategory } from '../../../../utils/vendorCatalog';
 import type { VendorBase } from '../../../../types/vendorRadar';
 
@@ -83,11 +82,11 @@ const VendorCatalog: React.FC<VendorCatalogProps> = ({ onClose, onAddVendor }) =
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredVendors.map((vendor, index) => (
-                <Card
+                <div
                   key={index}
-                  className="hover:shadow-md transition-shadow"
+                  className="rounded-xl border border-gray-200/70 bg-white hover:shadow-md transition-shadow shadow-sm dark:border-gray-800 dark:bg-gray-900"
                 >
-                  <CardContent className="p-4">
+                  <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex-1">
                         <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
@@ -146,8 +145,8 @@ const VendorCatalog: React.FC<VendorCatalogProps> = ({ onClose, onAddVendor }) =
                         Add
                       </Button>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               ))}
             </div>
           )}

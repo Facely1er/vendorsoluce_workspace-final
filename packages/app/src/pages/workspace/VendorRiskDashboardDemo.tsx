@@ -5,7 +5,6 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Card, { CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import VendorRiskTable from '../../components/vendor/VendorRiskTable';
 import { VendorRisk } from '../types';
 import Button from '../../components/ui/Button';
@@ -13,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { BarChart3, Zap, Shield, Brain, Eye, Lock, User, Plus, RefreshCw } from 'lucide-react';
 import RadarWidget from '../../components/dashboard/RadarWidget';
 import UnifiedQuickActions from '../../components/dashboard/UnifiedQuickActions';
-import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell, { WORKSPACE_PAGE_BODY_STACK_LOOSE_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkflowAutomation from '../../components/vendor/WorkflowAutomation';
 import ThreatIntelligenceFeed from '../../components/vendor/ThreatIntelligenceFeed';
 import PredictiveAnalytics from '../../components/analytics/PredictiveAnalytics';
@@ -152,13 +151,13 @@ const VendorRiskDashboardDemo: React.FC = () => {
         </div>
       </div>
 
-      <div className="space-y-8">
+      <div className={WORKSPACE_PAGE_BODY_STACK_LOOSE_CLASS}>
         {activeView === 'dashboard' && (
           <div id="dashboard-panel" role="tabpanel" className="space-y-8">
             {/* KPI-style stat cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-200">
-                <CardContent className="px-6 py-5">
+              <div className="rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 dark:border-gray-700 dark:bg-gray-800">
+                <div className="px-6 py-5">
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400 leading-snug min-w-0 pr-2">
@@ -172,10 +171,10 @@ const VendorRiskDashboardDemo: React.FC = () => {
                       {DEMO_VENDORS.length}
                     </p>
                   </div>
-                </CardContent>
-              </Card>
-              <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-200">
-                <CardContent className="px-6 py-5">
+                </div>
+              </div>
+              <div className="rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 dark:border-gray-700 dark:bg-gray-800">
+                <div className="px-6 py-5">
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400 leading-snug min-w-0 pr-2">
@@ -194,10 +193,10 @@ const VendorRiskDashboardDemo: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-              <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-200">
-                <CardContent className="px-6 py-5">
+                </div>
+              </div>
+              <div className="rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 dark:border-gray-700 dark:bg-gray-800">
+                <div className="px-6 py-5">
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400 leading-snug min-w-0 pr-2">
@@ -219,8 +218,8 @@ const VendorRiskDashboardDemo: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
 
             {/* Radar + Quick Actions + Recent Activity */}
@@ -236,11 +235,11 @@ const VendorRiskDashboardDemo: React.FC = () => {
                   onAddVendor={() => navigate('/vendors')}
                   onCreateAssessment={() => navigate('/vendor-assessments')}
                 />
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-base font-semibold">Recent activity</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0">
+                <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                  <div className="p-4 pb-2">
+                    <div className="text-base font-semibold text-gray-900 dark:text-white">Recent activity</div>
+                  </div>
+                  <div className="pt-0">
                     <ul className="space-y-2">
                       {DEMO_RECENT_ACTIVITY.map((item, i) => (
                         <li key={i} className="text-sm text-gray-600 dark:text-gray-400 flex justify-between gap-2">
@@ -249,13 +248,13 @@ const VendorRiskDashboardDemo: React.FC = () => {
                         </li>
                       ))}
                     </ul>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Vendor table (read-only demo) */}
-            <Card className="overflow-hidden">
+            <div className="rounded-xl border border-gray-200/70 bg-white overflow-hidden shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('vendorRisk.vendorOverview')}</h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Sample vendors. Sign in to add and manage your own.</p>
@@ -265,7 +264,7 @@ const VendorRiskDashboardDemo: React.FC = () => {
                 onRefresh={() => {}}
                 onView={(v) => navigate(`/vendor-risk-radar?vendor=${v.id}`)}
               />
-            </Card>
+            </div>
 
             {/* CTA strip */}
             <div className="bg-gradient-to-r from-vendorsoluce-navy to-vendorsoluce-teal text-white rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -293,7 +292,7 @@ const VendorRiskDashboardDemo: React.FC = () => {
 
         {activeView === 'workflows' && (
           <div id="workflows-panel" role="tabpanel" className="space-y-6">
-            <Card className="p-6">
+            <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between mb-6">
                 <div className="min-w-0 flex-1">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Workflow Automation</h2>
@@ -332,13 +331,13 @@ const VendorRiskDashboardDemo: React.FC = () => {
                 </div>
               </div>
               <WorkflowAutomation />
-            </Card>
+            </div>
           </div>
         )}
 
         {activeView === 'intelligence' && (
           <div id="intelligence-panel" role="tabpanel" className="space-y-6">
-            <Card className="p-6">
+            <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="mb-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-4">
                   <div>
@@ -374,12 +373,12 @@ const VendorRiskDashboardDemo: React.FC = () => {
                 </div>
               </div>
               <ThreatIntelligenceFeed vendorIds={demoVendorIds} />
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Threat Intelligence Sources</CardTitle>
-              </CardHeader>
-              <CardContent>
+            </div>
+            <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="p-4 pb-2">
+                <div className="font-semibold text-gray-900 dark:text-white">Threat Intelligence Sources</div>
+              </div>
+              <div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center p-6 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow">
                     <div className="text-2xl font-bold text-gray-900 dark:text-white">{DEMO_THREAT_STATS.activeSources}</div>
@@ -397,14 +396,14 @@ const VendorRiskDashboardDemo: React.FC = () => {
                     <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">Comprehensive threat landscape (demo)</div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         )}
 
         {activeView === 'analytics' && (
           <div id="analytics-panel" role="tabpanel" className="space-y-6">
-            <Card className="p-6">
+            <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Predictive Analytics</h2>
                 <p className="text-gray-600 dark:text-gray-300 mt-1">AI-powered insights and risk predictions</p>
@@ -413,8 +412,8 @@ const VendorRiskDashboardDemo: React.FC = () => {
                 </p>
               </div>
               <PredictiveAnalytics />
-            </Card>
-            <Card className="p-6">
+            </div>
+            <div className="rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">Export Analytics Report</h3>
@@ -427,7 +426,7 @@ const VendorRiskDashboardDemo: React.FC = () => {
                   Export Report
                 </Button>
               </div>
-            </Card>
+            </div>
           </div>
         )}
       </div>

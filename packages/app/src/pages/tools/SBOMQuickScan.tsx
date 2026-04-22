@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, Mail, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SBOMUploader from '../../components/sbom/SBOMUploader';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
+import { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import { Button } from '../../components/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { useSBOMAnalyses } from '../../hooks/useSBOMAnalyses';
@@ -237,13 +237,13 @@ const SBOMQuickScan: React.FC = () => {
         <p className="text-gray-600 dark:text-gray-300 mb-6">{t('quickTools.sbomScan.description')}</p>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} lg:grid-cols-3`}>
         <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle>{t('sbom.upload.title')}</CardTitle>
-            </CardHeader>
-            <CardContent>
+          <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="p-4 pb-2">
+              <div className="font-semibold text-gray-900 dark:text-white">{t('sbom.upload.title')}</div>
+            </div>
+            <div>
               {!isAuthenticated && (
                 <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md">
                   <p className="text-sm text-blue-800 dark:text-blue-200 font-medium">
@@ -280,15 +280,15 @@ const SBOMQuickScan: React.FC = () => {
                   </Link>
                 </div>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
           
           <div className="mt-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('sbom.results.supportedFormats')}</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="p-4 pb-2">
+                <div className="font-semibold text-gray-900 dark:text-white">{t('sbom.results.supportedFormats')}</div>
+              </div>
+              <div>
                 <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
                   <li>• SPDX (JSON)</li>
                   <li>• CycloneDX (JSON)</li>
@@ -297,25 +297,25 @@ const SBOMQuickScan: React.FC = () => {
                 <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
                   {t('quickTools.sbomScan.formatInfo')}
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
         
         <div className="lg:col-span-2">
           {isLoading ? (
-            <Card className="h-64 flex justify-center items-center">
+            <div className="rounded-xl border border-gray-200/70 bg-white h-64 flex justify-center items-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="text-center">
                 <div className="spinner-border mb-3 h-8 w-8 border-b-2 border-t-2 border-vendorsoluce-teal rounded-full animate-spin"></div>
                 <p className="text-gray-600 dark:text-gray-300">{t('sbom.upload.analyzing')}</p>
               </div>
-            </Card>
+            </div>
           ) : scanComplete ? (
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('sbom.results.title')}</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <div className="rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="p-4 pb-2">
+                <div className="font-semibold text-gray-900 dark:text-white">{t('sbom.results.title')}</div>
+              </div>
+              <div>
                 <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md p-4 mb-6">
                   <p className="font-medium text-green-800 dark:text-green-400">
                     {t('quickTools.sbomScan.scanComplete')}
@@ -346,15 +346,15 @@ const SBOMQuickScan: React.FC = () => {
                 <button disabled className="w-full bg-gray-400 dark:bg-gray-600 text-white py-2 rounded-md cursor-not-allowed opacity-75">
                   {t('quickTools.sbomScan.fullAnalysis')} (Coming soon)
                 </button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ) : (
-            <Card className="h-64 flex flex-col justify-center items-center text-center">
+            <div className="rounded-xl border border-gray-200/70 bg-white h-64 flex flex-col justify-center items-center text-center shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">{t('sbom.upload.noSbom')}</h2>
               <p className="text-gray-600 dark:text-gray-300 max-w-md px-6">
                 {t('sbom.upload.uploadPrompt')}
               </p>
-            </Card>
+            </div>
           )}
         </div>
       </div>
@@ -362,13 +362,13 @@ const SBOMQuickScan: React.FC = () => {
       {/* Email Capture Modal */}
       {showEmailCapture && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <Card className="max-w-md w-full">
-            <CardHeader>
+          <div className="rounded-xl border border-gray-200/70 bg-white max-w-md w-full shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="p-4 pb-2">
               <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2">
+                <div className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                   <Mail className="h-5 w-5 text-vendorsoluce-teal" />
                   Get Your Full Report
-                </CardTitle>
+                </div>
                 <button
                   type="button"
                   onClick={() => setShowEmailCapture(false)}
@@ -379,8 +379,8 @@ const SBOMQuickScan: React.FC = () => {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-            </CardHeader>
-            <CardContent>
+            </div>
+            <div>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 You've used your {FREE_SCAN_LIMIT} free scans for today. Enter your email to:
               </p>
@@ -417,8 +417,8 @@ const SBOMQuickScan: React.FC = () => {
                   </p>
                 </div>
               </form>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
     </div>
