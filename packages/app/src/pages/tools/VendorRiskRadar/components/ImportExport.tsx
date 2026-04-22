@@ -42,16 +42,16 @@ const ImportExport: React.FC<ImportExportProps> = ({
     <div className="flex w-full flex-col gap-2">
       <div className="flex flex-wrap gap-2">
         <label htmlFor="vendor-risk-radar-import-file" className="sr-only">
-          Import vendors from CSV, Excel, or portable JSON portfolio
+          Import vendors from CSV or portable JSON portfolio
         </label>
         <input
           id="vendor-risk-radar-import-file"
           ref={fileInputRef}
           type="file"
-          accept=".csv,.xlsx,.xls,.json"
+          accept=".csv,.json"
           onChange={handleImport}
           className="hidden"
-          title="Spreadsheet (.csv, .xlsx) or portable JSON from Export portfolio"
+          title="Spreadsheet (.csv) or portfolio JSON from Export portfolio"
         />
         <Button
           variant="outline"

@@ -24,7 +24,7 @@ const RADAR_IMPORT_HANDOFF_MAX_AGE_MS = 15_000;
 const VendorRiskRadar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [_searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const importHandoffHandledRef = useRef(false);
   const [showWebsiteImportHandoff, setShowWebsiteImportHandoff] = useState(false);
   const {
@@ -92,6 +92,24 @@ const VendorRiskRadar: React.FC = () => {
     });
     return () => window.cancelAnimationFrame(raf);
   }, [location.search, location.pathname, navigate]);
+
+  // Deep-link from dashboard: ?vendor=<id> pre-opens the vendor detail modal.
+  useEffect(() => {
+    const vendorId = searchParams.get('vendor');
+    if (!vendorId || loading || vendors.length === 0) return;
+    const match = vendors.find((v) => v.id === vendorId);
+    if (match) {
+      setSelectedVendor(match);
+      setSearchParams(
+        (prev) => {
+          const p = new URLSearchParams(prev);
+          p.delete('vendor');
+          return p;
+        },
+        { replace: true }
+      );
+    }
+  }, [searchParams, vendors, loading, setSearchParams]);
 
   // Deep links to deliverables (e.g. workflow catalog) need the Analyze tab where that section mounts.
   useEffect(() => {
