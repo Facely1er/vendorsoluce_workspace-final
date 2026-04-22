@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/ui/Button';
-import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { Badge } from '../../components/ui/Badge';

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FileText, Radar as RadarIcon, Settings2, Radar } from 'lucide-react';
 import { MR } from 'shared/constants/routes';
 import WorkspacePage from '../../components/workspace/WorkspacePage';
+import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 import { WORKSPACE_PAGE_BODY_STACK_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import { Button } from '../../components/ui/Button';
 import { useVendorPortfolio } from './VendorRiskRadar/hooks/useVendorPortfolio';
