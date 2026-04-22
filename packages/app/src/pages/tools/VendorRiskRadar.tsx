@@ -109,7 +109,7 @@ const VendorRiskRadar: React.FC = () => {
         { replace: true }
       );
     }
-  }, [searchParams, vendors, loading, setSearchParams]);
+  }, [searchParams, vendors, loading, setSearchParams, setSelectedVendor]);
 
   // Deep links to deliverables (e.g. workflow catalog) need the Analyze tab where that section mounts.
   useEffect(() => {
