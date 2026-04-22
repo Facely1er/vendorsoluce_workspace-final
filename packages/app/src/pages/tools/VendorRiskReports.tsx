@@ -107,7 +107,7 @@ const VendorRiskReports: React.FC = () => {
               <RadarVisualization vendors={vendors} />
             </div>
 
-            <div className={`mb-6 ${WORKSPACE_PAGE_BODY_STACK_CLASS}`}>
+            <div className={`mb-6 ${WORKSPACE_PAGE_BODY_STACK_CLASS}`}>  
               <PortfolioViraRegister vendors={vendors} stats={stats} />
             </div>
 
