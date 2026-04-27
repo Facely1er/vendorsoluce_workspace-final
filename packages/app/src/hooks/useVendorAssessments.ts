@@ -10,6 +10,7 @@ import {
   updateLocalVendorAssessment,
 } from '../services/local/vendorAssessmentsLocalStore';
 import { useVendorPortfolio } from '../pages/tools/VendorRiskRadar/hooks/useVendorPortfolio';
+import { syncVendorRiskAfterAssessmentComplete } from '../services/ermitsApiCoreSync';
 
 type VendorAssessment = Database['public']['Tables']['vs_vendor_assessments']['Row'];
 type VendorAssessmentInsert = Database['public']['Tables']['vs_vendor_assessments']['Insert'];
@@ -252,6 +253,10 @@ export const useVendorAssessments = () => {
         completed_at: new Date().toISOString(),
       });
       await fetchAssessments();
+      void syncVendorRiskAfterAssessmentComplete(
+        { vendor_id: updated.vendor_id },
+        overallScore
+      ).catch(() => {});
       return updated as unknown as VendorAssessmentWithDetails;
     }
     try {
@@ -277,6 +282,7 @@ export const useVendorAssessments = () => {
       }
 
       setAssessments(prev => prev.map(a => a.id === id ? data : a));
+      void syncVendorRiskAfterAssessmentComplete(data, overallScore).catch(() => {});
       return data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to complete assessment');

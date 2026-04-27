@@ -38,6 +38,5 @@ jobs:
           CI: 'true'
       - name: Run tests
         run: npm run test -- --run
-        continue-on-error: true
         env:
           CI: 'true'
