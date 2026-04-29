@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '../../components/ui/Button';
 import {
   Settings,
@@ -20,6 +20,12 @@ import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useI18n } from '../../context/I18nContext';
 import { logger } from '../../utils/logger';
+import {
+  collectLocalWorkspacePreferences,
+  applyLocalWorkspacePreferencesSnapshot,
+  clearLocalWorkspacePreferences,
+  type LocalWorkspacePreferencesSnapshot,
+} from '../../utils/localWorkspacePreferences';
 
 const toggleTrack = 'w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-vendorsoluce-green/20 dark:peer-focus:ring-vendorsoluce-green/40 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all peer-checked:bg-vendorsoluce-green';
 
@@ -49,6 +55,7 @@ const AccountPage: React.FC = () => {
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   const [notifications, setNotifications] = useState({ emailNotifications: true, securityAlerts: true, marketingEmails: false, weeklyReports: true });
   const [privacy, setPrivacy] = useState({ profileVisibility: 'private', dataSharing: false, analyticsOptOut: false });
+  const importPrefsInputRef = useRef<HTMLInputElement>(null);
 
   const handleNotificationChange = (key: string, value: boolean) => setNotifications((prev) => ({ ...prev, [key]: value }));
   const handlePrivacyChange = (key: string, value: boolean | string) => setPrivacy((prev) => ({ ...prev, [key]: value }));
@@ -65,8 +72,70 @@ const AccountPage: React.FC = () => {
     }
   };
 
-  const exportData = () => alert('Data export functionality would be implemented here');
-  const importData = () => alert('Data import functionality would be implemented here');
+  const exportLocalUiData = () => {
+    try {
+      const snapshot = collectLocalWorkspacePreferences();
+      const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `vendorsoluce-workspace-ui-${new Date().toISOString().split('T')[0]}.json`;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      logger.error('Export local workspace UI data failed', error);
+    }
+  };
+
+  const triggerImportLocalUi = () => importPrefsInputRef.current?.click();
+
+  const onImportLocalUiFile: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(reader.result as string) as LocalWorkspacePreferencesSnapshot;
+        if (parsed?.version !== 1) {
+          throw new Error('Unsupported file: expected version 1 export from this screen.');
+        }
+        if (
+          !window.confirm(
+            'Replace recent navigation, favorites, guided setup progress, and saved on-device chat transcripts from this file?',
+          )
+        ) {
+          return;
+        }
+        applyLocalWorkspacePreferencesSnapshot(parsed);
+        window.alert('Local workspace UI data was restored. Refresh the page if the sidebar or chat still look out of date.');
+      } catch (error) {
+        logger.error('Import local workspace UI data failed', error);
+        window.alert('Could not import this file. Export a new copy from this page and try again.');
+      } finally {
+        e.target.value = '';
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const clearLocalUiData = () => {
+    if (
+      !window.confirm(
+        'Clear recent items, favorites, guided setup checklist progress, and on-device chat history? Your account and theme are not affected.',
+      )
+    ) {
+      return;
+    }
+    const { clearedKeys } = clearLocalWorkspacePreferences();
+    window.alert(
+      clearedKeys.length > 0
+        ? `Removed ${clearedKeys.length} local entries. Refresh if the UI still shows old shortcuts.`
+        : 'No matching local UI data was stored in this browser.',
+    );
+  };
 
   const closePasswordModal = () => {
     setShowPasswordModal(false);
@@ -161,11 +230,31 @@ const AccountPage: React.FC = () => {
             </div>
             <ToggleRow title="Data sharing" description="Allow sharing anonymized data for product improvements." checked={privacy.dataSharing} onChange={(v) => handlePrivacyChange('dataSharing', v)} />
             <ToggleRow title="Analytics opt-out" description="Opt out of usage analytics and tracking." checked={privacy.analyticsOptOut} onChange={(v) => handlePrivacyChange('analyticsOptOut', v)} />
-            <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-              <Button variant="outline" onClick={exportData}><Download className="mr-2 h-4 w-4" />Export my data</Button>
-              <Button variant="outline" onClick={importData}><Upload className="mr-2 h-4 w-4" />Import data</Button>
+            <input
+              ref={importPrefsInputRef}
+              type="file"
+              accept="application/json,.json"
+              className="hidden"
+              aria-hidden="true"
+              onChange={onImportLocalUiFile}
+            />
+            <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap">
+              <Button variant="outline" onClick={exportLocalUiData}>
+                <Download className="mr-2 h-4 w-4" />
+                Export local UI data
+              </Button>
+              <Button variant="outline" onClick={triggerImportLocalUi}>
+                <Upload className="mr-2 h-4 w-4" />
+                Import local UI data
+              </Button>
+              <Button variant="outline" onClick={clearLocalUiData} className="border-amber-300 text-amber-800 hover:bg-amber-50 dark:border-amber-700 dark:text-amber-200 dark:hover:bg-amber-950/30">
+                <Trash2 className="mr-2 h-4 w-4" />
+                Clear local UI data
+              </Button>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Exports include assessments, vendor data, and SBOM analyses connected to your account.</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Download or restore browser-only shortcuts (recent pages, favorites, setup checklist, assistant chat). Vendor records and assessments in your account are not included; use workspace export tools for operational data.
+            </p>
           </div>
         </PanelCard>
 
