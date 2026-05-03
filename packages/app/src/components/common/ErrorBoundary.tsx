@@ -135,13 +135,13 @@ Please describe what you were doing when this error occurred:
 
           <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
             <h3 className="font-medium text-gray-900 dark:text-white mb-2">Error Details:</h3>
-            <pre className="text-xs text-gray-600 dark:text-gray-400 overflow-auto">
+            <pre className="text-xs text-gray-600 dark:text-gray-400 overflow-auto whitespace-pre-wrap break-words">
               {error.message}
             </pre>
             {import.meta.env.DEV && (
               <details className="mt-2">
                 <summary className="text-xs text-gray-500 cursor-pointer">Stack Trace</summary>
-                <pre className="text-xs text-gray-600 dark:text-gray-400 mt-2 overflow-auto">
+                <pre className="text-xs text-gray-600 dark:text-gray-400 mt-2 overflow-auto whitespace-pre-wrap break-words">
                   {error.stack}
                 </pre>
               </details>

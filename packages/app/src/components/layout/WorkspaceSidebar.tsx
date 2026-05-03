@@ -132,6 +132,7 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
                   ? 'text-vendorsoluce-green bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20'
                   : 'text-gray-700 dark:text-gray-300 hover:text-vendorsoluce-green hover:bg-gray-50 dark:hover:bg-gray-800'
               }`}
+              aria-current={isMainDashboardActive ? 'page' : undefined}
             >
               <LayoutDashboard className="h-4 w-4 flex-shrink-0" />
               {t('navigation.dashboard', 'Dashboard')}
@@ -164,7 +165,8 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
                         ? 'text-vendorsoluce-green dark:text-vendorsoluce-light-green'
                         : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
                     }`}
-                    {...(isCollapsed ? { 'aria-expanded': 'false' as const } : { 'aria-expanded': 'true' as const })}
+                    aria-expanded={!isCollapsed}
+                    aria-controls={`sidebar-section-${section.id}`}
                   >
                     <span className="flex min-w-0 flex-1 items-start gap-1.5 leading-tight">
                       <span className="mt-0.5 shrink-0">{SECTION_ICON[section.id] ?? <Layers className="h-3.5 w-3.5" />}</span>
@@ -177,7 +179,7 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
                   </button>
 
                   {!isCollapsed && (
-                    <ul className="mt-0.5 space-y-px" role="list">
+                    <ul id={`sidebar-section-${section.id}`} className="mt-0.5 space-y-px" role="list">
                       {section.items.map((item) =>
                         item.external ? (
                           <li key={item.href}>
@@ -197,6 +199,7 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
                             <Link
                               to={item.href}
                               title={item.description ? `${item.label} — ${item.description}` : item.label}
+                              aria-current={isRouteActive(item.href) ? 'page' : undefined}
                               className={`flex items-start gap-2 px-2 py-1.5 rounded-lg text-[11px] leading-snug transition-colors ${
                                 isRouteActive(item.href)
                                   ? 'text-vendorsoluce-green dark:text-white bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 font-medium'
@@ -207,7 +210,7 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
                               <span className="min-w-0 flex-1 break-words">
                                 <span className="block">{item.label}</span>
                                 {item.description ? (
-                                  <span className="mt-0.5 block font-normal text-[10px] leading-snug text-gray-500 dark:text-gray-500">
+                                  <span className="mt-0.5 block font-normal text-[10px] leading-snug text-gray-500 dark:text-gray-400">
                                     {item.description}
                                   </span>
                                 ) : null}
@@ -267,6 +270,7 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
               }`}
               title={t('navigation.dashboard', 'Dashboard')}
               aria-label={t('navigation.dashboard', 'Dashboard')}
+              aria-current={isMainDashboardActive ? 'page' : undefined}
             >
               <LayoutDashboard className="h-4 w-4" />
             </Link>
@@ -295,6 +299,7 @@ const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
                       className={iconRailLinkClass(isRouteActive(item.href))}
                       title={item.label}
                       aria-label={item.label}
+                      aria-current={isRouteActive(item.href) ? 'page' : undefined}
                     >
                       {HREF_ICON[item.href] ?? <span className="h-4 w-4 flex-shrink-0" />}
                     </Link>

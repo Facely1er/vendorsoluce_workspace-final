@@ -57,7 +57,7 @@ const AccessibilityHelper: React.FC = () => {
       <a
         href="#main-content"
         onClick={skipToMain}
-        className="sr-only focus:not-sr-only fixed top-4 left-4 z-50 bg-vendorsoluce-navy text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+        className="sr-only focus:not-sr-only fixed top-4 left-4 z-50 bg-vendorsoluce-green text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
       >
         Skip to main content
       </a>
@@ -65,7 +65,7 @@ const AccessibilityHelper: React.FC = () => {
       {/* Accessibility helper toggle */}
       <button
         onClick={() => setShowHelper(!showHelper)}
-        className="fixed bottom-4 left-4 z-40 bg-vendorsoluce-navy text-white p-3 rounded-full shadow-lg hover:bg-vendorsoluce-dark-green focus:outline-none focus:ring-2 focus:ring-white"
+        className="fixed bottom-4 left-4 z-40 bg-vendorsoluce-green text-white p-3 rounded-full shadow-lg hover:bg-vendorsoluce-dark-green focus:outline-none focus:ring-2 focus:ring-white"
         aria-label="Toggle accessibility options"
       >
         <Accessibility className="h-5 w-5" />
@@ -112,7 +112,7 @@ const AccessibilityHelper: React.FC = () => {
                   type="checkbox"
                   checked={isHighContrast}
                   onChange={toggleHighContrast}
-                  className="h-4 w-4 text-vendorsoluce-navy focus:ring-vendorsoluce-navy border-gray-300 rounded"
+                  className="h-4 w-4 text-vendorsoluce-green focus:ring-vendorsoluce-green border-gray-300 rounded"
                 />
                 <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                   High Contrast Mode

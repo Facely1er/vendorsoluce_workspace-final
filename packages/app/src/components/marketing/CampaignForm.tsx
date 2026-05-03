@@ -82,34 +82,35 @@ export const CampaignForm: React.FC<CampaignFormProps> = ({ campaignId, onSave, 
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Campaign Name</label>
+            <label htmlFor="campaign-name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Campaign Name</label>
             <input
+              id="campaign-name"
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Description</label>
+            <label htmlFor="campaign-description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
             <textarea
+              id="campaign-description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green"
               rows={3}
             />
           </div>
 
           <div>
-            <label htmlFor="campaign-type" className="block text-sm font-medium mb-2">Campaign Type</label>
+            <label htmlFor="campaign-type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Campaign Type</label>
             <select
               id="campaign-type"
               value={formData.type}
               onChange={(e) => setFormData({ ...formData, type: e.target.value as MarketingCampaign['type'] })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              aria-label="Campaign type"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green"
             >
               <option value="welcome">Welcome</option>
               <option value="trial">Trial</option>
@@ -123,13 +124,12 @@ export const CampaignForm: React.FC<CampaignFormProps> = ({ campaignId, onSave, 
           </div>
 
           <div>
-            <label htmlFor="campaign-trigger-type" className="block text-sm font-medium mb-2">Trigger Type</label>
+            <label htmlFor="campaign-trigger-type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Trigger Type</label>
             <select
               id="campaign-trigger-type"
               value={formData.trigger_type}
               onChange={(e) => setFormData({ ...formData, trigger_type: e.target.value as any })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              aria-label="Trigger type"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green"
             >
               <option value="event">Event-Based</option>
               <option value="schedule">Scheduled</option>
@@ -139,7 +139,7 @@ export const CampaignForm: React.FC<CampaignFormProps> = ({ campaignId, onSave, 
 
           {formData.trigger_type === 'event' && (
             <div>
-              <label htmlFor="campaign-event-type" className="block text-sm font-medium mb-2">Event Type</label>
+              <label htmlFor="campaign-event-type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event Type</label>
               <input
                 id="campaign-event-type"
                 type="text"
@@ -148,21 +148,19 @@ export const CampaignForm: React.FC<CampaignFormProps> = ({ campaignId, onSave, 
                   ...formData,
                   trigger_config: { ...formData.trigger_config, event_type: e.target.value }
                 })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green"
                 placeholder="e.g., user_signup, checkout_started"
-                aria-label="Event type"
               />
             </div>
           )}
 
           <div>
-            <label htmlFor="campaign-status" className="block text-sm font-medium mb-2">Status</label>
+            <label htmlFor="campaign-status" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
             <select
               id="campaign-status"
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              aria-label="Campaign status"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-vendorsoluce-green"
             >
               <option value="draft">Draft</option>
               <option value="active">Active</option>

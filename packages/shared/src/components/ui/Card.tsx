@@ -11,7 +11,7 @@ const Card: React.FC<CardProps> = ({
   variant = 'default',
   className = '',
 }) => {
-  const baseClasses = 'bg-white dark:bg-gray-800 rounded-lg shadow-md transition-all duration-300 overflow-hidden';
+  const baseClasses = 'bg-white dark:bg-gray-800 rounded-lg shadow-md transition-shadow duration-300 overflow-hidden';
   
   const variantClasses = {
     default: 'border border-gray-200 dark:border-gray-700',
@@ -43,19 +43,24 @@ const CardHeader: React.FC<CardHeaderProps> = ({
   );
 };
 
+type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
 interface CardTitleProps {
   children: React.ReactNode;
   className?: string;
+  /** Override the rendered heading level. Defaults to 'h3'. */
+  as?: HeadingLevel;
 }
 
 const CardTitle: React.FC<CardTitleProps> = ({
   children,
   className = '',
+  as: Tag = 'h3',
 }) => {
   return (
-    <h3 className={`text-lg font-semibold text-gray-900 dark:text-white ${className}`}>
+    <Tag className={`text-lg font-semibold text-gray-900 dark:text-white ${className}`}>
       {children}
-    </h3>
+    </Tag>
   );
 };
 

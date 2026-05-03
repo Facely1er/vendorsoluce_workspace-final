@@ -31,6 +31,15 @@ const PortalNav: React.FC = () => {
   const isActive = (path: string) =>
     location.pathname === path || location.pathname.startsWith(path + '/');
 
+  React.useEffect(() => {
+    if (!mobileOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [mobileOpen]);
+
   return (
     <nav
       className="glass-nav-vs fixed top-0 left-0 right-0 z-[99999] w-full max-w-[100vw]"
@@ -75,6 +84,7 @@ const PortalNav: React.FC = () => {
                       ? 'text-vendorsoluce-green dark:text-white bg-gray-50 dark:bg-gray-700'
                       : 'text-gray-700 dark:text-white hover:text-vendorsoluce-green dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
+                  aria-current={isActive(to) ? 'page' : undefined}
                 >
                   <Icon className="w-3.5 h-3.5 flex-shrink-0" strokeWidth={2} />
                   {label}
