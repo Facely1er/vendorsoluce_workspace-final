@@ -15,9 +15,9 @@ const Card: React.FC<CardProps> = ({
   
   const variantClasses = {
     default: 'border border-gray-200 dark:border-gray-700',
-    assessment: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-green hover:shadow-lg hover:-translate-y-1',
-    sbom: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-light-green hover:shadow-lg hover:-translate-y-1',
-    vendor: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-dark-green hover:shadow-lg hover:-translate-y-1',
+    assessment: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-navy hover:shadow-lg hover:-translate-y-1',
+    sbom: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-teal hover:shadow-lg hover:-translate-y-1',
+    vendor: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-blue hover:shadow-lg hover:-translate-y-1',
   };
   
   return (
