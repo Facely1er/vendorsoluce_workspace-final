@@ -47,6 +47,7 @@ export default [
           ignoreRestSiblings: true
         }
       ],
+      'no-undef': 'off',
       'react-hooks/exhaustive-deps': 'warn',
       'no-case-declarations': 'error',
       'no-redeclare': 'off',

@@ -9,7 +9,7 @@
     "build": "npm run verify:ui && npm run verify:integration && node ./scripts/run-vite.mjs build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "node ./scripts/run-vite.mjs preview",
-    "type-check": "node ../../node_modules/typescript/bin/tsc --noEmit",
+    "type-check": "node ./node_modules/typescript/bin/tsc --noEmit",
     "clean": "rm -rf dist node_modules",
     "verify:integration": "node scripts/verify-portal-integration.mjs",
     "verify:ui": "node ../shared/scripts/verify-ui-tokens.mjs && node ../shared/scripts/verify-ui-inline.mjs && node ../shared/scripts/verify-workspace-layout.mjs && node ../shared/scripts/verify-static-radar-design.mjs"
