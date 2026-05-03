@@ -23,10 +23,14 @@ const Skeleton: React.FC<SkeletonProps> = ({
   };
 
   return (
-    <div 
+    <div
+      role="status"
+      aria-label="Loading…"
       className={`bg-gray-200 dark:bg-gray-700 ${animate ? 'animate-pulse' : ''} ${className}`.trim()}
       style={style}
-    />
+    >
+      <span className="sr-only">Loading…</span>
+    </div>
   );
 };
 

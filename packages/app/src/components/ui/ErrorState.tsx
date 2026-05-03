@@ -19,7 +19,7 @@ const ErrorState: React.FC<ErrorStateProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`text-center py-12 ${className}`}>
+    <div role="alert" aria-live="assertive" className={`text-center py-12 ${className}`}>
       <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
         <AlertTriangle className="h-8 w-8 text-red-600 dark:text-red-400" />
       </div>

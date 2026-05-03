@@ -39,6 +39,7 @@ export const TabsList: React.FC<TabsListProps> = ({ children, className = '', va
   const resolvedVariant = variant ?? context?.variant ?? 'pill';
   return (
     <div
+      role="tablist"
       className={cn(
         resolvedVariant === 'underline'
           ? 'flex flex-wrap gap-4 sm:gap-6 border-b border-gray-200 dark:border-gray-700'
@@ -79,6 +80,9 @@ export const TabsTrigger: React.FC<TabsTriggerProps> = ({ value, children, class
 
   return (
     <button
+      type="button"
+      role="tab"
+      aria-selected={isActive}
       onClick={() => context.onValueChange(value)}
       className={cn(triggerBaseClass, triggerStateClass, className)}
     >

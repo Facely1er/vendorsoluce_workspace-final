@@ -11,13 +11,13 @@ const Card: React.FC<CardProps> = ({
   variant = 'default',
   className = '',
 }) => {
-  const baseClasses = 'bg-white dark:bg-gray-800 rounded-lg shadow-md transition-all duration-300 overflow-hidden';
+  const baseClasses = 'bg-white dark:bg-gray-800 rounded-lg shadow-md transition-shadow duration-300 overflow-hidden';
   
   const variantClasses = {
     default: 'border border-gray-200 dark:border-gray-700',
-    assessment: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-navy hover:shadow-lg hover:-translate-y-1',
-    sbom: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-teal hover:shadow-lg hover:-translate-y-1',
-    vendor: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-blue hover:shadow-lg hover:-translate-y-1',
+    assessment: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-green hover:shadow-lg hover:-translate-y-1',
+    sbom: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-light-green hover:shadow-lg hover:-translate-y-1',
+    vendor: 'border border-gray-200 dark:border-gray-700 border-l-4 border-l-vendorsoluce-dark-green hover:shadow-lg hover:-translate-y-1',
   };
   
   return (
@@ -43,19 +43,24 @@ const CardHeader: React.FC<CardHeaderProps> = ({
   );
 };
 
+type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
 interface CardTitleProps {
   children: React.ReactNode;
   className?: string;
+  /** Override the rendered heading level. Defaults to 'h3'. */
+  as?: HeadingLevel;
 }
 
 const CardTitle: React.FC<CardTitleProps> = ({
   children,
   className = '',
+  as: Tag = 'h3',
 }) => {
   return (
-    <h3 className={`text-lg font-semibold text-gray-900 dark:text-white ${className}`}>
+    <Tag className={`text-lg font-semibold text-gray-900 dark:text-white ${className}`}>
       {children}
-    </h3>
+    </Tag>
   );
 };
 
