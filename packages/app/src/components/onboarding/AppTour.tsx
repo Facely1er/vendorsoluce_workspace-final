@@ -17,7 +17,10 @@ const AppTour: React.FC<AppTourProps> = ({ isRunning, onComplete, onSkip }) => {
   const [stepIndex, setStepIndex] = useState(0);
   const [run, setRun] = useState(false);
 
-  // Tour steps configuration
+  // Tour steps configuration – only reference elements that exist on the live dashboard.
+  // Steps that relied on [data-tour="add-vendor"], [data-tour="run-assessment"],
+  // [data-tour="analyze-sbom"], and [data-tour="quick-actions"] were removed because
+  // those targets no longer exist in the active page layout.
   const steps: Step[] = [
     {
       target: 'body',
@@ -69,46 +72,6 @@ const AppTour: React.FC<AppTourProps> = ({ isRunning, onComplete, onSkip }) => {
         </div>
       ),
       placement: 'bottom',
-    },
-    {
-      target: '[data-tour="add-vendor"]',
-      content: (
-        <div>
-          <h3 className="text-lg font-bold mb-2">Add Your First Vendor</h3>
-          <p>Start building your vendor risk portfolio by clicking here to add your first vendor. You can assess their security posture and track compliance.</p>
-        </div>
-      ),
-      placement: 'top',
-    },
-    {
-      target: '[data-tour="run-assessment"]',
-      content: (
-        <div>
-          <h3 className="text-lg font-bold mb-2">Supply Chain Assessment</h3>
-          <p>Evaluate your organization's supply chain security posture with our NIST SP 800-161 aligned assessment tool.</p>
-        </div>
-      ),
-      placement: 'top',
-    },
-    {
-      target: '[data-tour="analyze-sbom"]',
-      content: (
-        <div>
-          <h3 className="text-lg font-bold mb-2">SBOM Analysis</h3>
-          <p>Upload and analyze Software Bill of Materials files to identify vulnerabilities and compliance issues in your software components.</p>
-        </div>
-      ),
-      placement: 'top',
-    },
-    {
-      target: '[data-tour="quick-actions"]',
-      content: (
-        <div>
-          <h3 className="text-lg font-bold mb-2">Quick Actions</h3>
-          <p>Access frequently used features quickly from this section. Add vendors, run assessments, analyze SBOMs, and generate reports.</p>
-        </div>
-      ),
-      placement: 'top',
     },
     {
       target: 'body',

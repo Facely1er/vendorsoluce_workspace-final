@@ -2,7 +2,7 @@
 // File: src/components/onboarding/OnboardingChecklist.tsx
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
+import PanelCard from '../vendorsoluce-intelligence/PanelCard';
 import { ProgressBarFill } from '../ui/ProgressBarFill';
 import { Badge } from '../ui/Badge';
 import { Check, Circle, ArrowRight, Target } from 'lucide-react';
@@ -12,6 +12,7 @@ import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabase';
 import { OnboardingService } from '../../services/onboardingService';
 import { logger } from '../../utils/logger';
+import { WR } from 'shared/constants/routes';
 
 interface ChecklistItem {
   id: string;
@@ -30,8 +31,8 @@ export const OnboardingChecklist: React.FC = () => {
     {
       id: 'add-vendor',
       title: 'Add Your First Vendor',
-      description: 'Create a vendor risk profile',
-      route: '/vendor-risk-dashboard',
+      description: 'Import or create a vendor record in the portfolio',
+      route: WR.VENDOR_GRAPH_IMPORT,
       completed: false,
     },
     {
@@ -128,80 +129,77 @@ export const OnboardingChecklist: React.FC = () => {
   };
 
   return (
-    <Card>
-      <CardHeader>
+    <PanelCard
+      title={
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Target className="h-5 w-5 text-vendorsoluce-green mr-2" />
-            <CardTitle>Getting Started Checklist</CardTitle>
+            Getting Started Checklist
           </div>
           <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300">
             {completedCount} of {checklist.length} completed
           </Badge>
         </div>
-        <div className="mt-4">
-          <ProgressBarFill percent={progress} fillClassName="fill-vendorsoluce-green" />
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {checklist.map((item) => (
-            <div
-              key={item.id}
-              className={`flex items-start p-4 rounded-lg border-2 transition-all cursor-pointer ${
-                item.completed
-                  ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-800'
-                  : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-vendorsoluce-green'
-              }`}
-              onClick={() => handleItemClick(item)}
-            >
-              <div className="flex-shrink-0 mr-4 mt-1">
-                {item.completed ? (
-                  <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                    <Check className="h-4 w-4 text-white" />
-                  </div>
-                ) : (
-                  <Circle className="h-6 w-6 text-gray-400" />
-                )}
-              </div>
-              <div className="flex-1">
-                <h4
-                  className={`font-medium mb-1 ${
-                    item.completed
-                      ? 'text-green-900 dark:text-green-100'
-                      : 'text-gray-900 dark:text-white'
-                  }`}
-                >
-                  {item.title}
-                </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {item.description}
-                </p>
-              </div>
-              <ArrowRight
-                className={`h-5 w-5 ml-2 flex-shrink-0 ${
-                  item.completed
-                    ? 'text-green-600 dark:text-green-400'
-                    : 'text-gray-400'
-                }`}
-              />
+      }
+      description={<ProgressBarFill percent={progress} fillClassName="fill-vendorsoluce-green" className="mt-2" />}
+    >
+      <div className="space-y-3">
+        {checklist.map((item) => (
+          <div
+            key={item.id}
+            className={`flex items-start p-4 rounded-lg border-2 transition-all cursor-pointer ${
+              item.completed
+                ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-800'
+                : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-vendorsoluce-green'
+            }`}
+            onClick={() => handleItemClick(item)}
+          >
+            <div className="flex-shrink-0 mr-4 mt-1">
+              {item.completed ? (
+                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                  <Check className="h-4 w-4 text-white" />
+                </div>
+              ) : (
+                <Circle className="h-6 w-6 text-gray-400" />
+              )}
             </div>
-          ))}
-        </div>
-
-        {completedCount === checklist.length && (
-          <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-            <div className="flex items-center">
-              <Check className="h-5 w-5 text-green-600 dark:text-green-400 mr-2" />
-              <p className="text-sm text-green-800 dark:text-green-300">
-                Great job! You've completed the onboarding checklist. Explore more features
-                or upgrade to continue after your trial.
+            <div className="flex-1">
+              <h4
+                className={`font-medium mb-1 ${
+                  item.completed
+                    ? 'text-green-900 dark:text-green-100'
+                    : 'text-gray-900 dark:text-white'
+                }`}
+              >
+                {item.title}
+              </h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {item.description}
               </p>
             </div>
+            <ArrowRight
+              className={`h-5 w-5 ml-2 flex-shrink-0 ${
+                item.completed
+                  ? 'text-green-600 dark:text-green-400'
+                  : 'text-gray-400'
+              }`}
+            />
           </div>
-        )}
-      </CardContent>
-    </Card>
+        ))}
+      </div>
+
+      {completedCount === checklist.length && (
+        <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+          <div className="flex items-center">
+            <Check className="h-5 w-5 text-green-600 dark:text-green-400 mr-2" />
+            <p className="text-sm text-green-800 dark:text-green-300">
+              Great job! You've completed the onboarding checklist. Explore more features
+              or upgrade to continue after your trial.
+            </p>
+          </div>
+        </div>
+      )}
+    </PanelCard>
   );
 };
 

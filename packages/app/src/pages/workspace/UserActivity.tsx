@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Activity,
@@ -11,10 +11,12 @@ import {
   AlertTriangle,
   CheckCircle,
   BarChart3,
+  Inbox,
 } from 'lucide-react';
 import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
-import { MR, WR } from 'shared/constants/routes';
-// import { useAuth } from '../../context/AuthContext';
+import { MR } from 'shared/constants/routes';
+import { useVendors } from '../../hooks/useVendors';
+import { useSupplyChainAssessments } from '../../hooks/useSupplyChainAssessments';
 
 interface ActivityItem {
   id: string;
@@ -23,90 +25,68 @@ interface ActivityItem {
   timestamp: string;
   type: 'vendor' | 'assessment' | 'sbom' | 'settings' | 'security' | 'compliance';
   status: 'success' | 'warning' | 'error' | 'info';
-  /** Deep link into the relevant workspace surface (illustrative rows use mock targets). */
+  /** Deep link into the relevant workspace surface. */
   href?: string;
 }
 
 const UserActivity: React.FC = () => {
-  // const { profile } = useAuth(); // Not used currently
   const [filter, setFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const { vendors } = useVendors();
+  const { assessments } = useSupplyChainAssessments();
 
-  // Illustrative timeline until a unified activity API feeds this view.
-  const activities: ActivityItem[] = [
-    {
-      id: '1',
-      action: 'Completed Supply Chain Assessment',
-      details: 'NIST SP 800-161 assessment with 78% compliance score',
-      timestamp: '2025-01-17T14:30:00Z',
-      type: 'assessment',
-      status: 'success',
-      href: MR.SUPPLY_CHAIN_ASSESSMENT,
-    },
-    {
-      id: '2',
-      action: 'Added new vendor',
-      details: 'TechCorp Solutions added to vendor portfolio',
-      timestamp: '2025-01-16T09:15:00Z',
-      type: 'vendor',
-      status: 'success',
-      href: MR.VENDORS,
-    },
-    {
-      id: '3',
-      action: 'SBOM Analysis completed',
-      details: 'Analyzed app-v2.1.json - 3 critical vulnerabilities found',
-      timestamp: '2025-01-15T16:45:00Z',
-      type: 'sbom',
-      status: 'warning',
-      href: MR.NIST_CHECKLIST,
-    },
-    {
-      id: '4',
-      action: 'Security settings updated',
-      details: 'Two-factor authentication enabled',
-      timestamp: '2025-01-14T11:20:00Z',
-      type: 'security',
-      status: 'success',
-      href: WR.ACCOUNT,
-    },
-    {
-      id: '5',
-      action: 'Vendor assessment failed',
-      details: 'CloudSecure Inc assessment incomplete due to missing responses',
-      timestamp: '2025-01-13T13:30:00Z',
-      type: 'vendor',
-      status: 'error',
-      href: MR.VENDOR_ASSESSMENTS,
-    },
-    {
-      id: '6',
-      action: 'Profile information updated',
-      details: 'Company and role information updated',
-      timestamp: '2025-01-12T10:00:00Z',
-      type: 'settings',
-      status: 'success',
-      href: WR.PROFILE,
-    },
-    {
-      id: '7',
-      action: 'Compliance report generated',
-      details: 'Q4 2024 supply chain compliance report exported',
-      timestamp: '2025-01-11T15:30:00Z',
-      type: 'compliance',
-      status: 'success',
-      href: MR.VENDOR_RISK_REPORTS,
-    },
-    {
-      id: '8',
-      action: 'Risk threshold exceeded',
-      details: 'DevTools Pro vendor risk score increased to 85 (High)',
-      timestamp: '2025-01-10T08:45:00Z',
-      type: 'vendor',
-      status: 'warning',
-      href: MR.VENDOR_RISK_RADAR,
-    },
-  ];
+  // Build an activity feed from real workspace data.
+  const activities: ActivityItem[] = useMemo(() => {
+    const items: ActivityItem[] = [];
+
+    // One entry per completed assessment (most recent first).
+    const sortedAssessments = [...assessments].sort(
+      (a, b) => new Date(b.updated_at ?? 0).getTime() - new Date(a.updated_at ?? 0).getTime(),
+    );
+    for (const a of sortedAssessments) {
+      if (a.status === 'completed') {
+        items.push({
+          id: `assessment-done-${a.id}`,
+          action: `Completed: ${a.assessment_name || 'Supply Chain Assessment'}`,
+          details: `NIST SP 800-161 assessment — score: ${a.score ?? 'N/A'}`,
+          timestamp: a.updated_at ?? a.created_at,
+          type: 'assessment',
+          status: 'success',
+          href: MR.SUPPLY_CHAIN_ASSESSMENT,
+        });
+      } else if (a.status === 'in_progress') {
+        items.push({
+          id: `assessment-wip-${a.id}`,
+          action: `In progress: ${a.assessment_name || 'Supply Chain Assessment'}`,
+          details: 'Assessment started but not yet submitted.',
+          timestamp: a.updated_at ?? a.created_at,
+          type: 'assessment',
+          status: 'info',
+          href: MR.SUPPLY_CHAIN_ASSESSMENT,
+        });
+      }
+    }
+
+    // One entry per vendor (most recently added first).
+    const sortedVendors = [...vendors].sort(
+      (a, b) => new Date(b.created_at ?? 0).getTime() - new Date(a.created_at ?? 0).getTime(),
+    );
+    for (const v of sortedVendors) {
+      items.push({
+        id: `vendor-${v.id}`,
+        action: `Vendor added: ${v.name}`,
+        details: `${v.industry} — Risk level: ${v.risk_level ?? 'Not assessed'}`,
+        timestamp: v.created_at,
+        type: 'vendor',
+        status: (v.risk_level === 'High' || v.risk_level === 'Critical') ? 'warning' : 'success',
+        href: MR.VENDORS,
+      });
+    }
+
+    // Sort all items by timestamp descending.
+    items.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    return items;
+  }, [vendors, assessments]);
 
   const getActivityIcon = (type: string) => {
     switch (type) {
@@ -234,12 +214,14 @@ const UserActivity: React.FC = () => {
         <div className="px-6 pb-6">
           {filteredActivities.length === 0 ? (
             <div className="text-center py-12">
-              <Activity className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <Inbox className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                No activities found
+                {activities.length === 0 ? 'No activity yet' : 'No activities match your search'}
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                {searchTerm ? 'Try adjusting your search terms' : 'Your activity will appear here as you use VendorSoluce'}
+                {activities.length === 0
+                  ? 'Add vendors or run an assessment to see events here.'
+                  : 'Try adjusting your search terms or filter.'}
               </p>
             </div>
           ) : (
