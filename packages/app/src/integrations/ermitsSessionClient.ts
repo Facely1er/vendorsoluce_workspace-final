@@ -7,6 +7,9 @@ export type ErmitsSessionSource =
   | "assessmenthub"
   | "sectorintel";
 
+/** Session origins the browser may send on create/update; `cybersoluce` is reserved for server-side use. */
+export type ErmitsClientSessionSource = Exclude<ErmitsSessionSource, "cybersoluce">;
+
 export type ErmitsRiskSessionContexts = {
   brief: Record<string, unknown>;
   privacy: Record<string, unknown>;
@@ -61,7 +64,7 @@ export function persistSessionId(sessionId: string) {
 }
 
 export async function createErmitsRiskSession(body: {
-  source: ErmitsSessionSource;
+  source: ErmitsClientSessionSource;
   industry?: string;
   companySize?: string;
   region?: string;
@@ -93,7 +96,7 @@ export async function fetchErmitsRiskSession(sessionId: string): Promise<ErmitsR
 
 export async function updateErmitsRiskSession(body: {
   sessionId: string;
-  source: ErmitsSessionSource;
+  source: ErmitsClientSessionSource;
   updates: Record<string, unknown>;
 }): Promise<ErmitsRiskSession> {
   const res = await fetch(apiBase() + "/risk-session-update", {

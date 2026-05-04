@@ -27,7 +27,7 @@ const MasterTermsOfService: React.FC = () => {
           <li>SBOM Analyzer - Software supply chain security and vulnerability analysis</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3 mt-6">CyberSoluce™ Brand Products:</h3>
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3 mt-6">Asset Intelligence:</h3>
         <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-300 mb-4 pl-4">
           <li>Enhanced Asset Inventory Management Platform</li>
           <li>Dependency-aware asset visibility and management</li>

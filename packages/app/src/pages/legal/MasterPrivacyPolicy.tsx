@@ -29,7 +29,7 @@ const MasterPrivacyPolicy: React.FC = () => {
         <p className="text-gray-600 dark:text-gray-300 mb-4">This Privacy Policy applies to all ERMITS products and services, including:</p>
         
         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 mb-4">
-          <p className="font-semibold text-gray-900 dark:text-white mb-2">CyberSoluce™:</p>
+          <p className="font-semibold text-gray-900 dark:text-white mb-2">Asset Intelligence:</p>
           <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-300 mb-3 pl-4">
             <li>Enhanced Asset Inventory Management Platform</li>
             <li>Dependency-aware visibility into asset inventory</li>
@@ -101,7 +101,7 @@ const MasterPrivacyPolicy: React.FC = () => {
         <p className="text-gray-600 dark:text-gray-300 mb-3">All core computational functions are performed locally within your browser or self-managed environment whenever technically feasible:</p>
         <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-300 mb-4 pl-4">
           <li><strong>Security Assessments:</strong> CMMC, cybersecurity assessments processed in your browser</li>
-          <li><strong>Asset Inventory:</strong> CyberSoluce asset data processed client-side</li>
+          <li><strong>Asset Inventory:</strong> Inventory data processed client-side</li>
           <li><strong>SBOM Analysis:</strong> TechnoSoluce processes SBOM files entirely client-side</li>
           <li><strong>Risk Scoring:</strong> All risk calculations performed locally</li>
           <li><strong>Compliance Evaluations:</strong> Assessment scoring and gap analysis done in your browser</li>
@@ -296,7 +296,7 @@ const MasterPrivacyPolicy: React.FC = () => {
         <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3 mt-6">4.1 Service Delivery and Operation</h3>
         <p className="text-gray-600 dark:text-gray-300 mb-2">We use collected information to:</p>
         <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-300 mb-4 pl-4">
-          <li><strong>Provide Services:</strong> Deliver CyberSoluce, SocialCaution, TechnoSoluce, CyberCertitude, VendorSoluce™, CyberCorrect, and CyberCaution services</li>
+          <li><strong>Provide Services:</strong> Deliver SocialCaution, TechnoSoluce, CyberCertitude, VendorSoluce™, CyberCorrect, and CyberCaution services</li>
           <li><strong>Process Transactions:</strong> Handle subscriptions, billing, and payment confirmations</li>
           <li><strong>Authenticate Users:</strong> Verify identity and maintain account security</li>
           <li><strong>Enable Features:</strong> Provide cloud synchronization, multi-device access, collaboration features (when opted-in)</li>
