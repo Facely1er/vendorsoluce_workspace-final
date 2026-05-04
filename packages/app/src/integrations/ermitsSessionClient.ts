@@ -2,13 +2,10 @@ export type ErmitsSessionSource =
   | "cyberbrief"
   | "cybercorrect"
   | "vendorsoluce"
-  | "cybersoluce"
   | "cybercaution"
   | "assessmenthub"
-  | "sectorintel";
-
-/** Session origins the browser may send on create/update; `cybersoluce` is reserved for server-side use. */
-export type ErmitsClientSessionSource = Exclude<ErmitsSessionSource, "cybersoluce">;
+  | "sectorintel"
+  | "cybersoluce";
 
 export type ErmitsRiskSessionContexts = {
   brief: Record<string, unknown>;
@@ -26,100 +23,125 @@ export type ErmitsRiskSession = {
   payload: Record<string, unknown>;
   source: ErmitsSessionSource | string;
   contexts: ErmitsRiskSessionContexts;
+  updates?: Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
 };
 
-const SESSION_STORAGE_KEY = "ermits:sessionId";
-
-function apiBase(): string {
-  const base =
-    (import.meta as { env?: { VITE_ERMIT_API_URL?: string } }).env?.VITE_ERMIT_API_URL?.replace(/\/$/, "") ?? "";
-  return base;
-}
-
-function apiKey(): string {
-  return (import.meta as { env?: { VITE_ERMIT_API_KEY?: string } }).env?.VITE_ERMIT_API_KEY ?? "";
-}
-
-function headersInit(): HeadersInit {
-  const key = apiKey();
-  const h: Record<string, string> = { "Content-Type": "application/json" };
-  if (key) h["x-ermits-api-key"] = key;
-  return h;
-}
-
-export function getSessionIdFromUrl(search: string = typeof window !== "undefined" ? window.location.search : ""): string | null {
-  const p = new URLSearchParams(search);
-  const id = p.get("session");
-  return id && id.trim() ? id.trim() : null;
+export function getSessionIdFromUrl(): string | null {
+  return new URLSearchParams(window.location.search).get("session");
 }
 
 export function persistSessionId(sessionId: string) {
+  localStorage.setItem("ermitsRiskSessionId", sessionId);
+}
+
+export function getPersistedSessionId(): string | null {
   try {
-    localStorage.setItem(SESSION_STORAGE_KEY, sessionId);
+    return (
+      localStorage.getItem("ermitsRiskSessionId") ?? localStorage.getItem("ermits:sessionId")
+    );
   } catch {
-    /* ignore */
+    return null;
   }
 }
 
-export async function createErmitsRiskSession(body: {
-  source: ErmitsClientSessionSource;
+export async function createErmitsRiskSession(input: {
+  source: ErmitsSessionSource;
   industry?: string;
   companySize?: string;
   region?: string;
   dataSensitivity?: string;
   dependencyLevel?: string;
-}): Promise<ErmitsRiskSession> {
-  const res = await fetch(apiBase() + "/risk-session", {
+}) {
+  const apiUrl = import.meta.env.VITE_ERMIT_API_URL;
+  const apiKey = import.meta.env.VITE_ERMIT_API_KEY;
+
+  if (!apiUrl) throw new Error("Missing VITE_ERMIT_API_URL");
+  if (!apiKey) throw new Error("Missing VITE_ERMIT_API_KEY");
+
+  const res = await fetch(`${apiUrl.replace(/\/$/, "")}/risk-session`, {
     method: "POST",
-    headers: headersInit(),
-    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      "x-ermits-api-key": apiKey,
+    },
+    body: JSON.stringify(input),
   });
+
   if (!res.ok) {
-    const t = await res.text();
-    throw new Error(t || "createErmitsRiskSession failed");
+    throw new Error(`ERMITS session creation failed: ${res.status} ${await res.text()}`);
   }
-  return (await res.json()) as ErmitsRiskSession;
+
+  const session = (await res.json()) as ErmitsRiskSession;
+  persistSessionId(session.sessionId);
+  return session;
 }
 
-export async function fetchErmitsRiskSession(sessionId: string): Promise<ErmitsRiskSession> {
-  const u = new URL(apiBase() + "/risk-session");
-  u.searchParams.set("sessionId", sessionId);
-  const res = await fetch(u.toString(), { headers: headersInit() });
+export async function fetchErmitsRiskSession(sessionId: string) {
+  const apiUrl = import.meta.env.VITE_ERMIT_API_URL;
+  const apiKey = import.meta.env.VITE_ERMIT_API_KEY;
+
+  if (!apiUrl) throw new Error("Missing VITE_ERMIT_API_URL");
+  if (!apiKey) throw new Error("Missing VITE_ERMIT_API_KEY");
+
+  const res = await fetch(
+    `${apiUrl.replace(/\/$/, "")}/risk-session?sessionId=${encodeURIComponent(sessionId)}`,
+    {
+      headers: {
+        "x-ermits-api-key": apiKey,
+      },
+    },
+  );
+
   if (!res.ok) {
-    const t = await res.text();
-    throw new Error(t || "fetchErmitsRiskSession failed");
+    throw new Error(`ERMITS session fetch failed: ${res.status} ${await res.text()}`);
   }
-  return (await res.json()) as ErmitsRiskSession;
+
+  return res.json() as Promise<ErmitsRiskSession>;
 }
 
-export async function updateErmitsRiskSession(body: {
+export async function updateErmitsRiskSession(input: {
   sessionId: string;
-  source: ErmitsClientSessionSource;
+  source: ErmitsSessionSource;
   updates: Record<string, unknown>;
-}): Promise<ErmitsRiskSession> {
-  const res = await fetch(apiBase() + "/risk-session-update", {
+}) {
+  const apiUrl = import.meta.env.VITE_ERMIT_API_URL;
+  const apiKey = import.meta.env.VITE_ERMIT_API_KEY;
+
+  if (!apiUrl) throw new Error("Missing VITE_ERMIT_API_URL");
+  if (!apiKey) throw new Error("Missing VITE_ERMIT_API_KEY");
+
+  const res = await fetch(`${apiUrl.replace(/\/$/, "")}/risk-session-update`, {
     method: "POST",
-    headers: headersInit(),
-    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      "x-ermits-api-key": apiKey,
+    },
+    body: JSON.stringify(input),
   });
+
   if (!res.ok) {
-    const t = await res.text();
-    throw new Error(t || "updateErmitsRiskSession failed");
+    throw new Error(`ERMITS session update failed: ${res.status} ${await res.text()}`);
   }
-  return (await res.json()) as ErmitsRiskSession;
+
+  return res.json() as Promise<ErmitsRiskSession>;
 }
 
 export type SectorRiskProfile = Record<string, unknown>;
 
 export async function fetchSectorRisk(industry: string): Promise<SectorRiskProfile> {
-  const u = new URL(apiBase() + "/sector-risk");
+  const apiUrl = import.meta.env.VITE_ERMIT_API_URL;
+  const apiKey = import.meta.env.VITE_ERMIT_API_KEY;
+  if (!apiUrl) throw new Error("Missing VITE_ERMIT_API_URL");
+  if (!apiKey) throw new Error("Missing VITE_ERMIT_API_KEY");
+  const u = new URL(`${apiUrl.replace(/\/$/, "")}/sector-risk`);
   u.searchParams.set("industry", industry || "other");
-  const res = await fetch(u.toString(), { headers: headersInit() });
+  const res = await fetch(u.toString(), {
+    headers: { "x-ermits-api-key": apiKey },
+  });
   if (!res.ok) {
-    const t = await res.text();
-    throw new Error(t || "fetchSectorRisk failed");
+    throw new Error(`Sector risk fetch failed: ${res.status} ${await res.text()}`);
   }
-  return (await res.json()) as SectorRiskProfile;
+  return res.json() as Promise<SectorRiskProfile>;
 }

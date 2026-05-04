@@ -10,7 +10,7 @@ import {
 function workspaceBase(): string {
   const raw = (import.meta as ImportMeta & { env: { VITE_CYBERCAUTION_WORKSPACE_URL?: string } }).env
     .VITE_CYBERCAUTION_WORKSPACE_URL;
-  const s = (raw || "/workspace/").trim();
+  const s = (raw || "/workspace").trim();
   return s.replace(/\/$/, "") || "/workspace";
 }
 
@@ -58,7 +58,13 @@ const VendorReadinessPage: React.FC = () => {
   function goWorkspace() {
     if (!sessionId) return;
     const base = workspaceBase();
-    window.location.href = base + "/?session=" + encodeURIComponent(sessionId);
+    const q = "session=" + encodeURIComponent(sessionId);
+    if (base.startsWith("http://") || base.startsWith("https://")) {
+      window.location.href = base.includes("?") ? `${base}&${q}` : `${base}?${q}`;
+    } else {
+      const path = base.startsWith("/") ? base : `/${base}`;
+      window.location.href = `${path}?${q}`;
+    }
   }
 
   async function complete() {
