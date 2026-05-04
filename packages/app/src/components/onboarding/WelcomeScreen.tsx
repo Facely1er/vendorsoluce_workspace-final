@@ -17,6 +17,7 @@ import { useAuth } from '../../context/AuthContext';
 import { TrialStartBanner } from './TrialStartBanner';
 import { OnboardingService } from '../../services/onboardingService';
 import { logger } from '../../utils/logger';
+import { WR } from 'shared/constants/routes';
 
 interface WelcomeScreenProps {
   onComplete: () => void;
@@ -217,7 +218,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               </div>
             </Link>
             
-            <Link to="/vendor-risk-dashboard" className="block">
+            <Link to={WR.VENDOR_GRAPH_IMPORT} className="block">
               <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:border-vendorsoluce-green transition-colors cursor-pointer">
                 <div className="flex items-center">
                   <BarChart3 className="h-8 w-8 text-vendorsoluce-green mr-4" />

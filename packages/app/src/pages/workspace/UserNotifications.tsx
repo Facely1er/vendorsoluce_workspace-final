@@ -19,14 +19,8 @@ interface Notification {
 
 const UserNotifications: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
-  const [notifications, setNotifications] = useState<Notification[]>([
-    { id: '1', title: 'Critical Vulnerability Detected', message: 'High-severity vulnerability found in React component used by TechCorp Solutions', type: 'error', category: 'security', timestamp: '2025-01-17T10:30:00Z', read: false, actionUrl: '/vendors' },
-    { id: '2', title: 'Vendor Assessment Overdue', message: 'CloudSecure Inc assessment is 3 days overdue. Please follow up.', type: 'warning', category: 'vendor', timestamp: '2025-01-16T14:15:00Z', read: false, actionUrl: '/vendor-assessments' },
-    { id: '3', title: 'Assessment Completed', message: 'Your NIST SP 800-161 supply chain assessment has been completed with a score of 78%', type: 'success', category: 'assessment', timestamp: '2025-01-15T16:45:00Z', read: true, actionUrl: '/supply-chain-results' },
-    { id: '4', title: 'New Vendor Added', message: 'DevTools Pro has been successfully added to your vendor portfolio', type: 'info', category: 'vendor', timestamp: '2025-01-14T09:20:00Z', read: true },
-    { id: '5', title: 'Security Settings Updated', message: 'Two-factor authentication has been enabled for your account', type: 'success', category: 'security', timestamp: '2025-01-13T11:30:00Z', read: true },
-    { id: '6', title: 'System Maintenance Scheduled', message: 'Scheduled maintenance on January 20th from 2:00 AM to 4:00 AM EST', type: 'info', category: 'system', timestamp: '2025-01-12T08:00:00Z', read: false },
-  ]);
+  // Starts empty; notifications are added by workspace events via the appStore toast system.
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   const getNotificationIcon = (type: string, category: string) => {
     if (type === 'error') return <AlertTriangle className="h-5 w-5 text-red-500" />;

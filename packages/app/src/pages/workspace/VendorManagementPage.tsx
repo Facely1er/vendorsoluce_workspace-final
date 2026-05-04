@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Building, Eye, Edit, RefreshCw, Search, Trash2, TrendingUp, AlertTriangle } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -7,6 +7,10 @@ import type { VendorProfile } from '../../services/vendorService';
 import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { logger } from '../../utils/logger';
+import { useVendors } from '../../hooks/useVendors';
+import type { Database } from '../../lib/database.types';
+
+type VendorRow = Database['public']['Tables']['vs_vendors']['Row'];
 
 interface VendorStats {
   total: number;
@@ -17,40 +21,66 @@ interface VendorStats {
   complianceBreakdown: { compliant: number; 'non-compliant': number; partial: number };
 }
 
+/** Map the internal vendor row to the VendorProfile shape used by the verification component. */
+function toVendorProfile(v: VendorRow): VendorProfile {
+  return {
+    id: v.id,
+    company_name: v.name,
+    legal_name: v.name,
+    website: v.website ?? undefined,
+    industry: v.industry,
+    company_size: 'medium',
+    headquarters: '',
+    description: v.description ?? undefined,
+    status: (v.assessment_status === 'completed' ? 'approved' : 'pending') as VendorProfile['status'],
+    risk_score: v.risk_score ?? undefined,
+    compliance_status: (v.compliance_status === 'Compliant'
+      ? 'compliant'
+      : v.compliance_status === 'Non-Compliant'
+        ? 'non-compliant'
+        : 'partial') as VendorProfile['compliance_status'],
+    created_at: v.created_at,
+    updated_at: v.created_at,
+    user_id: v.user_id ?? '',
+  };
+}
+
 const VendorManagementPage: React.FC = () => {
-  const [vendors, setVendors] = useState<VendorProfile[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { vendors: rawVendors, loading, refetch } = useVendors();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [industryFilter, setIndustryFilter] = useState<string>('all');
   const [selectedVendor, setSelectedVendor] = useState<VendorProfile | null>(null);
-  const [stats, setStats] = useState<VendorStats | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  useEffect(() => {
-    loadVendors();
-    loadStats();
-  }, []);
+  // Convert internal rows to the VendorProfile shape expected by the rest of the UI.
+  const vendors: VendorProfile[] = useMemo(() => rawVendors.map(toVendorProfile), [rawVendors]);
 
-  const loadVendors = async () => {
-    setLoading(true);
-    try {
-      const mockVendors: VendorProfile[] = [
-        { id: '1', company_name: 'TechCorp Solutions', legal_name: 'TechCorp Solutions Inc.', website: 'https://techcorp.com', industry: 'Technology', company_size: 'large', founded_year: 2010, headquarters: 'San Francisco, CA, USA', description: 'Leading technology solutions provider', status: 'pending', risk_score: 75, compliance_status: 'compliant', created_at: '2024-01-15T10:00:00Z', updated_at: '2024-01-15T10:00:00Z', user_id: 'user-1' },
-        { id: '2', company_name: 'SecureData Ltd', legal_name: 'SecureData Limited', website: 'https://securedata.com', industry: 'Cybersecurity', company_size: 'medium', founded_year: 2015, headquarters: 'London, UK', description: 'Cybersecurity and data protection services', status: 'approved', risk_score: 85, compliance_status: 'compliant', created_at: '2024-01-10T14:30:00Z', updated_at: '2024-01-12T09:15:00Z', user_id: 'user-2' },
-        { id: '3', company_name: 'CloudSoft Inc', legal_name: 'CloudSoft Incorporated', website: 'https://cloudsoft.com', industry: 'Cloud Services', company_size: 'small', founded_year: 2020, headquarters: 'Austin, TX, USA', description: 'Cloud infrastructure and software services', status: 'rejected', risk_score: 45, compliance_status: 'non-compliant', created_at: '2024-01-08T16:45:00Z', updated_at: '2024-01-09T11:20:00Z', user_id: 'user-3' },
-      ];
-      setVendors(mockVendors);
-    } catch (error) { logger.error('Error loading vendors:', error); }
-    finally { setLoading(false); }
-  };
-
-  const loadStats = async () => {
-    try {
-      setStats({ total: 25, pending: 8, approved: 15, rejected: 2, averageRiskScore: 72.5, complianceBreakdown: { compliant: 15, 'non-compliant': 5, partial: 5 } });
-    } catch (error) { logger.error('Error loading stats:', error); }
-  };
+  // Derive live stats from real vendor data.
+  const stats: VendorStats = useMemo(() => {
+    const total = vendors.length;
+    const pending = vendors.filter((v) => v.status === 'pending' || v.status === 'under-review').length;
+    const approved = vendors.filter((v) => v.status === 'approved').length;
+    const rejected = vendors.filter((v) => v.status === 'rejected').length;
+    const scored = vendors.filter((v) => typeof v.risk_score === 'number');
+    const averageRiskScore =
+      scored.length > 0
+        ? Math.round(scored.reduce((s, v) => s + (v.risk_score ?? 0), 0) / scored.length * 10) / 10
+        : 0;
+    return {
+      total,
+      pending,
+      approved,
+      rejected,
+      averageRiskScore,
+      complianceBreakdown: {
+        compliant: vendors.filter((v) => v.compliance_status === 'compliant').length,
+        'non-compliant': vendors.filter((v) => v.compliance_status === 'non-compliant').length,
+        partial: vendors.filter((v) => v.compliance_status === 'partial').length,
+      },
+    };
+  }, [vendors]);
 
   const filteredVendors = useMemo(() => vendors.filter((vendor) => {
     const matchesSearch = vendor.company_name.toLowerCase().includes(searchTerm.toLowerCase()) || vendor.industry.toLowerCase().includes(searchTerm.toLowerCase());
@@ -73,8 +103,9 @@ const VendorManagementPage: React.FC = () => {
 
   const getRiskLevel = (score: number) => score >= 80 ? { level: 'Low', color: 'text-emerald-600 dark:text-emerald-400' } : score >= 60 ? { level: 'Medium', color: 'text-amber-600 dark:text-amber-400' } : { level: 'High', color: 'text-red-600 dark:text-red-400' };
 
-  const handleVendorVerified = (vendorId: string, status: 'approved' | 'rejected') => {
-    setVendors((prev) => prev.map((vendor) => (vendor.id === vendorId ? { ...vendor, status } : vendor)));
+  const handleVendorVerified = (_vendorId: string, _status: 'approved' | 'rejected') => {
+    // Refresh from the real data source after a verification decision.
+    refetch();
     setSelectedVendor(null);
   };
 
@@ -86,8 +117,8 @@ const VendorManagementPage: React.FC = () => {
     <WorkspacePageShell
       title="Vendor management"
       description="Review vendor intake, verification status, and risk context."
-      actions={[{ label: 'Refresh', onClick: loadVendors, variant: 'outline' }, { label: 'Add vendor', onClick: () => logger.log('Add vendor action'), variant: 'primary' }]}
-      stats={stats ? [{ label: 'Total vendors', value: stats.total, hint: 'Tracked in the workspace portfolio' }, { label: 'Pending review', value: stats.pending, hint: 'Awaiting verification or decision' }, { label: 'Approved', value: stats.approved, hint: 'Active and accepted' }, { label: 'Average risk score', value: stats.averageRiskScore, hint: 'Current portfolio baseline' }] : []}
+      actions={[{ label: 'Refresh', onClick: refetch, variant: 'outline' }, { label: 'Add vendor', onClick: () => logger.log('Add vendor action'), variant: 'primary' }]}
+      stats={[{ label: 'Total vendors', value: stats.total, hint: 'Tracked in the workspace portfolio' }, { label: 'Pending review', value: stats.pending, hint: 'Awaiting verification or decision' }, { label: 'Approved', value: stats.approved, hint: 'Active and accepted' }, { label: 'Average risk score', value: stats.averageRiskScore || '—', hint: 'Current portfolio baseline' }]}
     >
       <div className={`${WORKSPACE_PAGE_BODY_GRID_CLASS} xl:grid-cols-[minmax(0,1fr)_320px]`}>
         <PanelCard title={`Vendor registry (${filteredVendors.length})`} description="Search, filter, and review vendors without switching layouts or losing portfolio context.">
@@ -102,8 +133,8 @@ const VendorManagementPage: React.FC = () => {
           </div>
         </PanelCard>
         <div className="space-y-6">
-          <PanelCard title="Portfolio signals" description="Keep the review queue and risk posture visible while operating vendor workflows."><div className="grid gap-3"><div className="rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900"><div className="flex items-center gap-3"><div className="rounded-xl bg-emerald-50 p-2.5 dark:bg-emerald-950/40"><Building className="h-5 w-5 text-emerald-600 dark:text-emerald-400" /></div><div><div className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Active records</div><div className="text-lg font-semibold text-gray-950 dark:text-white">{vendors.length}</div></div></div></div><div className="rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900"><div className="flex items-center gap-3"><div className="rounded-xl bg-amber-50 p-2.5 dark:bg-amber-950/40"><AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" /></div><div><div className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Pending decisions</div><div className="text-lg font-semibold text-gray-950 dark:text-white">{stats?.pending ?? 0}</div></div></div></div><div className="rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900"><div className="flex items-center gap-3"><div className="rounded-xl bg-purple-50 p-2.5 dark:bg-purple-950/40"><TrendingUp className="h-5 w-5 text-purple-600 dark:text-purple-400" /></div><div><div className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Average score</div><div className="text-lg font-semibold text-gray-950 dark:text-white">{stats?.averageRiskScore ?? '—'}</div></div></div></div></div></PanelCard>
-          <PanelCard title="Operational guidance" description="Use this page for verification and disposition. Use the intelligence views for dependency-driven cascade analysis."><div className="space-y-3 text-sm text-gray-600 dark:text-gray-300"><p>Verification decisions made here should stay consistent with the graph-backed intelligence records introduced in the portfolio and detail views.</p><p>Keep vendor naming normalized before import so identity joins remain stable across assessment, graph, and reporting modules.</p><div className="flex gap-2 pt-2"><Button variant="outline" size="sm" onClick={() => logger.log('Go to intelligence portfolio')}>Open intelligence portfolio</Button><Button variant="outline" size="sm" onClick={loadVendors}><RefreshCw className="mr-2 h-4 w-4" />Refresh data</Button></div></div></PanelCard>
+          <PanelCard title="Portfolio signals" description="Keep the review queue and risk posture visible while operating vendor workflows."><div className="grid gap-3"><div className="rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900"><div className="flex items-center gap-3"><div className="rounded-xl bg-emerald-50 p-2.5 dark:bg-emerald-950/40"><Building className="h-5 w-5 text-emerald-600 dark:text-emerald-400" /></div><div><div className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Active records</div><div className="text-lg font-semibold text-gray-950 dark:text-white">{vendors.length}</div></div></div></div><div className="rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900"><div className="flex items-center gap-3"><div className="rounded-xl bg-amber-50 p-2.5 dark:bg-amber-950/40"><AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" /></div><div><div className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Pending decisions</div><div className="text-lg font-semibold text-gray-950 dark:text-white">{stats.pending}</div></div></div></div><div className="rounded-xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900"><div className="flex items-center gap-3"><div className="rounded-xl bg-purple-50 p-2.5 dark:bg-purple-950/40"><TrendingUp className="h-5 w-5 text-purple-600 dark:text-purple-400" /></div><div><div className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Average score</div><div className="text-lg font-semibold text-gray-950 dark:text-white">{stats.averageRiskScore || '—'}</div></div></div></div></div></PanelCard>
+          <PanelCard title="Operational guidance" description="Use this page for verification and disposition. Use the intelligence views for dependency-driven cascade analysis."><div className="space-y-3 text-sm text-gray-600 dark:text-gray-300"><p>Verification decisions made here should stay consistent with the graph-backed intelligence records introduced in the portfolio and detail views.</p><p>Keep vendor naming normalized before import so identity joins remain stable across assessment, graph, and reporting modules.</p><div className="flex gap-2 pt-2"><Button variant="outline" size="sm" onClick={() => logger.log('Go to intelligence portfolio')}>Open intelligence portfolio</Button><Button variant="outline" size="sm" onClick={refetch}><RefreshCw className="mr-2 h-4 w-4" />Refresh data</Button></div></div></PanelCard>
         </div>
       </div>
     </WorkspacePageShell>

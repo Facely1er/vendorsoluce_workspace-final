@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/ui/Button';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkspacePageBody from '../../components/workspace/WorkspacePageBody';
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { Badge } from '../../components/ui/Badge';
+import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import { 
   Shield, 
   Plus,
@@ -42,24 +43,6 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { useAppStore } from '../../stores/appStore';
 import type { ControlRequirement } from '../../types/requirements';
-
-// Component to handle progress bar fill without inline styles
-const ProgressBarFill: React.FC<{ progress: number }> = ({ progress }) => {
-  const fillRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    if (fillRef.current) {
-      fillRef.current.style.setProperty('--progress-width', `${progress}%`);
-    }
-  }, [progress]);
-
-  return (
-    <div 
-      ref={fillRef}
-      className="bg-vendorsoluce-green h-2 rounded-full progress-width" 
-    />
-  );
-};
 
 const VendorSecurityAssessments: React.FC = () => {
   const { t } = useTranslation();
@@ -555,7 +538,7 @@ const VendorSecurityAssessments: React.FC = () => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mr-2">
-                              <ProgressBarFill progress={progress} />
+                              <ProgressBarFill percent={progress} fillClassName="fill-vendorsoluce-green" />
                             </div>
                             <span className="text-sm text-gray-900 dark:text-white font-medium">
                               {progress}%
