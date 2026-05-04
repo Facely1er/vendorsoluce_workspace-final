@@ -16,7 +16,7 @@ import WorkspacePageShell, { WORKSPACE_PAGE_BODY_GRID_CLASS } from '../../compon
 import PanelCard from '../../components/vendorsoluce-intelligence/PanelCard';
 import { ProgressBarFill } from '../../components/ui/ProgressBarFill';
 import { Link } from 'react-router-dom';
-import { WR } from 'shared/constants/routes';
+import { WR, MR } from 'shared/constants/routes';
 import { useAuth } from '../../context/AuthContext';
 import { useVendors } from '../../hooks/useVendors';
 import { useSupplyChainAssessments } from '../../hooks/useSupplyChainAssessments';
@@ -229,7 +229,7 @@ const UserDashboard: React.FC = () => {
                   </div>
                 </Link>
 
-                <a href="/templates" target="_blank" rel="noopener noreferrer">
+                <a href={MR.TEMPLATES} target="_blank" rel="noopener noreferrer">
                   <div className="rounded-xl border border-gray-200/70 p-4 transition-colors hover:border-vendorsoluce-green hover:bg-emerald-50/60 dark:border-gray-800 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/20">
                     <div className="flex items-center gap-3">
                       <ExternalLink className="h-6 w-6 text-vendorsoluce-green" />

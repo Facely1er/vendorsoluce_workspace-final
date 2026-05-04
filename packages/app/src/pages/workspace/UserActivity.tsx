@@ -48,7 +48,7 @@ const UserActivity: React.FC = () => {
         items.push({
           id: `assessment-done-${a.id}`,
           action: `Completed: ${a.assessment_name || 'Supply Chain Assessment'}`,
-          details: `NIST SP 800-161 assessment — score: ${a.score ?? 'N/A'}`,
+          details: `${a.framework || 'Assessment'} — score: ${a.overall_score ?? 'N/A'}`,
           timestamp: a.updated_at ?? a.created_at,
           type: 'assessment',
           status: 'success',
@@ -58,7 +58,7 @@ const UserActivity: React.FC = () => {
         items.push({
           id: `assessment-wip-${a.id}`,
           action: `In progress: ${a.assessment_name || 'Supply Chain Assessment'}`,
-          details: 'Assessment started but not yet submitted.',
+          details: `${a.framework || 'Assessment'} — started but not yet submitted.`,
           timestamp: a.updated_at ?? a.created_at,
           type: 'assessment',
           status: 'info',
