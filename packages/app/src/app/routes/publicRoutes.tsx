@@ -31,6 +31,7 @@ const MarketingAdminPage = lazyWithRetry(() => import('../../pages/admin/Marketi
 const CreateCampaignPage = lazyWithRetry(() => import('../../pages/admin/CreateCampaignPage'));
 const ConditionalDashboard = lazyWithRetry(() => import('../../components/dashboard/ConditionalDashboard'));
 const ConditionalVendorDashboard = lazyWithRetry(() => import('../../components/dashboard/ConditionalVendorDashboard'));
+const VendorReadinessPage = lazyWithRetry(() => import('../../pages/public/VendorReadinessPage'));
 const HomePage = lazyWithRetry(() => import('../../pages/public/HomePage'));
 
 function RouteWrapper({ children }: { children: React.ReactNode }) {
@@ -73,6 +74,7 @@ export function VendorAssessmentPortalRedirect() {
 export const publicRoutes = (
   <>
     <Route path={MR.HOME} element={<RouteWrapper><HomePage /></RouteWrapper>} />
+    <Route path="/vendor-readiness" element={<RouteWrapper><VendorReadinessPage /></RouteWrapper>} />
       <Route path={MR.DASHBOARD} element={<RouteWrapper><ConditionalDashboard /></RouteWrapper>} />
       <Route path={AR.RESET_PASSWORD} element={<RouteWrapper><ResetPasswordPage /></RouteWrapper>} />
       {/* Option A: marketing + legal live on the website deployment (www.vendorsoluce.com). */}
