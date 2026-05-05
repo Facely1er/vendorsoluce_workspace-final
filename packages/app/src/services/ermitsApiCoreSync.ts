@@ -1,16 +1,8 @@
 /**
  * Optional forward of vendor risk signals to ERMITS API Core (`POST /v1/vendors/risk-score`).
  *
- * Configure `VITE_ERMITS_API_BASE_URL` (e.g. https://ref.supabase.co/functions/v1/ermits-api) and
- * `VITE_ERMITS_API_KEY` only in trusted environments. Keys in Vite are visible in the client
- * bundle — for production multi-tenant SaaS, prefer a same-origin proxy or Edge Function that
- * holds the org-scoped secret server-side.
+ * Security: this call must be proxied server-side so no API key is shipped to the browser.
  */
-
-function env(name: string): string | undefined {
-  const v = import.meta.env[name as keyof ImportMetaEnv] as string | undefined;
-  return v?.trim() || undefined;
-}
 
 /** Derive API Core vendor payload from completed assessment score (higher score ⇒ stronger controls). */
 export function vendorAssessmentToErmitsPayload(
@@ -34,19 +26,13 @@ export async function syncVendorRiskAfterAssessmentComplete(
   row: { vendor_id: string | null },
   overallScore: number
 ): Promise<void> {
-  const base = env('VITE_ERMITS_API_BASE_URL');
-  const key = env('VITE_ERMITS_API_KEY');
-  if (!base || !key) return;
-
-  const url = `${base.replace(/\/$/, '')}/v1/vendors/risk-score`;
+  const url = new URL("/.netlify/functions/ermits-proxy", window.location.origin);
+  url.searchParams.set("path", "ermits-api/v1/vendors/risk-score");
   const payload = vendorAssessmentToErmitsPayload(row, overallScore);
 
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-ermits-api-key': key,
-    },
+  await fetch(url.toString(), {
+    method: "POST",
+    headers: { "content-type": "application/json" },
     body: JSON.stringify(payload),
   });
 }

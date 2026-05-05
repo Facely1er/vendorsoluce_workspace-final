@@ -2,6 +2,7 @@
 import {
   fetchErmitsRiskSession,
   getSessionIdFromUrl,
+  isErmitsSessionApiConfigured,
   persistSessionId,
   updateErmitsRiskSession,
   type ErmitsRiskSession,
@@ -35,6 +36,10 @@ const VendorReadinessPage: React.FC = () => {
 
   useEffect(() => {
     if (!sessionId) return;
+    if (!isErmitsSessionApiConfigured()) {
+      setError("ERMITS session proxy is not available.");
+      return;
+    }
     let cancelled = false;
     (async () => {
       setLoading(true);

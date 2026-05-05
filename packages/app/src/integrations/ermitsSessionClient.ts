@@ -7,6 +7,9 @@ export type ErmitsSessionSource =
   | "sectorintel"
   | "cybersoluce";
 
+/** Browser clients must not send `cybersoluce` on create/update (internal / server use only). */
+export type ErmitsClientSessionSource = Exclude<ErmitsSessionSource, "cybersoluce">;
+
 export type ErmitsRiskSessionContexts = {
   brief: Record<string, unknown>;
   privacy: Record<string, unknown>;
@@ -28,8 +31,11 @@ export type ErmitsRiskSession = {
   updatedAt: string;
 };
 
-export function getSessionIdFromUrl(): string | null {
-  return new URLSearchParams(window.location.search).get("session");
+export function getSessionIdFromUrl(search?: string): string | null {
+  const q = search !== undefined ? search : typeof window !== "undefined" ? window.location.search : "";
+  if (!q) return null;
+  const id = new URLSearchParams(q).get("session");
+  return id && id.trim() ? id.trim() : null;
 }
 
 export function persistSessionId(sessionId: string) {
@@ -46,25 +52,25 @@ export function getPersistedSessionId(): string | null {
   }
 }
 
+export function isErmitsSessionApiConfigured(): boolean {
+  // Configuration is server-side (Netlify function env). The browser cannot validate it safely.
+  return true;
+}
+
 export async function createErmitsRiskSession(input: {
-  source: ErmitsSessionSource;
+  source: ErmitsClientSessionSource;
   industry?: string;
   companySize?: string;
   region?: string;
   dataSensitivity?: string;
   dependencyLevel?: string;
 }) {
-  const apiUrl = import.meta.env.VITE_ERMIT_API_URL;
-  const apiKey = import.meta.env.VITE_ERMIT_API_KEY;
-
-  if (!apiUrl) throw new Error("Missing VITE_ERMIT_API_URL");
-  if (!apiKey) throw new Error("Missing VITE_ERMIT_API_KEY");
-
-  const res = await fetch(`${apiUrl.replace(/\/$/, "")}/risk-session`, {
+  const u = new URL("/.netlify/functions/ermits-proxy", window.location.origin);
+  u.searchParams.set("path", "risk-session");
+  const res = await fetch(u.toString(), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-ermits-api-key": apiKey,
     },
     body: JSON.stringify(input),
   });
@@ -79,20 +85,10 @@ export async function createErmitsRiskSession(input: {
 }
 
 export async function fetchErmitsRiskSession(sessionId: string) {
-  const apiUrl = import.meta.env.VITE_ERMIT_API_URL;
-  const apiKey = import.meta.env.VITE_ERMIT_API_KEY;
-
-  if (!apiUrl) throw new Error("Missing VITE_ERMIT_API_URL");
-  if (!apiKey) throw new Error("Missing VITE_ERMIT_API_KEY");
-
-  const res = await fetch(
-    `${apiUrl.replace(/\/$/, "")}/risk-session?sessionId=${encodeURIComponent(sessionId)}`,
-    {
-      headers: {
-        "x-ermits-api-key": apiKey,
-      },
-    },
-  );
+  const u = new URL("/.netlify/functions/ermits-proxy", window.location.origin);
+  u.searchParams.set("path", "risk-session");
+  u.searchParams.set("sessionId", sessionId);
+  const res = await fetch(u.toString(), { headers: { "Content-Type": "application/json" } });
 
   if (!res.ok) {
     throw new Error(`ERMITS session fetch failed: ${res.status} ${await res.text()}`);
@@ -103,20 +99,15 @@ export async function fetchErmitsRiskSession(sessionId: string) {
 
 export async function updateErmitsRiskSession(input: {
   sessionId: string;
-  source: ErmitsSessionSource;
+  source: ErmitsClientSessionSource;
   updates: Record<string, unknown>;
 }) {
-  const apiUrl = import.meta.env.VITE_ERMIT_API_URL;
-  const apiKey = import.meta.env.VITE_ERMIT_API_KEY;
-
-  if (!apiUrl) throw new Error("Missing VITE_ERMIT_API_URL");
-  if (!apiKey) throw new Error("Missing VITE_ERMIT_API_KEY");
-
-  const res = await fetch(`${apiUrl.replace(/\/$/, "")}/risk-session-update`, {
+  const u = new URL("/.netlify/functions/ermits-proxy", window.location.origin);
+  u.searchParams.set("path", "risk-session-update");
+  const res = await fetch(u.toString(), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-ermits-api-key": apiKey,
     },
     body: JSON.stringify(input),
   });
@@ -131,15 +122,10 @@ export async function updateErmitsRiskSession(input: {
 export type SectorRiskProfile = Record<string, unknown>;
 
 export async function fetchSectorRisk(industry: string): Promise<SectorRiskProfile> {
-  const apiUrl = import.meta.env.VITE_ERMIT_API_URL;
-  const apiKey = import.meta.env.VITE_ERMIT_API_KEY;
-  if (!apiUrl) throw new Error("Missing VITE_ERMIT_API_URL");
-  if (!apiKey) throw new Error("Missing VITE_ERMIT_API_KEY");
-  const u = new URL(`${apiUrl.replace(/\/$/, "")}/sector-risk`);
+  const u = new URL("/.netlify/functions/ermits-proxy", window.location.origin);
+  u.searchParams.set("path", "sector-risk");
   u.searchParams.set("industry", industry || "other");
-  const res = await fetch(u.toString(), {
-    headers: { "x-ermits-api-key": apiKey },
-  });
+  const res = await fetch(u.toString(), { headers: { "Content-Type": "application/json" } });
   if (!res.ok) {
     throw new Error(`Sector risk fetch failed: ${res.status} ${await res.text()}`);
   }
