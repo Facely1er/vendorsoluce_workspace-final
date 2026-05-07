@@ -249,20 +249,23 @@ html.dark button.bg-vendorsoluce-green:hover {
   color: #0f172a !important;
 }
 
-/* Active state must still react on hover; previous build froze active nav hover. */
+/* Active nav hover — align with components.css / index (stronger than base active tint). */
 nav a[title].active:hover,
 nav a[title][aria-current="page"]:hover,
 .nav-link.nav-link-active:hover,
 .nav-link.bg-vendorsoluce-green:hover {
-  background: rgb(var(--accent-rgb) / 0.14) !important;
+  background: rgb(var(--accent-rgb) / 0.16) !important;
+  color: var(--accent) !important;
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.24) !important;
 }
 
 html.dark nav a[title].active:hover,
 html.dark nav a[title][aria-current="page"]:hover,
 html.dark .nav-link.nav-link-active:hover,
 html.dark .nav-link.bg-vendorsoluce-green:hover {
-  background: rgb(var(--accent-2-rgb) / 0.20) !important;
+  background: rgb(var(--accent-2-rgb) / 0.2) !important;
   color: var(--accent-2) !important;
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-2-rgb) / 0.28) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════

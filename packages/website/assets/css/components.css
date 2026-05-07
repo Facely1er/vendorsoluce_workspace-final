@@ -221,21 +221,23 @@ html.dark nav a[title][aria-current="page"] {
   background: rgb(var(--accent-2-rgb) / 0.12) !important;
 }
 
-/* CRITICAL: Prevent ANY hover effects on active links */
+/* Active nav: keep selection visible; slightly stronger tint + ring on hover */
 .nav-link.nav-link-active:hover,
 .nav-link.bg-vendorsoluce-green:hover,
 nav a[title].active:hover,
 nav a[title][aria-current="page"]:hover {
-  background: rgb(var(--accent-rgb) / 0.08) !important;
+  background: rgb(var(--accent-rgb) / 0.16) !important;
   color: var(--accent) !important;
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.24) !important;
 }
 
 .dark .nav-link.nav-link-active:hover,
 .dark .nav-link.bg-vendorsoluce-green:hover,
 html.dark nav a[title].active:hover,
 html.dark nav a[title][aria-current="page"]:hover {
-  background: rgb(var(--accent-2-rgb) / 0.12) !important;
+  background: rgb(var(--accent-2-rgb) / 0.2) !important;
   color: var(--accent-2) !important;
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-2-rgb) / 0.28) !important;
 }
 
 /* Mobile navigation link styles - same rules */
@@ -278,14 +280,16 @@ html.dark .mobile-nav-link.bg-vendorsoluce-green {
 
 .mobile-nav-link.nav-link-active:hover,
 .mobile-nav-link.bg-vendorsoluce-green:hover {
-  background: rgb(var(--accent-rgb) / 0.08) !important;
+  background: rgb(var(--accent-rgb) / 0.16) !important;
   color: var(--accent) !important;
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.24) !important;
 }
 
 html.dark .mobile-nav-link.nav-link-active:hover,
 html.dark .mobile-nav-link.bg-vendorsoluce-green:hover {
-  background: rgb(var(--accent-2-rgb) / 0.12) !important;
+  background: rgb(var(--accent-2-rgb) / 0.2) !important;
   color: var(--accent-2) !important;
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-2-rgb) / 0.28) !important;
 }
 
 /* Ensure SVG icons inherit the text color */
