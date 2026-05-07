@@ -185,59 +185,61 @@ nav.glass-nav-vs[class*="fixed"] {
 }
 
 /* Navigation Link Styles - Polished hover and active states */
-/* Use minimal styles to avoid breaking Tailwind classes */
-.nav-link {
-  /* Let Tailwind handle display, padding, etc. */
+/* Scope to glass nav so inlined Tailwind layers cannot override hover on deploy builds */
+nav.glass-nav-vs .nav-link {
   position: relative;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 /* Hover effect ONLY for inactive links - only override color/background */
-.nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
+nav.glass-nav-vs .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
   color: var(--accent) !important;
   background-color: rgb(var(--accent-rgb) / 0.1) !important;
 }
 
-.dark .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
+.dark nav.glass-nav-vs .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover,
+html.dark nav.glass-nav-vs .nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover {
   color: var(--accent-2) !important;
   background-color: rgb(var(--accent-2-rgb) / 0.12) !important;
 }
 
 /* Active link styles - match index.html: subtle green tint, bold text */
-.nav-link.nav-link-active,
-.nav-link.bg-vendorsoluce-green,
-nav a[title].active,
-nav a[title][aria-current="page"] {
+nav.glass-nav-vs .nav-link.nav-link-active,
+nav.glass-nav-vs .nav-link.bg-vendorsoluce-green,
+nav.glass-nav-vs a.nav-link.active,
+nav.glass-nav-vs a.nav-link[aria-current="page"] {
   color: var(--accent) !important;
   background: rgb(var(--accent-rgb) / 0.08) !important;
   font-weight: 700 !important;
 }
 
-.dark .nav-link.nav-link-active,
-.dark .nav-link.bg-vendorsoluce-green,
-html.dark nav a[title].active,
-html.dark nav a[title][aria-current="page"] {
+.dark nav.glass-nav-vs .nav-link.nav-link-active,
+.dark nav.glass-nav-vs .nav-link.bg-vendorsoluce-green,
+html.dark nav.glass-nav-vs a.nav-link.active,
+html.dark nav.glass-nav-vs a.nav-link[aria-current="page"] {
   color: var(--accent-2) !important;
   background: rgb(var(--accent-2-rgb) / 0.12) !important;
 }
 
 /* Active nav: keep selection visible; slightly stronger tint + ring on hover */
-.nav-link.nav-link-active:hover,
-.nav-link.bg-vendorsoluce-green:hover,
-nav a[title].active:hover,
-nav a[title][aria-current="page"]:hover {
-  background: rgb(var(--accent-rgb) / 0.16) !important;
+nav.glass-nav-vs .nav-link.nav-link-active:hover,
+nav.glass-nav-vs .nav-link.bg-vendorsoluce-green:hover,
+nav.glass-nav-vs a.nav-link.active:hover,
+nav.glass-nav-vs a.nav-link[aria-current="page"]:hover {
+  background: rgb(var(--accent-rgb) / 0.18) !important;
   color: var(--accent) !important;
-  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.24) !important;
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.3) !important;
 }
 
-.dark .nav-link.nav-link-active:hover,
-.dark .nav-link.bg-vendorsoluce-green:hover,
-html.dark nav a[title].active:hover,
-html.dark nav a[title][aria-current="page"]:hover {
-  background: rgb(var(--accent-2-rgb) / 0.2) !important;
+.dark nav.glass-nav-vs .nav-link.nav-link-active:hover,
+.dark nav.glass-nav-vs .nav-link.bg-vendorsoluce-green:hover,
+html.dark nav.glass-nav-vs a.nav-link.active:hover,
+html.dark nav.glass-nav-vs a.nav-link[aria-current="page"]:hover {
+  background: rgb(var(--accent-2-rgb) / 0.22) !important;
   color: var(--accent-2) !important;
-  box-shadow: inset 0 0 0 1px rgb(var(--accent-2-rgb) / 0.28) !important;
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-2-rgb) / 0.35) !important;
 }
 
 /* Mobile navigation link styles - same rules */
@@ -293,7 +295,7 @@ html.dark .mobile-nav-link.bg-vendorsoluce-green:hover {
 }
 
 /* Ensure SVG icons inherit the text color */
-.nav-link svg,
+nav.glass-nav-vs .nav-link svg,
 .mobile-nav-link svg {
   color: currentColor;
 }

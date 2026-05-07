@@ -103,6 +103,11 @@
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
             if (!href) return;
+
+            // Skip brand/logo link (matches navigation.js)
+            if (link.closest('[data-tour="main-nav"]')) {
+                return;
+            }
             
             // Skip external links and anchor links
             if (href.startsWith('http://') || href.startsWith('https://') || href.startsWith('#')) {

@@ -119,14 +119,14 @@ nav [data-tour="main-nav"] a:focus{
   font-weight:inherit !important;
 }
 
-nav a[aria-current="page"][style*="pointer-events: none"],
-nav a[aria-current="page"].cursor-default{
+/* Disable interaction only when JS sets inline pointer-events (e.g. Vendor Radar).
+   Do not pair with .cursor-default — Tailwind's cursor-default utility must not imply no-hover. */
+nav a[aria-current="page"][style*="pointer-events: none"]{
   pointer-events:none !important;
   opacity:.9;
 }
 
-nav a[aria-current="page"][style*="pointer-events: none"]:hover,
-nav a[aria-current="page"].cursor-default:hover{
+nav a[aria-current="page"][style*="pointer-events: none"]:hover{
   transform:none !important;
   box-shadow:none !important;
 }
