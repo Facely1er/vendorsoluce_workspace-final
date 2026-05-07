@@ -480,16 +480,20 @@ nav.glass-nav-vs a.nav-link.active:hover,
 nav.glass-nav-vs a.nav-link[aria-current="page"]:hover,
 nav.glass-nav-vs a.nav-link.nav-link-active:focus-visible,
 nav.glass-nav-vs a.nav-link[aria-current="page"]:focus-visible {
-  background: rgb(var(--accent-rgb) / 0.22) !important;
-  color: var(--accent) !important;
-  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.35) !important;
+  background-color: rgba(51, 105, 30, 0.28) !important;
+  background-color: rgb(var(--accent-rgb) / 0.28) !important;
+  color: var(--accent, #33691e) !important;
+  box-shadow: inset 0 0 0 2px rgba(51, 105, 30, 0.45) !important;
+  box-shadow: inset 0 0 0 2px rgb(var(--accent-rgb) / 0.45) !important;
 }
 html.dark nav.glass-nav-vs a.nav-link.nav-link-active:hover,
 html.dark nav.glass-nav-vs a.nav-link.active:hover,
 html.dark nav.glass-nav-vs a.nav-link[aria-current="page"]:hover,
 html.dark nav.glass-nav-vs a.nav-link.nav-link-active:focus-visible,
 html.dark nav.glass-nav-vs a.nav-link[aria-current="page"]:focus-visible {
-  background: rgb(var(--accent-2-rgb) / 0.26) !important;
-  color: var(--accent-2) !important;
-  box-shadow: inset 0 0 0 1px rgb(var(--accent-2-rgb) / 0.4) !important;
+  background-color: rgba(102, 187, 106, 0.34) !important;
+  background-color: rgb(var(--accent-2-rgb) / 0.34) !important;
+  color: var(--accent-2, #81c784) !important;
+  box-shadow: inset 0 0 0 2px rgba(129, 199, 132, 0.55) !important;
+  box-shadow: inset 0 0 0 2px rgb(var(--accent-2-rgb) / 0.55) !important;
 }

@@ -191,6 +191,13 @@ nav.glass-nav-vs .nav-link {
   transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
   pointer-events: auto;
   cursor: pointer;
+  /* Avoid Tailwind text-gray-700 / dark:text-white on the anchor — deploy/minify order
+     can block :hover overrides; label colors live here only. */
+  color: #374151;
+}
+html.dark nav.glass-nav-vs .nav-link,
+.dark nav.glass-nav-vs .nav-link {
+  color: #f9fafb;
 }
 
 /* Hover effect ONLY for inactive links - only override color/background */

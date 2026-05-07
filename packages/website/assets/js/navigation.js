@@ -234,7 +234,10 @@
      * Marks the current page's navigation link as active
      */
     function setActiveNavLink() {
-        const currentPath = window.location.pathname;
+        let currentPath = window.location.pathname || '/';
+        if (currentPath.length > 1 && currentPath.endsWith('/')) {
+            currentPath = currentPath.slice(0, -1);
+        }
         const pathSegments = currentPath.split('/').filter(Boolean);
         const currentFile = pathSegments.length ? pathSegments[pathSegments.length - 1] : 'index.html';
         const normalizedCurrentFile = currentFile.split('?')[0].split('#')[0];
@@ -275,8 +278,11 @@
                 }
             }
             
-            // Extract filename from href
-            let linkFile = href.replace(/^\.\.?\//, '').split('/').pop() || '';
+            // Extract filename from href (handles index.html, ./index.html, clean URLs)
+            let hrefPath = href.replace(/^\.\.?\//, '').split('?')[0].split('#')[0];
+            const hrefParts = hrefPath.split('/').filter(Boolean);
+            let linkFile = hrefParts.length ? hrefParts[hrefParts.length - 1] : '';
+            if (!linkFile) linkFile = 'index.html';
             linkFile = linkFile.split('?')[0].split('#')[0];
             // Normalize for comparison: strip .html so /how-it-works matches link /how-it-works.html
             const currentBase = (normalizedCurrentFile.replace(/\.html$/i, '') || 'index');
@@ -319,6 +325,9 @@
             setActiveNavLink();
             updateBreadcrumbHeight();
             window.addEventListener('resize', updateBreadcrumbHeight);
+            window.addEventListener('load', function() {
+                setActiveNavLink();
+            });
         }
         // Always wait for full DOM so mobile menu panel (often after script) exists
         if (document.readyState === 'loading') {
