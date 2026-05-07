@@ -15,7 +15,7 @@ This monorepo is set up for **two separate Netlify sites**: one for the **market
 | **Repository** | This repo (same as app) |
 | **Base directory** | `packages/website` |
 | **Config file path** | `packages/website/netlify.toml` |
-| **Build command** | *(from config)* `npm run build` |
+| **Build command** | *(from config)* root `npm ci`, then `npm run build -w vendorsoluce-static` (see `packages/website/netlify.toml`) |
 | **Publish directory** | *(from config)* `.` (i.e. `packages/website`) |
 | **Branch** | `main` (or your production branch) |
 
@@ -76,7 +76,7 @@ From the repo root:
 |--|--------|-----|
 | Base directory | `packages/website` | *(empty)* |
 | Config | `packages/website/netlify.toml` | Root `netlify.toml` |
-| Build | `npm run build` (Tailwind in package) | `npm run build:app` (Turbo) |
+| Build | Root `npm ci` + `npm run build -w vendorsoluce-static` | `npm run build:app` (Turbo) |
 | Publish | `.` (website package) | `packages/app/dist` |
 | Env vars | Optional | Optional (Supabase, Stripe, etc.) |
 
@@ -87,6 +87,6 @@ After deployment, point your domains in Netlify (e.g. `vendorsoluce.com` / `www.
 ## Troubleshooting
 
 - **"Failed to parse configuration"** – Netlify could not read `netlify.toml`. Ensure the file uses valid TOML (no inline `environment = { ... }`; use a `[build.environment]` section instead). Both configs in this repo use that format.
-- **Website build fails** – Confirm **Base directory** is `packages/website` and **Config file path** is `packages/website/netlify.toml`. The build runs `npm run build` inside that package (Tailwind). If install fails (e.g. missing deps), ensure `packages/website` has a `package-lock.json` or try clearing Netlify build cache.
+- **Website build fails** – Confirm **Base directory** is `packages/website` and **Config file path** is `packages/website/netlify.toml`. The build script changes to the repo root, runs `npm ci` (uses the **root** `package-lock.json`), then `npm run build -w vendorsoluce-static`. If install still fails, clear the Netlify build cache and redeploy.
 - **App build fails** – Confirm Base directory is **empty** (repo root). Root `netlify.toml` is used. Add env vars (e.g. `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) in Netlify → Site → Environment variables if you use auth.
 - **Wrong site deploys** – For the **website** site you must set Config file path to `packages/website/netlify.toml`; otherwise Netlify uses the root `netlify.toml` (app config) and will build the app instead.

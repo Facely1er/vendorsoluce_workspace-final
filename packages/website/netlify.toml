@@ -1,10 +1,17 @@
 # Marketing website (packages/website) — see docs/archive/repo-root-notes/NETLIFY.md
 #
+# Netlify UI: Base directory MUST be `packages/website` so `publish = "."` is this folder.
+# Install + build run from the monorepo root so `npm ci` sees the root package-lock and
+# the `file:../shared` workspace link resolves (same pattern as local `npm run build -w vendorsoluce-static`).
+#
 # Canonical URL: https://www.vendorsoluce.com
 # In Netlify → Domain management: set the primary custom domain to www.vendorsoluce.com
 # so apex (vendorsoluce.com) only redirects one way. _redirects sends apex → www; if
 # Netlify also redirects www → apex, browsers hit a redirect loop.
 
+[build.environment]
+  NODE_VERSION = "22"
+
 [build]
-  command = "npm run build"
+  command = "cd ../.. && npm ci --include=dev --no-audit && npm run build -w vendorsoluce-static"
   publish = "."

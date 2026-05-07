@@ -2,6 +2,9 @@
   "name": "vendorsoluce-static",
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "build": "npm run verify:ui && node scripts/generate-route-manifest.mjs && node embed-header-footer.js && npm run build:css",
     "build:css": "node ./scripts/run-tailwind.mjs -i ./src/tailwind.css -o ./assets/css/tailwind.css --minify",
