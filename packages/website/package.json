@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "node embed-header-footer.js",
+    "build": "npm run verify:ui && node scripts/generate-route-manifest.mjs && node embed-header-footer.js && npm run build:css",
     "build:css": "node ./scripts/run-tailwind.mjs -i ./src/tailwind.css -o ./assets/css/tailwind.css --minify",
     "watch:css": "node ./scripts/run-tailwind.mjs -i ./src/tailwind.css -o ./assets/css/tailwind.css --watch",
     "serve": "npx http-server . -p 8080 -c-1 --cors",
@@ -14,15 +14,16 @@
     "verify:chrome": "node scripts/verify-chrome.js",
     "verify:seo": "node scripts/audit-static-seo.mjs",
     "normalize:seo": "node scripts/normalize-static-seo.mjs",
-    "verify": "npm run verify:links && npm run verify:platform-links && npm run verify:seo",
+    "verify": "npm run verify:ui && npm run verify:radar && npm run verify:report && npm run verify:links && npm run verify:platform-links && npm run verify:chrome && npm run verify:seo && npm run verify:routes",
     "dev": "npx http-server . -p 8081 -c-1 --cors -o",
     "dev:only": "npx http-server . -p 8081 -c-1 --cors -o",
     "verify:routes": "node scripts/generate-route-manifest.mjs",
-    "verify:ui": "node -e \"console.log('verify:ui skipped for standalone website package')\""
+    "verify:ui": "node ../shared/scripts/verify-ui-tokens.mjs && node ../shared/scripts/verify-ui-inline.mjs && node ../shared/scripts/verify-static-radar-design.mjs && node ../shared/scripts/verify-website-tokens-css.mjs && node ../shared/scripts/verify-website-html-loads-tokens.mjs"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.18",
     "postcss": "^8.4.35",
+    "shared": "file:../shared",
     "tailwindcss": "^3.4.1"
   }
 }

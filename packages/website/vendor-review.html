@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="index, follow">
   <title>Vendor Review — VendorSoluce&trade; | ERMITS</title>
-  <meta name="description" content="VendorSoluce Vendor Review: enter your vendor data to generate an interactive Vendor Risk Radar, visualize portfolio exposure by criticality and threat signals, and export PDF or CSV reports — all in your browser, no account required." />
+  <meta name="description" content="VendorSoluce Vendor Review: complete a browser-based vendor review with local scoring, priority queue, recommendations, and export-ready evidence — no account or workspace dependency required." />
   <link href="assets/css/tailwind.css" rel="stylesheet"/>
   <link href="assets/css/tokens.css" rel="stylesheet"/>
   <link href="assets/css/components.css" rel="stylesheet"/>
@@ -24,13 +24,17 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ERMITS">
 <meta property="og:title" content="Vendor Review — VendorSoluce&trade; | ERMITS">
-<meta property="og:description" content="VendorSoluce Vendor Review: prioritize by inherent exposure and criticality (local exposure report), add external threat context (Vendor Risk Radar), then move to assessments, VIRA methodology, or the assurance portal when procurement is ready.">
+<meta property="og:description" content="VendorSoluce Vendor Review: complete a browser-based vendor review with local scoring, priority queue, recommendations, and export-ready evidence without app sign-in or workspace handoff.">
 
 <meta name="twitter:title" content="Vendor Review — VendorSoluce&trade; | ERMITS">
-<meta name="twitter:description" content="VendorSoluce Vendor Review: prioritize by inherent exposure and criticality (local exposure report), add external threat context (Vendor Risk Radar), then move to assessments, VIRA methodology, or the assurance portal when procurement is ready.">
+<meta name="twitter:description" content="VendorSoluce Vendor Review: complete a browser-based vendor review with local scoring, priority queue, recommendations, and export-ready evidence without app sign-in or workspace handoff.">
 
 <meta name="twitter:card" content="summary">
   <link href="assets/css/shell.css" rel="stylesheet"/>
+<style id="vendor-review-workflow-styles">
+  .vs-review-step{display:inline-flex;align-items:center;justify-content:center;width:1.75rem;height:1.75rem;border-radius:9999px;background:rgba(51,105,30,.14);color:#33691e;font-weight:800;flex:0 0 auto}.dark .vs-review-step{background:rgba(139,195,74,.18);color:#c5e1a5}.vs-review-field{display:flex;flex-direction:column;gap:.4rem}.vs-review-field span{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#475569}.dark .vs-review-field span{color:#cbd5e1}.vs-review-field input,.vs-review-field select,.vs-review-field textarea{width:100%;border:1px solid #d1d5db;border-radius:.75rem;background:#fff;color:#111827;padding:.72rem .85rem;font-size:.875rem;outline:0;transition:border-color .18s ease,box-shadow .18s ease,background-color .18s ease}.dark .vs-review-field input,.dark .vs-review-field select,.dark .vs-review-field textarea{background:#111827;color:#f9fafb;border-color:#374151}.vs-review-field input:focus,.vs-review-field select:focus,.vs-review-field textarea:focus{border-color:#33691e;box-shadow:0 0 0 3px rgba(51,105,30,.16)}.vs-review-secondary,.vs-review-danger,.vs-review-secondary-small{display:inline-flex;align-items:center;justify-content:center;border-radius:.75rem;border:1px solid #d1d5db;background:#fff;color:#1f2937;font-weight:700;transition:all .18s ease}.vs-review-secondary,.vs-review-danger{padding:.72rem .95rem;font-size:.875rem}.vs-review-secondary-small{padding:.55rem .75rem;font-size:.75rem}.dark .vs-review-secondary,.dark .vs-review-secondary-small{background:#111827;color:#f9fafb;border-color:#374151}.vs-review-secondary:hover,.vs-review-secondary-small:hover{border-color:#33691e;color:#33691e}.dark .vs-review-secondary:hover,.dark .vs-review-secondary-small:hover{color:#c5e1a5;border-color:#8bc34a}.vs-review-danger{border-color:#fecaca;background:#fff;color:#991b1b}.dark .vs-review-danger{border-color:#7f1d1d;background:#111827;color:#fecaca}.vs-review-danger:hover{background:#fee2e2}.dark .vs-review-danger:hover{background:#450a0a}.vs-review-metric{border:1px solid #e5e7eb;background:#fff;border-radius:1rem;padding:1rem;box-shadow:0 6px 22px rgba(15,23,42,.06)}.dark .vs-review-metric{border-color:#374151;background:#111827}.vs-review-metric span{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.045em;font-weight:800;color:#64748b}.dark .vs-review-metric span{color:#94a3b8}.vs-review-metric strong{display:block;margin-top:.35rem;font-size:1.8rem;line-height:1;font-weight:900;color:#111827}.dark .vs-review-metric strong{color:#fff}.vs-review-metric em{display:block;margin-top:.35rem;font-size:.75rem;font-style:normal;color:#64748b}.dark .vs-review-metric em{color:#94a3b8}.vs-vendor-row{border:1px solid #e5e7eb;background:#fff;border-radius:1rem;padding:1rem}.dark .vs-vendor-row{border-color:#374151;background:#111827}.vs-tier{display:inline-flex;align-items:center;border-radius:9999px;padding:.25rem .55rem;font-size:.72rem;font-weight:800}.vs-tier-critical{background:#fee2e2;color:#991b1b}.vs-tier-high{background:#ffedd5;color:#9a3412}.vs-tier-moderate{background:#fef9c3;color:#854d0e}.vs-tier-low{background:#dcfce7;color:#166534}.dark .vs-tier-critical{background:#7f1d1d;color:#fecaca}.dark .vs-tier-high{background:#7c2d12;color:#fed7aa}.dark .vs-tier-moderate{background:#713f12;color:#fef08a}.dark .vs-tier-low{background:#14532d;color:#bbf7d0}.vs-review-check{display:inline-flex;align-items:center;justify-content:center;width:1.35rem;height:1.35rem;border-radius:9999px;background:rgba(51,105,30,.14);color:#33691e;font-size:.8rem;font-weight:900;flex:0 0 auto}.dark .vs-review-check{background:rgba(139,195,74,.18);color:#c5e1a5}@media print{nav,footer,.vs-review-secondary,.vs-review-danger,.vs-review-secondary-small,#vendor-review-form,#empty-state{display:none!important}main{padding-top:0!important;background:#fff!important}.vs-card,.vs-review-metric,.vs-vendor-row{box-shadow:none!important;border-color:#cbd5e1!important}.dark *{color:#111827!important;background:#fff!important}}
+</style>
+
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
   <!-- CANONICAL HEADER — Nav below; mobile drawer fragment: includes/mobile-menu-panel.html (npm run sync:mobile-menu). JS: assets/js/navigation.js -->
@@ -258,7 +262,7 @@
       </div>
     </div>
   </div>
-</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 pt-[var(--nav-height,64px)] bg-gray-100 dark:bg-gray-900">
+</div><script src="assets/js/navigation.js"></script><script data-vs-theme-toggle src="assets/js/theme.js"></script><main class="flex-1 pt-[var(--nav-height,64px)] bg-gray-100 dark:bg-gray-800/70">
     <!-- Breadcrumb Navigation -->
     <nav aria-label="Breadcrumb" class="sticky top-[var(--nav-height,64px)] z-40 w-full min-h-10 flex items-center text-sm border-b border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm px-6 sm:px-8 lg:px-12" data-breadcrumb="true">
       <div class="max-w-7xl mx-auto w-full flex items-center">
@@ -284,120 +288,128 @@
       </div>
     </nav>
 
-    <!-- Page intro — matches Features / Trust: max-w-7xl, text-4xl md:text-5xl h1 -->
-    <section class="pt-12 md:pt-16 pb-6 md:pb-8 px-6 sm:px-8 lg:px-12 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900" aria-labelledby="vendor-review-heading">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center">
-          <h1 id="vendor-review-heading" class="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white leading-tight">
-            <span class="block">Know which vendors</span>
-            <span class="block text-vendorsoluce-green dark:text-vendorsoluce-light-green">deserve attention first</span>
+    <!-- Page intro — self-contained browser workflow -->
+    <section class="px-6 sm:px-8 lg:px-12 pt-8 sm:pt-10 pb-8 lg:pb-10 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900" aria-labelledby="vendor-review-heading">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_.95fr] gap-8 lg:gap-12 items-center">
+        <div class="text-center lg:text-left">
+          <p class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-3">Browser-based vendor review</p>
+          <h1 id="vendor-review-heading" class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
+            <span class="block">Complete a vendor review</span>
+            <span class="block text-vendorsoluce-green dark:text-vendorsoluce-light-green">without leaving this page</span>
           </h1>
-          <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">Enter your vendor portfolio data to generate an interactive <span class="font-semibold text-gray-900 dark:text-white">Vendor Risk Radar</span>.</p>
-          <p class="mt-3 text-base text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">Runs in your browser. No account required to launch the radar from the card below.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Vendor Risk Radar — pre-onboarding: set expectations before the tool page -->
-    <section class="pt-6 md:pt-8 pb-8 md:pb-10 px-6 sm:px-8 lg:px-12 bg-gray-50 dark:bg-gray-900" aria-labelledby="radar-heading">
-      <div class="max-w-7xl mx-auto">
-        <article id="vendor-risk-radar" class="vs-card rounded-xl shadow-lg overflow-hidden">
-          <div class="grid grid-cols-1 lg:grid-cols-12 lg:min-h-0">
-            <div class="lg:col-span-8 flex flex-col items-center text-center lg:items-start lg:text-left p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-700">
-              <p class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Before the radar opens</p>
-              <h2 id="radar-heading" class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white leading-tight max-w-2xl lg:max-w-none">Vendor Risk Radar</h2>
-              <p class="mt-3 text-base text-gray-700 dark:text-gray-300 leading-relaxed max-w-2xl">The next page is the tool: add vendors, see exposure and threat context on an interactive map, then export a PDF or CSV if you want a shareable copy. Your work stays in this browser until you choose otherwise.</p>
-
-              <ol class="mt-8 grid w-full max-w-2xl lg:max-w-none grid-cols-1 sm:grid-cols-3 gap-4 text-left" aria-label="What happens first on the radar page">
-                <li class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-                  <span class="text-lg font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green">1</span>
-                  <p class="mt-1 text-sm font-semibold text-gray-900 dark:text-white">Land on the tool</p>
-                  <p class="mt-1 text-xs text-gray-600 dark:text-gray-400 leading-snug">No sign-up required to start exploring.</p>
-                </li>
-                <li class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-                  <span class="text-lg font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green">2</span>
-                  <p class="mt-1 text-sm font-semibold text-gray-900 dark:text-white">Add vendors</p>
-                  <p class="mt-1 text-xs text-gray-600 dark:text-gray-400 leading-snug">A few rows is enough to see the radar move.</p>
-                </li>
-                <li class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-                  <span class="text-lg font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green">3</span>
-                  <p class="mt-1 text-sm font-semibold text-gray-900 dark:text-white">Review &amp; export</p>
-                  <p class="mt-1 text-xs text-gray-600 dark:text-gray-400 leading-snug">Escalate what matters; export when ready.</p>
-                </li>
-              </ol>
-
-              <div class="mt-10 w-full max-w-md flex flex-col items-center lg:items-stretch gap-2">
-                <a href="/radar/vendor-threat-radar.html?from=vendor-review" class="vs-btn-primary group text-sm w-full justify-center px-6 py-3.5">
-                  Continue to Vendor Risk Radar
-                  <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
-                <p class="text-center lg:text-left text-xs text-gray-500 dark:text-gray-400">Opens the browser-based radar in this window. You can return here anytime.</p>
-              </div>
-            </div>
-            <aside class="lg:col-span-4 flex flex-col justify-center gap-5 px-6 py-8 md:px-8 lg:py-10 bg-gray-50 dark:bg-gray-900 border-t lg:border-t-0 lg:border-l border-gray-200 dark:border-gray-700" aria-label="On the next screen">
-              <p class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 text-center lg:text-left">On the next screen</p>
-              <ul class="space-y-4 text-sm text-gray-700 dark:text-gray-300">
-                <li class="flex gap-3">
-                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-xs font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green" aria-hidden="true">A</span>
-                  <span><strong class="text-gray-900 dark:text-white">Toolbar first.</strong> Add or import vendors from the controls at the top of the radar page.</span>
-                </li>
-                <li class="flex gap-3">
-                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-xs font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green" aria-hidden="true">B</span>
-                  <span><strong class="text-gray-900 dark:text-white">Map updates live.</strong> Criticality, data access, and threat overlays build the picture as you edit.</span>
-                </li>
-                <li class="flex gap-3">
-                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-vendorsoluce-green/15 text-xs font-bold text-vendorsoluce-green dark:text-vendorsoluce-light-green" aria-hidden="true">C</span>
-                  <span><strong class="text-gray-900 dark:text-white">Export is optional.</strong> PDF or CSV when you need a snapshot for others.</span>
-                </li>
-              </ul>
-              <p class="text-center lg:text-left text-xs text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-600 pt-4">Browser-based &middot; No VendorSoluce account required for this radar</p>
-            </aside>
+          <p class="mt-4 text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">Add vendors, score inherent exposure, identify priority relationships, generate recommendations, and export a local report. No app sign-in, no workspace handoff, no backend dependency.</p>
+          <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+            <a href="#review-workflow" class="vs-btn-primary justify-center">Start vendor review</a>
+            <button type="button" id="vs-load-demo-top" class="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-5 py-3 text-sm font-semibold text-gray-800 dark:text-gray-100 hover:border-vendorsoluce-green hover:text-vendorsoluce-green dark:hover:text-vendorsoluce-light-green transition-colors">Load sample portfolio</button>
           </div>
-        </article>
+        </div>
+        <aside class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/70 p-6 shadow-sm" aria-label="Workflow coverage">
+          <h2 class="text-lg font-bold text-gray-900 dark:text-white">Workflow coverage</h2>
+          <ol class="mt-4 space-y-3 text-sm text-gray-700 dark:text-gray-300">
+            <li class="flex gap-3"><span class="vs-review-step">1</span><span><strong class="text-gray-900 dark:text-white">Capture vendor profile</strong><br>Criticality, data access, dependency, concentration, security posture, and contract status.</span></li>
+            <li class="flex gap-3"><span class="vs-review-step">2</span><span><strong class="text-gray-900 dark:text-white">Score and prioritize</strong><br>Produces a portfolio risk score, tier, and vendor-by-vendor priority queue.</span></li>
+            <li class="flex gap-3"><span class="vs-review-step">3</span><span><strong class="text-gray-900 dark:text-white">Generate actions</strong><br>Immediate triage, 30-day remediation, and monitoring actions based on the data entered.</span></li>
+            <li class="flex gap-3"><span class="vs-review-step">4</span><span><strong class="text-gray-900 dark:text-white">Export evidence</strong><br>CSV, JSON, and printable report export are handled locally in the browser.</span></li>
+          </ol>
+        </aside>
       </div>
     </section>
 
-    <!-- After the radar: three-column paths (single CTA set—no duplicate actions strip) -->
-    <section id="workspace" class="pt-8 pb-12 md:pb-16 px-6 sm:px-8 lg:px-12 bg-gray-100/80 dark:bg-gray-900 backdrop-blur-sm" aria-labelledby="workspace-heading">
+    <section id="review-workflow" class="px-6 sm:px-8 lg:px-12 py-8 lg:py-10 bg-gray-50 dark:bg-gray-900/80" aria-labelledby="workflow-heading">
       <div class="max-w-7xl mx-auto">
-        <header class="text-center mb-8 md:mb-10 max-w-3xl mx-auto">
-          <h2 id="workspace-heading" class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white leading-tight">After the radar: assessments, saved work, and vendors</h2>
-          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Pick the path that matches where you are in the workflow—each option opens in the right surface.</p>
+        <header class="mb-6 lg:mb-8">
+          <h2 id="workflow-heading" class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Vendor Review Workspace</h2>
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300 max-w-3xl">This page now contains the full minimum viable workflow. Data is stored only in this browser session unless you export or clear it.</p>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
-          <article class="vs-card vs-step-card rounded-xl p-6 flex flex-col h-full text-center md:text-left">
-            <p class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Assess</p>
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Baseline assessment</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex-1">When one relationship needs structured scoring beyond the radar snapshot, run the free baseline assessment—still no account.</p>
-            <a href="/assessment/index.html" class="mt-5 inline-flex items-center justify-center gap-1.5 text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">
-              Open free assessment
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
-          </article>
-          <article class="vs-card vs-step-card rounded-xl p-6 flex flex-col h-full text-center md:text-left ring-1 ring-vendorsoluce-green/25 dark:ring-vendorsoluce-green/20">
-            <p class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Workspace</p>
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">VendorSoluce app</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex-1">Portfolio history, saved radar sessions, and team collaboration live in the app—same radar logic, with sign-in.</p>
-            <a href="https://app.vendorsoluce.com/vendor-risk-radar?from=vendor-review&amp;utm_source=vendorsoluce&amp;utm_medium=website&amp;utm_campaign=vendor-review" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center justify-center gap-1.5 text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">
-              Open in VendorSoluce app
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
-          </article>
-          <article class="vs-card vs-step-card rounded-xl p-6 flex flex-col h-full text-center md:text-left">
-            <p class="text-xs font-bold uppercase tracking-wider text-vendorsoluce-green dark:text-vendorsoluce-light-green mb-2">Vendors</p>
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Portal &amp; demos</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex-1">Vendor-facing questionnaires and evidence exchange run in the Vendor Assurance Portal. <a href="/contact.html" class="font-medium text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">Contact us</a> for a demo.</p>
-            <a href="https://portal.vendorsoluce.com/?utm_source=vendorsoluce&amp;utm_medium=website&amp;utm_campaign=vendor-review" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center justify-center gap-1.5 text-sm font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green hover:underline">
-              Vendor Assurance Portal
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
-          </article>
+        <div class="grid grid-cols-1 xl:grid-cols-[420px_minmax(0,1fr)] gap-6 lg:gap-8 items-start">
+          <form id="vendor-review-form" class="vs-card rounded-2xl p-5 md:p-6 shadow-lg" autocomplete="off">
+            <div class="flex items-start justify-between gap-4 mb-5">
+              <div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Add / update vendor</h3>
+                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Use practical business inputs; the score updates after each save.</p>
+              </div>
+              <span class="rounded-full bg-vendorsoluce-green/10 dark:bg-vendorsoluce-green/20 px-3 py-1 text-xs font-semibold text-vendorsoluce-green dark:text-vendorsoluce-light-green">Local</span>
+            </div>
+
+            <input type="hidden" id="vendor-id" />
+            <div class="space-y-4">
+              <label class="vs-review-field"><span>Vendor name</span><input id="vendor-name" required type="text" placeholder="Example: CloudCore Hosting" /></label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <label class="vs-review-field"><span>Service category</span><select id="vendor-category"><option>Cloud / Infrastructure</option><option>Security</option><option>Payments / Finance</option><option>HR / Workforce</option><option>Legal / Compliance</option><option>Operations / Logistics</option><option>Software / SaaS</option><option>Other</option></select></label>
+                <label class="vs-review-field"><span>Region</span><select id="vendor-region"><option>United States</option><option>Canada</option><option>Europe</option><option>United Kingdom</option><option>Latin America</option><option>Africa</option><option>Asia-Pacific</option><option>Global / Multi-region</option></select></label>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <label class="vs-review-field"><span>Business criticality</span><select id="criticality"><option value="1">Low</option><option value="2">Moderate</option><option value="3">High</option><option value="4">Critical</option></select></label>
+                <label class="vs-review-field"><span>Data access</span><select id="data-access"><option value="1">No sensitive data</option><option value="2">Business data</option><option value="3">Personal / regulated data</option><option value="4">Sensitive / privileged access</option></select></label>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <label class="vs-review-field"><span>Operational dependency</span><select id="dependency"><option value="1">Low</option><option value="2">Moderate</option><option value="3">High</option><option value="4">Single point of failure</option></select></label>
+                <label class="vs-review-field"><span>Concentration exposure</span><select id="concentration"><option value="1">Easy substitute</option><option value="2">Some alternatives</option><option value="3">Limited alternatives</option><option value="4">No practical alternative</option></select></label>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <label class="vs-review-field"><span>Security posture known?</span><select id="security-posture"><option value="1">Validated / current evidence</option><option value="2">Partially validated</option><option value="3">Outdated or incomplete</option><option value="4">Unknown</option></select></label>
+                <label class="vs-review-field"><span>Contract controls</span><select id="contract-controls"><option value="1">Strong clauses + SLA</option><option value="2">Basic clauses</option><option value="3">Weak clauses</option><option value="4">No clear controls</option></select></label>
+              </div>
+              <label class="vs-review-field"><span>Notes / known issue</span><textarea id="vendor-notes" rows="3" placeholder="Known dependency, incident, missing evidence, renewal date, etc."></textarea></label>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button type="submit" class="vs-btn-primary justify-center">Save vendor</button>
+              <button type="button" id="reset-form" class="vs-review-secondary">Clear form</button>
+            </div>
+            <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button type="button" id="load-demo" class="vs-review-secondary">Load sample vendors</button>
+              <button type="button" id="clear-all" class="vs-review-danger">Clear all</button>
+            </div>
+          </form>
+
+          <div class="space-y-6">
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" aria-label="Review summary">
+              <article class="vs-review-metric"><span>Portfolio score</span><strong id="portfolio-score">0</strong><em id="portfolio-tier">No data</em></article>
+              <article class="vs-review-metric"><span>Vendors reviewed</span><strong id="vendor-count">0</strong><em>Saved locally</em></article>
+              <article class="vs-review-metric"><span>High priority</span><strong id="high-priority-count">0</strong><em>Needs action</em></article>
+              <article class="vs-review-metric"><span>Evidence gaps</span><strong id="evidence-gap-count">0</strong><em>Unknown / weak posture</em></article>
+            </section>
+
+            <section class="vs-card rounded-2xl p-5 md:p-6 shadow-lg" aria-labelledby="results-heading">
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+                <div>
+                  <h3 id="results-heading" class="text-lg font-bold text-gray-900 dark:text-white">Priority queue</h3>
+                  <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Highest scoring vendors appear first. Edit any row to refine the review.</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button type="button" id="export-csv" class="vs-review-secondary-small">Export CSV</button>
+                  <button type="button" id="export-json" class="vs-review-secondary-small">Export JSON</button>
+                  <button type="button" id="print-report" class="vs-review-secondary-small">Print report</button>
+                </div>
+              </div>
+              <div id="vendor-list" class="space-y-3"></div>
+              <div id="empty-state" class="rounded-xl border border-dashed border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800/60 p-8 text-center">
+                <h4 class="text-base font-bold text-gray-900 dark:text-white">No vendors added yet</h4>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Add one vendor manually or load the sample portfolio to validate the workflow.</p>
+              </div>
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <article class="vs-card rounded-2xl p-5 md:p-6 shadow-lg" aria-labelledby="actions-heading">
+                <h3 id="actions-heading" class="text-lg font-bold text-gray-900 dark:text-white">Recommended action plan</h3>
+                <div id="action-plan" class="mt-4 space-y-3 text-sm text-gray-700 dark:text-gray-300"></div>
+              </article>
+              <article class="vs-card rounded-2xl p-5 md:p-6 shadow-lg" aria-labelledby="governance-heading">
+                <h3 id="governance-heading" class="text-lg font-bold text-gray-900 dark:text-white">Governance checks completed</h3>
+                <ul class="mt-4 space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                  <li class="flex gap-3"><span class="vs-review-check">✓</span><span>Inherent vendor exposure captured using business-criticality and dependency signals.</span></li>
+                  <li class="flex gap-3"><span class="vs-review-check">✓</span><span>Data access and security evidence gaps included in the priority score.</span></li>
+                  <li class="flex gap-3"><span class="vs-review-check">✓</span><span>Review output can be exported for procurement, risk, compliance, or executive follow-up.</span></li>
+                  <li class="flex gap-3"><span class="vs-review-check">✓</span><span>No application, workspace, account, or remote API is required for this workflow.</span></li>
+                </ul>
+              </article>
+            </section>
+          </div>
         </div>
-        <p class="mt-8 md:mt-10 text-center text-xs text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Sign-in is required in the app for saved radar sessions and shared work.</p>
       </div>
     </section>
-
   </main>
   <!-- CANONICAL FOOTER TEMPLATE — Exact copy from index.html. Do not change; validate before propagating to other pages. -->
 <footer id="footer" class="bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white border-t border-gray-300 dark:border-gray-800 w-full flex-shrink-0">
@@ -445,7 +457,7 @@
             </a>
           </li>
           <li>
-            <a href="https://portal.vendorsoluce.com?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+            <a href="https://www.portal.vendorsoluce.com?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
               <span>Vendor Assurance Portal</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
@@ -557,5 +569,6 @@
 
 
 
+<script src="assets/js/vendor-review-workflow.js"></script>
 </body>
 </html>

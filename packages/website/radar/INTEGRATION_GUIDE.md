@@ -133,7 +133,7 @@ function openVendorCatalog() {
                             </button>
                         `).join('')}
                     </div>
-                    <hr class="vs-modal-hr" />
+                    <hr style="margin: 20px 0;">
                     <button class="btn btn-primary" onclick="addAllVendors()">
                         Add All 150+ Vendors
                     </button>

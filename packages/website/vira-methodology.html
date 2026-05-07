@@ -401,10 +401,10 @@
     <div class="section-body">
       <p>VIRA sets the baseline <em>before</em> vendor engagement. Tier reflects structural facts your org defines — data, criticality, access, regulation — so effort and questionnaires scale to real exposure.</p>
     </div>
-    <div class="info-box info-box--mt1">
+    <div class="info-box" style="margin-top:1rem">
       <div class="info-box-label">Why assess inherent risk first</div>
       <div class="info-box-title">Defensible · Proportional · Independent · Consistent</div>
-      <ul class="vira-tight-list vira-tight-list--mt">
+      <ul class="vira-tight-list" style="margin-top:0.5rem">
         <li><strong>Defensibility</strong> — Tiers map to stated inputs (e.g. record volume + production access + DPA).</li>
         <li><strong>Proportionality</strong> — Light process for Low; full diligence path for Critical.</li>
         <li><strong>Independence</strong> — SOC 2 / ISO do not raise inherent tier; they inform residual risk later.</li>
@@ -505,7 +505,7 @@
         <span class="op">+</span><span class="var">D4</span><span class="op">×</span><span class="num">0.15</span>
         <span class="op">+</span><span class="var">D5</span><span class="op">×</span><span class="num">0.10</span>
       </div>
-      <div class="formula-line formula-line--mt">
+      <div class="formula-line" style="margin-top:.5rem;">
         <span class="var">final_score</span><span class="op">=</span>
         <span class="var">max</span><span class="op">(</span><span class="var">raw_score</span><span class="op">,</span><span class="var"> override_minimum</span><span class="op">)</span>
         <span class="comment">// override_minimum = 0 if no overrides apply</span>
@@ -516,7 +516,7 @@
       </div>
     </div>
 
-    <div class="section-body section-body--mt1">
+    <div class="section-body" style="margin-top:1rem;">
       <p><strong>Capped at 100 per domain.</strong> Factors are weighted and summed, then capped. <strong>Discrete inputs only</strong> — no interpolation — so every point traces to an observed characteristic.</p>
     </div>
   </section>
@@ -535,23 +535,23 @@
       </thead>
       <tbody>
         <tr>
-          <td>Tier 1 sensitive data processing<br><span class="override-note">(Health, Biometric, Children's data)</span></td>
-          <td class="override-rationale">Elevated legal and reputational impact for health, biometric, or children’s data.</td>
+          <td>Tier 1 sensitive data processing<br><span style="font-size:.72rem;color:var(--txt3);font-weight:400">(Health, Biometric, Children's data)</span></td>
+          <td style="color:var(--txt2)">Elevated legal and reputational impact for health, biometric, or children’s data.</td>
           <td><span class="min-tier mt-high">High</span></td>
         </tr>
         <tr>
           <td>Privileged or admin system access</td>
-          <td class="override-rationale">Admin or privileged access implies lateral movement if the vendor is compromised.</td>
+          <td style="color:var(--txt2)">Admin or privileged access implies lateral movement if the vendor is compromised.</td>
           <td><span class="min-tier mt-high">High</span></td>
         </tr>
         <tr>
-          <td>Sole provider of a mission-critical function<br><span class="override-note">(no documented alternative)</span></td>
-          <td class="override-rationale">No practical substitute for a mission-critical sole provider.</td>
+          <td>Sole provider of a mission-critical function<br><span style="font-size:.72rem;color:var(--txt3);font-weight:400">(no documented alternative)</span></td>
+          <td style="color:var(--txt2)">No practical substitute for a mission-critical sole provider.</td>
           <td><span class="min-tier mt-high">High</span></td>
         </tr>
         <tr>
-          <td>Regulated processing requiring a BAA<br><span class="override-note">(HIPAA Business Associate Agreement)</span></td>
-          <td class="override-rationale">PHI under HIPAA requires a BAA and baseline diligence regardless of vendor claims.</td>
+          <td>Regulated processing requiring a BAA<br><span style="font-size:.72rem;color:var(--txt3);font-weight:400">(HIPAA Business Associate Agreement)</span></td>
+          <td style="color:var(--txt2)">PHI under HIPAA requires a BAA and baseline diligence regardless of vendor claims.</td>
           <td><span class="min-tier mt-med">Medium</span></td>
         </tr>
       </tbody>
@@ -605,11 +605,11 @@
     <div class="dd-grid">
       <div class="dd-row">
         <div>
-          <div class="dd-tier-name dd-tier-crit">Critical</div>
+          <div class="dd-tier-name" style="color:var(--c-crit)">Critical</div>
           <div class="dd-level">Enhanced</div>
         </div>
         <div>
-          <div class="dd-tier-desc">Full questionnaire (150+), evidence review, technical assessment as needed, exec and legal sign-off, mandatory reassessment cadence.</div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.45;">Full questionnaire (150+), evidence review, technical assessment as needed, exec and legal sign-off, mandatory reassessment cadence.</div>
           <div class="dd-requirements">
             <span class="dd-req">Full questionnaire (150+)</span>
             <span class="dd-req">Evidence vault review</span>
@@ -624,11 +624,11 @@
       </div>
       <div class="dd-row">
         <div>
-          <div class="dd-tier-name dd-tier-high">High</div>
+          <div class="dd-tier-name" style="color:var(--c-high)">High</div>
           <div class="dd-level">Standard-plus</div>
         </div>
         <div>
-          <div class="dd-tier-desc">Questionnaire (80+), key-control evidence, certification checks, required agreements (DPA/BAA), periodic reassessment.</div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.45;">Questionnaire (80+), key-control evidence, certification checks, required agreements (DPA/BAA), periodic reassessment.</div>
           <div class="dd-requirements">
             <span class="dd-req">Security questionnaire (80+)</span>
             <span class="dd-req">SOC 2 Type II or equivalent</span>
@@ -641,11 +641,11 @@
       </div>
       <div class="dd-row">
         <div>
-          <div class="dd-tier-name dd-tier-med">Medium</div>
+          <div class="dd-tier-name" style="color:var(--c-med)">Medium</div>
           <div class="dd-level">Standard</div>
         </div>
         <div>
-          <div class="dd-tier-desc">Standard questionnaire with selective self-attestation, certification and privacy review, annual reassessment.</div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.45;">Standard questionnaire with selective self-attestation, certification and privacy review, annual reassessment.</div>
           <div class="dd-requirements">
             <span class="dd-req">Security questionnaire</span>
             <span class="dd-req">Certification attestation</span>
@@ -656,11 +656,11 @@
       </div>
       <div class="dd-row">
         <div>
-          <div class="dd-tier-name dd-tier-low">Low</div>
+          <div class="dd-tier-name" style="color:var(--c-low)">Low</div>
           <div class="dd-level">Lightweight</div>
         </div>
         <div>
-          <div class="dd-tier-desc">Light self-attestation, basic checks, annual or change-triggered review.</div>
+          <div style="font-size:.8rem;color:var(--txt2);margin-bottom:.625rem;line-height:1.45;">Light self-attestation, basic checks, annual or change-triggered review.</div>
           <div class="dd-requirements">
             <span class="dd-req">Self-attestation form</span>
             <span class="dd-req">Basic security check</span>
@@ -679,7 +679,7 @@
       <p>Owned by your risk or procurement team, before vendor questionnaires or evidence.</p>
     </div>
 
-    <div class="process-flow process-flow--mt">
+    <div class="process-flow" style="margin-top:1.75rem">
       <div class="process-step">
         <div class="process-step-left">
           <div class="process-step-num">01</div>
@@ -761,7 +761,7 @@
       <p>VIRA stops at inherent tier; residual work follows.</p>
     </div>
 
-    <table class="compare-table compare-table--mt15">
+    <table class="compare-table" style="margin-top:1.5rem">
       <thead>
         <tr><th>Factor</th><th>Inherent risk (VIRA)</th><th>Residual risk (post-VIRA)</th></tr>
       </thead>
@@ -897,7 +897,7 @@
             </a>
           </li>
           <li>
-            <a href="https://portal.vendorsoluce.com?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
+            <a href="https://www.portal.vendorsoluce.com?utm_source=vendorsoluce&utm_medium=website&utm_campaign=footer" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 hover:text-vendorsoluce-green dark:hover:text-white flex items-center group text-sm leading-snug">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 mr-2 text-vendorsoluce-green dark:text-vendorsoluce-light-green"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
               <span>Vendor Assurance Portal</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>

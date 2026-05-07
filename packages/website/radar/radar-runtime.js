@@ -3,7 +3,6 @@
  *
  * Implements all interactive functions for vendor-threat-radar.html.
  * Depends on: Chart.js 4 (loaded globally), radar-first-run.js, radar-interactions.js.
- * Optional: data-management-strategy.js (trial/upgrade flows).
  *
  * All public functions are assigned to `window` so the inline init script
  * (and onclick handlers in the HTML) can resolve them without a module system.
@@ -12,9 +11,7 @@
   'use strict';
 
   // ─────────────────────────────────────────────────────────────────────────
-  // Storage — mode-aware
-  //   Demo (default) : sessionStorage — data clears when browser closes
-  //   Trial active   : localStorage   — data persists across sessions
+  // Storage
   // ─────────────────────────────────────────────────────────────────────────
   var STORAGE_KEY = 'vendorsoluce_vendors';
   var RADAR_PORTFOLIO_FORMAT = 'vendorsoluce-radar-portfolio';
@@ -25,23 +22,6 @@
   var filterLevel = 'all';
   var chartInstances = { inherent: null, sector: null, geo: null };
   var sonarAnimFrame = null;
-
-  /** Returns true when a non-expired trial entry exists in localStorage. */
-  function isTrialActive() {
-    try {
-      var raw = localStorage.getItem('vendorsoluce_trial');
-      if (!raw) return false;
-      var d = JSON.parse(raw);
-      return !d.expired && new Date() < new Date(d.expiresAt);
-    } catch (e) { return false; }
-  }
-
-  /** Returns the correct storage object for the current mode. */
-  function getStorage() {
-    return isTrialActive() ? localStorage : sessionStorage;
-  }
-
-  var MS_PER_DAY = 86400000;
 
   // ─────────────────────────────────────────────────────────────────────────
   // Risk calculation (ported from packages/app/src/utils/riskCalculations.ts)
@@ -181,8 +161,7 @@
   // ─────────────────────────────────────────────────────────────────────────
   function loadVendors() {
     try {
-      var storage = getStorage();
-      var stored = storage.getItem(STORAGE_KEY);
+      var stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         var parsed = JSON.parse(stored);
         vendorData = Array.isArray(parsed) ? parsed : [];
@@ -194,48 +173,7 @@
 
   function saveVendors() {
     try {
-      getStorage().setItem(STORAGE_KEY, JSON.stringify(vendorData));
-    } catch (e) {}
-  }
-
-  /** Map catalog rows (sbom) to runtime shape (sbomProfile) for risk scoring. */
-  function normalizeCatalogVendorForRadar(v) {
-    var o = Object.assign({}, v);
-    if (o.sbom && !o.sbomProfile) {
-      o.sbomProfile = {
-        providesSoftware: !!o.sbom.providesSoftware,
-        sbomAvailable: !!o.sbom.sbomAvailable,
-        sbomFormat: o.sbom.sbomFormat || 'none',
-      };
-    }
-    return o;
-  }
-
-  var MAX_STARTER_VENDORS = 20;
-
-  /**
-   * First visit only: storage key absent → populate from getStarterVendorSet() (vendor-catalog-enhanced.js).
-   * If key exists (including "[]" after clear), do nothing.
-   */
-  function seedInitialPortfolioIfEmpty() {
-    try {
-      var storage = getStorage();
-      if (storage.getItem(STORAGE_KEY) !== null) return;
-      if (typeof getStarterVendorSet !== 'function') return;
-      var starters = getStarterVendorSet();
-      if (!Array.isArray(starters) || starters.length === 0) return;
-      starters = starters.slice(0, MAX_STARTER_VENDORS);
-      vendorData = starters.map(function (row) {
-        var v = normalizeCatalogVendorForRadar(row);
-        v = applyStarterDependencyDemo(v);
-        var risks = calculateVendorRisk(v);
-        return Object.assign({}, v, risks, {
-          id: v.id || generateId(),
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-      });
-      saveVendors();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(vendorData));
     } catch (e) {}
   }
 
@@ -372,22 +310,20 @@
       var label = riskLabelForTier(tier);
       var dataTypesText = (v.dataTypes || []).join(', ') || '—';
       html += '<div class="vendor-item vendor-item-' + escHtml(tier) + '" data-id="' + escHtml(v.id) + '">' +
-        '<div class="vendor-item-left">' +
+        '<div class="vendor-item-header">' +
         '<div class="vendor-item-name">' + escHtml(v.name) + '</div>' +
         '<span class="' + riskBadgeClass(tier) + '">' + escHtml(label) + ' (' + score + ')</span>' +
         '</div>' +
-        '<div class="vendor-item-center">' +
         '<div class="vendor-item-meta">' +
         '<span>' + escHtml(v.category || '—') + '</span>' +
         (v.sector ? ' &bull; ' + escHtml(v.sector) : '') +
         (v.location ? ' &bull; ' + escHtml(v.location) : '') +
         '</div>' +
         '<div class="vendor-item-data">' + escHtml(dataTypesText) + '</div>' +
-        '</div>' +
         '<div class="vendor-item-actions">' +
-        '<button type="button" class="secondary btn-small" onclick="editVendor(\'' + escHtml(v.id) + '\')">Edit</button>' +
-        '<button type="button" class="secondary btn-small" onclick="viewVendorDetails(\'' + escHtml(v.id) + '\')">Details</button>' +
-        '<button type="button" class="danger btn-small" onclick="deleteVendor(\'' + escHtml(v.id) + '\')">Delete</button>' +
+        '<button class="secondary" onclick="editVendor(\'' + escHtml(v.id) + '\')">Edit</button> ' +
+        '<button class="secondary" onclick="viewVendorDetails(\'' + escHtml(v.id) + '\')">Details</button> ' +
+        '<button class="danger" onclick="deleteVendor(\'' + escHtml(v.id) + '\')">Delete</button>' +
         '</div>' +
         '</div>';
     });
@@ -512,7 +448,7 @@
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    // Risk-level ring labels (numeric scores on the right)
+    // Risk-level ring labels
     var labelColor = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.3)';
     ctx.fillStyle = labelColor;
     ctx.font = '10px sans-serif';
@@ -522,35 +458,7 @@
       ctx.fillText(lbl, cx + 4, cy - r * frac + 3);
     });
 
-    // Risk-zone band labels inside rings (top-left quadrant)
-    var zoneMeta = [
-      { label: 'Critical', from: 0.75, to: 1,    color: isDark ? 'rgba(252,165,165,0.55)' : 'rgba(220,38,38,0.35)' },
-      { label: 'High',     from: 0.50, to: 0.75,  color: isDark ? 'rgba(253,186,116,0.45)' : 'rgba(217,119,6,0.3)' },
-      { label: 'Medium',   from: 0.25, to: 0.50,  color: isDark ? 'rgba(147,197,253,0.4)'  : 'rgba(37,99,235,0.25)' },
-      { label: 'Low',      from: 0,    to: 0.25,  color: isDark ? 'rgba(134,239,172,0.4)'  : 'rgba(22,163,74,0.25)' },
-    ];
-    ctx.font = 'bold 9px sans-serif';
-    ctx.textAlign = 'right';
-    zoneMeta.forEach(function (z) {
-      var midFrac = (z.from + z.to) / 2;
-      var midR = midFrac * r;
-      // Place label at 315° (upper-left diagonal) for each zone
-      var angle = -Math.PI * 3 / 4;
-      var lx = cx + midR * Math.cos(angle) - 3;
-      var ly = cy + midR * Math.sin(angle) + 4;
-      ctx.fillStyle = z.color;
-      ctx.fillText(z.label, lx, ly);
-    });
-    ctx.textAlign = 'left';
-
-    // Axis direction hint along the bottom of the canvas
-    ctx.font = '9px sans-serif';
-    ctx.fillStyle = labelColor;
-    ctx.textAlign = 'center';
-    ctx.fillText('Risk score (distance from centre)', cx, h - 4);
-    ctx.textAlign = 'left';
-
-    // Dots — dim blips that don't match the active filter
+    // Dots
     var colorMap = { critical: '#DC2626', high: '#D97706', medium: '#2563EB', low: '#16A34A' };
     if (vendorData.length === 0) return;
     vendorData.forEach(function (v, i) {
@@ -560,16 +468,13 @@
       var x = cx + dist * Math.cos(angle);
       var y = cy + dist * Math.sin(angle);
       var tier = getRiskTier(score);
-      var matched = filterLevel === 'all' || tier === filterLevel;
       ctx.beginPath();
-      ctx.arc(x, y, matched ? 5 : 3, 0, Math.PI * 2);
-      ctx.fillStyle = matched ? colorMap[tier] : (isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)');
+      ctx.arc(x, y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = colorMap[tier];
       ctx.fill();
-      if (matched) {
-        ctx.strokeStyle = isDark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.7)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
+      ctx.strokeStyle = isDark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.7)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
     });
   }
 
@@ -581,66 +486,20 @@
   // ─────────────────────────────────────────────────────────────────────────
   // Dependency Intelligence
   // ─────────────────────────────────────────────────────────────────────────
-  /** Normalize list fields that may be arrays, comma strings, or missing (legacy / JSON). */
-  function coerceDependencyStringArray(val) {
-    if (Array.isArray(val)) {
-      return val.map(function (s) { return String(s).trim(); }).filter(Boolean);
-    }
-    if (val == null || val === '') return [];
-    if (typeof val === 'string') {
-      return val.split(/[,;]/).map(function (s) { return s.trim(); }).filter(Boolean);
-    }
-    return [];
-  }
-
-  function getTierLevelNumeric(v) {
-    var t = v && v.tierLevel;
-    if (t === null || t === undefined || t === '') return NaN;
-    var n = typeof t === 'number' ? t : parseInt(String(t), 10);
-    return isNaN(n) ? NaN : n;
-  }
-
-  function vendorHasMappedDependencies(v) {
-    return (
-      coerceDependencyStringArray(v.dependentSystems).length > 0 ||
-      coerceDependencyStringArray(v.upstreamProviders).length > 0 ||
-      coerceDependencyStringArray(v.subProcessors).length > 0
-    );
-  }
-
-  /** First-time seed: catalog rows omit dependency fields — add minimal demo data so KPIs are non-zero. */
-  function applyStarterDependencyDemo(row) {
-    var o = Object.assign({}, row);
-    if (!vendorHasMappedDependencies(o)) {
-      o.dependentSystems = ['Core integrations', 'IAM / SSO'];
-      o.upstreamProviders = ['Shared telecom & DNS fabric'];
-      o.criticalOperations = ['Business-critical workloads'];
-    }
-    var n = getTierLevelNumeric(o);
-    if (isNaN(n) || n < 1) o.tierLevel = 2;
-    return o;
-  }
-
   function updateDependencyIntelligence() {
-    var mappedDeps = vendorData.filter(vendorHasMappedDependencies).length;
-    var tier2 = vendorData.filter(function (v) {
-      var n = getTierLevelNumeric(v);
-      return !isNaN(n) && n >= 2;
+    var mappedDeps = vendorData.filter(function (v) {
+      return v.dependentSystems && v.dependentSystems.length > 0;
     }).length;
+    var tier2 = vendorData.filter(function (v) { return v.tierLevel >= 2; }).length;
     var criticalOps = vendorData.filter(function (v) {
-      return coerceDependencyStringArray(v.criticalOperations).length > 0;
+      return v.criticalOperations && v.criticalOperations.length > 0;
     }).length;
 
-    // Shared upstream providers (case-insensitive merge for counting)
+    // Count shared upstream providers
     var upstreamCount = {};
-    var upstreamLabel = {};
     vendorData.forEach(function (v) {
-      coerceDependencyStringArray(v.upstreamProviders).forEach(function (p) {
-        var raw = p.trim();
-        if (!raw) return;
-        var norm = raw.toLowerCase();
-        if (!upstreamLabel[norm]) upstreamLabel[norm] = raw;
-        upstreamCount[norm] = (upstreamCount[norm] || 0) + 1;
+      (v.upstreamProviders || []).forEach(function (p) {
+        upstreamCount[p] = (upstreamCount[p] || 0) + 1;
       });
     });
     var hotspots = Object.keys(upstreamCount).filter(function (k) { return upstreamCount[k] > 1; }).length;
@@ -680,8 +539,7 @@
           hotspotsPanel.innerHTML = '<p class="dependency-empty">No shared dependencies identified across vendors.</p>';
         } else {
           hotspotsPanel.innerHTML = hotspotEntries.map(function (e) {
-            var label = upstreamLabel[e[0]] || e[0];
-            return '<div class="hotspot-item"><span class="hotspot-name">' + escHtml(label) + '</span><span class="hotspot-count">' + e[1] + ' vendors</span></div>';
+            return '<div class="hotspot-item"><span class="hotspot-name">' + escHtml(e[0]) + '</span><span class="hotspot-count">' + e[1] + ' vendors</span></div>';
           }).join('');
         }
       }
@@ -696,22 +554,19 @@
     if (!v) { box.innerHTML = ''; return; }
     var score = v.residualRisk !== undefined ? v.residualRisk : (v.inherentRisk || 0);
     var html = '<strong>' + escHtml(v.name) + '</strong> <span class="' + riskBadgeClass(getRiskTier(score)) + '">' + score + '</span><br>';
-    var ds = coerceDependencyStringArray(v.dependentSystems);
-    var up = coerceDependencyStringArray(v.upstreamProviders);
-    var co = coerceDependencyStringArray(v.criticalOperations);
-    if (ds.length) {
+    if (v.dependentSystems && v.dependentSystems.length) {
       html += '<p class="cascade-label">Dependent systems:</p><ul class="cascade-list">' +
-        ds.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
+        v.dependentSystems.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
     }
-    if (up.length) {
+    if (v.upstreamProviders && v.upstreamProviders.length) {
       html += '<p class="cascade-label">Upstream providers:</p><ul class="cascade-list">' +
-        up.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
+        v.upstreamProviders.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
     }
-    if (co.length) {
+    if (v.criticalOperations && v.criticalOperations.length) {
       html += '<p class="cascade-label">Critical operations:</p><ul class="cascade-list">' +
-        co.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
+        v.criticalOperations.map(function (s) { return '<li>' + escHtml(s) + '</li>'; }).join('') + '</ul>';
     }
-    if (!ds.length && !up.length && !co.length) {
+    if (!v.dependentSystems && !v.upstreamProviders && !v.criticalOperations) {
       html += '<p class="dependency-empty">No dependency data for this vendor.</p>';
     }
     box.innerHTML = html;
@@ -774,17 +629,14 @@
     setVal('vendorPopulationImpacted', v.populationImpacted);
     setVal('vendorContact', v.contact);
     setVal('vendorNotes', v.notes);
-    setVal('vendorDependentSystems', coerceDependencyStringArray(v.dependentSystems).join(', '));
-    setVal('vendorBusinessFunctions', coerceDependencyStringArray(v.businessFunctions).join(', '));
-    setVal('vendorUpstreamProviders', coerceDependencyStringArray(v.upstreamProviders).join(', '));
-    setVal('vendorSubProcessors', coerceDependencyStringArray(v.subProcessors).join(', '));
-    setVal('vendorCriticalOperations', coerceDependencyStringArray(v.criticalOperations).join(', '));
-    setVal('vendorRegulations', coerceDependencyStringArray(v.regulations).join(', '));
-    setVal('vendorTierLevel', (function () {
-      var n = getTierLevelNumeric(v);
-      return isNaN(n) ? '' : String(n);
-    })());
-    setVal('vendorParentVendorIds', coerceDependencyStringArray(v.parentVendorIds).join(', '));
+    setVal('vendorDependentSystems', (v.dependentSystems || []).join(', '));
+    setVal('vendorBusinessFunctions', (v.businessFunctions || []).join(', '));
+    setVal('vendorUpstreamProviders', (v.upstreamProviders || []).join(', '));
+    setVal('vendorSubProcessors', (v.subProcessors || []).join(', '));
+    setVal('vendorCriticalOperations', (v.criticalOperations || []).join(', '));
+    setVal('vendorRegulations', (v.regulations || []).join(', '));
+    setVal('vendorTierLevel', v.tierLevel || '');
+    setVal('vendorParentVendorIds', (v.parentVendorIds || []).join(', '));
     setVal('vendorDependencyNotes', v.dependencyNotes);
 
     // Check data type checkboxes
@@ -898,7 +750,6 @@
     var sel = document.getElementById('riskFilter');
     filterLevel = sel ? sel.value : 'all';
     updateVendorList();
-    updateSonarCanvas(); // keep exposure map in sync with filter
   }
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -1141,18 +992,13 @@
             serviceType: v.serviceType ? String(v.serviceType) : undefined,
             populationImpacted: v.populationImpacted ? String(v.populationImpacted) : undefined,
             sbomProfile: (v.sbomProfile && typeof v.sbomProfile === 'object') ? v.sbomProfile : undefined,
-            dependentSystems: (function () { var a = coerceDependencyStringArray(v.dependentSystems); return a.length ? a : undefined; })(),
-            businessFunctions: (function () { var a = coerceDependencyStringArray(v.businessFunctions); return a.length ? a : undefined; })(),
-            upstreamProviders: (function () { var a = coerceDependencyStringArray(v.upstreamProviders); return a.length ? a : undefined; })(),
-            subProcessors: (function () { var a = coerceDependencyStringArray(v.subProcessors); return a.length ? a : undefined; })(),
-            criticalOperations: (function () { var a = coerceDependencyStringArray(v.criticalOperations); return a.length ? a : undefined; })(),
-            regulations: (function () { var a = coerceDependencyStringArray(v.regulations); return a.length ? a : undefined; })(),
-            tierLevel: (function () {
-              var t = v.tierLevel;
-              if (t === null || t === undefined || t === '') return undefined;
-              var n = typeof t === 'number' ? t : parseInt(String(t), 10);
-              return isNaN(n) ? undefined : n;
-            })(),
+            dependentSystems: Array.isArray(v.dependentSystems) ? v.dependentSystems : undefined,
+            businessFunctions: Array.isArray(v.businessFunctions) ? v.businessFunctions : undefined,
+            upstreamProviders: Array.isArray(v.upstreamProviders) ? v.upstreamProviders : undefined,
+            subProcessors: Array.isArray(v.subProcessors) ? v.subProcessors : undefined,
+            criticalOperations: Array.isArray(v.criticalOperations) ? v.criticalOperations : undefined,
+            regulations: Array.isArray(v.regulations) ? v.regulations : undefined,
+            tierLevel: typeof v.tierLevel === 'number' ? v.tierLevel : undefined,
             createdAt: v.createdAt || new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           };
@@ -1206,22 +1052,142 @@
     var reportId = 'VS-RPT-' + Date.now().toString(36).toUpperCase();
     var now = new Date();
     var dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    if (typeof window.buildVendorExposureMapReportHtml !== 'function') {
-      alert('Report module missing: reload the page. If this persists, contact support.');
-      return '';
-    }
-    return window.buildVendorExposureMapReportHtml(vendorData, {
-      clientName: clientName,
-      reportId: reportId,
-      dateStr: dateStr,
-      illustrative: false,
+
+    var critical = 0, high = 0, medium = 0, low = 0, totalRisk = 0;
+    vendorData.forEach(function (v) {
+      var s = v.residualRisk !== undefined ? v.residualRisk : (v.inherentRisk || 0);
+      totalRisk += v.inherentRisk || 0;
+      var t = getRiskTier(s);
+      if (t === 'critical') critical++; else if (t === 'high') high++;
+      else if (t === 'medium') medium++; else low++;
     });
+    var total = vendorData.length;
+    var avg = total > 0 ? Math.round(totalRisk / total) : 0;
+
+    var sorted = vendorData.slice().sort(function (a, b) { return (b.inherentRisk || 0) - (a.inherentRisk || 0); });
+
+    var registerRows = sorted.map(function (v) {
+      var score = v.residualRisk !== undefined ? v.residualRisk : (v.inherentRisk || 0);
+      var tier = getRiskTier(score);
+      return '<tr style="border-bottom:1px solid #ddd">' +
+        '<td style="padding:6px 8px">' + escHtml(v.name) + '</td>' +
+        '<td style="padding:6px 8px">' + escHtml(v.category || '—') + '</td>' +
+        '<td style="padding:6px 8px">' + escHtml(v.sector || '—') + '</td>' +
+        '<td style="padding:6px 8px">' + escHtml(v.location || '—') + '</td>' +
+        '<td style="padding:6px 8px;font-weight:600">' + (v.inherentRisk || 0) + '</td>' +
+        '<td style="padding:6px 8px">' + (v.residualRisk || 0) + '</td>' +
+        '<td style="padding:6px 8px;color:' + { critical: '#DC2626', high: '#D97706', medium: '#2563EB', low: '#16A34A' }[tier] + ';font-weight:600">' + riskLabelForTier(tier) + '</td>' +
+        '<td style="padding:6px 8px">' + escHtml((v.dataTypes || []).join(', ') || '—') + '</td>' +
+        '<td style="padding:6px 8px">Vendor Risk Radar</td>' +
+        '</tr>';
+    }).join('');
+
+    // Build dependency KPI section
+    var mappedDepsCount = vendorData.filter(function (v) { return v.dependentSystems && v.dependentSystems.length > 0; }).length;
+    var upstreamMap = {};
+    vendorData.forEach(function (v) { (v.upstreamProviders || []).forEach(function (p) { upstreamMap[p] = (upstreamMap[p] || 0) + 1; }); });
+    var sharedDeps = Object.keys(upstreamMap).map(function (k) { return [k, upstreamMap[k]]; }).filter(function (e) { return e[1] > 1; });
+
+    // Recommendations
+    var recs = [];
+    if (critical > 0) recs.push('Conduct immediate risk review for ' + critical + ' critical-risk vendor' + (critical > 1 ? 's' : '') + '.');
+    if (high > 0) recs.push('Schedule remediation planning for ' + high + ' high-risk vendor' + (high > 1 ? 's' : '') + ' within 30 days.');
+    var sbomGaps = vendorData.filter(function (v) { return v.sbomProfile && v.sbomProfile.providesSoftware && !v.sbomProfile.sbomAvailable; }).length;
+    if (sbomGaps > 0) recs.push('Request SBOMs from ' + sbomGaps + ' software-providing vendor' + (sbomGaps > 1 ? 's' : '') + ' (NIST SP 800-161).');
+    if (sharedDeps.length > 0) recs.push('Review shared dependency concentration: ' + sharedDeps.map(function (e) { return e[0] + ' (' + e[1] + ' vendors)'; }).join(', ') + '.');
+    if (recs.length === 0) recs.push('Maintain current vendor monitoring cadence and review annually.');
+
+    return '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8"/>\n' +
+      '<meta name="viewport" content="width=device-width,initial-scale=1"/>\n' +
+      '<title>Portfolio C-SCRM Report' + (clientName ? ' — ' + clientName : '') + '</title>\n' +
+      '<style>\n' +
+      'body{font-family:\'Segoe UI\',Arial,sans-serif;font-size:14px;line-height:1.6;color:#1a1a2e;max-width:1100px;margin:0 auto;padding:2rem}\n' +
+      'h1{color:#33691E;font-size:1.8rem;margin-bottom:.25rem}\n' +
+      'h2{color:#1e3a5f;font-size:1.15rem;margin-top:2rem;border-bottom:2px solid #e5e7eb;padding-bottom:.35rem}\n' +
+      'h3{color:#374151;font-size:1rem;margin-top:1.25rem}\n' +
+      '.cover-meta{color:#6b7280;font-size:.875rem;margin-bottom:2rem}\n' +
+      '.cover-risk-summary{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1.5rem 0}\n' +
+      '.risk-kpi{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:.75rem 1.25rem;min-width:100px;text-align:center}\n' +
+      '.risk-kpi .num{font-size:1.75rem;font-weight:700}\n' +
+      '.risk-kpi .lbl{font-size:.75rem;color:#6b7280}\n' +
+      '.critical .num{color:#DC2626} .high .num{color:#D97706} .medium .num{color:#2563EB} .low .num{color:#16A34A}\n' +
+      'table{width:100%;border-collapse:collapse;font-size:.875rem;margin-top:.75rem}\n' +
+      'thead tr{background:#f3f4f6}\n' +
+      'th{padding:8px;text-align:left;font-weight:600;border-bottom:2px solid #d1d5db}\n' +
+      '.report-footer{margin-top:3rem;padding-top:1rem;border-top:1px solid #e5e7eb;font-size:.75rem;color:#9ca3af;display:flex;justify-content:space-between}\n' +
+      'ul{margin:.5rem 0;padding-left:1.5rem}\n' +
+      '@media print{body{padding:.5rem} h1{font-size:1.4rem}}\n' +
+      '</style>\n</head>\n<body>\n' +
+      '<h1>Portfolio C-SCRM Report</h1>\n' +
+      '<div class="cover-meta">' +
+      (clientName ? 'Prepared for: <strong>' + escHtml(clientName) + '</strong> &nbsp;|&nbsp; ' : '') +
+      'Generated: ' + escHtml(dateStr) + ' &nbsp;|&nbsp; ' +
+      '<span id="reportId">Report ID: ' + reportId + '</span>' +
+      '</div>\n' +
+      '<div class="cover-risk-summary">\n' +
+      '<div class="risk-kpi critical"><div class="num">' + critical + '</div><div class="lbl">Critical</div></div>\n' +
+      '<div class="risk-kpi high"><div class="num">' + high + '</div><div class="lbl">High</div></div>\n' +
+      '<div class="risk-kpi medium"><div class="num">' + medium + '</div><div class="lbl">Medium</div></div>\n' +
+      '<div class="risk-kpi low"><div class="num">' + low + '</div><div class="lbl">Low</div></div>\n' +
+      '<div class="risk-kpi"><div class="num">' + total + '</div><div class="lbl">Total</div></div>\n' +
+      '<div class="risk-kpi"><div class="num">' + avg + '</div><div class="lbl">Avg Score</div></div>\n' +
+      '</div>\n' +
+      '<ol>\n' +
+      '<li>Section 1  -  Executive Summary</li>\n' +
+      '<li>Section 1b  -  Portfolio Risk Posture</li>\n' +
+      '<li>Section 2  -  Vendor Risk Register</li>\n' +
+      '<li>Section 5b  -  Dependency &amp; Cascade</li>\n' +
+      '<li>Section 5  -  Recommended Actions</li>\n' +
+      '<li>Appendix  -  Methodology</li>\n' +
+      '</ol>\n' +
+      '<h2>Section 1  -  Executive Summary</h2>\n' +
+      '<p><strong>Purpose &amp; Scope</strong></p>\n' +
+      '<p>This C-SCRM portfolio report covers <strong>' + total + ' vendor' + (total !== 1 ? 's' : '') + '</strong>' +
+        (clientName ? ' managed by <strong>' + escHtml(clientName) + '</strong>' : '') +
+        ', aligned to NIST SP 800-161 Rev. 1. It provides an inherent risk register, sector and geographic analysis, dependency intelligence, and prioritised recommendations.</p>\n' +
+      '<p>Portfolio Risk Overview</p>\n' +
+      '<p>Risk Distribution Breakdown</p>\n' +
+      '<h2>Section 1b  -  Portfolio Risk Posture</h2>\n' +
+      '<p>1. Vendor Risk Distribution — ' + critical + ' critical, ' + high + ' high, ' + medium + ' medium, ' + low + ' low.</p>\n' +
+      '<p>2. Dependency Concentration — ' + mappedDepsCount + ' vendor' + (mappedDepsCount !== 1 ? 's' : '') + ' with mapped dependencies.</p>\n' +
+      '<p>3. Operational Exposure — based on population impacted and service criticality across the portfolio.</p>\n' +
+      '<p>4. Data Exposure Overview — data types handled include: ' +
+        escHtml(vendorData.reduce(function (acc, v) {
+          (v.dataTypes || []).forEach(function (dt) { if (acc.indexOf(dt) === -1) acc.push(dt); });
+          return acc;
+        }, []).join(', ') || 'not specified') + '.</p>\n' +
+      '<p>5. Supply Chain Visibility — tier and upstream mappings available for ' + mappedDepsCount + ' vendor' + (mappedDepsCount !== 1 ? 's' : '') + '.</p>\n' +
+      '<p>6. Portfolio Risk Posture Statement — inherent risk scores may influence procurement and monitoring decisions. This assessment does not assess control effectiveness or residual risk beyond SBOM availability signals.</p>\n' +
+      '<h2>Section 2  -  Vendor Risk Register</h2>\n' +
+      '<table>\n<thead><tr>' +
+        '<th>Vendor</th><th>Category</th><th>Sector</th><th>Location</th>' +
+        '<th>Inherent</th><th>Residual</th><th>Risk Level</th><th>Data Types</th><th>Source</th>' +
+      '</tr></thead>\n<tbody>' + registerRows + '</tbody>\n</table>\n' +
+      '<h2>Section 5b  -  Dependency &amp; Cascade</h2>\n' +
+      '<p>' + mappedDepsCount + ' vendor' + (mappedDepsCount !== 1 ? 's' : '') + ' with mapped dependencies.</p>\n' +
+      (sharedDeps.length > 0
+        ? '<p>Shared dependency concentration:</p><ul>' +
+          sharedDeps.map(function (e) { return '<li><strong>' + escHtml(e[0]) + '</strong> — shared by ' + e[1] + ' vendors</li>'; }).join('') +
+          '</ul>\n'
+        : '<p>No shared dependency hotspots identified.</p>\n') +
+      '<h2>Section 5  -  Recommended Actions</h2>\n' +
+      '<ul>' + recs.map(function (r) { return '<li>' + escHtml(r) + '</li>'; }).join('') + '</ul>\n' +
+      '<h2>Appendix  -  Methodology</h2>\n' +
+      '<p>Inherent Risk Methodology</p>\n' +
+      '<p><strong>Inherent risk:</strong> scored 0–100 based on vendor criticality category (critical/strategic/tactical/commodity), data types handled (PII, PHI, Financial, IP, etc.), SBOM availability, sector, geography, service type, and population impacted. Aligned with NIST SP 800-161 Rev. 1 C-SCRM principles.</p>\n' +
+      '<p><strong>Residual risk:</strong> inherent risk minus applicable control credits (e.g. SBOM on file). Does not reflect full control effectiveness; use full VIRA assessment for comprehensive residual analysis.</p>\n' +
+      '<p>NIST SP 800-161 Rev. 1 · FIPS 199 · EO 14028 alignment</p>\n' +
+      '<div class="report-footer">' +
+      '<span>Generated by VendorSoluce&trade; Vendor Threat Radar &mdash; ' + escHtml(dateStr) + '</span>' +
+      '<span>Report ID: ' + reportId + '</span>' +
+      '</div>\n' +
+      '</body>\n</html>';
   }
 
   function generateComprehensiveReport() {
     if (vendorData.length === 0) { alert('Add vendors to the radar before generating a report.'); return; }
     var html = buildReportHtml();
-    triggerDownload(html, 'vendorsoluce-vendor-exposure-map-report.html', 'text/html');
+    triggerDownload(html, 'vendorsoluce-portfolio-cscrm-report.html', 'text/html');
   }
 
   function openReportForPDF() {
@@ -1298,60 +1264,12 @@
   window.addEventListener('resize', function () { updateSonarCanvas(); });
 
   // ─────────────────────────────────────────────────────────────────────────
-  // Trial countdown banner
-  // ─────────────────────────────────────────────────────────────────────────
-  function showTrialBannerIfActive() {
-    try {
-      var raw = localStorage.getItem('vendorsoluce_trial');
-      if (!raw) return;
-      var d = JSON.parse(raw);
-      if (d.expired || new Date() >= new Date(d.expiresAt)) return;
-      var daysLeft = Math.max(0, Math.ceil((new Date(d.expiresAt) - Date.now()) / MS_PER_DAY));
-      // Don't inject more than once
-      if (document.getElementById('trialCountdownBanner')) return;
-      var container = document.querySelector('.radar-container');
-      if (!container) return;
-      var banner = document.createElement('div');
-      banner.id = 'trialCountdownBanner';
-      banner.className = 'alert-banner warning';
-      banner.style.cssText = 'margin-bottom:16px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border-left:4px solid var(--risk-medium);';
-      banner.innerHTML =
-        '<div class="alert-content" style="flex:1;">' +
-          '<div class="alert-title">Free Trial Active \u2014 ' + daysLeft + ' day' + (daysLeft !== 1 ? 's' : '') + ' remaining</div>' +
-          '<div style="font-size:.8125rem;">' + vendorData.length + ' / 100 vendors used \u00b7 Upgrade for unlimited access</div>' +
-        '</div>' +
-        '<a href="https://app.vendorsoluce.com/pricing?from=radar-trial" target="_blank" rel="noopener noreferrer" ' +
-          'style="background:var(--risk-medium);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:.8125rem;font-weight:600;text-decoration:none;white-space:nowrap;">Upgrade</a>';
-      container.insertBefore(banner, container.firstChild);
-    } catch (e) {}
-  }
-
-  /**
-   * Called by data-management-strategy.js after trial is activated.
-   * Migrates any existing sessionStorage data to localStorage so the user
-   * doesn't lose vendors they already added in demo mode.
-   */
-  function onTrialActivated() {
-    try {
-      var sessionVendors = sessionStorage.getItem(STORAGE_KEY);
-      if (sessionVendors && localStorage.getItem(STORAGE_KEY) === null) {
-        localStorage.setItem(STORAGE_KEY, sessionVendors);
-        vendorData = JSON.parse(sessionVendors) || [];
-      }
-    } catch (e) {}
-    showTrialBannerIfActive();
-    updateAllDisplays();
-  }
-
-  // ─────────────────────────────────────────────────────────────────────────
   // Initialisation
   // ─────────────────────────────────────────────────────────────────────────
   function init() {
     loadVendors();
-    seedInitialPortfolioIfEmpty();
     setupFormSubmit();
     updateAllDisplays();
-    showTrialBannerIfActive();
   }
 
   if (document.readyState === 'loading') {
@@ -1383,7 +1301,4 @@
   window.initRadarModeSelector = initRadarModeSelector;
   window.updateAllDisplays = updateAllDisplays;
   window.addVendorsToWorkingList = addVendorsToWorkingList;
-  window.showTrialBannerIfActive = showTrialBannerIfActive;
-  window.onTrialActivated = onTrialActivated;
-  window.isTrialActive = isTrialActive;
 })();

@@ -26,10 +26,6 @@ const ALLOWLIST_NO_CHROME = new Set([
   'steel/index.html',
   'vendor-portfolio-report.html',
   'vendor-inherent-risk-assessment-report-2026-03-11.html',
-  // Redirect stub — meta http-equiv="refresh" sends users directly to the report; no nav/footer needed.
-  'vendorExposureMap.html',
-  // Standalone generated report document (same engine as vendor-portfolio-report.html).
-  'radar/sample-portfolio-cscrm-report.html',
   'radar/verify-radar.html',
   'radar/test-radar.html',
   'radar/test-radar-functional.html',

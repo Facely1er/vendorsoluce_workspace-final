@@ -68,7 +68,7 @@ nav button{
   top:var(--nav-height);
 }
 
-/* Canonical theme toggle — design tokens (matches per-page inline overrides; avoids hardcoded gray/yellow drift) */
+/* Canonical theme toggle */
 nav [data-tour="theme-toggle"] button,
 nav button[data-theme-toggle]{
   width:2.25rem !important;
@@ -76,8 +76,8 @@ nav button[data-theme-toggle]{
   min-width:2.25rem !important;
   min-height:2.25rem !important;
   border-radius:.5rem !important;
-  background-color:var(--bg-2) !important;
-  color:var(--text-secondary) !important;
+  background-color:rgb(243 244 246) !important;
+  color:rgb(55 65 81) !important;
   display:inline-flex !important;
   align-items:center !important;
   justify-content:center !important;
@@ -87,18 +87,18 @@ nav button[data-theme-toggle]{
 
 html.dark nav [data-tour="theme-toggle"] button,
 html.dark nav button[data-theme-toggle]{
-  background-color:var(--border) !important;
-  color:var(--risk-medium) !important;
+  background-color:rgb(55 65 81) !important;
+  color:rgb(250 204 21) !important;
 }
 
 nav [data-tour="theme-toggle"] button:hover,
 nav button[data-theme-toggle]:hover{
-  background-color:var(--border) !important;
+  background-color:rgb(229 231 235) !important;
 }
 
 html.dark nav [data-tour="theme-toggle"] button:hover,
 html.dark nav button[data-theme-toggle]:hover{
-  background-color:var(--border) !important;
+  background-color:rgb(75 85 99) !important;
 }
 
 nav [data-tour="theme-toggle"] button svg,
@@ -106,11 +106,6 @@ nav button[data-theme-toggle] svg{
   width:1.25rem !important;
   height:1.25rem !important;
   color:inherit !important;
-}
-
-nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
-nav button[data-theme-toggle] .lucide-sun.hidden-icon{
-  color:var(--risk-medium) !important;
 }
 
 /* Protect brand lockup from active-nav styles */
@@ -151,49 +146,331 @@ nav[aria-label="Breadcrumb"] .w-full{
   display:none;
 }
 
-/* Brand greens — same behavior as index/features inline <style> blocks, so footer
-   link icons (classes text-vendorsoluce-green + dark:text-vendorsoluce-light-green)
-   resolve in dark mode on every page that loads shell.css without duplicating rules. */
-.bg-vendorsoluce-green{
-  background-color:var(--vendorsoluce-green);
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SITE-WIDE THEME NORMALIZATION PATCH
+   Purpose: remove page-level drift where some static pages (notably account/legal)
+   were missing token-driven dark surfaces or relied on page-local CSS only.
+   This file is loaded by every static page and intentionally sits last.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+html,
+body {
+  min-height: 100%;
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
 }
 
-.text-vendorsoluce-green{
-  color:var(--vendorsoluce-green) !important;
+body,
+#root,
+#root > div,
+main {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
 }
 
-html:not(.dark) .text-vendorsoluce-green,
-:not(.dark) .text-vendorsoluce-green{
-  color:var(--vendorsoluce-green) !important;
+html.dark body,
+html.dark #root,
+html.dark #root > div,
+html.dark main {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
 }
 
-html:not(.dark) span[class*="text-vendorsoluce-green/80"],
-:not(.dark) span[class*="text-vendorsoluce-green/80"]{
-  color:var(--text-secondary) !important;
+/* Shared card class used by account.html even when components.css is absent. */
+.modern-card {
+  background-color: var(--card) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow) !important;
 }
 
-.text-vendorsoluce-light-green{
-  color:var(--vendorsoluce-light-green);
+/* Normalize token-based text on pages with mixed Tailwind/static classes. */
+html.dark .modern-card,
+html.dark .legal-content,
+html.dark section,
+html.dark article {
+  color: var(--text) !important;
 }
 
-/* Dark: wordmarks use white; elements with BOTH green + light-green keep accent-2 (footer icons) — order matters. */
-html.dark .text-vendorsoluce-green,
-.dark .text-vendorsoluce-green,
-html[class*="dark"] .text-vendorsoluce-green,
-[class*="dark"] .text-vendorsoluce-green{
-  color:#fff !important;
+/* Account/legal pages had several light-only panels; these selectors only target
+   dark mode and avoid primary CTA buttons. */
+html.dark .modern-card .bg-gray-50,
+html.dark .legal-content.bg-white,
+html.dark div.bg-white:not([class*="bg-white/"]):not(nav div):not(footer div),
+html.dark section.bg-white {
+  background-color: var(--card) !important;
 }
 
-html.dark .text-vendorsoluce-light-green,
-.dark .text-vendorsoluce-light-green,
-html[class*="dark"] .text-vendorsoluce-light-green,
-[class*="dark"] .text-vendorsoluce-light-green{
-  color:var(--vendorsoluce-light-green) !important;
+html.dark .bg-gray-50:not(nav *),
+html.dark .bg-gray-100:not(nav *),
+html.dark .bg-green-50,
+html.dark .bg-vendorsoluce-pale-green,
+html.dark [class*="bg-vendorsoluce-pale-green/"] {
+  background-color: rgb(var(--accent-rgb) / 0.10) !important;
 }
 
-html.dark span[class*="text-vendorsoluce-green/80"],
-.dark span[class*="text-vendorsoluce-green/80"],
-html[class*="dark"] span[class*="text-vendorsoluce-green/80"],
-[class*="dark"] span[class*="text-vendorsoluce-green/80"]{
-  color:var(--vendorsoluce-light-green) !important;
+html.dark .border-gray-200,
+html.dark .border-gray-300,
+html.dark .border-green-200,
+html.dark .border-vendorsoluce-green\/30,
+html.dark .border-vendorsoluce-green\/40 {
+  border-color: var(--border) !important;
+}
+
+html.dark .text-gray-900,
+html.dark .text-gray-800,
+html.dark .text-gray-700 {
+  color: var(--text) !important;
+}
+
+html.dark .text-gray-600,
+html.dark .text-gray-500 {
+  color: var(--muted) !important;
+}
+
+/* Preserve brand/CTA colors instead of turning every green element white. */
+html.dark main .text-vendorsoluce-green,
+html.dark main .group-hover\:text-vendorsoluce-green:hover,
+html.dark main .group:hover .group-hover\:text-vendorsoluce-green {
+  color: var(--accent-2) !important;
+}
+
+html.dark .bg-vendorsoluce-green,
+html.dark a.bg-vendorsoluce-green,
+html.dark button.bg-vendorsoluce-green {
+  background-color: var(--accent) !important;
+  color: var(--accent-ink) !important;
+}
+
+html.dark .hover\:bg-vendorsoluce-dark-green:hover,
+html.dark a.bg-vendorsoluce-green:hover,
+html.dark button.bg-vendorsoluce-green:hover {
+  background-color: var(--accent-2) !important;
+  color: #0f172a !important;
+}
+
+/* Active state must still react on hover; previous build froze active nav hover. */
+nav a[title].active:hover,
+nav a[title][aria-current="page"]:hover,
+.nav-link.nav-link-active:hover,
+.nav-link.bg-vendorsoluce-green:hover {
+  background: rgb(var(--accent-rgb) / 0.14) !important;
+}
+
+html.dark nav a[title].active:hover,
+html.dark nav a[title][aria-current="page"]:hover,
+html.dark .nav-link.nav-link-active:hover,
+html.dark .nav-link.bg-vendorsoluce-green:hover {
+  background: rgb(var(--accent-2-rgb) / 0.20) !important;
+  color: var(--accent-2) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SITE-WIDE THEME QA PATCH — 2026-05-07
+   Scope: normalize all static pages, including vendor-review/account/legal/radar,
+   without changing content, routing, or page structure.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Neutral dark surfaces: previous patch tinted generic gray sections green, which
+   made review pages feel inconsistent. Keep green only for explicit brand accents. */
+html.dark main,
+html.dark section,
+html.dark .bg-gray-50,
+html.dark .bg-gray-50\/50,
+html.dark .bg-gray-50\/80,
+html.dark .bg-gray-50\/90,
+html.dark .bg-gray-100,
+html.dark .bg-gray-100\/50,
+html.dark .bg-gray-100\/70,
+html.dark .bg-gray-100\/80,
+html.dark .bg-gray-200,
+html.dark .from-gray-50,
+html.dark .to-gray-50,
+html.dark .from-gray-100,
+html.dark .to-gray-100 {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+html.dark article,
+html.dark aside,
+html.dark .vs-card,
+html.dark .vs-step-card,
+html.dark .modern-card,
+html.dark .card,
+html.dark .hero-card,
+html.dark .faq-item,
+html.dark .rounded-xl,
+html.dark .rounded-2xl,
+html.dark .rounded-lg {
+  border-color: var(--border) !important;
+}
+
+/* Card/panel surfaces. Avoid nav/footer so canonical shell remains intact. */
+html.dark main .bg-white,
+html.dark main .bg-white\/50,
+html.dark main .bg-white\/60,
+html.dark main .bg-white\/70,
+html.dark main .bg-white\/80,
+html.dark main .bg-white\/90,
+html.dark main .bg-white\/95,
+html.dark main .bg-gray-800\/50,
+html.dark main .bg-gray-800\/55,
+html.dark main .bg-gray-800\/60,
+html.dark main .bg-gray-800\/70,
+html.dark main .bg-gray-900\/80,
+html.dark main .bg-gray-900\/90,
+html.dark .vs-card,
+html.dark .modern-card,
+html.dark .card,
+html.dark .hero-card,
+html.dark .faq-item,
+html.dark #workspace-actions,
+html.dark .legal-content {
+  background-color: var(--card) !important;
+  color: var(--text) !important;
+}
+
+/* Secondary dark panels inside cards/review pages. */
+html.dark main aside.bg-gray-50,
+html.dark main aside.bg-gray-100,
+html.dark main [class*="bg-gray-800/"],
+html.dark main [class*="dark:bg-gray-800/"] {
+  background-color: var(--bg-2) !important;
+  color: var(--text) !important;
+}
+
+/* Explicit brand-tinted surfaces stay branded, but readable. */
+html.dark main .bg-green-50,
+html.dark main .bg-vendorsoluce-pale-green,
+html.dark main [class*="bg-vendorsoluce-pale-green/"],
+html.dark main [class*="bg-vendorsoluce-green/"] {
+  background-color: rgb(var(--accent-rgb) / 0.14) !important;
+  color: var(--text) !important;
+}
+
+/* Light theme readability for pale/brand panels. */
+main .bg-green-50,
+main .bg-vendorsoluce-pale-green,
+main [class*="bg-vendorsoluce-pale-green/"],
+main [class*="bg-vendorsoluce-green/"] {
+  color: #111827 !important;
+}
+main .bg-green-50 .text-gray-500,
+main .bg-green-50 .text-gray-600,
+main .bg-vendorsoluce-pale-green .text-gray-500,
+main .bg-vendorsoluce-pale-green .text-gray-600,
+main [class*="bg-vendorsoluce-pale-green/"] .text-gray-500,
+main [class*="bg-vendorsoluce-pale-green/"] .text-gray-600,
+main [class*="bg-vendorsoluce-green/"] .text-gray-500,
+main [class*="bg-vendorsoluce-green/"] .text-gray-600 {
+  color: #1f2937 !important;
+}
+
+/* Dark text hierarchy across all content pages. */
+html.dark main .text-gray-950,
+html.dark main .text-gray-900,
+html.dark main .text-gray-800,
+html.dark main .text-gray-700,
+html.dark main .prose,
+html.dark main h1,
+html.dark main h2,
+html.dark main h3,
+html.dark main h4,
+html.dark main strong,
+html.dark main th {
+  color: var(--text) !important;
+}
+html.dark main .text-gray-600,
+html.dark main .text-gray-500,
+html.dark main .text-gray-400,
+html.dark main p,
+html.dark main li,
+html.dark main td,
+html.dark main label,
+html.dark main .lead,
+html.dark main .small {
+  color: var(--muted) !important;
+}
+html.dark main a:not(.vs-btn-primary):not(.btn):not([class*="bg-vendorsoluce-green"]) {
+  color: var(--accent-2) !important;
+}
+
+/* Borders/dividers/tables/forms. */
+html.dark main .border-gray-100,
+html.dark main .border-gray-200,
+html.dark main .border-gray-300,
+html.dark main .divide-gray-100 > :not([hidden]) ~ :not([hidden]),
+html.dark main .divide-gray-200 > :not([hidden]) ~ :not([hidden]),
+html.dark main table,
+html.dark main th,
+html.dark main td {
+  border-color: var(--border) !important;
+}
+html.dark main input,
+html.dark main select,
+html.dark main textarea,
+html.dark main .form-control {
+  background-color: var(--bg-2) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+html.dark main input::placeholder,
+html.dark main textarea::placeholder {
+  color: var(--muted) !important;
+}
+
+/* Keep primary CTAs legible; do not inherit muted paragraph overrides. */
+a.vs-btn-primary,
+button.vs-btn-primary,
+html.dark a.vs-btn-primary,
+html.dark button.vs-btn-primary,
+html.dark main .btn.primary,
+html.dark main a.bg-vendorsoluce-green,
+html.dark main button.bg-vendorsoluce-green {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
+  color: var(--accent-ink) !important;
+  border-color: transparent !important;
+}
+
+/* Vendor Review page specific shells. */
+html.dark body:has(a[data-page="vendor-review"]) main {
+  background-color: var(--bg) !important;
+}
+html.dark body:has(a[data-page="vendor-review"]) main section {
+  background-color: var(--bg) !important;
+}
+html.dark body:has(a[data-page="vendor-review"]) #vendor-risk-radar,
+html.dark body:has(a[data-page="vendor-review"]) #workspace-actions {
+  background-color: var(--card) !important;
+  border-color: var(--border) !important;
+}
+html.dark body:has(a[data-page="vendor-review"]) #vendor-risk-radar aside {
+  background-color: var(--bg-2) !important;
+}
+
+/* Account page: app/access cards and status panels. */
+html.dark body:has(#account-app-links) main,
+html.dark body:has(#account-app-links) section,
+html.dark body:has(#account-app-links) .modern-card,
+html.dark body:has(#account-app-links) .vs-card {
+  background-color: var(--card) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+/* Legal pages: remove white document-sheet drift in dark mode. */
+html.dark main .legal-content,
+html.dark main .legal-content *:not(a):not(svg):not(path) {
+  color: inherit;
+}
+html.dark main .legal-content h1,
+html.dark main .legal-content h2,
+html.dark main .legal-content h3,
+html.dark main .legal-content strong {
+  color: var(--text) !important;
+}
+html.dark main .legal-content p,
+html.dark main .legal-content li {
+  color: var(--muted) !important;
 }

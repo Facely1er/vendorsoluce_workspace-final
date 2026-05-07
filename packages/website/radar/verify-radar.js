@@ -18,12 +18,6 @@ ok(html.includes('id="csvTemplateLink"'), 'csvTemplateLink present');
 ok(html.includes('class="mode-fieldset"'), 'mode-fieldset');
 ok(html.includes('initRadarModeSelector()'), 'initRadarModeSelector called on load');
 ok(html.includes('radar-first-run.js'), 'radar-first-run.js included before runtime');
-ok(html.includes('vendor-catalog-enhanced.js'), 'vendor-catalog-enhanced.js included before runtime (starter portfolio)');
-ok(
-    html.includes('report-vendor-exposure-map.js') &&
-        html.indexOf('report-vendor-exposure-map.js') < html.indexOf('radar-runtime.js'),
-    'report-vendor-exposure-map.js included before radar-runtime (portfolio HTML export)',
-);
 ok(html.includes('radar-interactions.js'), 'radar-interactions.js included before runtime');
 ok(html.includes('window.openAddVendor = openAddVendor'), 'openAddVendor exposed');
 ok(html.includes('window.downloadVendorCsvTemplate = downloadVendorCsvTemplate'), 'downloadVendorCsvTemplate exposed');
