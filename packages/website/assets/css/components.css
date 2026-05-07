@@ -448,13 +448,20 @@ html.dark .vs-step-card {
     min-width: 0;
   }
 
+  /* Explicit rows for browsers without subgrid (Chrome < 117, Samsung Internet, etc.) */
   #solution .vs-solution-step {
     display: grid;
-    grid-template-rows: subgrid;
+    grid-template-rows: auto auto minmax(18rem, 18rem) auto;
     grid-row: span 4;
     min-height: 0;
     min-width: 0;
     height: auto;
+  }
+
+  @supports (grid-template-rows: subgrid) {
+    #solution .vs-solution-step {
+      grid-template-rows: subgrid;
+    }
   }
 }
 
