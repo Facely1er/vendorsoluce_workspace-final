@@ -217,14 +217,16 @@ html.dark .border-vendorsoluce-green\/40 {
   border-color: var(--border) !important;
 }
 
-html.dark .text-gray-900,
-html.dark .text-gray-800,
-html.dark .text-gray-700 {
+/* Scope to main only — nav links use .text-gray-700 but must not inherit this global
+   sweep or dark-mode hover/active from components.css loses to !important here. */
+html.dark main .text-gray-900,
+html.dark main .text-gray-800,
+html.dark main .text-gray-700 {
   color: var(--text) !important;
 }
 
-html.dark .text-gray-600,
-html.dark .text-gray-500 {
+html.dark main .text-gray-600,
+html.dark main .text-gray-500 {
   color: var(--muted) !important;
 }
 
@@ -249,24 +251,7 @@ html.dark button.bg-vendorsoluce-green:hover {
   color: #0f172a !important;
 }
 
-/* Active nav hover — align with components.css / index (stronger than base active tint). */
-nav a[title].active:hover,
-nav a[title][aria-current="page"]:hover,
-.nav-link.nav-link-active:hover,
-.nav-link.bg-vendorsoluce-green:hover {
-  background: rgb(var(--accent-rgb) / 0.16) !important;
-  color: var(--accent) !important;
-  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.24) !important;
-}
-
-html.dark nav a[title].active:hover,
-html.dark nav a[title][aria-current="page"]:hover,
-html.dark .nav-link.nav-link-active:hover,
-html.dark .nav-link.bg-vendorsoluce-green:hover {
-  background: rgb(var(--accent-2-rgb) / 0.2) !important;
-  color: var(--accent-2) !important;
-  box-shadow: inset 0 0 0 1px rgb(var(--accent-2-rgb) / 0.28) !important;
-}
+/* Active/inactive nav hover: see end of file (nav.glass-nav-vs …) after all .text-gray patches */
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    SITE-WIDE THEME QA PATCH — 2026-05-07
@@ -476,4 +461,35 @@ html.dark main .legal-content strong {
 html.dark main .legal-content p,
 html.dark main .legal-content li {
   color: var(--muted) !important;
+}
+
+/* ─── Desktop glass nav: hover/active must win over Tailwind .text-gray-700 + shell
+    patches (this file loads last). Keeps Home/current-page hovers visible on deploy. ─── */
+nav.glass-nav-vs a.nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover,
+nav.glass-nav-vs a.nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):focus-visible {
+  color: var(--accent) !important;
+  background-color: rgb(var(--accent-rgb) / 0.12) !important;
+}
+html.dark nav.glass-nav-vs a.nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):hover,
+html.dark nav.glass-nav-vs a.nav-link:not(.nav-link-active):not(.bg-vendorsoluce-green):focus-visible {
+  color: var(--accent-2) !important;
+  background-color: rgb(var(--accent-2-rgb) / 0.14) !important;
+}
+nav.glass-nav-vs a.nav-link.nav-link-active:hover,
+nav.glass-nav-vs a.nav-link.active:hover,
+nav.glass-nav-vs a.nav-link[aria-current="page"]:hover,
+nav.glass-nav-vs a.nav-link.nav-link-active:focus-visible,
+nav.glass-nav-vs a.nav-link[aria-current="page"]:focus-visible {
+  background: rgb(var(--accent-rgb) / 0.22) !important;
+  color: var(--accent) !important;
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.35) !important;
+}
+html.dark nav.glass-nav-vs a.nav-link.nav-link-active:hover,
+html.dark nav.glass-nav-vs a.nav-link.active:hover,
+html.dark nav.glass-nav-vs a.nav-link[aria-current="page"]:hover,
+html.dark nav.glass-nav-vs a.nav-link.nav-link-active:focus-visible,
+html.dark nav.glass-nav-vs a.nav-link[aria-current="page"]:focus-visible {
+  background: rgb(var(--accent-2-rgb) / 0.26) !important;
+  color: var(--accent-2) !important;
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-2-rgb) / 0.4) !important;
 }
