@@ -25,8 +25,8 @@
       // Normalize the href to get just the filename
       let linkPage = href.split('/').pop();
       
-      // Handle index.html and root paths
-      if (linkPage === '' || linkPage === 'index.html' || href.endsWith('/') || href === './' || href === '../') {
+      // Handle index.html and root paths (navigation.js may rewrite "/" to "." or "index.html")
+      if (linkPage === '' || linkPage === '.' || linkPage === 'index.html' || href.endsWith('/') || href === './' || href === '../') {
         linkPage = 'index.html';
       }
       

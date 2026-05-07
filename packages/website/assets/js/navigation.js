@@ -76,7 +76,8 @@
                 out.push('..');
             }
             Array.prototype.push.apply(out, down);
-            return out.join('/') || '.';
+            /* Empty target = site root. Use index.html — '.' breaks active-nav matching (linkFile '.'). */
+            return out.join('/') || 'index.html';
         }
 
         // Rewrite all root-relative links (header, breadcrumb, footer, CTAs)
@@ -282,7 +283,7 @@
             let hrefPath = href.replace(/^\.\.?\//, '').split('?')[0].split('#')[0];
             const hrefParts = hrefPath.split('/').filter(Boolean);
             let linkFile = hrefParts.length ? hrefParts[hrefParts.length - 1] : '';
-            if (!linkFile) linkFile = 'index.html';
+            if (!linkFile || linkFile === '.') linkFile = 'index.html';
             linkFile = linkFile.split('?')[0].split('#')[0];
             // Normalize for comparison: strip .html so /how-it-works matches link /how-it-works.html
             const currentBase = (normalizedCurrentFile.replace(/\.html$/i, '') || 'index');
