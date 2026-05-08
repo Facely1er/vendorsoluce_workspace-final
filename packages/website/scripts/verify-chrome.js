@@ -26,6 +26,12 @@ const ALLOWLIST_NO_CHROME = new Set([
   'steel/index.html',
   'vendor-portfolio-report.html',
   'vendor-inherent-risk-assessment-report-2026-03-11.html',
+  // Illustrative sample report rendered from JS data (noindex), same engine as
+  // the "Generate portfolio report" output in Vendor Threat Radar.
+  'radar/sample-portfolio-cscrm-report.html',
+  // Meta-refresh redirect stub to radar/sample-portfolio-cscrm-report.html (noindex);
+  // never visibly renders, so site chrome is intentionally omitted.
+  'vendorExposureMap.html',
   'radar/verify-radar.html',
   'radar/test-radar.html',
   'radar/test-radar-functional.html',
