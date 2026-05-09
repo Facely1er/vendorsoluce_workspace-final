@@ -248,8 +248,7 @@ const VendorPortfolioPage: React.FC = () => {
             {vendors.length > 0 ? (
               <div className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
                 <div
-                  className="h-full rounded-full bg-emerald-500 transition-all duration-500"
-                  style={{ width: `${attestedPct}%` }}
+                  className={`h-full rounded-full bg-emerald-500 transition-all duration-500 w-[${attestedPct}%]`}
                   role="progressbar"
                   aria-valuenow={attestedPct}
                   aria-valuemin={0}

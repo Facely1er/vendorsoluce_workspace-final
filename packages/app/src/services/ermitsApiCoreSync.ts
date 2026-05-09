@@ -36,3 +36,49 @@ export async function syncVendorRiskAfterAssessmentComplete(
     body: JSON.stringify(payload),
   });
 }
+
+export type ErmitsSbomAnalyzePayload = {
+  applicationId?: string;
+  criticalVulnerabilities: number;
+  highVulnerabilities: number;
+  unknownLicenses: number;
+  sbomCurrent: boolean;
+  ciCdScanning: boolean;
+  dependencyOwnerAssigned: boolean;
+  complianceSignals: string[];
+};
+
+export function sbomAnalysisToErmitsPayload(input: {
+  criticalVulnerabilities?: number;
+  highVulnerabilities?: number;
+  unknownLicenses?: number;
+  sbomCurrent?: boolean;
+  ciCdScanning?: boolean;
+  dependencyOwnerAssigned?: boolean;
+  complianceSignals?: string[];
+  applicationId?: string;
+}): ErmitsSbomAnalyzePayload {
+  return {
+    ...(input.applicationId ? { applicationId: input.applicationId } : {}),
+    criticalVulnerabilities: Math.max(0, Number(input.criticalVulnerabilities ?? 0) || 0),
+    highVulnerabilities: Math.max(0, Number(input.highVulnerabilities ?? 0) || 0),
+    unknownLicenses: Math.max(0, Number(input.unknownLicenses ?? 0) || 0),
+    sbomCurrent: Boolean(input.sbomCurrent ?? true),
+    ciCdScanning: Boolean(input.ciCdScanning ?? false),
+    dependencyOwnerAssigned: Boolean(input.dependencyOwnerAssigned ?? false),
+    complianceSignals:
+      Array.isArray(input.complianceSignals) && input.complianceSignals.length
+        ? input.complianceSignals.map(String).filter(Boolean)
+        : ["NIST SP 800-161"],
+  };
+}
+
+export async function syncSbomExposureAfterAnalysisComplete(payload: ErmitsSbomAnalyzePayload): Promise<void> {
+  const url = new URL("/.netlify/functions/ermits-proxy", window.location.origin);
+  url.searchParams.set("path", "ermits-api/v1/sbom/analyze");
+  await fetch(url.toString(), {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+}

@@ -249,6 +249,28 @@
     height: var(--bar-height, 0%);
   }
 
+  /* Recharts outer frame — sizing vars set on element via ref */
+  .chart-frame {
+    height: var(--chart-frame-height, 300px);
+  }
+
+  .chart-frame-fixed-w {
+    width: var(--chart-frame-width, 100%);
+  }
+
+  /* Radar widget vendor dots — offset vars set on element via ref */
+  .radar-widget-dot {
+    left: calc(50% + var(--radar-dot-x, 0px));
+    top: calc(50% + var(--radar-dot-y, 0px));
+    transform: translate(-50%, -50%);
+  }
+
+  /* Skeleton sizing — vars set on element via ref */
+  .skeleton-root {
+    width: var(--skeleton-width, 100%);
+    height: var(--skeleton-height, 1rem);
+  }
+
   /* Brand tagline — aligned with website styling */
   .tagline-text {
     letter-spacing: -0.02em;

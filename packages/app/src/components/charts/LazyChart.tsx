@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Skeleton } from '../ui/Skeleton';
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
+import ChartFrame from './ChartFrame';
 
 // Lazy load chart components with retry logic
 const RadarChart = lazyWithRetry(() => import('./RadarChart'));
@@ -25,9 +26,9 @@ interface LazyChartProps {
 }
 
 const ChartSkeleton: React.FC<{ height?: number }> = ({ height = 300 }) => (
-  <div className="w-full" style={{ height: `${height}px` }}>
+  <ChartFrame height={height}>
     <Skeleton className="w-full h-full rounded-lg" />
-  </div>
+  </ChartFrame>
 );
 
 const LazyChart: React.FC<LazyChartProps> = ({ 

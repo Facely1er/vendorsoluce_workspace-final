@@ -2,6 +2,7 @@ import React from 'react';
 import { PieChart as RechartsPieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { lineBarAreaDefault, useChartDataPalette } from '../../theme/inlineUiTokens';
 import { cn } from '../../utils/cn';
+import ChartFrame from './ChartFrame';
 
 interface PieChartProps {
   data: Array<{
@@ -57,13 +58,7 @@ const PieChart: React.FC<PieChartProps> = ({
   };
 
   return (
-    <div
-      className={cn(className, (!width || width === '100%') && 'w-full')}
-      style={{
-        height: `${height}px`,
-        ...(width && width !== '100%' ? { width } : {}),
-      }}
-    >
+    <ChartFrame height={height} width={width} className={cn(className)}>
       <ResponsiveContainer width="100%" height="100%">
         <RechartsPieChart>
           <Pie
@@ -84,7 +79,7 @@ const PieChart: React.FC<PieChartProps> = ({
           {showLegend && <Legend />}
         </RechartsPieChart>
       </ResponsiveContainer>
-    </div>
+    </ChartFrame>
   );
 };
 

@@ -17,6 +17,7 @@ const ALLOWED_PATHS = new Set([
   "sector-risk",
   // ERMITS API Core (served under /functions/v1/ermits-api)
   "ermits-api/v1/vendors/risk-score",
+  "ermits-api/v1/sbom/analyze",
 ]);
 
 function json(statusCode: number, body: unknown, extraHeaders?: Record<string, string>): ProxyResult {

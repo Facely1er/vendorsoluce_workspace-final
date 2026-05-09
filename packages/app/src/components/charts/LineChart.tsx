@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
+import ChartFrame from './ChartFrame';
 import { lineBarAreaDefault } from '../../theme/inlineUiTokens';
 import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -34,13 +35,7 @@ const LineChart: React.FC<LineChartProps> = ({
   showLegend = true
 }) => {
   return (
-    <div
-      className={cn(className, (!width || width === '100%') && 'w-full')}
-      style={{
-        height: `${height}px`,
-        ...(width && width !== '100%' ? { width } : {}),
-      }}
-    >
+    <ChartFrame height={height} width={width} className={cn(className)}>
       <ResponsiveContainer width="100%" height="100%">
         <RechartsLineChart data={data}>
           {showGrid && <CartesianGrid strokeDasharray="3 3" />}
@@ -62,7 +57,7 @@ const LineChart: React.FC<LineChartProps> = ({
           ))}
         </RechartsLineChart>
       </ResponsiveContainer>
-    </div>
+    </ChartFrame>
   );
 };
 

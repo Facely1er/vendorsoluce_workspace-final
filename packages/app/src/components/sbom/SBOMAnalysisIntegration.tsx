@@ -13,6 +13,7 @@ import { AlertCircle, CheckCircle, Loader2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Button from '../ui/Button';
 import { logger } from '../../utils/logger';
+import { sbomAnalysisToErmitsPayload, syncSbomExposureAfterAnalysisComplete } from '../../services/ermitsApiCoreSync';
 import './SBOMAnalysisIntegration.css';
 
 interface SBOMAnalysisResult {
@@ -70,6 +71,24 @@ const SBOMAnalysisIntegration: React.FC<SBOMAnalysisIntegrationProps> = ({
         generateReport: true
       });
       setAnalysisResult(result);
+
+      // Best-effort: sync SBOM exposure summary to ERMITS API Core (server-side proxy injects API key).
+      try {
+        const payload = sbomAnalysisToErmitsPayload({
+          criticalVulnerabilities: result?.metadata?.criticalVulnerabilities,
+          highVulnerabilities: result?.metadata?.highVulnerabilities,
+          // VendorSoluce SBOM analyzer does not currently surface unknown license count consistently;
+          // default to 0 unless the API result includes it.
+          unknownLicenses: (result as any)?.metadata?.unknownLicenses ?? (result as any)?.unknownLicenses ?? 0,
+          sbomCurrent: true,
+          ciCdScanning: false,
+          dependencyOwnerAssigned: false,
+          complianceSignals: ['NIST SP 800-161'],
+        });
+        await syncSbomExposureAfterAnalysisComplete(payload);
+      } catch (syncErr) {
+        logger.warn('ERMITS SBOM exposure sync failed (non-blocking):', syncErr);
+      }
     } catch (err) {
       // Error is handled by the hook
       logger.error('Analysis failed:', err);

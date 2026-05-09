@@ -2,6 +2,7 @@ import React from 'react';
 import { AreaChart as RechartsAreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { lineBarAreaDefault } from '../../theme/inlineUiTokens';
 import { cn } from '../../utils/cn';
+import ChartFrame from './ChartFrame';
 
 interface AreaChartProps {
   data: Array<{
@@ -35,13 +36,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
   showLegend = true
 }) => {
   return (
-    <div
-      className={cn(className, (!width || width === '100%') && 'w-full')}
-      style={{
-        height: `${height}px`,
-        ...(width && width !== '100%' ? { width } : {}),
-      }}
-    >
+    <ChartFrame height={height} width={width} className={cn(className)}>
       <ResponsiveContainer width="100%" height="100%">
         <RechartsAreaChart data={data}>
           {showGrid && <CartesianGrid strokeDasharray="3 3" />}
@@ -63,7 +58,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
           ))}
         </RechartsAreaChart>
       </ResponsiveContainer>
-    </div>
+    </ChartFrame>
   );
 };
 

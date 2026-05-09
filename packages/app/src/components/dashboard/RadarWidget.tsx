@@ -1,9 +1,47 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Card, { CardHeader, CardTitle, CardContent } from '../ui/Card';
 import Button from '../ui/Button';
 import { Radar, ExternalLink } from 'lucide-react';
 import { VendorRisk } from '../../types';
+import { cn } from '../../utils/cn';
+
+function RadarVendorDot({
+  vendor,
+  index,
+  colorClass,
+  onVendorClick,
+}: {
+  vendor: VendorRisk;
+  index: number;
+  colorClass: string;
+  onVendorClick?: (vendor: VendorRisk) => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const angle = (index * 45) * (Math.PI / 180);
+  const radius = 40 + (vendor.riskScore / 100) * 20;
+  const x = Math.cos(angle) * radius;
+  const y = Math.sin(angle) * radius;
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.setProperty('--radar-dot-x', `${x}px`);
+    el.style.setProperty('--radar-dot-y', `${y}px`);
+  }, [x, y]);
+
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        'radar-widget-dot absolute w-3 h-3 rounded-full cursor-pointer hover:scale-150 transition-transform',
+        colorClass,
+      )}
+      title={`${vendor.name}: ${vendor.riskScore} (${vendor.riskLevel})`}
+      onClick={() => onVendorClick?.(vendor)}
+    />
+  );
+}
 
 interface RadarWidgetProps {
   vendors: VendorRisk[];
@@ -54,26 +92,22 @@ const RadarWidget: React.FC<RadarWidgetProps> = ({ vendors, onVendorClick }) => 
                 {/* Risk indicators */}
                 <div className="relative z-10">
                   {vendors.slice(0, 8).map((vendor, index) => {
-                    const angle = (index * 45) * (Math.PI / 180);
-                    const radius = 40 + (vendor.riskScore / 100) * 20;
-                    const x = Math.cos(angle) * radius;
-                    const y = Math.sin(angle) * radius;
-                    const color = 
-                      vendor.riskLevel === 'Critical' ? 'bg-red-500' :
-                      vendor.riskLevel === 'High' ? 'bg-orange-500' :
-                      vendor.riskLevel === 'Medium' ? 'bg-yellow-500' : 'bg-green-500';
-                    
+                    const colorClass =
+                      vendor.riskLevel === 'Critical'
+                        ? 'bg-red-500'
+                        : vendor.riskLevel === 'High'
+                          ? 'bg-orange-500'
+                          : vendor.riskLevel === 'Medium'
+                            ? 'bg-yellow-500'
+                            : 'bg-green-500';
+
                     return (
-                      <div
+                      <RadarVendorDot
                         key={vendor.id}
-                        className={`absolute w-3 h-3 ${color} rounded-full cursor-pointer hover:scale-150 transition-transform`}
-                        style={{
-                          left: `calc(50% + ${x}px)`,
-                          top: `calc(50% + ${y}px)`,
-                          transform: 'translate(-50%, -50%)'
-                        }}
-                        title={`${vendor.name}: ${vendor.riskScore} (${vendor.riskLevel})`}
-                        onClick={() => onVendorClick?.(vendor)}
+                        vendor={vendor}
+                        index={index}
+                        colorClass={colorClass}
+                        onVendorClick={onVendorClick}
                       />
                     );
                   })}

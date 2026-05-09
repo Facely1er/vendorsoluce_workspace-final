@@ -2,6 +2,7 @@ import React from 'react';
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { lineBarAreaDefault } from '../../theme/inlineUiTokens';
 import { cn } from '../../utils/cn';
+import ChartFrame from './ChartFrame';
 
 interface BarChartProps {
   data: Array<{
@@ -34,13 +35,7 @@ const BarChart: React.FC<BarChartProps> = ({
   showLegend = true
 }) => {
   return (
-    <div
-      className={cn(className, (!width || width === '100%') && 'w-full')}
-      style={{
-        height: `${height}px`,
-        ...(width && width !== '100%' ? { width } : {}),
-      }}
-    >
+    <ChartFrame height={height} width={width} className={cn(className)}>
       <ResponsiveContainer width="100%" height="100%">
         <RechartsBarChart data={data}>
           {showGrid && <CartesianGrid strokeDasharray="3 3" />}
@@ -59,7 +54,7 @@ const BarChart: React.FC<BarChartProps> = ({
           ))}
         </RechartsBarChart>
       </ResponsiveContainer>
-    </div>
+    </ChartFrame>
   );
 };
 
