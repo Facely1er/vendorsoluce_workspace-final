@@ -4,7 +4,13 @@ import { supabase, isSupabaseEnabled } from '../lib/supabase';
 import { DEMO_VENDORS } from '../data/demoData';
 import { UsageService } from '../services/usageService';
 import type { Database } from '../lib/database.types';
-import { createLocalVendor, deleteLocalVendor, getLocalVendors, updateLocalVendor } from '../services/local/workspaceLocalStore';
+import {
+  createLocalVendor,
+  deleteLocalVendor,
+  getLocalVendors,
+  getLocalWorkspaceStorageIssue,
+  updateLocalVendor,
+} from '../services/local/workspaceLocalStore';
 
 const usageService = new UsageService();
 
@@ -18,11 +24,13 @@ export const useVendors = () => {
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [storageWarning, setStorageWarning] = useState<string | null>(null);
 
   const fetchVendors = useCallback(async () => {
     if (!user) {
       setVendors([]);
       setLoading(false);
+      setStorageWarning(null);
       return;
     }
 
@@ -30,6 +38,7 @@ export const useVendors = () => {
       setVendors(DEMO_VENDORS);
       setLoading(false);
       setError(null);
+      setStorageWarning(null);
       return;
     }
 
@@ -37,6 +46,7 @@ export const useVendors = () => {
       setVendors(getLocalVendors(user.id));
       setLoading(false);
       setError(null);
+      setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? null);
       return;
     }
 
@@ -51,6 +61,7 @@ export const useVendors = () => {
 
       if (error) throw error;
       setVendors(data || []);
+      setStorageWarning(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch vendors');
     } finally {
@@ -63,9 +74,15 @@ export const useVendors = () => {
     if (isDemoMode) return;
 
     if (useLocalWorkspaceData) {
-      const created = createLocalVendor(user.id, vendorData);
-      setVendors(prev => [created, ...prev]);
-      return created;
+      try {
+        const created = createLocalVendor(user.id, vendorData);
+        setVendors(prev => [created, ...prev]);
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? null);
+        return created;
+      } catch (err) {
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? (err instanceof Error ? err.message : 'Failed to save vendor locally'));
+        throw err;
+      }
     }
 
     try {
@@ -89,6 +106,7 @@ export const useVendors = () => {
 
       await usageService.incrementUsage(user.id, 'vendors', 1);
       setVendors(prev => [data, ...prev]);
+      setStorageWarning(null);
       return data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create vendor');
@@ -101,9 +119,15 @@ export const useVendors = () => {
 
     if (useLocalWorkspaceData) {
       if (!user) throw new Error('User not authenticated');
-      const updated = updateLocalVendor(user.id, id, vendorData);
-      setVendors(prev => prev.map(vendor => (vendor.id === id ? updated : vendor)));
-      return updated;
+      try {
+        const updated = updateLocalVendor(user.id, id, vendorData);
+        setVendors(prev => prev.map(vendor => (vendor.id === id ? updated : vendor)));
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? null);
+        return updated;
+      } catch (err) {
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? (err instanceof Error ? err.message : 'Failed to save vendor changes locally'));
+        throw err;
+      }
     }
 
     try {
@@ -117,6 +141,7 @@ export const useVendors = () => {
 
       if (error) throw error;
       setVendors(prev => prev.map(vendor => (vendor.id === id ? data : vendor)));
+      setStorageWarning(null);
       return data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update vendor');
@@ -129,9 +154,15 @@ export const useVendors = () => {
 
     if (useLocalWorkspaceData) {
       if (!user) throw new Error('User not authenticated');
-      deleteLocalVendor(user.id, id);
-      setVendors(prev => prev.filter(vendor => vendor.id !== id));
-      return;
+      try {
+        deleteLocalVendor(user.id, id);
+        setVendors(prev => prev.filter(vendor => vendor.id !== id));
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? null);
+        return;
+      } catch (err) {
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? (err instanceof Error ? err.message : 'Failed to update local vendor data'));
+        throw err;
+      }
     }
 
     try {
@@ -143,6 +174,7 @@ export const useVendors = () => {
 
       if (error) throw error;
       setVendors(prev => prev.filter(vendor => vendor.id !== id));
+      setStorageWarning(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete vendor');
       throw err;
@@ -165,6 +197,7 @@ export const useVendors = () => {
     vendors,
     loading,
     error,
+    storageWarning,
     createVendor,
     updateVendor,
     deleteVendor,

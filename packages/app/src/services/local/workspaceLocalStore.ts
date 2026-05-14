@@ -13,19 +13,107 @@ const KEYS = {
 
 const isBrowser = typeof window !== 'undefined';
 
+export type LocalWorkspaceStorageIssueCode = 'quota_exceeded' | 'storage_unavailable' | 'write_failed' | 'read_failed';
+
+export interface LocalWorkspaceStorageIssue {
+  code: LocalWorkspaceStorageIssueCode;
+  operation: 'read' | 'write';
+  key: string;
+  message: string;
+}
+
+export type LocalWorkspaceStorageWriteResult =
+  | { ok: true }
+  | { ok: false; issue: LocalWorkspaceStorageIssue };
+
+export class LocalWorkspaceStorageError extends Error {
+  readonly issue: LocalWorkspaceStorageIssue;
+
+  constructor(issue: LocalWorkspaceStorageIssue) {
+    super(issue.message);
+    this.name = 'LocalWorkspaceStorageError';
+    this.issue = issue;
+  }
+}
+
+let lastStorageIssue: LocalWorkspaceStorageIssue | null = null;
+
+function setLastStorageIssue(issue: LocalWorkspaceStorageIssue | null): void {
+  lastStorageIssue = issue;
+}
+
+export function getLocalWorkspaceStorageIssue(): LocalWorkspaceStorageIssue | null {
+  return lastStorageIssue;
+}
+
+export function clearLocalWorkspaceStorageIssue(): void {
+  setLastStorageIssue(null);
+}
+
+function isQuotaExceededError(error: unknown): boolean {
+  return (
+    (typeof DOMException !== 'undefined' && error instanceof DOMException && error.name === 'QuotaExceededError') ||
+    (typeof error === 'object' && error !== null && 'name' in error && (error as { name?: string }).name === 'QuotaExceededError')
+  );
+}
+
+function buildStorageIssue(
+  operation: 'read' | 'write',
+  key: string,
+  error: unknown
+): LocalWorkspaceStorageIssue {
+  if (isQuotaExceededError(error)) {
+    return {
+      code: 'quota_exceeded',
+      operation,
+      key,
+      message:
+        'Browser storage quota exceeded. Export/download your workspace data now to avoid data loss, then clear space and retry.',
+    };
+  }
+
+  return {
+    code: isBrowser ? `${operation}_failed` : 'storage_unavailable',
+    operation,
+    key,
+    message:
+      operation === 'write'
+        ? 'Unable to save workspace changes in browser storage. Export/download your workspace data and retry after freeing browser storage.'
+        : 'Unable to read workspace data from browser storage.',
+  };
+}
+
 function readJson<T>(key: string, fallback: T): T {
   if (!isBrowser) return fallback;
   try {
     const raw = window.localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : fallback;
-  } catch {
+    const parsed = raw ? (JSON.parse(raw) as T) : fallback;
+    if (lastStorageIssue?.operation === 'read') setLastStorageIssue(null);
+    return parsed;
+  } catch (error) {
+    setLastStorageIssue(buildStorageIssue('read', key, error));
     return fallback;
   }
 }
 
-function writeJson<T>(key: string, value: T): void {
-  if (!isBrowser) return;
-  window.localStorage.setItem(key, JSON.stringify(value));
+function writeJson<T>(key: string, value: T): LocalWorkspaceStorageWriteResult {
+  if (!isBrowser) {
+    const issue = buildStorageIssue('write', key, null);
+    setLastStorageIssue(issue);
+    return { ok: false, issue };
+  }
+
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+    if (lastStorageIssue?.operation === 'write' && lastStorageIssue?.key === key) {
+      setLastStorageIssue(null);
+    }
+    return { ok: true };
+  } catch (error) {
+    const issue = buildStorageIssue('write', key, error);
+    setLastStorageIssue(issue);
+    return { ok: false, issue };
+  }
 }
 
 function nowIso(): string {
@@ -114,8 +202,8 @@ export function getLocalVendors(userId: string): VendorRow[] {
   return seeded;
 }
 
-export function saveLocalVendors(vendors: VendorRow[]): void {
-  writeJson(KEYS.vendors, vendors);
+export function saveLocalVendors(vendors: VendorRow[]): LocalWorkspaceStorageWriteResult {
+  return writeJson(KEYS.vendors, vendors);
 }
 
 export function createLocalVendor(userId: string, vendorData: Omit<VendorInsert, 'user_id'>): VendorRow {
@@ -143,7 +231,8 @@ export function createLocalVendor(userId: string, vendorData: Omit<VendorInsert,
     updated_at: timestamp,
   };
   const next = [vendor, ...vendors];
-  saveLocalVendors(next);
+  const saveResult = saveLocalVendors(next);
+  if (!saveResult.ok) throw new LocalWorkspaceStorageError(saveResult.issue);
   return vendor;
 }
 
@@ -155,14 +244,16 @@ export function updateLocalVendor(userId: string, id: string, updates: VendorUpd
     updatedVendor = { ...vendor, ...updates, updated_at: nowIso() };
     return updatedVendor as VendorRow;
   });
-  saveLocalVendors(next);
+  const saveResult = saveLocalVendors(next);
+  if (!saveResult.ok) throw new LocalWorkspaceStorageError(saveResult.issue);
   if (!updatedVendor) throw new Error('Vendor not found');
   return updatedVendor;
 }
 
 export function deleteLocalVendor(userId: string, id: string): void {
   const next = getLocalVendors(userId).filter((vendor) => vendor.id !== id);
-  saveLocalVendors(next);
+  const saveResult = saveLocalVendors(next);
+  if (!saveResult.ok) throw new LocalWorkspaceStorageError(saveResult.issue);
 }
 
 export function getLocalAssessments(userId: string): AssessmentRow[] {
@@ -173,8 +264,8 @@ export function getLocalAssessments(userId: string): AssessmentRow[] {
   return seeded;
 }
 
-export function saveLocalAssessments(assessments: AssessmentRow[]): void {
-  writeJson(KEYS.assessments, assessments);
+export function saveLocalAssessments(assessments: AssessmentRow[]): LocalWorkspaceStorageWriteResult {
+  return writeJson(KEYS.assessments, assessments);
 }
 
 export function upsertLocalAssessment(
@@ -197,7 +288,8 @@ export function upsertLocalAssessment(
       };
       return updated as AssessmentRow;
     });
-    saveLocalAssessments(next);
+    const saveResult = saveLocalAssessments(next);
+    if (!saveResult.ok) throw new LocalWorkspaceStorageError(saveResult.issue);
     if (!updated) throw new Error('Assessment not found');
     return updated;
   }
@@ -219,7 +311,8 @@ export function upsertLocalAssessment(
     updated_at: timestamp,
   };
   const next = [created, ...assessments];
-  saveLocalAssessments(next);
+  const saveResult = saveLocalAssessments(next);
+  if (!saveResult.ok) throw new LocalWorkspaceStorageError(saveResult.issue);
   return created;
 }
 
@@ -243,12 +336,14 @@ export function completeLocalAssessment(
     };
     return completed as AssessmentRow;
   });
-  saveLocalAssessments(next);
+  const saveResult = saveLocalAssessments(next);
+  if (!saveResult.ok) throw new LocalWorkspaceStorageError(saveResult.issue);
   if (!completed) throw new Error('Assessment not found');
   return completed;
 }
 
 export function deleteLocalAssessment(userId: string, id: string): void {
   const next = getLocalAssessments(userId).filter((assessment) => assessment.id !== id);
-  saveLocalAssessments(next);
+  const saveResult = saveLocalAssessments(next);
+  if (!saveResult.ok) throw new LocalWorkspaceStorageError(saveResult.issue);
 }
