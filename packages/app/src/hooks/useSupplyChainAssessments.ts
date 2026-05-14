@@ -200,7 +200,7 @@ export const useSupplyChainAssessments = () => {
         setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? null);
         return;
       } catch (err) {
-        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? (err instanceof Error ? err.message : 'Failed to update local assessment data'));
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? (err instanceof Error ? err.message : 'Failed to delete assessment locally'));
         throw err;
       }
     }

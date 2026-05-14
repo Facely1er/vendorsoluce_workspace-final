@@ -160,7 +160,7 @@ export const useVendors = () => {
         setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? null);
         return;
       } catch (err) {
-        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? (err instanceof Error ? err.message : 'Failed to update local vendor data'));
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? (err instanceof Error ? err.message : 'Failed to delete vendor locally'));
         throw err;
       }
     }

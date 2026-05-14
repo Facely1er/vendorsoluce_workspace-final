@@ -60,10 +60,12 @@ describe('workspaceLocalStore storage resilience', () => {
       throw quotaError;
     });
 
+    const vendorData: Parameters<typeof createLocalVendor>[1] = {
+      name: 'Blocked vendor',
+    };
+
     expect(() =>
-      createLocalVendor('user-1', {
-        name: 'Blocked vendor',
-      } as Parameters<typeof createLocalVendor>[1])
+      createLocalVendor('user-1', vendorData)
     ).toThrow('Export/download');
   });
 });

@@ -73,7 +73,7 @@ function buildStorageIssue(
   }
 
   return {
-    code: isBrowser ? `${operation}_failed` : 'storage_unavailable',
+    code: isBrowser ? (operation === 'write' ? 'write_failed' : 'read_failed') : 'storage_unavailable',
     operation,
     key,
     message:
@@ -88,7 +88,7 @@ function readJson<T>(key: string, fallback: T): T {
   try {
     const raw = window.localStorage.getItem(key);
     const parsed = raw ? (JSON.parse(raw) as T) : fallback;
-    if (lastStorageIssue?.operation === 'read') setLastStorageIssue(null);
+    if (lastStorageIssue) setLastStorageIssue(null);
     return parsed;
   } catch (error) {
     setLastStorageIssue(buildStorageIssue('read', key, error));
@@ -105,9 +105,7 @@ function writeJson<T>(key: string, value: T): LocalWorkspaceStorageWriteResult {
 
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
-    if (lastStorageIssue?.operation === 'write' && lastStorageIssue?.key === key) {
-      setLastStorageIssue(null);
-    }
+    if (lastStorageIssue) setLastStorageIssue(null);
     return { ok: true };
   } catch (error) {
     const issue = buildStorageIssue('write', key, error);
