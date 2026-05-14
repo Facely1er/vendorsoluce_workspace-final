@@ -393,9 +393,9 @@ From `USER_JOURNEY_GUIDE.md`:
 ### Phase 1: Critical Design Fixes (Week 1-2)
 
 **Design Consistency:**
-- [ ] 1. Remove blue `tokens.css` from account.html (line 12)
-- [ ] 2. Remove blue `tokens.css` from legal/index.html (line 12)
-- [ ] 3. Rebuild both pages with green Tailwind stack
+- [x] 1. Remove blue `tokens.css` from account.html (line 12)
+- [x] 2. Remove blue `tokens.css` from legal/index.html (line 12)
+- [x] 3. Rebuild both pages with green Tailwind stack
 - [ ] 4. Verify visual consistency across all surfaces
 - [ ] 5. Establish `packages/shared/tailwind-colors.js` as single source
 
@@ -447,11 +447,14 @@ From `USER_JOURNEY_GUIDE.md`:
 - [x] UI/UX quality inspection completed
 - [x] Sign In button added to website header (packages/website/includes/header.html:100)
 - [x] Memory stored for header structure convention
+- [x] Remove blue token system from account.html
+- [x] Remove blue token system from legal/index.html
+- [x] Replace accent colors with VendorSoluce green
 
 ### In Progress 🚧
-- [ ] Remove blue token system from account/legal pages
-- [ ] Fix pricing page accessibility violation
 - [ ] Consolidate mobile menu logic
+- [ ] Verify visual consistency across all surfaces
+- [ ] Test mobile menu across all pages
 
 ### Blocked ⛔
 - None currently
@@ -462,12 +465,12 @@ From `USER_JOURNEY_GUIDE.md`:
 
 ### Phase 1 Fixes
 - ✅ `packages/website/includes/header.html` - Added Sign In button (line 100-102)
+- ✅ `packages/website/account.html` - Removed blue tokens.css, replaced with green Tailwind
+- ✅ `packages/website/legal/index.html` - Removed blue tokens.css
 
 ### Pending Modifications
-- `packages/website/account.html` - Remove blue tokens.css (line 12)
-- `packages/website/legal/index.html` - Remove blue tokens.css (line 12)
-- `packages/website/pricing.html` - Fix button-in-link pattern
-- `packages/website/assets/js/navigation.js` - Consolidate mobile menu
+- `packages/website/assets/js/navigation.js` - Consolidate mobile menu logic
+- `packages/website/includes/header.html` - Remove duplicate mobile menu scripts
 
 ---
 
