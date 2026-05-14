@@ -4,7 +4,13 @@ import { supabase, isSupabaseEnabled } from '../lib/supabase';
 import { DEMO_ASSESSMENTS } from '../data/demoData';
 import { UsageService } from '../services/usageService';
 import type { Database } from '../lib/database.types';
-import { completeLocalAssessment, deleteLocalAssessment, getLocalAssessments, upsertLocalAssessment } from '../services/local/workspaceLocalStore';
+import {
+  completeLocalAssessment,
+  deleteLocalAssessment,
+  getLocalAssessments,
+  getLocalWorkspaceStorageIssue,
+  upsertLocalAssessment,
+} from '../services/local/workspaceLocalStore';
 
 const usageService = new UsageService();
 
@@ -19,12 +25,14 @@ export const useSupplyChainAssessments = () => {
   const [currentAssessment, setCurrentAssessment] = useState<Assessment | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [storageWarning, setStorageWarning] = useState<string | null>(null);
 
   const fetchAssessments = useCallback(async () => {
     if (!user) {
       setAssessments([]);
       setCurrentAssessment(null);
       setLoading(false);
+      setStorageWarning(null);
       return;
     }
 
@@ -33,6 +41,7 @@ export const useSupplyChainAssessments = () => {
       setCurrentAssessment(null);
       setLoading(false);
       setError(null);
+      setStorageWarning(null);
       return;
     }
 
@@ -42,6 +51,7 @@ export const useSupplyChainAssessments = () => {
       setCurrentAssessment(localAssessments.find(a => a.status === 'in_progress') ?? null);
       setLoading(false);
       setError(null);
+      setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? null);
       return;
     }
 
@@ -56,6 +66,7 @@ export const useSupplyChainAssessments = () => {
       if (error) throw error;
       setAssessments(data || []);
       setCurrentAssessment(data?.find(a => a.status === 'in_progress') ?? null);
+      setStorageWarning(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch assessments');
     } finally {
@@ -71,13 +82,19 @@ export const useSupplyChainAssessments = () => {
     if (isDemoMode) return;
 
     if (useLocalWorkspaceData) {
-      const saved = upsertLocalAssessment(user.id, currentAssessment?.id ?? null, assessmentData, answers);
-      setCurrentAssessment(saved.status === 'completed' ? null : saved);
-      setAssessments(prev => {
-        const rest = prev.filter(a => a.id !== saved.id);
-        return [saved, ...rest];
-      });
-      return saved;
+      try {
+        const saved = upsertLocalAssessment(user.id, currentAssessment?.id ?? null, assessmentData, answers);
+        setCurrentAssessment(saved.status === 'completed' ? null : saved);
+        setAssessments(prev => {
+          const rest = prev.filter(a => a.id !== saved.id);
+          return [saved, ...rest];
+        });
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? null);
+        return saved;
+      } catch (err) {
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? (err instanceof Error ? err.message : 'Failed to save assessment locally'));
+        throw err;
+      }
     }
 
     try {
@@ -119,6 +136,7 @@ export const useSupplyChainAssessments = () => {
       await usageService.incrementUsage(user.id, 'vendor_assessments', 1);
       setCurrentAssessment(data);
       setAssessments(prev => [data, ...prev]);
+      setStorageWarning(null);
       return data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to save assessment');
@@ -134,10 +152,16 @@ export const useSupplyChainAssessments = () => {
     if (isDemoMode) return;
 
     if (useLocalWorkspaceData) {
-      const saved = completeLocalAssessment(user.id, currentAssessment.id, overallScore, sectionScores);
-      setCurrentAssessment(null);
-      setAssessments(prev => prev.map(a => (a.id === saved.id ? saved : a)));
-      return saved;
+      try {
+        const saved = completeLocalAssessment(user.id, currentAssessment.id, overallScore, sectionScores);
+        setCurrentAssessment(null);
+        setAssessments(prev => prev.map(a => (a.id === saved.id ? saved : a)));
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? null);
+        return saved;
+      } catch (err) {
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? (err instanceof Error ? err.message : 'Failed to complete assessment locally'));
+        throw err;
+      }
     }
 
     try {
@@ -158,6 +182,7 @@ export const useSupplyChainAssessments = () => {
       if (error) throw error;
       setCurrentAssessment(null);
       setAssessments(prev => prev.map(a => (a.id === data.id ? data : a)));
+      setStorageWarning(null);
       return data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to complete assessment');
@@ -168,10 +193,16 @@ export const useSupplyChainAssessments = () => {
   const deleteAssessment = async (id: string) => {
     if (useLocalWorkspaceData) {
       if (!user) throw new Error('User not authenticated');
-      deleteLocalAssessment(user.id, id);
-      setAssessments(prev => prev.filter(a => a.id !== id));
-      if (currentAssessment?.id === id) setCurrentAssessment(null);
-      return;
+      try {
+        deleteLocalAssessment(user.id, id);
+        setAssessments(prev => prev.filter(a => a.id !== id));
+        if (currentAssessment?.id === id) setCurrentAssessment(null);
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? null);
+        return;
+      } catch (err) {
+        setStorageWarning(getLocalWorkspaceStorageIssue()?.message ?? (err instanceof Error ? err.message : 'Failed to delete assessment locally'));
+        throw err;
+      }
     }
 
     try {
@@ -207,6 +238,7 @@ export const useSupplyChainAssessments = () => {
     currentAssessment,
     loading,
     error,
+    storageWarning,
     createOrUpdateAssessment,
     completeAssessment,
     deleteAssessment,

@@ -26,14 +26,15 @@ import UnifiedQuickActions from '../../components/dashboard/UnifiedQuickActions'
 import WorkspacePageShell, { WORKSPACE_PAGE_BODY_STACK_LOOSE_CLASS } from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
 import WorkspaceEmptyState from '../../components/common/WorkspaceEmptyState';
 import LoadingSkeleton from '../../components/common/LoadingSkeleton';
+import StatusBanner from '../../components/vendorsoluce-intelligence/StatusBanner';
 import { MR, WR } from 'shared/constants/routes';
 const VendorRiskDashboard: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const { vendors, loading, error, refetch } = useVendors();
+  const { vendors, loading, error, storageWarning: vendorStorageWarning, refetch } = useVendors();
   const { analyses } = useSBOMAnalyses();
-  const { assessments } = useSupplyChainAssessments();
+  const { assessments, storageWarning: assessmentStorageWarning } = useSupplyChainAssessments();
   const { stats: threatStats, loading: threatLoading, refresh: refreshThreats } = useThreatIntelligence();
   const [showAddModal, setShowAddModal] = useState(false);
   const [showScoreModal, setShowScoreModal] = useState(false);
@@ -103,6 +104,7 @@ const VendorRiskDashboard: React.FC = () => {
     else if (view === 'analytics') navigate(WR.VENDORS_ANALYTICS);
     else navigate(WR.VENDORS);
   };
+  const storageWarning = vendorStorageWarning ?? assessmentStorageWarning;
 
   // const handleExportDashboard = async () => {
   //   const recommendations = [
@@ -263,6 +265,11 @@ const VendorRiskDashboard: React.FC = () => {
   
   return (
     <WorkspacePageShell title={t('vendorRisk.title')} description={t('vendorRisk.description')} actions={[{ label: isRefreshing ? 'Refreshing…' : 'Refresh', onClick: handleRefresh, variant: 'outline' }, { label: 'Add vendor', onClick: () => setShowAddModal(true), variant: 'primary' }]} stats={[{ label: 'Total vendors', value: vendorRiskData.length, hint: 'Tracked in the active portfolio' }, { label: 'High risk', value: riskCounts.high, hint: 'Critical or high vendors' }, { label: 'Assessments', value: assessments.length, hint: 'Completed or in progress' }, { label: 'Threat signals', value: threatLoading ? '…' : (threatStats.threatsToday ?? '—'), hint: 'Current threat feed pressure' }]}>
+      {storageWarning ? (
+        <StatusBanner tone="warning" className="mb-6" title="Local workspace storage warning">
+          {storageWarning}
+        </StatusBanner>
+      ) : null}
       {/* Navigation */}
       <div className="mb-8">
         <div className="border-b border-gray-200 dark:border-gray-700" role="tablist" aria-label="Dashboard sections">

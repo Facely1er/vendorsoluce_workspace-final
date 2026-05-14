@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { generateRecommendationsPdf } from '../../utils/generatePdf';
 import WorkspaceSection from '../../components/workspace/WorkspaceSection';
 import WorkspacePageShell from '../../components/vendorsoluce-intelligence/WorkspacePageShell';
+import StatusBanner from '../../components/vendorsoluce-intelligence/StatusBanner';
 import { useSupplyChainAssessments } from '../../hooks/useSupplyChainAssessments';
 import { logger } from '../../utils/logger';
 import { SectionScore } from '../../stores/assessmentStore';
@@ -51,7 +52,7 @@ interface FilterState {
 const SupplyChainRecommendations = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { assessments, loading, error } = useSupplyChainAssessments();
+  const { assessments, loading, error, storageWarning } = useSupplyChainAssessments();
   const [recommendations, setRecommendations] = useState<RecommendationItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<FilterState>({
@@ -484,6 +485,11 @@ const SupplyChainRecommendations = () => {
         </div>
       }
     >
+      {storageWarning ? (
+        <StatusBanner tone="warning" className="mb-6" title="Local workspace storage warning">
+          {storageWarning}
+        </StatusBanner>
+      ) : null}
 
           {/* Search and Filters - Optimized */}
           <div className="space-y-3 mb-6">
