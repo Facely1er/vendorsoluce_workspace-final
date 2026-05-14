@@ -9,8 +9,6 @@
   <title>Account  -  VendorSoluce&trade; | ERMITS</title>
   <meta name="description" content="Manage your VendorSoluce&trade; local account settings and preferences." />
   <link href="assets/css/tailwind.css" rel="stylesheet"/>
-  <link href="assets/css/tokens.css" rel="stylesheet"/>
-  <link href="assets/css/product.css" rel="stylesheet"/>
   <style>
     
     .bg-vendorsoluce-green { background-color: var(--vendorsoluce-green); }
@@ -27,7 +25,7 @@
     /* Fix second line branding - use gray-700 in light theme instead of green/80 */
     html:not(.dark) span[class*="text-vendorsoluce-green/80"],
     :not(.dark) span[class*="text-vendorsoluce-green/80"] {
-      color: var(--text-secondary) !important;
+      color: rgb(55 65 81) !important; /* gray-700 */
     }
     .bg-vendorsoluce-dark-green { background-color: var(--vendorsoluce-dark-green); }
     .text-vendorsoluce-light-green { color: var(--vendorsoluce-light-green); }
@@ -57,22 +55,22 @@
     /* Active navigation link styles - only target navigation menu links (have title attribute), exclude brand logo */
     nav a[title].active,
     nav a[title][aria-current="page"] {
-      color: var(--accent) !important;
-      background: rgb(var(--accent-rgb) / 0.08) !important;
+      color: var(--vendorsoluce-green) !important;
+      background: rgba(51, 105, 30, 0.08) !important;
       font-weight: 700 !important;
     }
     html.dark nav a[title].active,
     html.dark nav a[title][aria-current="page"] {
-      color: var(--accent-2) !important;
-      background: rgb(var(--accent-2-rgb) / 0.12) !important;
+      color: var(--vendorsoluce-light-green) !important;
+      background: rgba(102, 187, 106, 0.12) !important;
     }
     nav a[title].active:hover,
     nav a[title][aria-current="page"]:hover {
-      background: rgb(var(--accent-rgb) / 0.12) !important;
+      background: rgba(51, 105, 30, 0.12) !important;
     }
     html.dark nav a[title].active:hover,
     html.dark nav a[title][aria-current="page"]:hover {
-      background: rgb(var(--accent-2-rgb) / 0.18) !important;
+      background: rgba(102, 187, 106, 0.18) !important;
     }
 /* Utility classes for inline styles */
     .tagline-text {
@@ -155,8 +153,8 @@
     min-width: 2.25rem !important;
     min-height: 2.25rem !important;
     border-radius: 0.5rem !important;
-    background-color: var(--bg-2) !important;
-    color: var(--text-secondary) !important;
+    background-color: rgb(243 244 246) !important; /* gray-100 */
+    color: rgb(55 65 81) !important; /* gray-700 */
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -165,16 +163,16 @@
   }
   html.dark nav [data-tour="theme-toggle"] button,
   html.dark nav button[data-theme-toggle] {
-    background-color: var(--border) !important;
-    color: var(--risk-medium) !important;
+    background-color: rgb(55 65 81) !important; /* gray-700 */
+    color: rgb(251 191 36) !important; /* yellow-400 */
   }
   nav [data-tour="theme-toggle"] button:hover,
   nav button[data-theme-toggle]:hover {
-    background-color: var(--border) !important;
+    background-color: rgb(229 231 235) !important; /* gray-200 */
   }
   html.dark nav [data-tour="theme-toggle"] button:hover,
   html.dark nav button[data-theme-toggle]:hover {
-    background-color: var(--border) !important;
+    background-color: rgb(75 85 99) !important; /* gray-600 */
   }
   /* Theme toggle icons: same size and color on all pages */
   nav [data-tour="theme-toggle"] button svg,
@@ -185,7 +183,7 @@
   }
   nav [data-tour="theme-toggle"] button .lucide-sun.hidden-icon,
   nav button[data-theme-toggle] .lucide-sun.hidden-icon {
-    color: var(--risk-medium) !important;
+    color: rgb(251 146 60) !important; /* orange-400 for sun icon */
   }
 </style>
 <nav class="glass-nav-vs fixed top-0 left-0 right-0 z-[99999] w-full max-w-[100vw]" aria-label="Main navigation">
